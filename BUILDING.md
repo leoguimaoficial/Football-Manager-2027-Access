@@ -24,7 +24,12 @@ Use PowerShell 7 on Windows. The local SDK version is pinned by global.json.
 
     ./scripts/setup.ps1
     ./scripts/restore.ps1
-    ./scripts/build.ps1 -GamePath 'C:/XboxGames/Football Manager 27/Content'
+    ./scripts/build.ps1 -GamePath 'C:/Program Files (x86)/Steam/steamapps/common/Football Manager 27'
+
+Use the actual Steam library path if the game is installed elsewhere. Explicit
+`-GamePath` and `FM27_GAME_DIR` also retain support for compatible Xbox installations;
+the scripts do not require an Xbox path. The current compiler baseline is Steam
+build 26577676, inspected locally with Unity 6000.3.18f1 and metadata 39.
 
 The game must already have a compatible BepInEx installation and generated FM27
 interop assemblies. You can also set FM27_GAME_DIR or pass -p:FM27GameDir to dotnet.

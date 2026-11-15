@@ -34,10 +34,14 @@ function Copy-LoaderRuntimePayload([string]$Source, [string]$Destination) {
     }
     if(Test-Path -LiteralPath $Destination){throw 'Loader staging destination already exists; preserved.'}
     $files=@(Get-ChildItem -LiteralPath $Source -Recurse -File)
+    if((Test-Path -LiteralPath (Join-Path $Source 'winhttp.dll')) -and (Test-Path -LiteralPath (Join-Path $Source 'version.dll'))){throw 'Loader source contains conflicting proxy names.'}
     $copied=0;$excluded=0
     foreach($file in $files){
         $relative=[IO.Path]::GetRelativePath($sourceRoot,$file.FullName)
         $normalized=$relative.Replace('\','/')
+        # Official Doorstop proxy rename: preserve the pinned bytes and leave
+        # Steam's native WinHTTP loading path alone.
+        if($normalized -eq 'winhttp.dll'){$relative='version.dll'}
         # Loader bundles used for development can retain example/diagnostic
         # mods. Plugins and patchers have independent ownership/deployment;
         # restoring the loader must never silently reinstall either subtree.
@@ -60,6 +64,11 @@ function Install-Loader([string]$GamePath, [string]$Payload, [string]$ReceiptPat
     if (-not (Test-Path -LiteralPath (Join-Path $GamePath 'fm.exe'))) { throw 'fm.exe not found.' }
     $files = @(Get-ChildItem -LiteralPath $Payload -Recurse -File)
     if ($files.Count -eq 0) { throw 'Empty payload.' }
+    if((Test-Path -LiteralPath (Join-Path $Payload 'winhttp.dll')) -and (Test-Path -LiteralPath (Join-Path $Payload 'version.dll'))){throw 'Payload contains conflicting Doorstop proxies.'}
+    foreach($proxy in 'winhttp.dll','version.dll'){
+        $other=if($proxy -eq 'winhttp.dll'){'version.dll'}else{'winhttp.dll'}
+        if((Test-Path -LiteralPath (Join-Path $Payload $proxy)) -and (Test-Path -LiteralPath (Join-Path $GamePath $other))){throw "Conflicting loader proxy preserved: $other. Remove its owned installation through its receipt first."}
+    }
     $entries = @($files | ForEach-Object {
         $relative = [IO.Path]::GetRelativePath([IO.Path]::GetFullPath($Payload), $_.FullName)
         $target = Get-SafeTarget $GamePath $relative
@@ -100,4 +109,9 @@ function Uninstall-Loader([string]$ReceiptPath) {
     $receipt | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath $ReceiptPath -Encoding utf8
     Write-Output 'Owned files removed; generated files and directories preserved.'
 }
-Export-ModuleMember -Function Install-Loader,Uninstall-Loader,Assert-GameClosed,Get-SafeTarget,Copy-LoaderRuntimePayload
+function Get-LoaderProxy([string]$GamePath) {
+    $found=@('version.dll','winhttp.dll' | Where-Object {Test-Path -LiteralPath (Join-Path $GamePath $_) -PathType Leaf})
+    if($found.Count -ne 1){throw 'Expected exactly one supported Doorstop proxy (version.dll or legacy winhttp.dll).'}
+    return $found[0]
+}
+Export-ModuleMember -Function Install-Loader,Uninstall-Loader,Assert-GameClosed,Get-SafeTarget,Copy-LoaderRuntimePayload,Get-LoaderProxy

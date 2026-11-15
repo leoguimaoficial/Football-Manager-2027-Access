@@ -1,14 +1,20 @@
 # Developer deployment and removal
 
-The current investigated profile is FM27 Xbox PC 0.9.2435.0 with Unity 6000.3.18f1, metadata 39
-and BepInEx 6.0.0-be.793. Compatible build/store variants are accepted by the
+The primary development profile is FM27 Steam build 26577676 with Unity
+6000.3.18f1, metadata 39 and BepInEx 6.0.0-be.793. Compatible build/store variants are accepted by the
 required API contract, x64/Unity6000.3.x/metadata39 checks, exact loader hashes and
 fresh local interop. Reference game hashes record qualification rather than impose
-a version allowlist. Steam discovery/API fixtures pass; real Steam gameplay has
-not been tested. See [compatibility details](NATIVE_COMPATIBILITY.md).
+a version allowlist. Actual Steam startup/main-menu actions pass through Doorstop's
+supported `version.dll` proxy; Xbox retains its historical scoped evidence.
+See [compatibility details](NATIVE_COMPATIBILITY.md) for current candidate limits.
 
 Close the game before installing the loader, Host, Navigation, Speech, Prism or
 the companion. The scripts recognize the Xbox package's WindowsApps process path.
+Loader staging renames the pinned archive's `winhttp.dll` to `version.dll`
+without changing its bytes. Never install both proxies. The universal installer
+can repair its own old receipt; source scripts require removal through the
+separate source-loader receipt before changing its loader payload. Do not pass
+the universal installer's `.fm27access/installation.json` to `-ReplaceReceipt`.
 
     ./scripts/setup.ps1 -Loader
     ./scripts/install-loader.ps1 -GamePath '<game root>'

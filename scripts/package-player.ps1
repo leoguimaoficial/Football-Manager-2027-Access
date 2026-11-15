@@ -19,7 +19,7 @@ try {
     Copy-Item -LiteralPath "$PSScriptRoot/Loader.psm1" -Destination $out
     Copy-Item -LiteralPath "$PSScriptRoot/collect-player-diagnostics.ps1" -Destination "$out/collect-diagnostics.ps1"
     Import-Module "$out/InteropContract.psm1" -Force
-    $nativeFiles=@('GameAssembly.dll','fm_Data/il2cpp_data/Metadata/global-metadata.dat','winhttp.dll')
+    $nativeFiles=@('GameAssembly.dll','fm_Data/il2cpp_data/Metadata/global-metadata.dat',(Get-LoaderProxy $GamePath))
     $nativeFiles+=@(Get-ChildItem -LiteralPath (Join-Path $GamePath 'BepInEx/core') -File -Filter '*.dll' | ForEach-Object {[IO.Path]::GetRelativePath($GamePath,$_.FullName)})
     $manifest=[ordered]@{schema=3;version=$version;channel='candidate';developerTools=$false;createdUtc=[DateTime]::UtcNow.ToString('o');companionRuntime='10.0.15';
         native=@{identity=$report.Identity;version=$profile.Version;evidence=$profile.Evidence;interopContract='fm27-required-managed-api-v1';files=@($nativeFiles | ForEach-Object {@{relative=$_;sha256=(Get-FileHash -LiteralPath (Join-Path $GamePath $_)).Hash}})};

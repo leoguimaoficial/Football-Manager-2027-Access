@@ -1,5 +1,18 @@
 # Production release record
 
+## Steam package correction — F206
+
+The maintainer authorized replacing the existing 0.1.0 assets without changing
+the mod version on 2026-11-15. Steam is now the primary compiler/runtime target.
+The correction uses the upstream-supported byte-identical version.dll Doorstop
+proxy. Installer1.0.1 performs an owned/hash-guarded same-version migration, retaining
+transaction rollback and preserving shared/modified files. Actual original-package
+repair, candidatef5e6cb73 cold startup and four-audit native main-menu regression
+pass. Production logging and developer-tool omissions remain intact. Hosted/public
+replacement qualification is recorded in session progress when complete. Earlier
+Xbox/native-package evidence below remains historical; it is not a Steam career,
+alternate-proxy Xbox, Epic, clean-machine or manual NVDA qualification.
+
 ## FM27 Access 0.1.0
 
 The first public release was authorized and published on 2026-11-15. Its source, complete player

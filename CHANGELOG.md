@@ -10,6 +10,13 @@ Version 0.1.0 is the first public release.
 
 ### Fixed
 
+- Steam startup uses Doorstop's supported `version.dll` proxy, preserving the
+  exact pinned loader bytes while leaving native WinHTTP to Windows. The installer
+  repairs the existing 0.1.0 installation by retiring only its unchanged, owned
+  old proxy; shared or modified files are preserved and conflicting proxies refused.
+- Complete packages require installer engine 1.0.1 for that receipt-aware repair.
+  The mod version remains 0.1.0; Steam compiler references and build examples now
+  follow the actual installed Steam build.
 - Future release packaging correctly reads GitHub release arrays and full catalog
   pages, reusing the validated installer engine when its version is unchanged.
 

@@ -1,5 +1,40 @@
 # Native compatibility contract
 
+## Steam investigation — 2026-11-15
+
+Steam build 26577676 is now installed and is the primary adaptation target.
+It uses x64, Unity 6000.3.18f1 and metadata 39, matching the Xbox engine/metadata
+family. Its actual native pair differs: GameAssembly SHA-256
+`1152DF80DE0AE35BFF4945CB9196C58E5EC5B53DE2138A006C0597522B558303`, metadata
+`774DA150861300AA49FFC462F40B7798A82DA1AA664B647BABF32FAAB649D0ED`.
+The pinned BepInEx 793 generated 179 local interop assemblies. The published
+0.1.0 required-API guard accepts them, and the complete source compiles against
+them. The private compiler-reference pin now records this inspected Steam input.
+
+The original WinHTTP proxy path stalls at the logos, even with Doorstop disabled
+and no CoreCLR loaded. A noninvasive sample places the main thread at
+`game_plugin!WaitForActivation`; that name alone does not establish a licensing
+cause. Removing only the receipt-owned proxy lets the unmodified game reach
+MainMenu. No native game, platform activation or authentication code was patched.
+
+The same pinned Doorstop bytes loaded as `version.dll` start the original Release
+0.1.0 core412b1c64 successfully. Actual MainMenu, What's New, Preferences and Load
+dialog open/close actions pass through the sole production-document client with
+exact origin focus and four clean WCAG-tagged axe audits. No career/save is loaded.
+The [Doorstop documentation](https://github.com/NeighTools/UnityDoorstop/wiki) and
+[BepInEx troubleshooting](https://docs.bepinex.dev/master/articles/user_guide/troubleshooting.html)
+explicitly support this proxy rename. The observed correction concerns the loader
+path, not a different Unity version or missing patcher plugins.
+
+Installer engine1.0.1 migrates only an unchanged, receipt-owned old proxy with
+the identical incoming fingerprint. It refuses shared/modified/conflicting proxies,
+keeps the existing transaction rollback, and updates the exact native compatibility
+profile. The actual installed 0.1.0 repair passes receipt/native-guard validation;
+corrected candidate coref5e6cb73 cold-starts on Steam and passes the same native
+actions/focus/four-audit suite. Future store
+variants still require API checks and scoped live qualification. Earlier runtime/
+package statements below are historical, not the current Steam process.
+
 Current runtime is cold Debugfe50e602-762b-4ad6-a4be-92e3adce44a0/game29712 after F175. The previous player071512/78c package was receipt-uninstalled. Current1628pure cases and loader/profile/player fixtures pass without skips, including compatible Steam/build-label acceptance and seven incompatible/mixed-pair refusals. Actual Steam gameplay is still unavailable. This update changes option availability handling and does not replace API-based native compatibility with a build-number allowlist. Older candidate counts/status below are historical.
 
 Current installed candidate 20261114-071512 uses Release Plugin

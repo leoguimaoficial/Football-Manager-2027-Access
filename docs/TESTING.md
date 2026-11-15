@@ -1,3 +1,28 @@
+## Steam startup and same-version repair — F206
+
+Actual Steam build26577676, Unity6000.3.18f1, metadata39, pinned BepInEx793:
+original Release412b1c64 fails at its logo splash through winhttp.dll, including
+a no-CoreCLR/Doorstop-disabled comparison. A fully proxy-free launch reaches
+MainMenu; byte-identical supported version.dll then starts the same production
+module. Corrected package repair uses the actual InstallationService transaction
+engine against the original installed receipt; all259 file hashes/native guard
+pass and original diagnostics are restored. Candidatef5e6cb73 cold-starts and
+repeats live-steam-startup.cjs: MainMenu, What's New, Preferences and load dialog,
+exact focus return, four clean axe audits, complete FM26 labels and production404
+developer-route refusal. No career, save, setting commit or manual NVDA test.
+
+1,644 pure cases,48 installer cases,83 JavaScript cases,five distribution
+contracts,20 guide locale/browser/axe checks and existing script fixtures pass.
+New migration cases cover exact-version repair, rollback restoring old bytes/
+receipt, shared/modified/different proxy refusal and two/missing-proxy rejection.
+Source staging preserves pinned proxy bytes and refuses coexistence. The first
+live driver expected Cancelar rather than the native Close; its failed report is
+retained separately. The first candidate archive exposed an outdated verifier
+proxy-name allowlist; corrected verification passes all eight candidate assets.
+These local source/packaging checks do not establish a hosted/public replacement
+or external clean-machine installation. Current publication status is in session
+progress; raw evidence is ignored under artifacts/steam-investigation.
+
 ## Native setup arrival speech — F205
 
 853533d4/game2676: three actual AddNationsModal reopen/cancel cycles are silent

@@ -76,6 +76,12 @@ public static class NativeBuildGuard
             if (report.AssemblyHash == expected.Assembly && report.MetadataHash != expected.Metadata)
                 return new(false, version, "Metadata changed without its bound native assembly; regenerate and inspect the native pair.");
             using var sha = SHA256.Create();
+            foreach (var file in expected.LoaderFiles.Where(f => f.Relative is "version.dll" or "winhttp.dll"))
+            {
+                string other = file.Relative == "version.dll" ? "winhttp.dll" : "version.dll";
+                if (File.Exists(Path.Combine(gameRoot, other)))
+                    return new(false, version, "Conflicting Doorstop proxies; repair the owned installation before loading the mod.");
+            }
             foreach (var file in expected.LoaderFiles)
             {
                 string path = SafeFile(gameRoot, file.Relative);

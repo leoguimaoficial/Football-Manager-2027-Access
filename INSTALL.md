@@ -8,6 +8,12 @@ Edge WebView2. The package includes .NET and BepInEx.
 The [release page](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.0)
 also provides the complete ZIP, its manifest and the standalone HTML manual.
 
+For the Steam startup correction, use installer engine **1.0.1** or newer and
+**Repair** version **0.1.0**. The mod keeps its version. Repair migrates the old
+receipt-owned `winhttp.dll` to the byte-identical supported `version.dll` proxy;
+it preserves shared/modified files and refuses conflicting proxies. Avoid manual
+DLL renaming: the installer also updates the compatibility profile and receipt.
+
 ## Install with the universal installer
 
 Open the installer, select a

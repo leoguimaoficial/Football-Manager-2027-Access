@@ -1,5 +1,79 @@
 # FM27 Access session progress
 
+## Steam startup correction and authorized 0.1.0 replacement — F206, 2026-11-15
+
+The maintainer explicitly requests working Steam startup/main menu, Steam as the
+primary development target, compatible Xbox support where practical, and replacement
+of the existing 0.1.0 release without increasing the version. This authorizes that
+specific replacement after verification; it does not make the current candidate
+stable or qualify a complete career. Work is on codex/steam-startup-compatibility.
+
+Steam build 26577676 uses Unity 6000.3.18f1/metadata39/BepInEx793. Its fresh 179
+interop assemblies pass the published required API. Release and explicit
+Debug/tools builds compile against Steam with zero errors; inherited test warnings
+remain. Current 1,644 pure cases,48 installer cases,83 Companion JavaScript cases,
+five distribution contracts and all20 guide locales/browser/axe checks pass.
+Loader/deployment/player/production/retention/cleanup fixtures pass. The private
+reference bundle and public pin now record the inspected Steam compiler input.
+
+Production core412b1c64/game20608 cold-starts through Steam: nine patches, complete
+Host/core initialization, one owned normal Companion24912/watch20608, health200
+with screen=Loading/developerTools=false. Native screenshot shows the logo splash;
+Companion UIA says Waiting for the game to be ready. A managed stack sample shows
+server/socket/thread-pool waits, without identifying a blocked mod call. Startup
+does not reach MainMenu in that original configuration. Its startup failure
+is retained separately from the corrected runs below.
+
+With Doorstop disabled and no CoreCLR loaded, the WinHTTP proxy still leaves
+the game at the logos. A noninvasive native stack places its main thread at
+game_plugin!WaitForActivation; this is a named observation, not a licensing
+diagnosis or permission to patch native activation. Removing only the owned proxy
+lets fully unmodified game21048 reach MainMenu/What's New. The same pinned proxy
+bytes as upstream-supported version.dll then start original Release core412b1c64/
+game20508 normally. Only Windows' own WinHTTP is loaded alongside it. All nine
+mod patches apply; normal Companion10212/watch20508 renders the actual menu.
+
+New live-steam-startup.cjs uses the sole production-document qualification client:
+native MainMenu/What's New/Preferences/load-dialog open/close, exact origin focus,
+complete labels/descriptions, four clean WCAG-tagged axe audits, no unexpected
+browser/request failures and production developer-route404 refusal pass. No career
+or save is selected or loaded. The first driver wrongly expected Cancelar in the
+load dialog; its native button is Close. That expectation was corrected after
+observing the real controls, with the failed report retained independently.
+
+Installer1.0.1 now migrates only the unchanged receipt-owned byte-identical old
+proxy, rejects shared/modified/conflicting proxies and rolls back through the
+existing journal. The mod remains0.1.0. An actual repair from the original installed
+receipt passes all259 installed-file hashes, exact native API guard and restored
+production logging. Corrected candidate coref5e6cb73/game27812 cold-starts through
+Steam with developerTools=false and owned Companion24196/watch27812. The same
+four-audit/native-action regression passes again on that candidate. New public
+artifacts and exact hosted-build qualification are still pending publication.
+
+Tool observations: a launch API initially returned no targetable window while
+Steam was still preparing the launch. A subsequent direct launch overlapped the
+eventual Steam launch; those processes were closed and their port conflict is
+excluded from clean-run findings. Later Steam launches stalled before fm.exe at
+CheckShaderDepotManifest. Normal Steam shutdown/restart enabled the clean run;
+another restart briefly exposed Steam login. Authentication was handed off, then
+the client was observed back in its normal session without automating credentials.
+No physical user action is inferred. Sky sometimes reports a stale UIA loading
+document while its screenshot shows the actual menu; a later activation fails.
+Use actual sole-client DOM/native results and distinguish that helper behavior.
+Its CANCELAR attempt in Steam returned coordinate input geometry is unavailable;
+the later observation showed the native launch had proceeded, so no retry occurred.
+
+All temporary diagnostic changes were hash-checked and restored before the actual
+installer repair. BepInEx normalized the diagnostic flags list to equivalent All;
+exact text comparison proved that sole setting normalization before restoration.
+Current console is off, disk Fatal/Error/Warning, InstantFlushing=false, and no
+legacy WinHTTP proxy remains. Original payload/receipts are backed up only in
+ignored artifacts/steam-investigation. The currently inspected Documents game
+directory contains zero .fm files; do not inherit the historical55-save inventory
+as current Steam state. No save deletion/load/write or career action occurred.
+F047/F115 and previous unresolved coverage remain; Xbox with the alternative proxy,
+Epic, full Steam career and manual NVDA are not newly qualified.
+
 ## Authorized 0.1.0 publication and hosted compilation — 2026-11-15
 
 The maintainer explicitly authorized publishing 0.1.0 and updating the principal

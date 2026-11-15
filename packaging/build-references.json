@@ -1,7 +1,7 @@
 {
-  "identity": "5AA8875A2937D3DE61370C1319365F925306E88EFC777651683AF3C6B46D46A5",
+  "gameVersion": "26577676",
   "schema": 1,
-  "commit": "0b7686cf1fb7b7596c05af7c6861248b5e3d2ed9",
   "repository": "leoguimaoficial/FM27Access-Build-References",
-  "gameVersion": "0.9.2435.0"
+  "commit": "da9a5dd5bcf11199b6a3344231e0078c4943387d",
+  "identity": "C1AC89A826E4235BC4C0448DD93001DC8DC77B4897F50C2CBBD3E4F437A63FC1"
 }

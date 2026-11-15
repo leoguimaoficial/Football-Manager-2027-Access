@@ -33,18 +33,18 @@ try {
         $GamePath=$report.Path
         New-Item -ItemType Directory -Force "$GamePath/BepInEx"|Out-Null
         Copy-Item -LiteralPath "$work/loader/BepInEx/core" -Destination "$GamePath/BepInEx/core" -Recurse
-        Copy-Item -LiteralPath "$work/loader/winhttp.dll" -Destination "$GamePath/winhttp.dll"
+        Copy-Item -LiteralPath "$work/loader/winhttp.dll" -Destination "$GamePath/version.dll"
     }else{
         $report=Get-VerifiedGameReport $GamePath
         Invoke-DotNet -Arguments @("$ProjectRoot/tools/game-inspect/bin/Release/net10.0/game-inspect.dll",'check-build-reference-baseline',$GamePath,"$ProjectRoot/packaging/build-references.json")
     }
     $profile=Get-ModDeploymentProfile $report
     Invoke-DotNet -Arguments @('build',"$ProjectRoot/FM27Access.sln",'-c','Release',"-p:FM27GameDir=$([IO.Path]::GetFullPath($GamePath))",'-p:FM27DeveloperTools=false','--nologo')
-    New-ModPayload -Destination $payload -NativeReport $report -Configuration Release -ReferenceBuild:([bool]$BuildReferencesPath)
+    New-ModPayload -Destination $payload -NativeReport $report -Configuration Release -ReferenceBuild:([bool]$BuildReferencesPath) -DistributionProxy
     # Add only the pristine redistributable loader. Never copy a local installation,
     # generated interop, caches, Unity libraries, plugins, patchers or game binaries.
-    foreach($name in 'winhttp.dll','doorstop_config.ini','.doorstop_version','dotnet','BepInEx/core'){
-        $source=Join-Path "$work/loader" $name
+    foreach($name in 'version.dll','doorstop_config.ini','.doorstop_version','dotnet','BepInEx/core'){
+        $source=Join-Path "$work/loader" $(if($name -eq 'version.dll'){'winhttp.dll'}else{$name})
         if(!(Test-Path -LiteralPath $source)){throw "Required pinned loader component missing: $name"}
         $target=Join-Path $payload $name
         New-Item -ItemType Directory -Force ([IO.Path]::GetDirectoryName($target)) | Out-Null
@@ -72,11 +72,11 @@ try {
         $relative=[IO.Path]::GetRelativePath($payload,$_.FullName).Replace('\','/')
         @{path=$relative;sha256=(Get-FileHash -LiteralPath $_.FullName).Hash;size=$_.Length;kind=$(if($relative.StartsWith('BepInEx/plugins/FM27Access/')){'mod'}elseif($relative -eq 'BepInEx/config/BepInEx.cfg'){'config'}else{'loader'})}
     })
-    $manifest=@{schema=1;version=$version;minimumInstallerVersion='1.0.0';package=$package;packageSha256=(Get-FileHash -LiteralPath (Join-Path $out $package)).Hash;
-        packageSize=(Get-Item -LiteralPath (Join-Path $out $package)).Length;bepInExVersion=$lock.version;platforms=@('Steam','Xbox','Epic','Manual');
-        compatibility='Windows x64; Unity 6000.3.x; IL2CPP metadata 39; fresh locally generated interop and the bundled required managed API contract. Xbox has targeted live evidence; Steam/Epic gameplay and clean-machine first launch remain unqualified.';files=$files}
-    $manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath "$out/FM27Access-Manifest.json" -Encoding utf8
     $engine=([xml](Get-Content -LiteralPath "$ProjectRoot/installer/InstallerVersion.props" -Raw)).Project.PropertyGroup.InstallerEngineVersion
+    $manifest=@{schema=1;version=$version;minimumInstallerVersion=$engine;package=$package;packageSha256=(Get-FileHash -LiteralPath (Join-Path $out $package)).Hash;
+        packageSize=(Get-Item -LiteralPath (Join-Path $out $package)).Length;bepInExVersion=$lock.version;platforms=@('Steam','Xbox','Epic','Manual');
+        compatibility='Windows x64; Unity 6000.3.x; IL2CPP metadata 39; fresh local interop and the bundled required managed API contract. Steam build 26577676 has targeted cold startup and main-menu action evidence using the supported version.dll proxy. Xbox retains historical scoped evidence; the alternate proxy on Xbox, Epic, full Steam careers and external clean-machine onboarding remain unqualified.';files=$files}
+    $manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath "$out/FM27Access-Manifest.json" -Encoding utf8
     @{schema=1;version=$engine;sha256=(Get-FileHash -LiteralPath "$out/FM27Access-Installer.exe").Hash;size=(Get-Item -LiteralPath "$out/FM27Access-Installer.exe").Length;
         url="https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/download/v$version/FM27Access-Installer.exe"} | ConvertTo-Json | Set-Content -LiteralPath "$out/FM27Access-Installer.json" -Encoding utf8
     $referencePin=Get-Content -LiteralPath "$ProjectRoot/packaging/build-references.json" -Raw|ConvertFrom-Json

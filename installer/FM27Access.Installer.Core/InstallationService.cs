@@ -148,6 +148,24 @@ public sealed class InstallationService
         var operations = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
         List<InstalledFile> receiptFiles = [];
         var incoming = manifest.Files.Select(f => f.Path).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var proxy = manifest.Files.Single(f => Distribution.IsLoaderProxy(f.Path));
+        var retiredProxies = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (string previousProxy in new[] { "winhttp.dll", "version.dll" }.Where(p => p != proxy.Path))
+        {
+            string target = Distribution.Target(root, previousProxy);
+            oldFiles.TryGetValue(previousProxy, out var prior);
+            if (File.Exists(target))
+            {
+                // Doorstop supports a byte-identical proxy rename. Never leave two
+                // proxies loading the runtime, or remove another owner's DLL.
+                if (prior is not { Owned: true, Kind: "loader" }
+                    || !prior.Sha256.Equals(proxy.Sha256, StringComparison.OrdinalIgnoreCase)
+                    || !Distribution.Hash(target).Equals(prior.Sha256, StringComparison.OrdinalIgnoreCase))
+                    throw new IOException("Conflicting loader proxy preserved: " + previousProxy);
+                operations.Add(previousProxy, null);
+            }
+            if (prior is not null) retiredProxies.Add(previousProxy);
+        }
         foreach (var file in manifest.Files)
         {
             ct.ThrowIfCancellationRequested();
@@ -181,7 +199,7 @@ public sealed class InstallationService
             operations.Add(file.Path, null);
         }
         // Keep ownership of loader files retired from a future manifest. They remain shared.
-        receiptFiles.AddRange(oldFiles.Values.Where(f => f.Kind == "loader" && !incoming.Contains(f.Path)));
+        receiptFiles.AddRange(oldFiles.Values.Where(f => f.Kind == "loader" && !incoming.Contains(f.Path) && !retiredProxies.Contains(f.Path)));
         string config = Distribution.Target(root, "BepInEx/config/BepInEx.cfg");
         byte[] original = File.Exists(config) ? File.ReadAllBytes(config) : [];
         string loggingState = InstallationStateService.StatePath(root, "logging.json");

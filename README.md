@@ -28,6 +28,12 @@ few minutes without speech; wait for the Companion window, then use it with your
 screen reader. You do not need to install .NET or BepInEx separately. The BepInEx
 console stays closed.
 
+Steam is the primary development target. If you installed the original 0.1.0
+package and startup stops at the logos, use the current installer and **Repair**
+0.1.0. Its engine 1.0.1 safely replaces the installation's old Doorstop proxy;
+the mod version stays 0.1.0. See the [compatibility record](docs/NATIVE_COMPATIBILITY.md)
+for the tested Steam build and the limits of Xbox/Epic qualification.
+
 Use the same installer to update, repair or uninstall. Your saves, bookmarks and
 settings are kept. See [installation help](INSTALL.md) and the
 [player guide](docs/user/FM27Access-UserGuide.html) for keyboard shortcuts,

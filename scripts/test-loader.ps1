@@ -41,6 +41,9 @@ Set-Content -LiteralPath "$bundle/BepInEx/plugins/Example/smoke.dll" -Value 'dia
 Set-Content -LiteralPath "$bundle/BepInEx/patchers/Example/patcher.dll" -Value 'diagnostic patcher fixture'
 $stage=Copy-LoaderRuntimePayload $bundle $staged
 if($stage.Copied -ne 2 -or $stage.ExcludedMods -ne 2){throw 'Loader payload boundaries failed.'}
+if((Test-Path -LiteralPath "$staged/winhttp.dll") -or (Get-LoaderProxy $staged) -ne 'version.dll' -or
+    (Get-FileHash -LiteralPath "$staged/version.dll").Hash -ne (Get-FileHash -LiteralPath "$bundle/winhttp.dll").Hash){throw 'Supported proxy rename did not preserve exact pinned bytes.'}
+if((Get-LoaderProxy $bundle) -ne 'winhttp.dll'){throw 'Legacy source proxy discovery failed.'}
 if(Test-Path -LiteralPath "$staged/BepInEx/plugins"){throw 'Loader staged a diagnostic plugin.'}
 if(Test-Path -LiteralPath "$staged/BepInEx/patchers"){throw 'Loader staged a diagnostic patcher.'}
 if((Get-FileHash -LiteralPath "$staged/BepInEx/core/runtime.dll").Hash -ne (Get-FileHash -LiteralPath "$bundle/BepInEx/core/runtime.dll").Hash){throw 'Loader runtime changed while staging.'}
@@ -54,6 +57,9 @@ $otherModHash=(Get-FileHash -LiteralPath "$isolatedGame/BepInEx/plugins/UserMod/
 Install-Loader $isolatedGame $staged $isolatedReceipt | Out-Null
 if(Test-Path -LiteralPath "$isolatedGame/BepInEx/plugins/Example/smoke.dll"){throw 'Loader restoration installed a bundled diagnostic plugin.'}
 Uninstall-Loader $isolatedReceipt | Out-Null
+Set-Content -LiteralPath "$isolatedGame/winhttp.dll" -Value 'independently owned proxy'
+$rejected=$false;try{Install-Loader $isolatedGame $staged (Join-Path $root 'proxy-conflict.json')|Out-Null}catch{$rejected=$true}
+if(-not $rejected -or (Get-Content -LiteralPath "$isolatedGame/winhttp.dll") -ne 'independently owned proxy' -or (Test-Path -LiteralPath "$isolatedGame/version.dll")){throw 'Conflicting proxy was not preserved/refused before installation.'}
 if((Get-FileHash -LiteralPath "$isolatedGame/BepInEx/plugins/UserMod/existing.dll").Hash -ne $otherModHash){throw 'Loader restoration/removal changed an independently owned mod.'}
 $rejected=$false;try{Copy-LoaderRuntimePayload $bundle (Join-Path $bundle 'nested') | Out-Null}catch{$rejected=$true}
 if(-not $rejected){throw 'Loader staging accepted recursive source/destination containment.'}

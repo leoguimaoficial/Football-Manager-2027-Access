@@ -5,6 +5,19 @@ issues and the limits of the existing checks. For installation and normal use,
 see the [player guide](user/FM27Access-UserGuide.html). Historical runtime and
 package references below describe their own test sessions, not separate downloads.
 
+## Steam startup proxy correction — F206
+
+Steam build26577676 uses the same Unity6000.3.18f1/metadata39 family as Xbox.
+The original 0.1.0 WinHTTP proxy path stalls before the menu, even when Doorstop
+is disabled. The byte-identical upstream-supported `version.dll` proxy allows
+actual production startup and MainMenu/What's New/Preferences/load-dialog
+open/close/focus checks with four clean axe audits. Installer1.0.1 repairs its own
+unchanged old proxy at the same mod version, preserving shared/modified files.
+See [native compatibility](NATIVE_COMPATIBILITY.md) and session progress for the
+exact installed candidate and publication status. This is targeted Steam startup/
+menu evidence; Xbox with the alternate proxy, Epic and a full Steam career are
+not inferred from it. Historical F047/F115 and other unresolved limits remain.
+
 ## Internal automatic setup titles corrected — F205
 
 Early native panel arrivals spoke raw AddNationsModal/DatabaseSelectionCard IDs

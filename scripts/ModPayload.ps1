@@ -1,8 +1,9 @@
+Import-Module "$PSScriptRoot/Loader.psm1" -Force
 function New-ModPayload {
     param([Parameter(Mandatory)][string]$Destination,
           [Parameter(Mandatory)]$NativeReport,
           [ValidateSet('Debug','Release')][string]$Configuration='Release',
-          [switch]$DeveloperTools,[switch]$ReferenceBuild)
+          [switch]$DeveloperTools,[switch]$ReferenceBuild,[switch]$DistributionProxy)
     if($DeveloperTools -and $Configuration -ne 'Debug'){throw 'Developer payload requires explicit Debug configuration.'}
     if(Test-Path -LiteralPath $Destination){throw 'Payload destination already exists; preserved.'}
     $plugin=Join-Path $Destination 'BepInEx/plugins/FM27Access'
@@ -10,10 +11,11 @@ function New-ModPayload {
     foreach($name in 'FM27Access.Host','FM27Access.Plugin','FM27Access.Navigation','FM27Access.Speech'){
         Copy-Item -LiteralPath (Join-Path $ProjectRoot "FM27Access.Plugin/bin/$Configuration/net6.0/$name.dll") -Destination $plugin
     }
-    $loader=@('winhttp.dll')+@(Get-ChildItem -LiteralPath (Join-Path $NativeReport.Path 'BepInEx/core') -File -Filter '*.dll' | ForEach-Object {[IO.Path]::GetRelativePath($NativeReport.Path,$_.FullName)})
+    $proxy=Get-LoaderProxy $NativeReport.Path
+    $loader=@($proxy)+@(Get-ChildItem -LiteralPath (Join-Path $NativeReport.Path 'BepInEx/core') -File -Filter '*.dll' | ForEach-Object {[IO.Path]::GetRelativePath($NativeReport.Path,$_.FullName)})
     @{Schema=2;Version=$NativeReport.GameVersion;Assembly=$NativeReport.AssemblyHash;Metadata=$NativeReport.MetadataHash;
         UnityFamily='6000.3.';MetadataVersion=39;ApiFile='required-api.json';
-        LoaderFiles=@($loader | ForEach-Object {@{Relative=$_;Sha256=(Get-FileHash -LiteralPath (Join-Path $NativeReport.Path $_)).Hash}})} | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath "$plugin/native-build.json" -Encoding utf8
+        LoaderFiles=@($loader | ForEach-Object {@{Relative=$(if($DistributionProxy -and $_ -eq $proxy){'version.dll'}else{$_});Sha256=(Get-FileHash -LiteralPath (Join-Path $NativeReport.Path $_)).Hash}})} | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath "$plugin/native-build.json" -Encoding utf8
     $contractCommand=if($ReferenceBuild){'api-contract-from-references'}else{'api-contract'}
     Invoke-DotNet -Arguments @((Join-Path $ProjectRoot 'tools/game-inspect/bin/Release/net10.0/game-inspect.dll'),$contractCommand,$plugin,$NativeReport.Path,"$plugin/required-api.json") | Out-Host
     if($DeveloperTools){

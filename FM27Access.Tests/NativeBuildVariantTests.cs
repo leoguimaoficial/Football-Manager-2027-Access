@@ -39,6 +39,20 @@ public sealed class NativeBuildVariantTests : IDisposable
     }
     private void Save()=>File.WriteAllText(profile,JsonSerializer.Serialize(deployment));
 
+    [Theory]
+    [InlineData("version.dll", "winhttp.dll")]
+    [InlineData("winhttp.dll", "version.dll")]
+    public void ByteIdenticalSupportedProxyPassesButASecondProxyIsRefused(string proxy, string other)
+    {
+        Setup(true); File.WriteAllText(Path.Combine(game, proxy), "synthetic Doorstop proxy");
+        deployment.LoaderFiles = deployment.LoaderFiles.Append(new NativeBuildGuard.FileFingerprint
+            { Relative = proxy, Sha256 = Hash(Path.Combine(game, proxy)) }).ToArray(); Save();
+        Assert.True(NativeBuildGuard.Validate(game, profile).Supported);
+        File.Copy(Path.Combine(game, proxy), Path.Combine(game, other));
+        var result = NativeBuildGuard.Validate(game, profile);
+        Assert.False(result.Supported); Assert.Contains("Conflicting Doorstop proxies", result.Reason);
+    }
+
     [Fact]
     public void NullLoaderEntryReturnsAProfileErrorInsteadOfCrashingStartup()
     {

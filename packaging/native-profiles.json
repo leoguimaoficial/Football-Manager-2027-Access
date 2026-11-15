@@ -10,5 +10,12 @@
     "Assembly": "3B393291208F1C06135100EA644911FD8CE9CCDDC93B9248A7F4C7A560B1F3BE",
     "Metadata": "118705D69DD8C981DDEEC4ED815AAB212E676A07AFC6F819D48511E833078BD1",
     "Evidence": "Native metadata/API inspected; generated-interop build and normal cold startup passed; targeted companion/native checks and two complete matches on one EventSource passed with zero unexpected transport failures; full-career and Steam live qualification pending (see docs/TESTING.md)"
+  },
+  {
+    "Store": "Steam",
+    "Version": "26577676",
+    "Assembly": "1152DF80DE0AE35BFF4945CB9196C58E5EC5B53DE2138A006C0597522B558303",
+    "Metadata": "774DA150861300AA49FFC462F40B7798A82DA1AA664B647BABF32FAAB649D0ED",
+    "Evidence": "Native API and actual Steam startup/main-menu commands passed with the byte-identical upstream-supported version.dll Doorstop proxy; see docs/NATIVE_COMPATIBILITY.md and current session progress for exact candidate and career-coverage limits."
   }
 ]

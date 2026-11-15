@@ -1,3 +1,16 @@
+## Steam MainMenu and startup — F206
+
+Steam build26577676/Unity6000.3.18f1/metadata39: original Release412b1c64 through
+the supported byte-identical version.dll proxy reaches MainMenu. Actual What's
+New, Preferences and load-dialog open/close, exact origin focus, full inherited
+labels/descriptions and four clean WCAG-tagged axe checks pass through the sole
+production-document client. Corrected receipt-installed candidatef5e6cb73 repeats
+the cold startup and same regression. No save/career is loaded, no preferences
+are committed and no manual NVDA evidence is claimed. Shared/modified-proxy
+refusal and transaction rollback are fixture coverage; actual same-version repair
+has all259 receipt hashes and native preflight checked. See session progress for
+the initial failed close-label expectation and remaining publication boundary.
+
 ## Pre-career country/custom-database arrival titles — F205
 
 853533d4/game2676: AddNationsModal opens/cancels three times with silent entry,

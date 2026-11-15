@@ -57,7 +57,8 @@ public static class Distribution
         using var stream = File.OpenRead(path); return Convert.ToHexString(SHA256.HashData(stream));
     }
     public static bool IsHash(string? value) => value is not null && Regex.IsMatch(value, "^[0-9a-fA-F]{64}$");
-    public static bool IsLoaderPath(string path) => path is "winhttp.dll" or "doorstop_config.ini" or ".doorstop_version"
+    public static bool IsLoaderProxy(string path) => path is "winhttp.dll" or "version.dll";
+    public static bool IsLoaderPath(string path) => IsLoaderProxy(path) || path is "doorstop_config.ini" or ".doorstop_version"
         || path.StartsWith("BepInEx/core/", StringComparison.Ordinal) || path.StartsWith("dotnet/", StringComparison.Ordinal);
     public static bool IsModPath(string path) => path.StartsWith(PluginRoot, StringComparison.Ordinal)
         && !Regex.IsMatch(path, @"\.(cfg|pdb|mdb|fm|fmf|dmp|log|tmp|bak)$|/(bookmarks\.json|mcs\.dll|GameAssembly\.dll|UnityPlayer\.dll|Assembly-CSharp\.dll|global-metadata\.dat)$", RegexOptions.IgnoreCase);
@@ -111,7 +112,8 @@ public static class Distribution
         foreach (string required in new[] { "FM27Access.Host.dll", "FM27Access.Plugin.dll", "FM27Access.Speech.dll", "FM27Access.Navigation.dll",
             "native-build.json", "required-api.json", "LICENSE", "THIRD-PARTY-LICENSES.txt", "companion/FM27AccessCompanion.exe", "prism/native/win-x64/prism.dll" })
             if (!paths.Contains(PluginRoot + required)) throw new InvalidDataException("Incomplete mod package: " + required);
-        foreach (string required in new[] { "winhttp.dll", "doorstop_config.ini", ".doorstop_version", "BepInEx/core/BepInEx.Unity.IL2CPP.dll", "BepInEx/config/BepInEx.cfg" })
+        if (paths.Count(IsLoaderProxy) != 1) throw new InvalidDataException("A package must contain exactly one supported Doorstop proxy.");
+        foreach (string required in new[] { "doorstop_config.ini", ".doorstop_version", "BepInEx/core/BepInEx.Unity.IL2CPP.dll", "BepInEx/config/BepInEx.cfg" })
             if (!paths.Contains(required)) throw new InvalidDataException("Incomplete loader package.");
         foreach (string path in paths)
             for (var parent = path.LastIndexOf('/'); parent > 0; parent = path.LastIndexOf('/', parent - 1))

@@ -24,7 +24,7 @@ if($sums.Count -ne $required.Count -or @(Get-ChildItem -LiteralPath $root -Recur
 $m=Get-Content -LiteralPath "$root/FM27Access-Manifest.json" -Raw | ConvertFrom-Json
 if($m.schema -ne 1 -or $m.version -ne $ExpectedVersion -or $m.package -ne "FM27Access-v$ExpectedVersion.zip" -or
    $m.packageSha256 -ne $sums[$m.package] -or $m.packageSize -ne (Get-Item -LiteralPath (Join-Path $root $m.package)).Length -or
-   $m.bepInExVersion -ne '6.0.0-be.793+dbc82f0' -or $m.files.Count -eq 0){throw 'Invalid distribution manifest.'}
+   $m.bepInExVersion -ne '6.0.0-be.793+dbc82f0' -or $m.minimumInstallerVersion -ne $info.installerVersion -or $m.files.Count -eq 0){throw 'Invalid distribution manifest.'}
 $expected=[Collections.Generic.Dictionary[string,object]]::new([StringComparer]::OrdinalIgnoreCase)
 foreach($file in $m.files){
     $p=$file.path
@@ -33,7 +33,7 @@ foreach($file in $m.files){
     if($file.kind -eq 'mod'){
         if(!$p.StartsWith('BepInEx/plugins/FM27Access/',[StringComparison]::Ordinal) -or $p -match '\.(pdb|mdb|cfg)$|/(mcs\.dll|bookmarks\.json)$'){throw 'Protected or nonproduction mod payload.'}
     } elseif($file.kind -eq 'config') {if($p -ne 'BepInEx/config/BepInEx.cfg'){throw 'Unexpected configuration payload.'}}
-    elseif($file.kind -ne 'loader' -or $p -notmatch '^(winhttp\.dll|doorstop_config\.ini|\.doorstop_version|BepInEx/core/.+|dotnet/.+)$'){throw 'Unexpected loader payload.'}
+    elseif($file.kind -ne 'loader' -or $p -notmatch '^(version\.dll|doorstop_config\.ini|\.doorstop_version|BepInEx/core/.+|dotnet/.+)$'){throw 'Unexpected loader payload.'}
     $expected.Add($p,$file)
 }
 $zip=[IO.Compression.ZipFile]::OpenRead((Join-Path $root $m.package))
@@ -58,7 +58,8 @@ try {
 foreach($name in 'FM27Access.Host.dll','FM27Access.Plugin.dll','FM27Access.Navigation.dll','FM27Access.Speech.dll','native-build.json','required-api.json','LICENSE','THIRD-PARTY-LICENSES.txt','companion/FM27AccessCompanion.exe','prism/native/win-x64/prism.dll'){
     if(!$expected.ContainsKey('BepInEx/plugins/FM27Access/'+$name)){throw "Incomplete mod: $name"}
 }
-foreach($name in 'winhttp.dll','doorstop_config.ini','.doorstop_version','BepInEx/core/BepInEx.Unity.IL2CPP.dll','BepInEx/config/BepInEx.cfg'){if(!$expected.ContainsKey($name)){throw "Missing loader: $name"}}
+foreach($name in 'version.dll','doorstop_config.ini','.doorstop_version','BepInEx/core/BepInEx.Unity.IL2CPP.dll','BepInEx/config/BepInEx.cfg'){if(!$expected.ContainsKey($name)){throw "Missing loader: $name"}}
+if($expected.ContainsKey('winhttp.dll')){throw 'Distribution must not install conflicting WinHTTP and version proxies.'}
 $installer=Get-Content -LiteralPath "$root/FM27Access-Installer.json" -Raw | ConvertFrom-Json
 if($installer.schema -ne 1 -or $installer.version -ne $info.installerVersion -or $installer.sha256 -ne $sums['FM27Access-Installer.exe'] -or
    $installer.size -ne (Get-Item -LiteralPath "$root/FM27Access-Installer.exe").Length -or

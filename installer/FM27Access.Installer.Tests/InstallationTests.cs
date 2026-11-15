@@ -43,6 +43,73 @@ public sealed class Fixture : IDisposable
 
 public sealed class InstallationTests
 {
+    private static DistributionManifest RenameProxy(Fixture f, string from = "winhttp.dll", string to = "version.dll")
+    {
+        File.Move(Distribution.Target(f.Staged, from), Distribution.Target(f.Staged, to));
+        return f.Build("0.1.0");
+    }
+
+    [Fact] public async Task SameVersionRepairMigratesTheOwnedProxyWithoutChangingItsBytes()
+    {
+        using var f = new Fixture(); var s = f.Service(); var state = new InstallationStateService();
+        await s.InstallAsync(f.Game, f.Staged, f.Manifest, null, default);
+        string hash = Distribution.Hash(Distribution.Target(f.Game, "winhttp.dll"));
+        await s.InstallAsync(f.Game, f.Staged, RenameProxy(f), null, default);
+        var receipt = state.Read(f.Game)!;
+        Assert.Equal("0.1.0", receipt.Version); Assert.Empty(state.Verify(f.Game, receipt));
+        Assert.DoesNotContain(receipt.Files, file => file.Path == "winhttp.dll");
+        Assert.True(receipt.Files.Single(file => file.Path == "version.dll").Owned);
+        Assert.False(File.Exists(Distribution.Target(f.Game, "winhttp.dll")));
+        Assert.Equal(hash, Distribution.Hash(Distribution.Target(f.Game, "version.dll")));
+        Assert.Equal("private save", File.ReadAllText(Distribution.Target(f.Game, "saves/career.fm")));
+        Assert.Equal("other mod", File.ReadAllText(Distribution.Target(f.Game, "BepInEx/plugins/UserMod/mod.dll")));
+        await s.UninstallAsync(f.Game, null, default);
+        Assert.True(File.Exists(Distribution.Target(f.Game, "version.dll")));
+    }
+
+    [Fact] public async Task FailedProxyMigrationRestoresTheOldProxyAndExactReceipt()
+    {
+        using var f = new Fixture(); await f.Service().InstallAsync(f.Game, f.Staged, f.Manifest, null, default);
+        var receipt = File.ReadAllBytes(InstallationStateService.StatePath(f.Game, "installation.json"));
+        string hash = Distribution.Hash(Distribution.Target(f.Game, "winhttp.dll"));
+        var next = RenameProxy(f);
+        await Assert.ThrowsAsync<IOException>(() => f.Service(i => { if (i == 1) throw new IOException("proxy migration failure"); })
+            .InstallAsync(f.Game, f.Staged, next, null, default));
+        Assert.Equal(hash, Distribution.Hash(Distribution.Target(f.Game, "winhttp.dll")));
+        Assert.False(File.Exists(Distribution.Target(f.Game, "version.dll")));
+        Assert.Equal(receipt, File.ReadAllBytes(InstallationStateService.StatePath(f.Game, "installation.json")));
+    }
+
+    [Theory]
+    [InlineData("shared")]
+    [InlineData("modified")]
+    [InlineData("different")]
+    public async Task ProxyMigrationRefusesSharedModifiedOrDifferentLoaderBytes(string scenario)
+    {
+        using var f = new Fixture();
+        if (scenario == "shared") File.Copy(Distribution.Target(f.Staged, "winhttp.dll"), Distribution.Target(f.Game, "winhttp.dll"));
+        await f.Service().InstallAsync(f.Game, f.Staged, f.Manifest, null, default);
+        var next = RenameProxy(f);
+        if (scenario == "modified") Fixture.Write(f.Game, "winhttp.dll", "external modification");
+        if (scenario == "different") { Fixture.Write(f.Staged, "version.dll", "a different loader build"); next = f.Build("0.1.0"); }
+        string hash = Distribution.Hash(Distribution.Target(f.Game, "winhttp.dll"));
+        var error = await Assert.ThrowsAsync<IOException>(() => f.Service().InstallAsync(f.Game, f.Staged, next, null, default));
+        Assert.Contains("Conflicting loader proxy preserved", error.Message);
+        Assert.Equal(hash, Distribution.Hash(Distribution.Target(f.Game, "winhttp.dll")));
+        Assert.False(File.Exists(Distribution.Target(f.Game, "version.dll")));
+    }
+
+    [Fact] public void DistributionRejectsTwoProxiesOrNoProxy()
+    {
+        using var f = new Fixture();
+        File.Copy(Distribution.Target(f.Staged, "winhttp.dll"), Distribution.Target(f.Staged, "version.dll"));
+        Assert.Throws<InvalidDataException>(() => Distribution.Validate(f.Build("0.1.0")));
+        File.Delete(Distribution.Target(f.Staged, "winhttp.dll"));
+        Distribution.Validate(f.Build("0.1.0"));
+        File.Delete(Distribution.Target(f.Staged, "version.dll"));
+        Assert.Throws<InvalidDataException>(() => Distribution.Validate(f.Build("0.1.0")));
+    }
+
     [Fact] public async Task InstallUpdateRepairUninstallPreservePersonalFilesAndSharedLoader()
     {
         using var f = new Fixture(); var s = f.Service(); var state = new InstallationStateService();

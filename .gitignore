@@ -54,6 +54,7 @@ Prism/include/
 # Game binaries and generated interop must never be distributed.
 BepInEx/
 winhttp.dll
+version.dll
 doorstop_config.ini
 .doorstop_version
 dotnet/

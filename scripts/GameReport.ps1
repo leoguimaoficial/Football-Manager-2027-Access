@@ -10,7 +10,8 @@ function Get-ModDeploymentProfile {
         $Report.LoaderVersion -like '6.0.0-be.793*'){
         foreach($profile in $profiles){
             if($Report.AssemblyHash -eq $profile.Assembly -and $Report.MetadataHash -eq $profile.Metadata){
-                if($Report.Store -ne 'Xbox' -or $Report.GameVersion -ne $profile.Version){
+                $referenceStore=if($profile.Store){$profile.Store}else{'Xbox'}
+                if($Report.Store -ne $referenceStore -or $Report.GameVersion -ne $profile.Version){
                     return @{Version=$Report.GameVersion;Assembly=$Report.AssemblyHash;Metadata=$Report.MetadataHash;Evidence='Reference native pair; different store/build label, live qualification pending. Actual API checks still required.'}
                 }
                 return $profile
