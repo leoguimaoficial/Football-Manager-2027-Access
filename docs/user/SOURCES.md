@@ -1,12 +1,24 @@
 # User guide editorial and evidence notes
 
-The core guide keeps fourteen sections in all twenty installer languages.
-The expanded beginner material is maintained in English (the editorial base),
-Brazilian Portuguese and European Portuguese. The other seventeen translations
-retain their shorter chapters, with corrected installation destinations,
-current store-support limits, navigation and installer-update instructions.
-Native-speaker review remains needed. Do not describe the editions as equally
-detailed or claim manual screen-reader qualification from browser tests.
+The complete guide keeps the same fourteen sections and 257 content units in
+all twenty installer languages. English is the canonical editorial source;
+every paragraph, heading, list item, table cell, shortcut and reference must
+have its counterpart in every translation. Never publish abridged editions or
+add a chapter only to selected languages. Regional wording can differ while
+preserving the complete meaning.
+
+The seventeen previously shortened editions were fully translated with machine
+translation assistance, protected technical terms and targeted corrections.
+The already complete Portuguese editions were retained. Structural checks do
+not establish linguistic perfection: native-speaker review remains useful, and
+browser tests do not establish manual screen-reader qualification.
+
+`translations.json` pins each locale to the canonical source and its own text
+hash. The generator refuses stale revisions, missing content units, changed
+links or altered keyboard notation. Update all twenty locales and their revision
+records together whenever the canonical text changes. Do not regenerate stamps
+to conceal an untranslated source edit. The existing regression suite covers
+both complete editions and deliberate omission/stale-source failures.
 
 ## FM26 reference
 

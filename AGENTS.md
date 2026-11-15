@@ -1,5 +1,16 @@
 # FM27 Access maintenance instructions
 
+## Complete language parity requirement
+
+The latest user correction requires the complete manual in all twenty languages:
+the same paragraphs, sections, steps, references and shortcuts, fully translated.
+Never provide shorter editions or add beginner material only to selected locales.
+English is canonical; docs/user/guide-contract.cjs and translations.json enforce
+content-unit, source revision, link and shortcut parity during HTML generation.
+Update every locale with a source change; do not refresh revision stamps to hide
+missing translation. Native-speaker qualification remains distinct from these
+structural checks. The earlier F207 partial-language scope below is superseded.
+
 ## Installer and guide follow-up — F207
 
 Installer1.0.2 and the improved manual are public from d7d2e9a/hosted43751083467;

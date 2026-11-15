@@ -102,6 +102,10 @@ Italian, Dutch, Danish, Swedish, Norwegian Bokmål, Polish, Turkish, Russian,
 Greek, Japanese, Korean, Simplified Chinese and Arabic. OS culture and saved
 preference select the initial language; unsupported languages fall back to English.
 Arabic uses RTL. Resource-key completeness and offline HTML behavior are tested.
+All twenty manual editions contain the same complete content. The build checks
+each paragraph, heading, list item, table cell, source link and shortcut against
+the canonical English structure and pinned translation revisions; it refuses
+abridged or stale editions. See [the editorial contract](../docs/user/SOURCES.md).
 
 The language inventory includes the native regional aliases already evidenced
 by FM27 and the public FM26 language baseline, plus Brazilian Portuguese. A

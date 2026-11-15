@@ -8,6 +8,7 @@ const inline = value => escape(value)
   .replace(/\[([^\]\n]+)\]\((https:\/\/[^\s()]+)\)/g,'<a href="$2">$1</a>')
   .replace(/`([^`]+)`/g,'<kbd>$1</kbd>');
 const chrome = JSON.parse(fs.readFileSync(path.join(__dirname,'chrome.json'),'utf8'));
+const {validateCatalog}=require('./guide-contract.cjs');
 function renderBody(value, table) {
   if(table){const rows=value.trim().split('\n').map(line=>line.split('|'));const [head,...body]=rows;
     return `<div class="scroll" tabindex="0" role="region" aria-label="${escape(table)}"><table><caption>${escape(table)}</caption><thead><tr>${head.map(h=>`<th scope="col">${inline(h)}</th>`).join('')}</tr></thead><tbody>${body.map(([key,...description])=>`<tr><th scope="row">${inline(key)}</th><td>${inline(description.join('|'))}</td></tr>`).join('')}</tbody></table></div>`;}
@@ -27,6 +28,7 @@ const languages = fs.readdirSync(resources).filter(n=>n.endsWith('.json')).map(n
   if (!chrome[code] || chrome[code].length !== 3) throw Error(`Incomplete guide navigation: ${code}`);
   return {code,ui,guide};
 }).sort((a,b)=>a.code==='en'?-1:b.code==='en'?1:a.code.localeCompare(b.code));
+validateCatalog(languages,JSON.parse(fs.readFileSync(path.join(__dirname,'translations.json'),'utf8')));
 const sections = languages.map(({code,ui,guide})=>`<article data-language="${code}" lang="${code}"${code==='ar'?' dir="rtl"':''}${code==='en'?'':' hidden'}>
 <header class="hero"><p class="eyebrow">FOOTBALL MANAGER · ACCESS</p><h1>FM27 Access — ${escape(ui.guide)}</h1><p class="edition">${escape(guide.intro.split('|')[0])}</p></header>
 <nav class="contents" aria-label="${escape(chrome[code][1])}"><p class="contents-title">${escape(chrome[code][1])}</p><ol>${ids.map(id=>`<li><a href="#${id}">${escape(guide[id].split('|')[0])}</a></li>`).join('')}</ol></nav>

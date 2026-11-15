@@ -1,3 +1,20 @@
+## Complete manual translations and installer 1.0.3
+
+The maintainer corrected the earlier partial-language scope: all twenty editions
+must contain the same full manual. Each now has14 sections and257 source content
+units, including every heading, paragraph, list item, table cell and reference.
+The existing complete Portuguese texts were retained; seventeen shorter editions
+were expanded with translation assistance, protected names/keys/paths and targeted
+terminology/markup corrections. Native-speaker certification is not claimed.
+
+The canonical source and all translated texts have pinned revision hashes. The
+generator refuses stale source revisions, missing content, altered links and
+changed shortcut identities. Eight distribution/guide cases cover the complete
+catalog and deliberate omission/stale-source failures. All20 browser editions
+pass keyboard, reflow, theme/print, no-JS and axe checks;59 installer cases pass.
+Installer1.0.3 bundles the complete offline HTML; no game/mod code changes.
+Public/hosted evidence follows in distribution/session progress once available.
+
 ## Installer 1.0.2 and beginner manual
 
 The local production installer builds successfully and 59 installer cases pass.

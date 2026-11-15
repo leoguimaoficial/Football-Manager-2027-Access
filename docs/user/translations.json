@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+  "locales": {
+    "ar": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "f15e693190e2ced552a45dcd2f8b85f557ef21e190942ca330d15ec3784de62e"
+    },
+    "da": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "d0423abbbeef945e944eba771d26d11bec0a89dd93e765fe613727d9085556f9"
+    },
+    "de": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "aed4d62c3e57a6e7837b0fe11b010d6d44e980ac679118d836d3463c131d3560"
+    },
+    "el": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "41f7ad2bb78f4af877e1d139a8ab571f46abd868e8d2f84735e46f213818902d"
+    },
+    "en": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941"
+    },
+    "es-419": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "6616b9caabcf5024e0d13f34a1c62ff7dbe873c598222357e8c5663b882652bc"
+    },
+    "es": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "42f71f710ddfe582d92f638fa9b7fd17fb4372d6bb0cc2a700a57595a487792a"
+    },
+    "fr": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "a4be64743f42924630b77915f4fbd6d30fc0125420e32083ce78d58c1da0676e"
+    },
+    "it": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "f60243684f134318ef30213bf3aab18fa9cd8d893453c7aab47c5cee6dcc4d6f"
+    },
+    "ja": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "5fe043e97386f024cd3e65f26da7fa299b3b3186eead20bdc5685611ccd0be78"
+    },
+    "ko": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "e9d273b31632c5753b17baab2fdd7d03180b80613baa4361fd3f9c66fb0e900a"
+    },
+    "nb": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "75a83331a1650d2357a04f8663431e89ef013af8b156635485e5e5f00425f751"
+    },
+    "nl": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "0cdc734880afffba12e634adbcd58de85b471285692924599e53998af6949e6c"
+    },
+    "pl": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "4746533eb2d8c30e3953f22c325225c0b989958e33145598f991309754051a55"
+    },
+    "pt-BR": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "215672fe114e42c63a454b396db1aa5f7549eef52e0d025437ff6c337cfea660"
+    },
+    "pt-PT": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "21280201865e640a830ba750d98c894134d902cc0d6e68ed0f6e5749446060e4"
+    },
+    "ru": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "15aa13ee040c7e343db38ced11b4dca66e389cfd0055423466f45055743efac8"
+    },
+    "sv": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "94d86430544648ebae6c1560ce3a20e8fe71ed26768548cf9312bec08d5ed2e2"
+    },
+    "tr": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "b841731a1a4bceea9e55506eaf52c59ec428f15752ebc91b79adbcb9203b8de6"
+    },
+    "zh": {
+      "sourceHash": "f1e5a93e21070a4eb33b331bc34542ceb2be6feff1bc748efb18fb7f803e5941",
+      "translationHash": "9c2484dd27ed9b4419942ea074ef422194729298cdd176c4dccea1d5811c2781"
+    }
+  }
+}

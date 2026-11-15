@@ -8,6 +8,14 @@ Version 0.1.0 is the first public release.
 
 ## [Unreleased]
 
+### User guide translations
+
+- All twenty languages now contain the complete beginner manual, with the same
+  paragraphs, steps, shortcuts and references. Previously shorter translations
+  have been expanded to match the English and Portuguese editions.
+- The guide build refuses missing content or translations based on an older
+  source revision. Installer 1.0.3 includes the complete offline manual.
+
 ## [0.1.0] - 2026-11-15
 
 The entries below summarize implemented work supported by the source and
