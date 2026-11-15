@@ -1,0 +1,119 @@
+name: Publish selected verified build
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: Successful Validate and prepare run ID
+        required: true
+        type: string
+      commit:
+        description: Exact 40-character commit SHA of that run
+        required: true
+        type: string
+      version:
+        description: Mod version already built (for example 0.1.0)
+        required: true
+        type: string
+      prerelease:
+        description: Publish as a prerelease
+        type: boolean
+        default: false
+      notes:
+        description: Release notes (English; describe qualification limits)
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: fm27-release-publication
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate selection, trusted workflow and approval configuration
+        uses: actions/github-script@v7
+        env:
+          SELECTED_RUN: ${{ inputs.run_id }}
+          SELECTED_SHA: ${{ inputs.commit }}
+          MOD_VERSION: ${{ inputs.version }}
+          IS_PRERELEASE: ${{ inputs.prerelease }}
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+            const runId = process.env.SELECTED_RUN;
+            const sha = process.env.SELECTED_SHA;
+            const version = process.env.MOD_VERSION;
+            if (!/^[0-9]+$/.test(runId) || !/^[0-9a-f]{40}$/.test(sha) || !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[0-9A-Za-z.-]+)?$/.test(version)) throw new Error('Invalid build identity');
+            if (version.includes('-') && process.env.IS_PRERELEASE !== 'true') throw new Error('A prerelease version cannot be published as stable');
+            const run = (await github.rest.actions.getWorkflowRun({owner,repo,run_id:Number(runId)})).data;
+            const workflow = (await github.rest.actions.getWorkflow({owner,repo,workflow_id:run.workflow_id})).data;
+            if (run.conclusion !== 'success' || run.head_sha !== sha || run.head_branch !== 'main' || !['push','workflow_dispatch'].includes(run.event) || workflow.path !== '.github/workflows/ci.yml') throw new Error('Selected run is not an eligible successful main build');
+            const env = (await github.request('GET /repos/{owner}/{repo}/environments/{environment_name}', {owner,repo,environment_name:'fm27-release'})).data;
+            if (!env.protection_rules?.some(r => r.type === 'required_reviewers' && r.reviewers?.length)) throw new Error('Configure required reviewers on fm27-release before publication');
+            const artifacts = (await github.rest.actions.listWorkflowRunArtifacts({owner,repo,run_id:Number(runId),per_page:100})).data.artifacts;
+            const artifact = artifacts.find(a => a.name === `distribution-${runId}-${sha}` && !a.expired);
+            if (!artifact) throw new Error('Distribution artifact absent or expired; rerun validation at the original commit');
+            for (const endpoint of ['GET /repos/{owner}/{repo}/git/ref/{ref}','GET /repos/{owner}/{repo}/releases/tags/{tag}']) {
+              try { await github.request(endpoint,{owner,repo,ref:`tags/v${version}`,tag:`v${version}`}); throw new Error('Version/tag already exists; published versions cannot be overwritten'); }
+              catch (e) { if (e.status !== 404) throw e; }
+            }
+      - uses: actions/download-artifact@v4
+        with:
+          name: distribution-${{ inputs.run_id }}-${{ inputs.commit }}
+          path: selected-build
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Verify original assets before approval
+        shell: pwsh
+        env:
+          SELECTED_RUN: ${{ inputs.run_id }}
+          SELECTED_SHA: ${{ inputs.commit }}
+          MOD_VERSION: ${{ inputs.version }}
+        run: ./scripts/verify-distribution.ps1 -Path selected-build -ExpectedCommit $env:SELECTED_SHA -ExpectedRunId $env:SELECTED_RUN -ExpectedVersion $env:MOD_VERSION
+  publish:
+    needs: verify
+    environment: fm27-release
+    runs-on: windows-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: distribution-${{ inputs.run_id }}-${{ inputs.commit }}
+          path: selected-build
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ github.token }}
+      - name: Recheck unchanged original artifacts
+        shell: pwsh
+        env:
+          SELECTED_RUN: ${{ inputs.run_id }}
+          SELECTED_SHA: ${{ inputs.commit }}
+          MOD_VERSION: ${{ inputs.version }}
+        run: ./scripts/verify-distribution.ps1 -Path selected-build -ExpectedCommit $env:SELECTED_SHA -ExpectedRunId $env:SELECTED_RUN -ExpectedVersion $env:MOD_VERSION
+      - name: Create draft, attach original assets, then publish
+        uses: actions/github-script@v7
+        env:
+          SELECTED_SHA: ${{ inputs.commit }}
+          MOD_VERSION: ${{ inputs.version }}
+          IS_PRERELEASE: ${{ inputs.prerelease }}
+          RELEASE_NOTES: ${{ inputs.notes }}
+        with:
+          script: |
+            const fs = require('node:fs'), path = require('node:path');
+            const {owner,repo} = context.repo;
+            const tag = `v${process.env.MOD_VERSION}`;
+            // createRef rejects an existing tag: never reuse/move a published version.
+            await github.rest.git.createRef({owner,repo,ref:`refs/tags/${tag}`,sha:process.env.SELECTED_SHA});
+            const release = (await github.rest.repos.createRelease({owner,repo,tag_name:tag,target_commitish:process.env.SELECTED_SHA,name:`FM27 Access ${tag}`,body:process.env.RELEASE_NOTES,draft:true,prerelease:process.env.IS_PRERELEASE==='true'})).data;
+            for (const name of fs.readdirSync('selected-build').sort()) {
+              const file = path.join('selected-build',name);
+              const data = fs.readFileSync(file);
+              await github.rest.repos.uploadReleaseAsset({owner,repo,release_id:release.id,name,data,headers:{'content-type':'application/octet-stream','content-length':data.length}});
+            }
+            await github.rest.repos.updateRelease({owner,repo,release_id:release.id,draft:false,make_latest:process.env.IS_PRERELEASE==='true'?'false':'true'});

@@ -1,0 +1,24 @@
+name: Validate independently updated user guide
+on:
+  push:
+    branches: [main]
+    paths: ['docs/user/**', 'tests/distribution/**', '.github/workflows/documentation.yml']
+  pull_request:
+    paths: ['docs/user/**', 'tests/distribution/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  guide:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/distribution/*.test.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: user-guide-${{ github.sha }}
+          path: docs/user/FM27Access-UserGuide.html
+          retention-days: 90

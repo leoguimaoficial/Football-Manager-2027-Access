@@ -15,6 +15,19 @@ establish complete career, match or screen reader compatibility. See the
 
 ### Added
 
+- Universal native Windows installer with independent engine versioning, public
+  GitHub version discovery, per-game receipts, package integrity checks, safe
+  cancellation/rollback, repair, removal and a separate installer update path.
+- Complete distribution packaging with the pinned IL2CPP x64 BepInEx runtime,
+  production console-off defaults, manifests, checksums and corresponding source.
+- Twenty installer language resource sets and a self-contained multilingual HTML
+  guide with offline fallback and independent documentation updates.
+- Player-oriented setup and gameplay instructions adapted from the public FM26
+  manual: screen-reader setup, Enter-to-confirm lists, searchable navigation,
+  table columns, bookmarks, career setup and separate match shortcut tables.
+- GitHub validation and selected-build publication workflows, with run/commit
+  verification and a required-reviewer environment gate before release publication.
+
 - Initial FM27 adaptation of FM26 Access 0.2.16, retaining its accessible Companion
   Web interface, speech pipeline, keyboard navigation and table paging.
 - Accessible presentation of FM27's Portal, including messages, agenda,

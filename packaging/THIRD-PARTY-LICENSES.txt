@@ -13,6 +13,10 @@ Upstream: https://github.com/BepInEx/BepInEx
 Supplied license: licenses/BepInEx-LICENSE.txt (LGPL-2.1).
 The loader is downloaded separately, never copied from the FM26 installation.
 Its runtime/native dependencies retain their supplied licenses.
+The pristine loader includes .NET 6.0.7. Its MIT license is retained in
+licenses/dotnet-LICENSE.txt; the matching runtime's third-party notices are
+licenses/dotnet-6.0.7-THIRD-PARTY-NOTICES.txt, obtained verbatim from
+https://github.com/dotnet/runtime/blob/v6.0.7/THIRD-PARTY-NOTICES.TXT.
 
 Prism TTS
 Source: https://github.com/ethindp/prism
@@ -39,6 +43,8 @@ win-x64 so the player does not need a development SDK. SDK 10.0.403 is used
 for development; the companion targets net10.0-windows and pins runtime 10.0.15.
 The exact player runtime is recorded in manifest.json. Its Microsoft license
 and third-party notices are included in the package.
+The universal installer has its own version and also publishes self-contained
+with .NET 10.0.15. Mod updates may reuse the last official unchanged engine binary.
 
 Mono C# compiler / mcs-unity
 Explicit Debug/developer-opt-in dependency for the C# evaluator; ../lib/mcs-LICENSE.txt

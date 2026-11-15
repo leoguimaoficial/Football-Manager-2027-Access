@@ -1,5 +1,66 @@
 # FM27 Access session progress
 
+## Universal installer, distribution and player guide — current continuation
+
+The new explicit distribution request authorizes dedicated installer projects,
+packaging, tests, GitHub workflows and multilingual player documentation. It
+supersedes the earlier restriction against new build/release infrastructure.
+The latest clarification says 0.1.0 is installable now and the HTML must be a
+player guide, not a technical audit report. GitHub release/tag publication still
+requires separate explicit approval; none was created here.
+
+The separate native Windows Forms installer follows the maintainer's Reigns
+Access reference while retaining FM27's existing native API guard, original
+five-project solution, production build defaults and receipt safety. The engine
+has its own version, public filename FM27Access-Installer.exe, official GitHub
+release discovery and explicit local manifest/ZIP selection. Install, update,
+downgrade confirmation, exact-version repair, removal, cancellation, rollback,
+durable recovery, separate logging restoration, independent guide updates and
+installer self-update are implemented. The complete ZIP includes the pinned
+BepInEx 793 IL2CPP x64 runtime and production console-off defaults. Normal disk
+logging remains Fatal/Error/Warning. No game/interop/compiler binaries enter
+source archives; the Prism redistributable exception is retained.
+
+The user identified the WindowsApps package-registration alias appearing as a
+second installation. Actual filesystem inspection confirms a protected reparse
+point. Resolve directory aliases before deduplication; inaccessible aliases are
+excluded without changing permissions. The later actual UI Automation tree
+shows only the usable XboxGames Content destination and recognizes installed
+0.1.0 from its assembly. Its older source receipt is not silently adopted. The
+inert main-screen Technical details button was removed; actual errors provide
+an optional read-only diagnostic view in their own dialog.
+
+The public FM26 release v0.2.16 HTML was downloaded and read, alongside its public
+README/INSTALL and the pristine source reference. Its player-oriented structure
+informs the replacement guide: setup, screen-reader settings, Enter-to-confirm
+choices, searchable menus, column options, bookmarks, career introductions,
+delegation, messages, squad, tactics and match readouts. Shortcuts were checked
+against current app.js/AccessibilityServer. The generated offline HTML has 20
+languages, 14 sections each and two semantic shortcut tables per language.
+It contains practical instructions rather than build/API/qualification warnings.
+Developer receipt/reload instructions are preserved separately in
+DEVELOPER_INSTALLATION.md; workflow/qualification evidence stays in DISTRIBUTION.md.
+
+Validation so far: 1,633 existing C# tests and all existing script fixtures;
+83 Companion JavaScript tests; 42 installer tests (including interrupted
+preparation recovery and production logging); four distribution/documentation
+contracts; the solution and self-contained installer/Companion Release builds;
+and real package integrity/production binary inspections. Browser/axe checks
+exercise all 20 guide languages, anchors, fallback, narrow viewport and forced
+colors. Final regenerated packages are rechecked after source changes.
+
+Evidence limits: UI Automation is actual native installer evidence, not manual
+NVDA qualification. Screenshot capture returned an unrelated surface and is
+excluded as visual proof. Some input attempts reported `user input was detected`
+or `coordinate input geometry is unavailable`; these are tool observations, not
+claims of physical user actions or completed keyboard tests. No actual game
+installation, reload, launch, save or business action was performed. The game's
+existing QA runtime and receipts remain intact. Clean-machine installation,
+real engine self-update and live Steam/Epic gameplay are separate remaining
+qualification. GitHub's trusted build runner, repository variables and protected
+reviewer environment require external setup; local passing tests do not imply
+those hosted jobs or a publication approval have run.
+
 ## Initial GitHub source publication preparation
 
 The new explicit request authorizes creation of a public

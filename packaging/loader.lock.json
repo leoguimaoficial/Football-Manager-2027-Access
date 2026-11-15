@@ -1,0 +1,8 @@
+{
+  "version": "6.0.0-be.793+dbc82f0",
+  "url": "https://builds.bepinex.dev/projects/bepinex_be/793/BepInEx-Unity.IL2CPP-win-x64-6.0.0-be.793%2Bdbc82f0.zip",
+  "sha256": "5B63D7D0E92A2448CCD13B738FF95FF1CC1026C6D718555D4DF8E6C824953AC4",
+  "target": "Unity.IL2CPP-win-x64",
+  "license": "LGPL-2.1",
+  "source": "https://github.com/BepInEx/BepInEx/tree/dbc82f0"
+}

@@ -1,0 +1,87 @@
+name: Validate and prepare
+on:
+  push:
+    branches: [main, 'codex/**']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  portable:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: tests/companion/package-lock.json
+      - name: Game-independent regression and production profile
+        shell: pwsh
+        run: ./scripts/test.ps1
+      - name: Installer transaction, network and discovery tests
+        run: dotnet test installer/FM27Access.Installer.Tests -c Release --logger trx --results-directory artifacts/installer-tests
+      - name: Companion JavaScript tests
+        shell: pwsh
+        run: |
+          npm ci --prefix tests/companion
+          if ($LASTEXITCODE -ne 0) { throw 'npm ci failed' }
+          npm --prefix tests/companion run test:unit
+          if ($LASTEXITCODE -ne 0) { throw 'Companion unit tests failed' }
+          node --test tests/distribution/*.test.cjs
+          if ($LASTEXITCODE -ne 0) { throw 'Distribution/documentation checks failed' }
+          npx --prefix tests/companion playwright install chromium
+          if ($LASTEXITCODE -ne 0) { throw 'Browser install failed' }
+          node tests/distribution/guide-browser.cjs
+          if ($LASTEXITCODE -ne 0) { throw 'Guide browser/axe checks failed' }
+      - name: Publish installer and Companion
+        shell: pwsh
+        run: |
+          ./installer/build-installer.ps1
+          dotnet publish FM27Access.CompanionApp -c Release -p:FM27DeveloperTools=false -o artifacts/companion
+          if ($LASTEXITCODE -ne 0) { throw 'Companion publish failed' }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: installer-${{ github.run_id }}-${{ github.sha }}
+          path: artifacts/installer/
+          retention-days: 90
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tests-${{ github.run_id }}-${{ github.sha }}
+          path: artifacts/**/*.trx
+          retention-days: 30
+  distribution:
+    # Proprietary build references stay on a dedicated trusted Windows machine.
+    # PRs/forks never execute code there. Configure the variable only after setup.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.FM27_NATIVE_BUILDS == 'enabled'
+    needs: portable
+    runs-on: [self-hosted, Windows, X64, fm27-build]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          clean: true
+          persist-credentials: false
+      - name: Verify prerequisites and build exact checkout
+        shell: pwsh
+        env:
+          GAME_PATH: ${{ vars.FM27_BUILD_GAME_PATH }}
+          SOURCE_SHA: ${{ github.sha }}
+          BUILD_RUN_ID: ${{ github.run_id }}
+        run: |
+          if (!(Test-Path -LiteralPath $env:GAME_PATH -PathType Container)) { throw 'Configure FM27_BUILD_GAME_PATH on the build runner.' }
+          ./scripts/package-distribution.ps1 -GamePath $env:GAME_PATH -OutputPath "artifacts/distribution-$env:BUILD_RUN_ID" -RunId $env:BUILD_RUN_ID -Commit $env:SOURCE_SHA
+      - uses: actions/upload-artifact@v4
+        with:
+          name: distribution-${{ github.run_id }}-${{ github.sha }}
+          path: artifacts/distribution-${{ github.run_id }}/
+          if-no-files-found: error
+          retention-days: 90

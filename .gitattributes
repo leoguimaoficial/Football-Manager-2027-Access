@@ -1,0 +1,4 @@
+# The generated offline guide is compared byte-for-byte in CI on Windows/Linux.
+docs/user/FM27Access-UserGuide.html text eol=lf
+# Preserve the upstream notice bytes, including its final blank line.
+packaging/licenses/dotnet-6.0.7-THIRD-PARTY-NOTICES.txt -text whitespace=-blank-at-eof

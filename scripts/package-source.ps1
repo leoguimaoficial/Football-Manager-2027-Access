@@ -5,7 +5,7 @@ try {
     $out=Join-Path $ProjectRoot ('artifacts/packages/source-'+[DateTime]::UtcNow.ToString('yyyyMMdd-HHmmss'))
     New-Item -ItemType Directory -Force $out | Out-Null
     # Allowlist: no BepInEx, game installation, interop, .upstream, artifacts or build outputs.
-    $folders='.agents','FM27Access.CompanionApp','FM27Access.Host','FM27Access.Navigation','FM27Access.Plugin','FM27Access.Sounds','FM27Access.Speech','FM27Access.Tests','docs','scripts','tests','tools','lib','packaging','Prism'
+    $folders='.agents','.github','installer','FM27Access.CompanionApp','FM27Access.Host','FM27Access.Navigation','FM27Access.Plugin','FM27Access.Sounds','FM27Access.Speech','FM27Access.Tests','docs','scripts','tests','tools','lib','packaging','Prism'
     foreach ($folder in $folders) {
         # Share Git's exclusion policy, including local credentials/configuration.
         $files=@(& git -C $ProjectRoot ls-files --cached --others --exclude-standard -- $folder)
@@ -16,15 +16,20 @@ try {
             Copy-Item -LiteralPath (Join-Path $ProjectRoot $relative) -Destination $target
         }
     }
-    foreach ($name in 'AGENTS.md','BUILDING.md','CHANGELOG.md','CONTRIBUTING.md','CREDITS.md','INSTALL.md','README.md','Directory.Build.props','Directory.Solution.props','FM27Access.sln','global.json','LICENSE','.gitignore') {
+    foreach ($name in 'AGENTS.md','BUILDING.md','CHANGELOG.md','CONTRIBUTING.md','CREDITS.md','INSTALL.md','README.md','Directory.Build.props','Directory.Solution.props','FM27Access.sln','global.json','LICENSE','.gitignore','.gitattributes') {
         Copy-Item -LiteralPath (Join-Path $ProjectRoot $name) -Destination $out
     }
     # Compress-Archive omits hidden files, including the publication .gitignore.
+    $sourceCommit=(& git -C $ProjectRoot rev-parse HEAD).Trim()
+    $sourceVersion=([xml](Get-Content -LiteralPath "$ProjectRoot/Directory.Build.props" -Raw)).SelectSingleNode('/Project/PropertyGroup/Version').InnerText
+    $sourceDirty=@(& git -C $ProjectRoot status --porcelain).Count -gt 0
+    @("FM27 Access source", "Version: $sourceVersion", "Commit: $sourceCommit", "WorkingTreeDirty: $($sourceDirty.ToString().ToLowerInvariant())", 'Repository: https://github.com/leoguimaoficial/Football-Manager-2027-Access') |
+        Set-Content -LiteralPath "$out/SOURCE-INFO.txt" -Encoding utf8
     [IO.Compression.ZipFile]::CreateFromDirectory($out,"$out.zip")
     $archive=[IO.Compression.ZipFile]::OpenRead("$out.zip")
     try {
         $names=@($archive.Entries | ForEach-Object {$_.FullName.Replace('\','/')})
-        foreach($required in '.gitignore','LICENSE','CREDITS.md','FM27Access.sln','global.json','Prism/NOTICE','Prism/dynamic/release/bin/prism.dll'){
+        foreach($required in '.gitignore','SOURCE-INFO.txt','LICENSE','CREDITS.md','FM27Access.sln','global.json','Prism/NOTICE','Prism/dynamic/release/bin/prism.dll'){
             if($required -notin $names){throw "Required publication file missing: $required"}
         }
         foreach($name in $names){

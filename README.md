@@ -4,9 +4,25 @@ FM27 Access (Football Manager 2027 Access) is an unofficial accessibility mod
 that aims to help blind players manage their football clubs using a screen
 reader and keyboard navigation.
 
-**In development — not yet released.** The project is working toward its first
-version, **0.1.0**. There is no official downloadable release or supported
-end-user installation available yet.
+**Version 0.1.0 is installable using the universal installer or the complete ZIP.**
+Its first public GitHub release is being prepared and has not been published.
+
+## Install and start playing
+
+Open `FM27Access-Installer.exe`, choose your language and Football Manager 2027
+installation, select the mod version and choose **Install**. If you have the ZIP
+package, keep it beside `FM27Access-Manifest.json` and choose **Install ZIP**.
+Close the game and Companion before installing, updating or removing the mod.
+
+Start Football Manager normally after installation. The first launch can take a
+few minutes without speech; wait for the Companion window, then use it with your
+screen reader. You do not need to install .NET or BepInEx separately. The BepInEx
+console stays closed.
+
+Use the same installer to update, repair or uninstall. Your saves, bookmarks and
+settings are kept. See [installation help](INSTALL.md) and the
+[player guide](docs/user/FM27Access-UserGuide.html) for keyboard shortcuts,
+messages, squad management, tactics and matches.
 
 ## About the project
 
@@ -41,6 +57,15 @@ all game variants and a first public installation still need further validation.
 Known problems and testing limits remain recorded in the
 [development notes](docs/README.md) and [known issues](docs/KNOWN_ISSUES.md).
 The [changelog](CHANGELOG.md) describes implemented changes.
+
+The [universal installer](installer/README.md) uses the same
+`FM27Access-Installer.exe` to discover official mod versions and manage each game
+installation, with safe update, repair and removal. English and nineteen other
+language resources, including Brazilian Portuguese, are included with an
+[offline HTML user guide](docs/user/FM27Access-UserGuide.html).
+The [distribution workflow](docs/DISTRIBUTION.md) uses a separate approval step;
+building or installing the
+current package does not publish a GitHub release.
 
 ## Accessibility goals
 

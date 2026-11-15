@@ -18,6 +18,8 @@ scope; [session progress](FM27_SESSION_PROGRESS.md) records its current executio
 - [Destination matrix](FM27_IMPLEMENTATION_MATRIX.md): each retained native UID/context and explicit evidence limits; full fields in the accompanying JSON.
 - [Known issues](KNOWN_ISSUES.md): remaining validation and compatibility limits.
 - [Production release qualification](PRODUCTION_RELEASE.md): player packaging, runtime/logging changes, current evidence and publication gates.
+- [Distribution and publication](DISTRIBUTION.md): universal installer, complete package, selected-run artifacts, required approval setup and independent multilingual guide.
+- [Developer deployment](DEVELOPER_INSTALLATION.md): original source/player receipt installation, loader setup and Debug reload.
 - [Repository preparation](REPOSITORY_PREPARATION.md): source exclusions, generated-file cleanup, retained dependencies and the blocked save-deletion request.
 - [Native compatibility](NATIVE_COMPATIBILITY.md): required APIs, compatible Steam/Xbox variants, local interop freshness and remaining live qualification.
 - [Transport stability](TRANSPORT_STABILITY.md): persistent HTTP framing, POST/no-replay policy, measured connection churn and timeout evidence.
