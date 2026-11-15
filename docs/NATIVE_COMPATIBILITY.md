@@ -1,6 +1,6 @@
 # Native compatibility contract
 
-## Steam investigation — 2026-11-15
+## Steam production startup — F206, 2026-11-15
 
 Steam build 26577676 is now installed and is the primary adaptation target.
 It uses x64, Unity 6000.3.18f1 and metadata 39, matching the Xbox engine/metadata
@@ -31,9 +31,13 @@ the identical incoming fingerprint. It refuses shared/modified/conflicting proxi
 keeps the existing transaction rollback, and updates the exact native compatibility
 profile. The actual installed 0.1.0 repair passes receipt/native-guard validation;
 corrected candidate coref5e6cb73 cold-starts on Steam and passes the same native
-actions/focus/four-audit suite. Future store
+actions/focus/four-audit suite. The exact hosted/public core `12107ea9` subsequently
+repeats that cold startup and suite; all public assets match build43745356921.
+The normal sole Companion is restored on MainMenu. Future store
 variants still require API checks and scoped live qualification. Earlier runtime/
 package statements below are historical, not the current Steam process.
+
+## Archived pre-Steam qualification records
 
 Current runtime is cold Debugfe50e602-762b-4ad6-a4be-92e3adce44a0/game29712 after F175. The previous player071512/78c package was receipt-uninstalled. Current1628pure cases and loader/profile/player fixtures pass without skips, including compatible Steam/build-label acceptance and seven incompatible/mixed-pair refusals. Actual Steam gameplay is still unavailable. This update changes option availability handling and does not replace API-based native compatibility with a build-number allowlist. Older candidate counts/status below are historical.
 

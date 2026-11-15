@@ -7,13 +7,27 @@ approval. The existing [known issues](KNOWN_ISSUES.md) and recorded qualificatio
 limits remain in force. Local packaging never creates a release or tag.
 
 The [published 0.1.0 release](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.0)
-uses source commit `6ed06c8b58c5a515b9d46c4fbb30a8cb3c051faa`, hosted
-[build 43735160905](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43735160905)
-and approved [publication 43735594264](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43735594264).
+now uses source commit `2a6773ce2dbb2e1434f5dca3b897ae36720db0c5` and successful
+[hosted build 43745356921](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43745356921).
+The maintainer explicitly authorized this one-time same-version replacement for
+Steam. The existing release ID and `v0.1.0` tag were retained; the tag now points
+to that selected source. No additional release/version was created. Old assets
+were backed up and retained until all replacement downloads were verified.
 All eight public downloads were fetched without authentication and compared with
 the original artifact; sizes, hashes, source provenance and the public tag match.
 The actual installer service finds one stable version, 0.1.0, validates its
-260-file manifest and retrieves the online guide. Installer engine 1.0.0 is current.
+260-file manifest and retrieves the online guide. Installer engine 1.0.1 is current;
+the manifest requires it for owned proxy migration. Player ZIP SHA-256:
+`C3E708F96E458721427904ED41666CBCBA94CC68BE54197BD1660DE4EB28729C`.
+That exact hosted/public payload cold-started on Steam as core `12107ea9` and
+passed the four-audit native main-menu action/focus suite before publication.
+
+The original (superseded) assets used commit
+`6ed06c8b58c5a515b9d46c4fbb30a8cb3c051faa`,
+[build 43735160905](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43735160905)
+and [publication 43735594264](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43735594264).
+The normal release workflow still refuses tag reuse; the explicit one-time
+maintenance replacement does not authorize automatic future overwrites.
 
 ## Build a complete candidate
 

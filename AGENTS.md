@@ -1,5 +1,27 @@
 # FM27 Access maintenance instructions
 
+## Current Steam baseline — F206
+
+Steam is the primary target by the maintainer's latest explicit request. Steam
+build26577676/game27.0.1.2503222 uses Unity6000.3.18f1/metadata39, as did Xbox.
+The original WinHTTP Doorstop proxy stalls native startup even when Doorstop is
+disabled. The upstream-supported byte-identical version.dll proxy fixes the
+observed startup path. Never patch native WaitForActivation/licensing or install
+both proxies. Installer1.0.1 migrates only its unchanged owned old proxy, preserving
+shared/modified files and transaction rollback. Compatible Xbox APIs remain
+accepted; the alternate proxy on Xbox is not newly live-qualified.
+
+The maintainer explicitly authorized replacing the existing0.1.0 assets and tag
+target without increasing the mod version. That one-time replacement is complete:
+source2a6773ce2dbb2e1434f5dca3b897ae36720db0c5 / hosted43745356921 / public
+core12107ea9. All eight public assets are verified, and exact hosted bytes pass
+Steam cold startup and native MainMenu/What's New/Preferences/load-dialog actions,
+focus and four axe audits. Current game21752 remains at MainMenu with normal sole
+Companion10724/watch21752. No save/career was loaded. Preserve this handoff; do not
+load historical women's checkpoints or claim full-career/manual NVDA coverage.
+See session progress for current evidence; older Xbox career/PID statements below
+describe their own historical sessions. No future same-version overwrite is implied.
+
 ## Public GitHub repository maintenance
 
 - The public repository is `leoguimaoficial/Football-Manager-2027-Access`, with

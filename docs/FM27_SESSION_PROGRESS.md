@@ -1,5 +1,42 @@
 # FM27 Access session progress
 
+## Verified Steam 0.1.0 replacement and final handoff — 2026-11-15
+
+Successful hosted build [43745356921](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43745356921)
+at source `2a6773ce2dbb2e1434f5dca3b897ae36720db0c5` supplies all eight refreshed
+public assets. The original immutable flag was false. Under the maintainer's
+explicit same-version authorization, the existing release ID446195775 and
+`v0.1.0` name were retained, with the tag moved to that verified source. Previous
+assets were backed up locally, staged replacements were digest-checked, and the
+old assets were removed only after independent unauthenticated downloads of all
+eight replacements passed exact artifact/source/checksum verification. No new
+version, release or replacement automation was created.
+
+The exact hosted payload was receipt-repaired locally before publication; all259
+file hashes/native guard pass. Steam game21752 cold-starts core
+`12107ea9-b698-470e-b7ed-6b9e1abbf67e`, developerTools=false. The complete four-audit
+live-steam-startup.cjs suite passes again on these exact bytes. Sole normal
+Companion10724 is restored from the actual Steam executable's installation,
+watch-pid21752. Its actual UIA tree contains MainMenu,27.0.1 and the ten normal
+buttons plus Mais combobox. A screenshot showing the desktop is excluded as
+visual evidence. No auxiliary qualification client remains; no save/career or
+preferences commit was performed.
+
+Final public installer-service verification reports online=true, one stable
+version0.1.0,260 manifest files, minimum/current engine1.0.1 and online guide.
+Player ZIP SHA-256 is
+`C3E708F96E458721427904ED41666CBCBA94CC68BE54197BD1660DE4EB28729C`.
+Tag and public bytes match the selected build; logging remains console-off /
+Fatal-Error-Warning / InstantFlushing=false. Native game files remain unchanged.
+The local installation wrapper initially checked an unset native LASTEXITCODE
+after a successful .NET API operation, falsely reporting failure; receipt/guard
+were independently reverified and installation was not replayed. A subsequent
+read-only check needed an explicit Speech assembly load; no game failure occurred.
+Raw receipts/backups/reports remain ignored under artifacts/steam-investigation.
+Full Steam career, alternate-proxy Xbox, Epic, external clean-machine onboarding,
+actual installer self-update UI and manual NVDA remain outside this evidence.
+F047/F115 and the historical unresolved issues remain recorded.
+
 ## Steam startup correction and authorized 0.1.0 replacement — F206, 2026-11-15
 
 The maintainer explicitly requests working Steam startup/main menu, Steam as the

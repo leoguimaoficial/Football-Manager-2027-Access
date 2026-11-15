@@ -8,24 +8,16 @@ Version 0.1.0 is the first public release.
 
 ## [Unreleased]
 
-### Fixed
-
-- Steam startup uses Doorstop's supported `version.dll` proxy, preserving the
-  exact pinned loader bytes while leaving native WinHTTP to Windows. The installer
-  repairs the existing 0.1.0 installation by retiring only its unchanged, owned
-  old proxy; shared or modified files are preserved and conflicting proxies refused.
-- Complete packages require installer engine 1.0.1 for that receipt-aware repair.
-  The mod version remains 0.1.0; Steam compiler references and build examples now
-  follow the actual installed Steam build.
-- Future release packaging correctly reads GitHub release arrays and full catalog
-  pages, reusing the validated installer engine when its version is unchanged.
-
 ## [0.1.0] - 2026-11-15
 
 The entries below summarize implemented work supported by the source and
 development records. In-game checks cover specific scenarios; they do not
 establish complete career, match or screen reader compatibility. See the
 [testing record](docs/TESTING.md) and [known issues](docs/KNOWN_ISSUES.md).
+
+The packages were refreshed for Steam on the same date, at the maintainer's
+explicit request, without changing the mod version. Exact source/build and
+download verification are recorded in [distribution](docs/DISTRIBUTION.md).
 
 ### Added
 
@@ -90,6 +82,14 @@ establish complete career, match or screen reader compatibility. See the
 
 ### Fixed
 
+- Steam startup uses Doorstop's supported `version.dll` proxy, preserving the
+  exact pinned loader bytes while leaving native WinHTTP to Windows. The installer
+  repairs the existing 0.1.0 installation by retiring only its unchanged, owned
+  old proxy; shared or modified files are preserved and conflicting proxies refused.
+- Complete packages require installer engine 1.0.1 for that receipt-aware repair.
+  The mod remains 0.1.0; compiler references and build examples follow Steam.
+- Release packaging correctly reads GitHub release arrays and full catalog
+  pages, reusing the validated installer engine when its version is unchanged.
 - Opening the installer no longer announces automatic discovery/status updates
   or restores focus a second time. Messages remain available in the Tab sequence.
 
