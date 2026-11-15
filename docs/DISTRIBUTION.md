@@ -6,6 +6,15 @@ distribution. Publication promotes the selected original artifacts after
 approval. The existing [known issues](KNOWN_ISSUES.md) and recorded qualification
 limits remain in force. Local packaging never creates a release or tag.
 
+The [published 0.1.0 release](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.0)
+uses source commit `6ed06c8b58c5a515b9d46c4fbb30a8cb3c051faa`, hosted
+[build 43735160905](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43735160905)
+and approved [publication 43735594264](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43735594264).
+All eight public downloads were fetched without authentication and compared with
+the original artifact; sizes, hashes, source provenance and the public tag match.
+The actual installer service finds one stable version, 0.1.0, validates its
+260-file manifest and retrieves the online guide. Installer engine 1.0.0 is current.
+
 ## Build a complete candidate
 
 ```powershell

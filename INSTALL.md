@@ -38,8 +38,8 @@ Fatal/Error/Warning disk logs; no log window opens with the game or Companion.
 The manual ZIP includes the same console-off defaults for a fresh installation.
 
 The first normal game launch may take time and have no speech while BepInEx
-generates interop locally. The Host still refuses unsupported native APIs.
-Never copy interop from another installation or disable the guard. User Guide
+prepares the game integration locally. The mod checks compatibility before
+starting; keep files generated for each installation in that installation. User Guide
 opens the selected language, updates from the canonical source when reachable,
 and falls back to the bundled/cached guide offline. Update installer updates
 the manager separately from the mod. Error details are available in the actual
@@ -47,9 +47,9 @@ error dialog rather than as an inert main-screen button.
 
 Existing developer deployments keep their original receipts. Their files are
 recognized but never silently adopted or overwritten by the new manager. Remove
-the old deployment with its existing receipt and the game closed before using
-the universal installer. Do not remove the currently installed QA runtime just
-to test this candidate.
+the old deployment using its original developer uninstaller, with the game closed,
+before installing through the universal installer. See the developer reference below
+for those separate installation receipts.
 
 
 Developers building from source can use the [separate deployment reference](docs/DEVELOPER_INSTALLATION.md).

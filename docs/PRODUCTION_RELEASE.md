@@ -2,10 +2,19 @@
 
 ## FM27 Access 0.1.0
 
-The first public release is authorized on 2026-11-15. Its source, complete player
+The first public release was authorized and published on 2026-11-15. Its source, complete player
 ZIP, universal installer, guide, manifests and checksums are tied to the release
 commit and verified build. The installer starts without automatic status speech;
 messages remain reachable by Tab and Windows dialogs confirm completion.
+
+Hosted build [43735160905](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43735160905)
+and approved publication [43735594264](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43735594264)
+pass at `6ed06c8b58c5a515b9d46c4fbb30a8cb3c051faa`. The public `v0.1.0`
+tag resolves to that commit. All eight downloaded public assets match the exact
+original artifact, including source provenance and SHA-256 checksums. The real
+installer catalog/manifest/guide services pass against the published release.
+The private input is pinned to `0b7686cf1fb7b7596c05af7c6861248b5e3d2ed9`;
+no proprietary reference DLL is present in the public source or player ZIP.
 
 See [distribution](DISTRIBUTION.md) for the publication record and
 [known issues](KNOWN_ISSUES.md) for current limits. The entries below preserve

@@ -38,19 +38,29 @@ Release package built using only the restored private references and downloaded
 official loader passes production-binary and source/player/archive integrity
 checks. The reference refresh command recognizes the unchanged baseline without
 uploading. These are build/distribution checks, not new live-game qualification.
-Version 0.1.0 publication is in progress; final run/tag/asset verification is
-recorded after the selected hosted build completes. Historical game qualification
+Hosted main build 43735160905 passes portable and full distribution jobs at
+6ed06c8b58c5a515b9d46c4fbb30a8cb3c051faa. Publication 43735594264 passed the
+configured required-reviewer gate using the maintainer's explicit authorization
+for this exact 0.1.0 release and published v0.1.0 at 2026-11-15T16:29:55Z.
+The public tag matches the selected commit. All eight public downloads were
+retrieved without authentication, matched against the original hosted artifact
+and revalidated for source provenance, production content and integrity. The
+actual installer service reports online=true, one stable version 0.1.0, 260
+manifest files, online guide and current engine 1.0.0. ZIP SHA-256 is
+0B88E2F99182FC899B650249B932AE5CB659BCFF0D03B1DA13E4E5DCFFBD35CB.
+Historical game qualification
 and unresolved issues below remain unchanged; no new game installation or manual
 NVDA qualification is claimed by this distribution work.
 
-## Universal installer, distribution and player guide — current continuation
+## Universal installer, distribution and player guide — before publication
 
 The new explicit distribution request authorizes dedicated installer projects,
 packaging, tests, GitHub workflows and multilingual player documentation. It
 supersedes the earlier restriction against new build/release infrastructure.
 The latest clarification says 0.1.0 is installable now and the HTML must be a
 player guide, not a technical audit report. GitHub release/tag publication still
-requires separate explicit approval; none was created here.
+required separate explicit approval; this earlier stage did not create one.
+The authorized publication and final evidence are recorded above.
 
 The separate native Windows Forms installer follows the maintainer's Reigns
 Access reference while retaining FM27's existing native API guard, original
