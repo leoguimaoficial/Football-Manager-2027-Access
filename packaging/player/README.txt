@@ -1,4 +1,4 @@
-FM27 Access 0.1.0 - production candidate (Windows x64)
+FM27 Access 0.1.1 - production package (Windows x64)
 
 This is a qualification package, not a declaration of complete career coverage.
 Compatible Xbox/Steam build labels are accepted through the required native API
@@ -7,7 +7,8 @@ contract, rather than a version/store allowlist. The game must be x64, Unity
 interop. Reference native hashes record provenance; loader hashes stay exact.
 Required type/member/layout/constant changes, stale interop and known mixed pairs
 are refused. API acceptance does not prove gameplay on an untested build.
-Steam gameplay and external clean first-install qualification remain pending.
+Steam has targeted startup and table/career qualification. A fresh Xbox launch
+and external clean first-install qualification remain pending.
 Never share or copy game binaries/generated interop between players.
 
 Prerequisites: PowerShell 7.2 or later, WebView2 Evergreen and the separately installed

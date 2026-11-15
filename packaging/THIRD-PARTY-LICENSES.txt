@@ -13,8 +13,10 @@ Upstream: https://github.com/BepInEx/BepInEx
 Supplied license: licenses/BepInEx-LICENSE.txt (LGPL-2.1).
 The loader is downloaded separately, never copied from the FM26 installation.
 Its runtime/native dependencies retain their supplied licenses.
-Doorstop's pinned winhttp.dll is supplied byte-identically as version.dll,
-using the upstream-supported proxy name. No native game file is modified.
+Doorstop's pinned winhttp.dll is supplied byte-identically as canonical version.dll
+in the universal archive. The installer selects winhttp.dll for Xbox/Microsoft
+Store and version.dll for other stores, using one upstream-supported proxy name.
+No native game file is modified.
 The pristine loader includes .NET 6.0.7. Its MIT license is retained in
 licenses/dotnet-LICENSE.txt; the matching runtime's third-party notices are
 licenses/dotnet-6.0.7-THIRD-PARTY-NOTICES.txt, obtained verbatim from
