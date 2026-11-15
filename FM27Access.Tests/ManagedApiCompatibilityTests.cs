@@ -11,6 +11,58 @@ public sealed class ManagedApiCompatibilityTests : IDisposable
     public ManagedApiCompatibilityTests() => Directory.CreateDirectory(root);
     public void Dispose() => Directory.Delete(root, true);
 
+    private (string Path, Type Type) ApplicationFixture(string directory, bool advertising, bool brokenFocus = false)
+    {
+        Directory.CreateDirectory(directory);
+        var assembly = new PersistedAssemblyBuilder(new AssemblyName("UnityEngine.CoreModule"), typeof(object).Assembly);
+        var module = assembly.DefineDynamicModule("UnityEngine.CoreModule");
+        var type = module.DefineType("UnityEngine.Application", TypeAttributes.Public | TypeAttributes.Abstract | TypeAttributes.Sealed);
+        var focus = type.DefineMethod("get_isFocused", MethodAttributes.Public | MethodAttributes.Static,
+            brokenFocus ? typeof(long) : typeof(bool), Type.EmptyTypes);
+        focus.GetILGenerator().Emit(OpCodes.Ldc_I4_1);
+        if (brokenFocus) focus.GetILGenerator().Emit(OpCodes.Conv_I8);
+        focus.GetILGenerator().Emit(OpCodes.Ret);
+        type.DefineMethod("set_runInBackground", MethodAttributes.Public | MethodAttributes.Static, typeof(void), [typeof(bool)])
+            .GetILGenerator().Emit(OpCodes.Ret);
+        if (advertising) type.DefineMethod("RequestAdvertisingIdentifierAsync", MethodAttributes.Public | MethodAttributes.Static,
+            typeof(void), Type.EmptyTypes).GetILGenerator().Emit(OpCodes.Ret);
+        var created = type.CreateType()!;
+        string path = System.IO.Path.Combine(directory, "UnityEngine.CoreModule.dll"); assembly.Save(path);
+        return (path, created);
+    }
+
+    private string ApplicationConsumer(Type application)
+    {
+        var assembly = new PersistedAssemblyBuilder(new AssemblyName("ApplicationConsumer"), typeof(object).Assembly);
+        var type = assembly.DefineDynamicModule("ApplicationConsumer").DefineType("Consumer", TypeAttributes.Public);
+        var il = type.DefineMethod("ReadAndConfigure", MethodAttributes.Public | MethodAttributes.Static, typeof(void), Type.EmptyTypes).GetILGenerator();
+        il.Emit(OpCodes.Call, application.GetMethod("get_isFocused")!); il.Emit(OpCodes.Pop);
+        il.Emit(OpCodes.Ldc_I4_1); il.Emit(OpCodes.Call, application.GetMethod("set_runInBackground")!); il.Emit(OpCodes.Ret);
+        type.CreateType(); string path = Path.Combine(root, "ApplicationConsumer.dll"); assembly.Save(path); return path;
+    }
+
+    [Fact]
+    public void UnusedSteamAdvertisingApiDoesNotBecomeAnXboxRequirement()
+    {
+        var steam = ApplicationFixture(Path.Combine(root, "steam"), true);
+        var xbox = ApplicationFixture(Path.Combine(root, "xbox"), false);
+        string consumer = ApplicationConsumer(steam.Type);
+        var required = ManagedApiContract.Capture([consumer], Path.GetDirectoryName(steam.Path)!);
+        Assert.Equal(2, Assert.Single(required).Members.Length);
+        Assert.Empty(ManagedApiContract.Validate(required, Path.GetDirectoryName(xbox.Path)!));
+        var oldOverbroad = ManagedApiContract.CaptureTypes(steam.Path, ["UnityEngine.Application"]);
+        Assert.Contains(ManagedApiContract.Validate(oldOverbroad, Path.GetDirectoryName(xbox.Path)!), e => e.Contains("members changed/missing"));
+    }
+
+    [Fact]
+    public void ApplicationMembersActuallyCalledByTheModStillRequireTheirExactSignatures()
+    {
+        var steam = ApplicationFixture(Path.Combine(root, "steam"), true);
+        var broken = ApplicationFixture(Path.Combine(root, "broken"), false, true);
+        var required = ManagedApiContract.Capture([ApplicationConsumer(steam.Type)], Path.GetDirectoryName(steam.Path)!);
+        Assert.Contains(ManagedApiContract.Validate(required, Path.GetDirectoryName(broken.Path)!), e => e.Contains("members changed/missing"));
+    }
+
     private string Fixture(string directory, bool extra = false, bool rename = false, bool changeSignature = false, int enumValue = 1)
     {
         Directory.CreateDirectory(directory);

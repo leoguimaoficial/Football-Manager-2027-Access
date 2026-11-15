@@ -13,7 +13,9 @@ const {default:AxeBuilder}=require('@axe-core/playwright');
  }
  async function menu(){await poll(async()=>await page.title()==='MainMenu','actual native MainMenu');await settled();}
  try{
-  report.health=JSON.parse(await c.fetchText('/health'));assert.equal(report.health.developerTools,false);assert.equal(report.health.version,'0.1.0');
+  const version=fs.readFileSync(path.resolve(__dirname,'../../Directory.Build.props'),'utf8').match(/<Version>([^<]+)<\/Version>/)?.[1];
+  assert.ok(version,'Central mod version');
+  report.health=JSON.parse(await c.fetchText('/health'));assert.equal(report.health.developerTools,false);assert.equal(report.health.version,version);
   await menu();assert.equal(await page.locator('html').getAttribute('data-fm-development'),'false');
   report.menuButtons=await page.getByRole('button').allTextContents();
   assert.ok(report.menuButtons.includes('CRIAR NOVO JOGO, Alt I for more info'));

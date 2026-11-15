@@ -40,6 +40,22 @@ public sealed class NativeBuildVariantTests : IDisposable
     private void Save()=>File.WriteAllText(profile,JsonSerializer.Serialize(deployment));
 
     [Theory]
+    [InlineData(false, "winhttp.dll", "version.dll")]
+    [InlineData(true, "version.dll", "winhttp.dll")]
+    public void StoreAwareProfileRequiresOnlyTheCorrectSinglePinnedProxy(bool steam, string selected, string other)
+    {
+        Setup(steam); File.WriteAllText(Path.Combine(game, selected), "synthetic pinned proxy");
+        deployment.LoaderProxyPolicy = LoaderProxyPolicy.ByStore;
+        deployment.LoaderFiles = deployment.LoaderFiles.Append(new NativeBuildGuard.FileFingerprint
+            { Relative = "version.dll", Sha256 = Hash(Path.Combine(game, selected)) }).ToArray(); Save();
+        Assert.True(NativeBuildGuard.Validate(game, profile).Supported);
+        File.Move(Path.Combine(game, selected), Path.Combine(game, other));
+        Assert.False(NativeBuildGuard.Validate(game, profile).Supported);
+        File.Copy(Path.Combine(game, other), Path.Combine(game, selected));
+        Assert.Contains("Conflicting Doorstop proxies", NativeBuildGuard.Validate(game, profile).Reason);
+    }
+
+    [Theory]
     [InlineData("version.dll", "winhttp.dll")]
     [InlineData("winhttp.dll", "version.dll")]
     public void ByteIdenticalSupportedProxyPassesButASecondProxyIsRefused(string proxy, string other)

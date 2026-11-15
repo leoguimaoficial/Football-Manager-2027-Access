@@ -16,8 +16,20 @@ internal class ToggleAdapter : PluginAdapterBase
     public override string Role => IsSingleSelectDisclosure ? "button" : "checkbox";
     public override bool CanActivate => true;
 
-    private bool? _singleSelectDisclosure;
-    internal bool IsSingleSelectDisclosure => _singleSelectDisclosure ??= ComputeSingleSelectDisclosure();
+    private SI.UI.VirtualisedList.SelectionModes? _selectionMode;
+    private bool _selectionModeRead;
+    internal bool IsSingleSelectDisclosure
+    {
+        get
+        {
+            var mode = SelectionMode();
+            return mode != null
+                && mode != SI.UI.VirtualisedList.SelectionModes.Many
+                && mode != SI.UI.VirtualisedList.SelectionModes.AtLeastOne;
+        }
+    }
+
+    internal bool IsManySelectRowSelector => SelectionMode() == SI.UI.VirtualisedList.SelectionModes.Many;
 
     // A SelectionCell toggle in a Many/AtLeastOne list is a genuine independently-toggleable row
     // selector (the team-selection / squad-picker pattern). Server CellHandle uses this distinction
@@ -30,8 +42,10 @@ internal class ToggleAdapter : PluginAdapterBase
     // wait polls, so a cached copy would confirm its own stale answer.
     internal bool IsChecked => Element.Cast<Toggle>().value;
 
-    private bool ComputeSingleSelectDisclosure()
+    private SI.UI.VirtualisedList.SelectionModes? SelectionMode()
     {
+        if (_selectionModeRead) return _selectionMode;
+        _selectionModeRead = true;
         VisualElement selectionCell = null;
         VisualElement virtList = null;
         var current = Element.hierarchy.parent;
@@ -42,20 +56,18 @@ internal class ToggleAdapter : PluginAdapterBase
             else if (typeName == "VirtualisedList") virtList = current;
             current = current.hierarchy.parent;
         }
-        if (selectionCell == null || virtList == null) return false; // a settings toggle, not a row selector
+        if (selectionCell == null || virtList == null) return null; // a settings toggle, not a row selector
         try
         {
-            var mode = new SI.UI.VirtualisedList(virtList.Pointer).SelectionMode;
-            return mode != SI.UI.VirtualisedList.SelectionModes.Many
-                && mode != SI.UI.VirtualisedList.SelectionModes.AtLeastOne;
+            _selectionMode = new SI.UI.VirtualisedList(virtList.Pointer).SelectionMode;
         }
         catch (System.Exception ex)
         {
             // Degrade in place: an unreadable SelectionMode falls back to the checkbox presentation (a
             // visible, if less ideal, control) rather than breaking the whole panel render.
             Speech.Log.Warn($"[Toggle] SelectionMode read failed, presenting as checkbox: {ex.Message}");
-            return false;
         }
+        return _selectionMode;
     }
 
     public override string GetLabel()
@@ -205,7 +217,8 @@ internal class ToggleAdapter : PluginAdapterBase
         // data Index and its owning ParentList, so no scroll or hit-test is needed.
         if (InSelectionCell())
         {
-            if (IsSingleSelectDisclosure)
+            bool single = IsSingleSelectDisclosure;
+            if (single || IsManySelectRowSelector)
             {
                 var rowEl = TableRowTextAdapter.FindTableRow(Element);
                 if (rowEl != null)
@@ -216,12 +229,12 @@ internal class ToggleAdapter : PluginAdapterBase
                         if(table==null)continue;
                         var list=table.ListElement;
                         int index=list.Controller.GetActiveElementIndex(rowEl);
-                        if(index>=0){list.Controller.UpdateSelection(false,false,index);return;}
+                        if(index>=0){list.Controller.UpdateSelection(!single,false,index);return;}
                         break;
                     }
                 }
             }
-            // Multi-select pickers (squad selection), or an unexpected template with no row/list: keep
+            // AtLeastOne pickers, or an unexpected template with no row/list: keep
             // the synthetic pointer, which honours the list's multi-select mode natively.
             SyntheticPointer.LeftClick(Element);
             return;

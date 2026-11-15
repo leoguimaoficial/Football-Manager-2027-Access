@@ -5,14 +5,15 @@ need Windows 10 or 11 x64, Football Manager 2027, a screen reader and Microsoft
 Edge WebView2. The package includes .NET and BepInEx.
 
 [Download the universal installer](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-Installer.exe).
-The [release page](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.0)
+The [release page](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.1)
 also provides the complete ZIP, its manifest and the standalone HTML manual.
 
-For the Steam startup correction, use installer engine **1.0.1** or newer and
-**Repair** version **0.1.0**. The mod keeps its version. Repair migrates the old
-receipt-owned `winhttp.dll` to the byte-identical supported `version.dll` proxy;
-it preserves shared/modified files and refuses conflicting proxies. Avoid manual
-DLL renaming: the installer also updates the compatibility profile and receipt.
+For the Steam/Xbox compatibility correction, use installer engine **1.0.4** or
+newer and update the mod to **0.1.1**. Updating only the installer does not replace
+0.1.0's compatibility contract. The installer selects `winhttp.dll` for Xbox/
+Microsoft Store and `version.dll` for other stores, using the same pinned bytes.
+It migrates only an unchanged receipt-owned alternative, preserves shared or
+modified files and rolls back interrupted operations. Never install both proxies.
 
 ## Install with the universal installer
 
@@ -34,15 +35,19 @@ For Xbox/Microsoft Store, the actual destination is **Content**, containing
 `fm.exe`, for example `C:\XboxGames\Football Manager 27\Content`. If a parent
 folder is selected, the installer can resolve its Content child; it still
 installs inside Content. Never extract beside Content or into XboxGames itself.
-Steam is the current tested package; the changed loader has not been retested
-end to end on Xbox/Microsoft Store or Epic. Store detection is not a coverage claim.
+Steam is the tested primary target. The Xbox compatibility correction is checked
+against preserved actual 0.9.2435.0 compiler/API inputs, but a fresh Xbox/Microsoft
+Store launch and Epic still need live validation. Store detection is not a
+coverage claim.
 
 For a downloaded package, keep the versioned ZIP and `FM27Access-Manifest.json`
 together and choose **Install ZIP**, then select the manifest. This offline path
 uses the same integrity, compatibility, collision and receipt checks. For direct
-manual copying, extract the ZIP outside the game, inspect its manifest and
-compare every existing destination before merging; never overwrite unknown
-loader or mod files. Direct copies are unmanaged and cannot be removed by the
+manual copying, extract the ZIP outside the game and inspect its manifest. Its
+canonical proxy is `version.dll`; Xbox/Microsoft Store requires that file named
+`winhttp.dll` instead. Compare every existing destination before merging and
+never keep both names or overwrite unknown loader/mod files. Direct copies are
+unmanaged and cannot be removed by the
 manager without an installation receipt. Prefer the receipt-managed offline path.
 
 Updates preserve player settings, bookmarks and saves. Uninstall removes only

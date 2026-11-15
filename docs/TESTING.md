@@ -1,3 +1,49 @@
+## 0.1.1 / installer1.0.4 cross-store release preparation
+
+The old installed contract reproduces the supplied Xbox0.9.2435.0 error exactly
+using the preserved real reference archive at private0b7686c. The revised actual-
+member Application contract passes both real Xbox/Steam inputs. Production
+source compiles against each with zero errors/warnings.1,648 C# cases,64 installer
+cases,89 JavaScript cases, eight distribution/manual cases and all20 full-guide
+browser/axe editions pass. New cases retain actual used-signature refusal and
+verify one canonical ZIP's per-store proxy, exact ownership, bidirectional owned
+migration, rollback and minimum-engine/policy refusal. Existing shared/modified
+file and conflicting-proxy guards remain covered by the common transaction tests.
+
+The manual's same correction paragraph is translated in all20 editions, preserving
+14 sections/257 units/eight reference targets. Private compiler ZIP/pin is updated
+explicitly to88df2f483130877ca7efc0d8c5e2c5edee945aad, identity1650B2B6....
+Hosted artifact/Steam installation/publication checks follow on the exact built
+source. Xbox is not installed here: no fresh Xbox live-launch claim. The earlier
+measured table trial below remains scoped evidence, not a universal speed claim.
+
+## Local FM26 0.2.17 table trial
+
+Final Release9573a8ad-92b7-42df-89ff-86877126c1b2, developerTools=false, passes the
+new men's FC Porto checkpoint comparison and scoped native-command regression.
+Seven completed response samples per screen compare with cold-restored original
+12107ea9: Squad1018.572→925.239ms, Tactics1052.373→895.849ms and name-sorted
+Player Database1684.644→1481.451ms (medians). Headers, counts, order and row text
+are identical in all three final comparisons. These are repeated body loads,
+with observed frame variance, not startup/save-load/full-career measurements.
+
+Rapid checkbox selection with a concurrent body read, selection inverse,
+page-only50/replacement, existing all10,000/clear0, actual player-profile/Back,
+exact focus, four pitch modes, native role-menu open/cancel, three clean axe
+audits and production developer-route404 refusal pass. A delayed actual old
+body cannot undo a confirmed checkbox; a controlled503 releases the guard,
+restores the native value and is not replayed. Independent explicit-Debug native
+probes corroborate actual record identities/Many mode/selected counts. The first
+rapid test's refused row was corrected through the shared reader gate before
+final production qualification.1,644 C# and89 JS cases pass; Release build has
+zero warnings/errors. Scope, sample values, diagnostic mismatches and Steam/tool
+observations are consolidated in session progress and ignored current verification.
+No manual NVDA, match or all-table-variant qualification is claimed. Original
+installed files/receipt are restored, and no source commit/release is made.
+Ownership-aware cleanup/retention fixtures pass. The existing cleanup routines
+remove30 generated outputs/about4.75GiB; automatic review blocks the broader
+custom deletion, so two private reference copies/about266MiB remain preserved.
+
 ## Complete manual translations and installer 1.0.3
 
 The maintainer corrected the earlier partial-language scope: all twenty editions

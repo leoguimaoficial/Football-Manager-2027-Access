@@ -37,7 +37,8 @@ public sealed record SemVersion(int Major, int Minor, int Patch, string Pre = ""
 
 public sealed record PackageFile(string Path, string Sha256, long Size, string Kind);
 public sealed record DistributionManifest(int Schema, string Version, string MinimumInstallerVersion, string Package,
-    string PackageSha256, long PackageSize, string BepInExVersion, string[] Platforms, string Compatibility, PackageFile[] Files);
+    string PackageSha256, long PackageSize, string BepInExVersion, string[] Platforms, string Compatibility, PackageFile[] Files,
+    string? LoaderProxyPolicy = null);
 public sealed record ReleaseAsset(string Name, Uri Url, long Size, string? Digest);
 public sealed record ModRelease(string Version, string Tag, DateTimeOffset Published, string Notes, bool Prerelease,
     ReleaseAsset Manifest, ReleaseAsset Package)
@@ -90,6 +91,9 @@ public static class Distribution
     {
         if (m.Schema != 1 || SemVersion.Parse(m.MinimumInstallerVersion).CompareTo(SemVersion.Parse(EngineVersion)) > 0)
             throw new InvalidDataException("Installer update required for this manifest.");
+        if (m.LoaderProxyPolicy is not (null or FM27Access.Speech.LoaderProxyPolicy.ByStore)
+            || m.LoaderProxyPolicy != null && SemVersion.Parse(m.MinimumInstallerVersion).CompareTo(SemVersion.Parse("1.0.4")) < 0)
+            throw new InvalidDataException("Unsupported loader proxy policy or minimum installer version.");
         SemVersion.Parse(m.Version);
         if (expectedVersion is not null && m.Version != expectedVersion) throw new InvalidDataException("Release/manifest version mismatch.");
         if (m.Package != $"FM27Access-v{m.Version}.zip" || !IsHash(m.PackageSha256) || m.PackageSize <= 0 || m.PackageSize > 2L * 1024 * 1024 * 1024
@@ -113,6 +117,8 @@ public static class Distribution
             "native-build.json", "required-api.json", "LICENSE", "THIRD-PARTY-LICENSES.txt", "companion/FM27AccessCompanion.exe", "prism/native/win-x64/prism.dll" })
             if (!paths.Contains(PluginRoot + required)) throw new InvalidDataException("Incomplete mod package: " + required);
         if (paths.Count(IsLoaderProxy) != 1) throw new InvalidDataException("A package must contain exactly one supported Doorstop proxy.");
+        if (m.LoaderProxyPolicy != null && !paths.Contains("version.dll"))
+            throw new InvalidDataException("Store-specific packages require the canonical version.dll proxy.");
         foreach (string required in new[] { "doorstop_config.ini", ".doorstop_version", "BepInEx/core/BepInEx.Unity.IL2CPP.dll", "BepInEx/config/BepInEx.cfg" })
             if (!paths.Contains(required)) throw new InvalidDataException("Incomplete loader package.");
         foreach (string path in paths)

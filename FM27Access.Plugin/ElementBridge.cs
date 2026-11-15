@@ -524,11 +524,13 @@ internal static class ElementBridge
         // chooses positions with (PitchPositionAdapter). Suppressing those left the speech surface
         // with no way to pick a position at all, while the HTML surface — which classifies through
         // the raw ElementClassifier and so never saw this demotion — still showed them.
-        if (element.name != "shirt-player-instruction-button"
+        // Check the inexpensive classification set first, as FM26 Access 0.2.17 does.
+        // Non-stops cannot be suppressed here and need no native ancestor traversal.
+        if (TreeWalker.NavigationStops.Contains(classification)
+            && element.name != "shirt-player-instruction-button"
             && !(classification == ElementClassification.Button
                  && PitchPositionAdapter.IsPitchPositionButton(element))
-            && IsOnTacticsPitch(element)
-            && TreeWalker.NavigationStops.Contains(classification))
+            && IsOnTacticsPitch(element))
             return ElementClassification.InternalChild;
 
         if (classification == ElementClassification.Button

@@ -1,6 +1,6 @@
 # Universal installer and distribution
 
-FM27 Access 0.1.0 is distributed through GitHub Releases. This document describes implementation
+FM27 Access 0.1.1 is distributed through GitHub Releases. This document describes implementation
 and build details; the [player guide](../docs/user/FM27Access-UserGuide.html)
 provides the installation and gameplay instructions.
 The user-facing program is always `FM27Access-Installer.exe`.
@@ -36,6 +36,14 @@ repository source (also linked by the release). The mod source ZIP retains its
 historical build identity and may contain an older installer engine.
 
 ## Runtime contracts
+
+- Engine1.0.4 accepts the optional `by-store` proxy policy only when the manifest
+  requires1.0.4 or newer. The ZIP remains canonical with `version.dll`; installation
+  resolves Xbox/Microsoft Store to `winhttp.dll` and other stores to `version.dll`.
+  Integrity reads use the original archive path; transactions/receipts use the
+  resolved installed path. Runtime guard uses the same policy without modifying
+  the signed-by-hash package/profile. Only an unchanged owned alternative can
+  migrate, with the original transaction rollback; two proxies are never installed.
 
 - `GitHubReleaseService` paginates public official releases. Drafts, invalid
   version tags and releases lacking both exact manifest/package assets are

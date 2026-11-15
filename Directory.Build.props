@@ -4,7 +4,7 @@
     <LangVersion>latest</LangVersion>
     <FM27GameDir Condition="'$(FM27GameDir)' == ''">$(FM27_GAME_DIR)</FM27GameDir>
     <BepInExDir Condition="'$(BepInExDir)' == '' and '$(FM27GameDir)' != ''">$(FM27GameDir)\BepInEx</BepInExDir>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <FM27DeveloperTools Condition="'$(FM27DeveloperTools)' == ''">false</FM27DeveloperTools>
     <DefineConstants Condition="'$(FM27DeveloperTools)' == 'true'">$(DefineConstants);FM27_DEVELOPER_TOOLS</DefineConstants>
   </PropertyGroup>

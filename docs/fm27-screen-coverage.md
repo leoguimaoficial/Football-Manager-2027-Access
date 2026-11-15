@@ -1,3 +1,17 @@
+## Local upstream table trial — new Steam men's QA career
+
+Release9573a8ad on the new FC Porto men's6 July2026 checkpoint: Squad32 rows,
+Tactics Both with its four pitch tables/33-row player list, and Player Database
+first50 of10,000 all preserve exact headers/counts/order/text against restored
+12107ea9. Concurrent checkbox/body-read, inverse, page-only selection on two
+pages and replacement, all/clear, player-profile/history Back/focus, four pitch
+modes and Panoramic role-menu open/cancel pass. Three WCAG-tagged axe audits,
+native Debug record/count probes and production diagnostics404 checks pass.
+Creation uses default setup and a mandatory first appearance preset; graphical
+customization is not audited. No day/match/business progression or manual NVDA.
+The original installation is restored; experimental source remains uncommitted.
+See the latest session/testing records for timing methodology and limitations.
+
 ## Steam MainMenu and startup — F206
 
 Steam build26577676/Unity6000.3.18f1/metadata39: original Release412b1c64 through

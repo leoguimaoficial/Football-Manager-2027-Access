@@ -1,9 +1,21 @@
 # Known issues and testing boundaries
 
-FM27 Access 0.1.0 is the first public release. This page records specific known
+FM27 Access 0.1.1 follows the first public release0.1.0. This page records specific known
 issues and the limits of the existing checks. For installation and normal use,
 see the [player guide](user/FM27Access-UserGuide.html). Historical runtime and
 package references below describe their own test sessions, not separate downloads.
+
+## Xbox 0.1.1 compatibility correction: fresh live check pending
+
+The reported0.9.2435.0 startup refusal is reproduced against preserved real Xbox
+references and corrected: an unused Steam advertising API no longer becomes a
+required Xbox member. Actual used methods still require their exact contracts.
+Production source compiles against both stores; the updated contract validates
+against both real inputs. Installer1.0.4 selects the appropriate sole proxy per
+store with guarded migration/rollback. The current machine no longer has Xbox
+installed, so this does not establish a new live Xbox launch or full-career
+qualification. Update both installer1.0.4 and mod0.1.1; updating only the engine
+leaves the old mod's API contract in place. Existing F047/F115 remain unresolved.
 
 ## Steam startup proxy correction — F206
 

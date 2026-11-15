@@ -1,5 +1,39 @@
 # FM27 Access maintenance instructions
 
+## Authorized 0.1.1 and installer 1.0.4 release
+
+The latest user request supersedes the earlier trial's no-commit/publication
+restriction: integrate the table improvements, correct Xbox coexistence, update
+the private compiler-reference ZIP and publish mod0.1.1/installer1.0.4 after
+verification. The reported Xbox0.9.2435.0 rejection is reproduced exactly against
+preserved real references: Application's unused Steam-only advertising method
+was included in the old overbroad contract. Capture actual binary member usage
+for that audited direct-only Unity API; retain other public/reflection contracts,
+fresh-interop/loader/native-pair guards and actual required-signature refusal.
+Canonical distribution proxy is mapped by store at install and runtime guard:
+Xbox winhttp.dll, otherwise version.dll, one pinned proxy only, guarded migration
+and rollback. Local Xbox/Steam compilation/API and installer cases are separate
+from a new Xbox live launch, which remains unavailable after uninstalling Xbox.
+Keep the original0.1.0 assets/tag intact; this request authorizes a new0.1.1.
+
+## Local upstream 0.2.17 table trial — no publication
+
+The latest request authorizes local upstream performance/selection trials and
+creation of a men's QA career, explicitly without commits. Changes are left on
+codex/upstream-0217-table-trial; do not publish or infer release authorization.
+Final Release9573a8ad passes scoped table/checkbox/focus/three-axe regression;
+same-checkpoint median body times improve9% Squad/15% Tactics/12% Player Database.
+Keep FM27 record guards and the shared reader/Many-selector gate: native Items
+are only ordinal integers, never player identity.89 JS/1644 C# cases pass.
+The exact public12107ea9 runtime/259 receipt files and original receipt bytes
+are restored; game closed. One named men's QA save/native backup is retained
+outside the project. Recognized generated outputs are cleaned after evidence
+consolidation. Automatic review blocked broad custom cleanup; two private
+.tools/reference-refresh-* copies remain preserved (about266MiB), not deleted
+through another mechanism. See session progress for the exact cleanup boundary.
+Local compiler-reference auto-refresh is disabled; its accidental sole private
+commit was lease-restored to da9a5dd. See the latest session/testing records.
+
 ## Complete language parity requirement
 
 The latest user correction requires the complete manual in all twenty languages:

@@ -30,6 +30,30 @@ FM.core = {
   // Patch cycle bookkeeping.
   refreshing: false,
   bodyRequest: Promise.resolve(),
+  // FM26 0.2.17: an older body must not undo an optimistic checkbox press.
+  // Retire the guard only after a body fetched after the activation reply lands.
+  fetchSeq: 0,
+  toggles: {},
+  answerToggle: function (id, expected) {
+    var guard = FM.core.toggles[id];
+    if (!guard || expected && guard !== expected) { return; }
+    guard.pending = Math.max(0, guard.pending - 1);
+    guard.seq = FM.core.fetchSeq;
+  },
+  toggleGuarded: function (id, seq, token) {
+    var guard = id && FM.core.toggles[id];
+    return !!guard && guard.owner === FM.core.screenIdentity(FMTOKEN)
+      && guard.owner === FM.core.screenIdentity(token || FMTOKEN)
+      && (guard.pending > 0 || seq <= guard.seq);
+  },
+  retireToggles: function (seq) {
+    Object.keys(FM.core.toggles).forEach(function (id) {
+      var guard = FM.core.toggles[id];
+      if (guard.owner !== FM.core.screenIdentity(FMTOKEN) || guard.pending === 0 && seq > guard.seq) {
+        delete FM.core.toggles[id];
+      }
+    });
+  },
   // A refresh requested while one is in flight is coalesced into a single follow-up
   // refresh, never dropped. pendingHard keeps a coalesced hard refresh hard: the flows that
   // need a full replace (pitch move, date pick) need it precisely because a morph leaves the
@@ -246,7 +270,7 @@ FM.core = {
     FM.core.actionFocus = { id: active.id, owner: owner, candidates: candidates, heading: heading && heading.id, inputs: inputs, inputAttempts: 0, rowMove: rowMove,
       rowRemoval: row && rowAction === 'delete' ? { table: row.closest('table').id, index: row.sectionRowIndex, count: row.closest('tbody').rows.length } : null };
   },
-  preserveCheckedValue: function (previous, next) {
+  preserveCheckedValue: function (previous, next, seq, token) {
     if (!previous || previous.id !== next.id || previous.tagName !== next.tagName) { return; }
     var select = previous.tagName === 'SELECT';
     if (select) {
@@ -256,6 +280,11 @@ FM.core = {
           || next.hasAttribute('data-loaded')) { return; }
     } else if (previous.tagName !== 'INPUT'
         || (previous.type !== 'checkbox' && previous.type !== 'radio') || previous.type !== next.type) { return; }
+    if (!select && previous.type === 'checkbox' && seq != null && FM.core.toggleGuarded(previous.id, seq, token)) {
+      next.checked = previous.checked;
+      next.toggleAttribute('checked', previous.checked);
+      return;
+    }
     var observed = Number(previous.getAttribute('data-fm-value-at')) || 0;
     if (observed <= (Number(next.getAttribute('data-fm-value-at')) || 0)) { return; }
     if (select) {
@@ -267,11 +296,11 @@ FM.core = {
     }
     next.setAttribute('data-fm-value-at', observed);
   },
-  replaceBody: function (html) {
+  replaceBody: function (html, seq, token) {
     var fragment = document.createElement('template');
     fragment.innerHTML = html;
-    fragment.content.querySelectorAll('input[data-fm-value-at],select[data-fm-value-at]').forEach(function (next) {
-      FM.core.preserveCheckedValue(document.getElementById(next.id), next);
+    fragment.content.querySelectorAll('input[id],select[data-fm-value-at]').forEach(function (next) {
+      FM.core.preserveCheckedValue(document.getElementById(next.id), next, seq, token);
     });
     document.getElementById('fmroot').replaceChildren(fragment.content);
   },
@@ -459,6 +488,7 @@ FM.core = {
     // timeouts plus a full streamed-table read) so the catch below gets to retry instead.
     var ac = new AbortController();
     var abortTimer = setTimeout(function () { ac.abort(); }, 20000);
+    var seq = ++FM.core.fetchSeq;
     FM.core.bodyRequest = fetch('/body?c=1', { signal: ac.signal }).then(function (r) {
       if (!r.ok) { throw new Error('HTTP ' + r.status); }
       var t = r.headers.get('X-FM-Token');
@@ -578,7 +608,7 @@ FM.core = {
       // A morph failure must never strand a half-updated page: log it and fall back to the
       // full replace, which cannot half-fail.
       if (hard) {
-        FM.core.replaceBody(b.h);
+        FM.core.replaceBody(b.h, seq, b.t || FMTOKEN);
       } else {
         try {
           // Idiomorph also skips the active node's children for this option.
@@ -590,10 +620,10 @@ FM.core = {
           // even though the incoming native body correctly contains checked.
           var preserveEdit = !!(activeEdit && (activeEdit.matches('input:not([type=radio]):not([type=checkbox]), textarea, select') || activeEdit.isContentEditable));
           Idiomorph.morph(document.getElementById('fmroot'), b.h, { morphStyle: 'innerHTML', ignoreActiveValue: preserveEdit,
-            callbacks: { beforeNodeMorphed: FM.core.preserveCheckedValue } });
+            callbacks: { beforeNodeMorphed: function (previous, next) { FM.core.preserveCheckedValue(previous, next, seq, b.t || FMTOKEN); } } });
         } catch (err) {
           FM.core.clog('morph failed, falling back to replace: ' + (err && err.message ? err.message : err));
-          FM.core.replaceBody(b.h);
+          FM.core.replaceBody(b.h, seq, b.t || FMTOKEN);
         }
       }
       // The commentary live region belongs to the persistent page shell, outside #fmroot. Once
@@ -609,6 +639,7 @@ FM.core = {
         FM.core.speechNotice(false);
       }
       if (b.t) { FMTOKEN = b.t; }
+      FM.core.retireToggles(seq);
       if (FM.core.provisionalFocus && FM.core.provisionalFocus.owner !== FM.core.screenIdentity(FMTOKEN)) { FM.core.provisionalFocus = null; }
       FM.core.refreshFails = 0;
       // This DOM now reflects the server's latest compose; prior missing-id evidence is void.
@@ -839,14 +870,23 @@ FM.core = {
     if (document.querySelector('table[data-takers]')) { return FM.takers.panelAct(id); }
     var send = function () {
       FM.core.rememberNativeAction(id);
+      var checkbox = history && history.type === 'checkbox';
+      if (checkbox) {
+        var guard = FM.core.toggles[id];
+        if (!guard || guard.owner !== FM.core.screenIdentity(FMTOKEN)) {
+          guard = FM.core.toggles[id] = { pending: 0, seq: 0, owner: FM.core.screenIdentity(FMTOKEN) };
+        }
+        guard.pending++;
+      }
       return FM.core.command('/activate?id=' + encodeURIComponent(id) + '&screen=' + encodeURIComponent(FMTOKEN), function (t) {
+        if (checkbox) { FM.core.answerToggle(id, guard); }
         if (FM.core.actResult(t)) {
           if (history && history.hasAttribute('data-fm-message-view-id')) { FM.msgview.searchReturn = null; }
           if (FM.conversation) { FM.conversation.waiting = null; }
           if (FM.core.actionFocus && FM.core.actionFocus.id === id) { FM.core.actionFocus.rowMove = null; FM.core.actionFocus.rowRemoval = null; }
         }
         FM.core.refresh(); return t;
-      });
+      }, function () { if (checkbox) { FM.core.answerToggle(id, guard); } });
     };
     return history && history.hasAttribute('data-fm-history')
       ? FM.core.historyCommand(history.getAttribute('data-fm-history'), send) : send();

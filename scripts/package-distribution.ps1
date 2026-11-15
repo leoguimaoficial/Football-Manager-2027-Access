@@ -73,9 +73,9 @@ try {
         @{path=$relative;sha256=(Get-FileHash -LiteralPath $_.FullName).Hash;size=$_.Length;kind=$(if($relative.StartsWith('BepInEx/plugins/FM27Access/')){'mod'}elseif($relative -eq 'BepInEx/config/BepInEx.cfg'){'config'}else{'loader'})}
     })
     $engine=([xml](Get-Content -LiteralPath "$ProjectRoot/installer/InstallerVersion.props" -Raw)).Project.PropertyGroup.InstallerEngineVersion
-    $manifest=@{schema=1;version=$version;minimumInstallerVersion=$engine;package=$package;packageSha256=(Get-FileHash -LiteralPath (Join-Path $out $package)).Hash;
+    $manifest=@{schema=1;version=$version;minimumInstallerVersion=$engine;loaderProxyPolicy='by-store';package=$package;packageSha256=(Get-FileHash -LiteralPath (Join-Path $out $package)).Hash;
         packageSize=(Get-Item -LiteralPath (Join-Path $out $package)).Length;bepInExVersion=$lock.version;platforms=@('Steam','Xbox','Epic','Manual');
-        compatibility='Windows x64; Unity 6000.3.x; IL2CPP metadata 39; fresh local interop and the bundled required managed API contract. Steam build 26577676 has targeted cold startup and main-menu action evidence using the supported version.dll proxy. Xbox retains historical scoped evidence; the alternate proxy on Xbox, Epic, full Steam careers and external clean-machine onboarding remain unqualified.';files=$files}
+        compatibility='Windows x64; Unity 6000.3.x; IL2CPP metadata 39; fresh local interop and the bundled required managed API contract. The installer selects winhttp.dll for Xbox/Microsoft Store and version.dll for other stores, with one pinned proxy only. Steam has targeted live qualification; Xbox 0.9.2435.0 compiler/API and installer checks pass, with a new Xbox live retest pending. Epic and external clean-machine onboarding remain unqualified.';files=$files}
     $manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath "$out/FM27Access-Manifest.json" -Encoding utf8
     @{schema=1;version=$engine;sha256=(Get-FileHash -LiteralPath "$out/FM27Access-Installer.exe").Hash;size=(Get-Item -LiteralPath "$out/FM27Access-Installer.exe").Length;
         url="https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/download/v$version/FM27Access-Installer.exe"} | ConvertTo-Json | Set-Content -LiteralPath "$out/FM27Access-Installer.json" -Encoding utf8

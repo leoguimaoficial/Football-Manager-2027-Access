@@ -1,5 +1,27 @@
 # Distribution, selected builds and publication
 
+## Authorized 0.1.1 / installer1.0.4 preparation
+
+The maintainer explicitly authorizes integrating the measured table improvements,
+correcting Xbox/Microsoft Store coexistence, updating the private compiler ZIP and
+publishing a new0.1.1 release with engine1.0.4. Original0.1.0 assets/tag remain
+intact. The new package/profile declares `by-store`, requires engine1.0.4 and
+contains only canonical version.dll. Installer and runtime guard resolve Xbox to
+winhttp.dll and other stores to version.dll without shipping/installing two proxies
+or changing bytes; exact installed paths/hashes remain receipt-owned.
+
+The Xbox API refusal is separately fixed in the required-member capture, not by
+removing the compatibility guard. Actual real-reference compilation/API checks
+cover Steam and preserved Xbox0.9.2435.0; fresh Xbox live qualification is pending.
+Private build-reference ZIP is explicitly refreshed at88df2f483130877ca7efc0d8c5e2c5edee945aad
+with identity1650B2B6032CAA78EE772DFFB9F3F4A8F556D22775FBD9F342BD9DF2C8DB5C0B.
+Temporary refresh work now uses ignored artifacts, covered by the existing cleanup
+routine. The two previously blocked old private copies are not deleted indirectly.
+
+Local regression and complete twenty-language guide checks pass as recorded in
+testing. Exact hosted build, cold Steam installation and public-download evidence
+will be recorded on completion; prepared source is not publication proof.
+
 FM27 Access 0.1.0 is the first public release, explicitly authorized by the
 maintainer on 2026-11-15. GitHub-hosted Windows runners build and verify the full
 distribution. Publication promotes the selected original artifacts after

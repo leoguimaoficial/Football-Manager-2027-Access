@@ -1,3 +1,29 @@
+## FM26 0.2.17 Many-selection adaptation — local trial
+
+Upstream commits7775d90,90b1ec6 and5ff0048 add stale-checkbox-body protection,
+index-native Many-mode toggles, a cheaper classification predicate order and
+page-only bulk selection. Reuse the classification and selection patterns;
+keep FM27's existing actual record identities and command-owner/availability
+checks. The new checkbox guard also respects incoming native owner identity and
+the existing newer-value timestamps, including the hard-replacement path.
+
+Actual Steam PlayerSearchReport/playertable has SelectionMode.Many, an
+ExpandedToggle inside StreamedTable.SelectionCell and VirtualisedList, and a
+separate FM.UI.PersonReference binding. Items are integers0,1,2...; they cannot
+certify the player's identity. The FM27 handle therefore still realizes and
+validates that exact reference before the native index toggle. Serialize this
+background operation with the existing streamed-reader gate: another selector
+or body harvest otherwise scrolls the record away mid-validation. No native
+calls leave the Unity dispatcher and no game-state cache or identity bypass is
+introduced. AtLeastOne pickers retain their original pointer/confirmation path.
+
+An initial rapid-three-checkbox trial refused one row; the shared gate corrects
+that demonstrated race. Subsequent native counts confirm3/0 through selection/
+inverse, including an overlapping body read. Page-only selection confirms50
+without retaining the previous page's50; original Select all confirms10,000.
+Final Release repeats the relevant actions without developer tools. Scope and
+timings are in the session/testing records; no complete-game qualification.
+
 ## Arrival titles omit internal fallback before native binding — F205
 
 Native setup titles can bind after PanelOpened. Preserve GetTitle for document/

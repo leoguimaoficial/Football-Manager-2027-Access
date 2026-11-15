@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <InstallerEngineVersion>1.0.3</InstallerEngineVersion>
+    <InstallerEngineVersion>1.0.4</InstallerEngineVersion>
     <Version>$(InstallerEngineVersion)</Version>
   </PropertyGroup>
 </Project>

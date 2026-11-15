@@ -15,6 +15,7 @@ function New-ModPayload {
     $loader=@($proxy)+@(Get-ChildItem -LiteralPath (Join-Path $NativeReport.Path 'BepInEx/core') -File -Filter '*.dll' | ForEach-Object {[IO.Path]::GetRelativePath($NativeReport.Path,$_.FullName)})
     @{Schema=2;Version=$NativeReport.GameVersion;Assembly=$NativeReport.AssemblyHash;Metadata=$NativeReport.MetadataHash;
         UnityFamily='6000.3.';MetadataVersion=39;ApiFile='required-api.json';
+        LoaderProxyPolicy=$(if($DistributionProxy){'by-store'}else{$null});
         LoaderFiles=@($loader | ForEach-Object {@{Relative=$(if($DistributionProxy -and $_ -eq $proxy){'version.dll'}else{$_});Sha256=(Get-FileHash -LiteralPath (Join-Path $NativeReport.Path $_)).Hash}})} | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath "$plugin/native-build.json" -Encoding utf8
     $contractCommand=if($ReferenceBuild){'api-contract-from-references'}else{'api-contract'}
     Invoke-DotNet -Arguments @((Join-Path $ProjectRoot 'tools/game-inspect/bin/Release/net10.0/game-inspect.dll'),$contractCommand,$plugin,$NativeReport.Path,"$plugin/required-api.json") | Out-Host

@@ -1564,6 +1564,7 @@ internal static class ServerHandles
         // its data index through the list's own selection API — index-native, no ScrollTo, no element
         // re-realisation — so a stale virtualised worldBound or shared-scroll shift cannot misfire it.
         public bool IsSelectionDisclosure;
+        public bool IsManySelectRowSelector;
 
         // A streamed table only keeps a handful of rows realised; the rest are recycled once
         // scrolled away. Re-realising a recycled row scrolls it back in, but its controls re-bind
@@ -1606,6 +1607,9 @@ internal static class ServerHandles
         // yet" — keep waiting. A row that never yields its activatable control within the budget is
         // genuinely gone (deleted/filtered out), the only case that reports unavailable.
         public override string Activate()
+            => IsManySelectRowSelector ? StreamedTableLoader.WithExclusiveRead(ActivateCore) : ActivateCore();
+
+        private string ActivateCore()
         {
             // A single-select disclosure row-selector selects by data index through the game's own
             // selection API — no ScrollTo, no element re-realisation, so there is nothing whose stale
@@ -1621,6 +1625,16 @@ internal static class ServerHandles
                     if (!ctx.SelectRow(Row, out var label))
                         return "That row is no longer available. Refresh.";
                     return string.IsNullOrEmpty(label) ? "Selected" : "Selected " + label;
+                });
+            }
+
+            if (IsManySelectRowSelector && NativeRowIdentity == null)
+            {
+                return MainThreadDispatcher.Invoke(() =>
+                {
+                    if (!TryValidate(out var error)) return error;
+                    var ctx = new Contexts.TableContext(Table, new ClassificationCache());
+                    return ToggleManyRow(ctx);
                 });
             }
 
@@ -1651,6 +1665,14 @@ internal static class ServerHandles
                         if (ServerText.IsDisabled(el)) return "That control is disabled.";
                         if (!ctx.SelectRow(Row, out var label)) return "That row is no longer available. Refresh.";
                         return string.IsNullOrEmpty(label) ? "Selected" : "Selected " + label;
+                    }
+                    if (IsManySelectRowSelector)
+                    {
+                        // FM27 record-backed rows keep their original binding and availability
+                        // barriers before taking the upstream index-addressed selection entry.
+                        if (ctx.PendingCellsAt(Row) > 0 || ++stable < StableFrames) return null;
+                        if (ServerText.IsDisabled(el)) return "That control is disabled.";
+                        return ToggleManyRow(ctx);
                     }
                     // The click has already gone in; the only thing left is to see the game own the
                     // new value. Answered before the geometry below because none of it applies any
@@ -1731,6 +1753,19 @@ internal static class ServerHandles
                     $"[Cell] row {Row} col {Col} selector still reads {toggleBefore} after {ConfirmBudgetMs}ms; reporting it unchanged.");
                 return "The selection did not change. Try again.";
             }
+        }
+
+        private string ToggleManyRow(Contexts.TableContext ctx)
+        {
+            if (!ctx.ToggleRowSelection(Row, out var selected, out var label))
+                return "That row is no longer available. Refresh.";
+            if (selected == null)
+            {
+                Speech.Degrade.Note($"[Cell] row {Row} selection toggle left the selected count unchanged or unreadable");
+                return "The selection did not change. Try again.";
+            }
+            return "Activated " + (string.IsNullOrEmpty(label) ? "" : label + ", ")
+                + "checkbox, " + (selected.Value ? "checked" : "unchecked");
         }
 
         // Choose an option of a two-option segmented cell control (the opposition grid's
@@ -2380,6 +2415,7 @@ internal static class ServerHandles
     {
         public VisualElement Table;
         public bool Clear;
+        public string PageTablePath;
 
         public override bool TryValidate(out string error)
         {
@@ -2395,7 +2431,10 @@ internal static class ServerHandles
         public override string Activate()
         {
             var ctx = new Contexts.TableContext(Table, new ClassificationCache());
-            return Clear ? ctx.ClearRowSelection() : ctx.SelectAllRows();
+            if (Clear) return ctx.ClearRowSelection();
+            if (PageTablePath != null)
+                return ctx.SelectPageRows(TablePages.Get(PageTablePath), StreamedTableLoader.PageRows);
+            return ctx.SelectAllRows();
         }
     }
 

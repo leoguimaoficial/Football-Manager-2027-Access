@@ -1,5 +1,42 @@
 # Native compatibility contract
 
+## Xbox refusal corrected for 0.1.1 / installer 1.0.4
+
+The maintainer supplied an actual Xbox0.9.2435.0 log refusing
+`UnityEngine.CoreModule::UnityEngine.Application (1)`. Against the preserved real
+Xbox reference archive at private commit0b7686c, the installed0.1.0 API contract
+reproduces that exact sole error. Steam's generated Application adds public
+RequestAdvertisingIdentifierAsync; Xbox omits it. The mod never calls it.
+
+Application is an explicitly audited direct-only static API in this source:
+runInBackground and isFocused. Capture their actual binary member references,
+including exact signatures/attributes, while preserving the type header/base
+and every other type's conservative public/reflection contract. New cases prove
+that omitting unused advertising passes, but changing the actually used focus
+signature still fails. No version label, native hash, interop-freshness or loader
+guard is bypassed. The new458-type/24,535-member contract validates against the
+actual Steam and Xbox references; the full production source compiles against
+both with zero errors/warnings. Xbox references are compiler inputs, never a
+fabricated running Xbox installation or fresh live qualification.
+
+The universal ZIP retains one canonical byte-identical Doorstop `version.dll`.
+Manifest/native-profile `by-store` policy resolves it to `winhttp.dll` for actual
+Xbox installations and `version.dll` otherwise. Engine1.0.4 maps archive paths
+to installed paths, records exact installed ownership and migrates only the
+unchanged owned alternative through the existing rollback. Runtime preflight
+resolves the same path/hash and refuses a second proxy. Legacy manifests/profiles
+retain their existing exact-name behavior. Manual copies must use the selected
+store name; receipt-managed Install ZIP is preferred. The reported log already
+reached Host, so that specific refusal was the API guard rather than proof of a
+Doorstop injection failure.
+
+Local validation:1,648 pure cases,64 installer cases,89 Companion JavaScript
+cases, eight distribution/manual contracts and all20 guide browser editions
+pass. Hosted exact-artifact preparation, Steam cold qualification and publication
+are recorded separately as they complete. A new Xbox live launch is unavailable
+after the maintainer uninstalled that game. Keep that boundary and existing
+career/match/NVDA limitations; do not claim all future builds are compatible.
+
 ## Steam production startup — F206, 2026-11-15
 
 Steam build 26577676 is now installed and is the primary adaptation target.

@@ -1,5 +1,125 @@
 # FM27 Access session progress
 
+## Authorized 0.1.1 / engine1.0.4 release preparation — 2026-11-15
+
+The maintainer approves integrating the table trial and publishing mod0.1.1,
+installer1.0.4 and the private compiler-reference ZIP. This supersedes the earlier
+no-commit restriction. The supplied Xbox0.9.2435.0 refusal is reproduced exactly
+against actual private0b7686c references: Steam-only Application advertising was
+unnecessarily required. Capture actual binary member usage for that audited
+direct-only Unity type, retaining all other public/reflection contracts and the
+actual required-signature/native-family/loader/freshness guards.
+
+The universal manifest/native profile uses `by-store`: one canonical version.dll
+in the ZIP, installed as winhttp.dll on Xbox/Microsoft Store and version.dll
+elsewhere. Exact per-file hash/ownership, only-owned unchanged migration and
+transaction rollback remain. Legacy package behavior stays exact-name. Source
+loader staging also selects by detected store. No native game/licensing patch.
+
+Full production source compiles against preserved Xbox0.9.2435.0 and current
+Steam26577676 with zero errors/warnings. The new458-type/24,535-member contract
+passes both.1,648 C#,64 installer,89 JS,eight distribution/manual cases and all20
+guide browser editions pass. The same correction paragraph is fully translated
+in all twenty manuals, preserving14 sections/257 units/eight reference targets.
+Private ZIP/pin is explicitly updated at88df2f483130877ca7efc0d8c5e2c5edee945aad,
+identity1650B2B6032CAA78EE772DFFB9F3F4A8F556D22775FBD9F342BD9DF2C8DB5C0B.
+The Xbox build is not installed locally; these are actual compiler/API inputs,
+not a fabricated fresh live Xbox test. Exact hosted artifact, Steam installation
+and publication are the remaining release steps, recorded separately below on
+completion. Original0.1.0 public assets/tag and the QA career remain preserved.
+
+## Local upstream 0.2.17 table trial — 2026-11-15
+
+The maintainer requested investigation, a local trial, real loading measurements,
+no commits and generated-workspace cleanup; they additionally authorized creating
+a men's career. Git Credential Manager access successfully fetched the original
+private upstream through5ff0048ffdc1bd87b4e3dc0a71a6440f8c432e7a. The pristine
+.upstream/fm26 checkout remains4d38a02. Relevant commits are7775d90 (checkboxes),
+90b1ec6 (classifier predicate order) and5ff0048 (Select all on page). Public
+0.2.17 notes are at
+https://github.com/DnDeezNuts/Football-Manager-2026-Access/releases/tag/v0.2.17.
+
+Changes remain uncommitted on codex/upstream-0217-table-trial. Public main stays
+exact1e932bd2fd72350e729816141a83f078d58f56f2; no mod release/tag/package changes.
+One build-wrapper call inadvertently invoked the pre-existing auto-refresh of
+private compiler references, creating/pushing f9424fd. Its exact sole change was
+undone with an explicit lease after confirming the remote tip and original
+parent. Private main and the local pin are restored to da9a5dd; local
+fm27.autoUpdateBuildReferences=false prevents further automatic writes. No FM27
+source commit was created. This incident was disclosed during the task.
+
+One fresh QA career uses FC Porto men,6 July2026 at09:00,29,240-player/default
+three-nation database and a fictitious FM27Access QA Performance coach. A required
+first preset was used; appearance customization was not audited. A fixed
+4-3-3/4-3-3 Control Possession tactic and native Quick Pick establish the shared
+lineup before saving `FM27Access QA Table Performance 20261115.fm`. No calendar day,
+match, transfer or other business action was advanced. The named QA save and
+native overwrite backup are outside the project and are retained.
+
+Original production core12107ea9 was measured, followed by candidates and a
+final cold Release9573a8ad-92b7-42df-89ff-86877126c1b2. Original12107ea9 was then
+cold-restored and remeasured. Final comparison below uses seven completed HTTP
+/body response timings per screen on the same checkpoint and sole production-
+document qualification client, with ordinary Companion stopped during each
+driver session. These are repeated screen-composition/load measurements, not
+game startup, save loading or a full-career speed claim. Windows was locked for
+much of the trial; frame-related variation remains in the individual samples.
+
+| Screen | Restored original median | Final candidate median | Reduction |
+| --- | ---: | ---: | ---: |
+| Squad,32 players |1018.572ms|925.239ms|9.16%|
+| Tactics, Both |1052.373ms|895.849ms|14.87%|
+| Player Database, name ascending, first50 of10,000 |1684.644ms|1481.451ms|12.06%|
+
+All three final comparisons have identical native table headers, row counts,
+row order and row text. Tactics includes its four pitch tables plus33-row player
+table. Default player-search ordering changes after a save reload, so the final
+database comparison explicitly sorts by name. Mode-switch regression also
+observes Both's own native column variant; the role-menu test uses Panoramic.
+
+The literal upstream selection path needed the FM27 identity adaptation recorded
+in migration notes. The initial concurrent test refused one recycled row; after
+sharing the existing reader gate, three rapid ticks and their inverses pass,
+including a concurrent body harvest. Independent Debug native probes confirm
+actual PersonReference identity, Many mode and selected counts3/0. Page-only
+selection independently confirms50 on each of two pages, replacement rather
+than accumulation, global selection10,000 and clear0. The final Release repeats
+rapid selections during a body read and page selection/replacement/clear.
+
+A delayed actual pre-activation body never writes unchecked after the confirmed
+tick; the next fresh body retires its guard. Controlled HTTP503 before execution
+occurs once, restores unchecked and releases the guard without replay. Existing
+native-value timestamp protection remains. Player-profile/Back restores exact
+row focus; all four pitch modes, native role-menu open/cancel and unchanged
+lineup/table values pass. Three WCAG-tagged axe audits pass; final Release has
+no page/request/network failures and rejects all four checked developer routes
+with404.1,644 C# and89 JavaScript cases pass; final Release build has zero errors
+and warnings. There is no manual NVDA or all-conditional-table qualification.
+
+Diagnostic/tool observations: one Debug-core-only launch against the production
+Host failed before HTTP mount because its diagnostic buffers are intentionally
+absent; no career was loaded in that attempt. A matching full Debug runtime was
+then installed cold under verified ownership. A readonly probe required a
+constructor-based query for the local compiler. A native screenshot while locked
+showed Windows sign-in and is excluded as layout evidence. Steam later stalled
+at CheckShaderDepotManifest before fm.exe; normal Steam restart recovered and
+that wait is excluded from timings. Harness retries for native destination,
+control-label/column variants and cross-realm assertions are not physical-user
+input claims.
+
+Final handoff restores all259 original installed-file hashes and the exact
+original installation.json bytes. Temporary compiler and Debug runtime are
+removed; game is closed. Experimental source/tests and this compact evidence
+remain local. Existing ownership/path-aware cleanup routines remove30 generated
+outputs (about4.75GiB), including archives, source extraction, project/installer
+build outputs, test caches, diagnostic backups and obsolete artifacts after
+evidence consolidation. Existing receipts, pinned SDK, FM26 baseline and licensed
+assets are preserved. Automatic approval review rejected a broader custom cleanup
+with `blocked by policy` and no detailed reason. The two extra private
+`.tools/reference-refresh-*` copies (278,890,725 bytes, about266MiB) remain
+preserved; their deletion is not bypassed through another mechanism. This is the
+remaining cleanup limit. F047/F115 and previous functional limitations remain.
+
 ## Full manual parity across all twenty languages — 2026-11-15
 
 The user explicitly corrected the previous partial-language approach: the whole

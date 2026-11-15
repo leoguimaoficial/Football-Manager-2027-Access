@@ -44,6 +44,7 @@ public static class NativeBuildGuard
         public string UnityFamily { get; set; }
         public int MetadataVersion { get; set; }
         public string ApiFile { get; set; }
+        public string LoaderProxyPolicy { get; set; }
         public FileFingerprint[] LoaderFiles { get; set; }
     }
     private static string SafeFile(string root, string relative)
@@ -63,8 +64,13 @@ public static class NativeBuildGuard
             var expected = JsonSerializer.Deserialize<Deployment>(input);
             if (expected?.Schema != 2 || expected.ApiFile != "required-api.json" || expected.MetadataVersion != 39
                 || expected.UnityFamily != "6000.3." || expected.LoaderFiles == null || expected.LoaderFiles.Length == 0
+                || expected.LoaderProxyPolicy is not (null or Speech.LoaderProxyPolicy.ByStore)
                 || expected.LoaderFiles.Any(file => file == null || string.IsNullOrWhiteSpace(file.Relative) || string.IsNullOrWhiteSpace(file.Sha256)))
                 return new(false, version, "Missing or unsupported native API compatibility profile.");
+            if (expected.LoaderProxyPolicy == Speech.LoaderProxyPolicy.ByStore
+                && (expected.LoaderFiles.Count(f => f.Relative is "version.dll" or "winhttp.dll") != 1
+                    || !expected.LoaderFiles.Any(f => f.Relative == "version.dll")))
+                return new(false, version, "Store-specific loader profile requires one canonical proxy.");
             var report = FM27Access.Platform.InstallationInspector.Inspect(gameRoot);
             version = report.GameVersion;
             if (report.Architecture != "x64" || report.MetadataVersion != expected.MetadataVersion || !report.UnityVersion.StartsWith(expected.UnityFamily, StringComparison.Ordinal))
@@ -78,13 +84,15 @@ public static class NativeBuildGuard
             using var sha = SHA256.Create();
             foreach (var file in expected.LoaderFiles.Where(f => f.Relative is "version.dll" or "winhttp.dll"))
             {
-                string other = file.Relative == "version.dll" ? "winhttp.dll" : "version.dll";
+                string installed = Speech.LoaderProxyPolicy.InstalledPath(file.Relative, report.Store, expected.LoaderProxyPolicy);
+                string other = installed == "version.dll" ? "winhttp.dll" : "version.dll";
                 if (File.Exists(Path.Combine(gameRoot, other)))
                     return new(false, version, "Conflicting Doorstop proxies; repair the owned installation before loading the mod.");
             }
             foreach (var file in expected.LoaderFiles)
             {
-                string path = SafeFile(gameRoot, file.Relative);
+                string relative = Speech.LoaderProxyPolicy.InstalledPath(file.Relative, report.Store, expected.LoaderProxyPolicy);
+                string path = SafeFile(gameRoot, relative);
                 using var stream = File.OpenRead(path);
                 if (!string.Equals(Convert.ToHexString(sha.ComputeHash(stream)), file.Sha256, StringComparison.OrdinalIgnoreCase))
                     return new(false, version, "Loader prerequisite differs: " + file.Relative);

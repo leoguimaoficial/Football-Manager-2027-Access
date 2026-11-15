@@ -71,6 +71,16 @@ internal static class StreamedTableLoader
     // a waiting reader just queues behind the active one and then reads fresh.
     private static readonly object _readLock = new object();
 
+    // FM27 table handles retain the actual bound record identity. A Many-mode
+    // checkbox may need to realize that record before using FM26's index-native
+    // toggle. Keep that across-frame validation exclusive with other selectors
+    // and body harvests, which otherwise scroll its row away mid-validation.
+    // Background threads only: never acquire this gate from a Unity dispatch.
+    internal static T WithExclusiveRead<T>(Func<T> operation)
+    {
+        lock (_readLock) return operation();
+    }
+
     internal static void Load(ScreenWalker.TableItem item)
     {
         // FM27 can rebind an existing table's columns after a tab action. The

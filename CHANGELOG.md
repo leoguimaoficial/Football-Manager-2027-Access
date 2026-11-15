@@ -8,6 +8,32 @@ Version 0.1.0 is the first public release.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-15
+
+### Faster screens and steadier table selection
+
+- Adapt DnDeezNuts's FM26 Access 0.2.17 improvements. In the measured FC Porto
+  men's checkpoint, repeated screen loads were about 9% faster for Squad, 15%
+  for Tactics and 12% for Player Database; results depend on the screen/machine.
+- Rapid player-checkbox presses retain the intended selections, including when
+  a table refresh is in progress. A stale response no longer unticks a choice.
+- Multi-page tables offer **Select all on page**, alongside the existing full
+  list selection and clear actions.
+
+### Xbox/Microsoft Store compatibility and installer 1.0.4
+
+- Correct the false incompatible-game rejection on Xbox/Microsoft Store while
+  retaining checks for the game functions the mod needs.
+- One installer chooses the appropriate loader name for Xbox/Microsoft Store
+  and other stores, keeps one proxy only and preserves owned-file migration and
+  rollback. Update both the installer and the mod to receive the complete fix.
+- The full manual retains all content in all twenty languages, including the
+  same new update instructions. Saves, bookmarks and settings remain in place.
+
+Steam has scoped live evidence; the Xbox correction is checked against the
+preserved real 0.9.2435.0 compiler/API inputs and installer cases. A fresh Xbox
+launch is still pending. See [testing](docs/TESTING.md) for exact evidence.
+
 ## [0.1.0] - 2026-11-15
 
 The entries below summarize implemented work supported by the source and

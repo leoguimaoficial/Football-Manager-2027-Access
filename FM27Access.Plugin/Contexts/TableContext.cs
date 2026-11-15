@@ -1288,6 +1288,7 @@ internal sealed class TableContext : IContainerContext
             IsChecked = state == "checked" || state == "on" || state == "selected",
             HasContextMenu = el.HasContextMenu,
             IsSelectionDisclosure = isDisclosure,
+            IsManySelectRowSelector = isToggle && el is ToggleAdapter rs && rs.IsManySelectRowSelector,
             ExcludeFromSelectionLabel = el is CompactLineChartAdapter,
         };
     }
@@ -1417,16 +1418,30 @@ internal sealed class TableContext : IContainerContext
     /// </summary>
     public string SelectAllRows()
     {
-        var virtList = GetVirtualisedList();
-        if (virtList == null) return Speech.Degrade.Value("table select all: list gone");
         int rows = RowCount();
         if (rows == 0) return "no rows";
         if (rows < 0) return Speech.Degrade.Value("table select all: row count unreadable");
+        return SelectRowRange(0, rows - 1);
+    }
+
+    public string SelectPageRows(int page, int pageSize)
+    {
+        int rows = RowCount();
+        if (rows == 0) return "no rows";
+        if (rows < 0) return Speech.Degrade.Value("table select page: row count unreadable");
+        var (start, count) = TablePaging.Window(rows, pageSize, page);
+        return SelectRowRange(start, start + count - 1);
+    }
+
+    private string SelectRowRange(int first, int last)
+    {
+        var virtList = GetVirtualisedList();
+        if (virtList == null) return Speech.Degrade.Value("table select: list gone");
         var vl = new SI.UI.VirtualisedList(((Il2CppSystem.Object)virtList).Pointer);
         var controller = vl.Controller;
-        if (controller == null) return Speech.Degrade.Value("table select all: no controller");
-        controller.UpdateSelection(false, false, 0);
-        controller.UpdateSelection(false, true, rows - 1);
+        if (controller == null) return Speech.Degrade.Value("table select: no controller");
+        controller.UpdateSelection(false, false, first);
+        controller.UpdateSelection(false, true, last);
         int selected = SelectedCount(vl);
         return selected < 0 ? "selected count unavailable, review the checkboxes"
             : $"{selected} selected";
@@ -1482,6 +1497,26 @@ internal sealed class TableContext : IContainerContext
         var controller = vl.Controller;
         if (controller == null) return false;
         controller.UpdateSelection(false, false, dataIndex);
+        label = ReadRow(dataIndex)?.SelectionLabel;
+        return true;
+    }
+
+    // FM26 0.2.17: use the native ctrl-click entry for Many-mode row selectors.
+    // Read the selection count back; a dispatch alone never confirms a change.
+    public bool ToggleRowSelection(int dataIndex, out bool? nowSelected, out string label)
+    {
+        nowSelected = null;
+        label = null;
+        var virtList = GetVirtualisedList();
+        if (virtList == null) return false;
+        var vl = new SI.UI.VirtualisedList(((Il2CppSystem.Object)virtList).Pointer);
+        if (vl.SelectionMode != SI.UI.VirtualisedList.SelectionModes.Many) return false;
+        var controller = vl.Controller;
+        if (controller == null || dataIndex < 0 || dataIndex >= RowCount()) return false;
+        int before = SelectedCount(vl);
+        controller.UpdateSelection(true, false, dataIndex);
+        int after = SelectedCount(vl);
+        if (before >= 0 && after >= 0 && after != before) nowSelected = after > before;
         label = ReadRow(dataIndex)?.SelectionLabel;
         return true;
     }
@@ -1689,6 +1724,7 @@ internal struct TableCellElement
     // selects the row by its data index through the list's own selection API, so the CellHandle drives it
     // index-natively (no ScrollTo re-realisation) — immune to virtualised worldBound staleness.
     public bool IsSelectionDisclosure;
+    public bool IsManySelectRowSelector;
     // The dropdown's accessible name was borrowed from its own displayed value (no real label
     // anywhere around it, no profile rename). The renderer relabels such a cell by its column
     // header and shows the borrowed value as the collapsed value.

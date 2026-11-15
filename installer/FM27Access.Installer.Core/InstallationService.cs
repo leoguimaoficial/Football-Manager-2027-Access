@@ -147,10 +147,16 @@ public sealed class InstallationService
         var oldFiles = old?.Files.ToDictionary(f => f.Path, StringComparer.OrdinalIgnoreCase) ?? new Dictionary<string, InstalledFile>(StringComparer.OrdinalIgnoreCase);
         var operations = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
         List<InstalledFile> receiptFiles = [];
-        var incoming = manifest.Files.Select(f => f.Path).ToHashSet(StringComparer.OrdinalIgnoreCase);
+        // Keep the archive canonical and map only its byte-identical proxy to the
+        // actual store's supported name. Installed ownership always records that name.
+        string store = manifest.LoaderProxyPolicy == LoaderProxyPolicy.ByStore
+            ? InstallationInspector.Inspect(root).Store : "";
+        string InstalledPath(string path) => LoaderProxyPolicy.InstalledPath(path, store, manifest.LoaderProxyPolicy);
+        var incoming = manifest.Files.Select(f => InstalledPath(f.Path)).ToHashSet(StringComparer.OrdinalIgnoreCase);
         var proxy = manifest.Files.Single(f => Distribution.IsLoaderProxy(f.Path));
+        string proxyPath = InstalledPath(proxy.Path);
         var retiredProxies = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (string previousProxy in new[] { "winhttp.dll", "version.dll" }.Where(p => p != proxy.Path))
+        foreach (string previousProxy in new[] { "winhttp.dll", "version.dll" }.Where(p => p != proxyPath))
         {
             string target = Distribution.Target(root, previousProxy);
             oldFiles.TryGetValue(previousProxy, out var prior);
@@ -169,7 +175,8 @@ public sealed class InstallationService
         foreach (var file in manifest.Files)
         {
             ct.ThrowIfCancellationRequested();
-            string source = Distribution.Target(staged, file.Path), target = Distribution.Target(root, file.Path);
+            string installedPath = InstalledPath(file.Path);
+            string source = Distribution.Target(staged, file.Path), target = Distribution.Target(root, installedPath);
             if (!File.Exists(source) || new FileInfo(source).Length != file.Size || !Distribution.Hash(source).Equals(file.Sha256, StringComparison.OrdinalIgnoreCase))
                 throw new InvalidDataException("Staging integrity check failed.");
             if (file.Kind == "config")
@@ -178,18 +185,18 @@ public sealed class InstallationService
                 if (BepInExService.LoggingText(defaults) != defaults) throw new InvalidDataException("Nonproduction default logging configuration.");
                 continue;
             }
-            bool owned = oldFiles.TryGetValue(file.Path, out var prior) && prior.Owned;
+            bool owned = oldFiles.TryGetValue(installedPath, out var prior) && prior.Owned;
             if (File.Exists(target) && !owned)
             {
                 if (file.Kind != "loader" || !Distribution.Hash(target).Equals(file.Sha256, StringComparison.OrdinalIgnoreCase))
                     throw new IOException("Unmanaged file collision: " + file.Path);
-                receiptFiles.Add(new(file.Path, file.Sha256, file.Kind, false)); continue;
+                receiptFiles.Add(new(installedPath, file.Sha256, file.Kind, false)); continue;
             }
             // A loader shared with other mods must never be replaced by another build.
             if (File.Exists(target) && file.Kind == "loader" && !Distribution.Hash(target).Equals(file.Sha256, StringComparison.OrdinalIgnoreCase))
                 throw new IOException("Incompatible existing loader preserved: " + file.Path);
-            receiptFiles.Add(new(file.Path, file.Sha256, file.Kind, true));
-            operations.Add(file.Path, source);
+            receiptFiles.Add(new(installedPath, file.Sha256, file.Kind, true));
+            operations.Add(installedPath, source);
         }
         foreach (var file in oldFiles.Values.Where(f => f.Owned && f.Kind == "mod" && !incoming.Contains(f.Path)))
         {
@@ -218,7 +225,7 @@ public sealed class InstallationService
         Transact(root, operations, () =>
         {
             foreach (var file in manifest.Files.Where(f => f.Kind != "config"))
-                if (!Distribution.Hash(Distribution.Target(root, file.Path)).Equals(file.Sha256, StringComparison.OrdinalIgnoreCase))
+                if (!Distribution.Hash(Distribution.Target(root, InstalledPath(file.Path))).Equals(file.Sha256, StringComparison.OrdinalIgnoreCase))
                     throw new IOException("Final integrity check failed.");
             validateFinal?.Invoke(root, staged);
             Distribution.Save(InstallationStateService.StatePath(root, "installation.json"), new InstallationReceipt(1, manifest.Version, receiptFiles.ToArray(), DateTimeOffset.UtcNow));

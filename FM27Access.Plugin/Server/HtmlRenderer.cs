@@ -2896,8 +2896,16 @@ internal static class HtmlRenderer
         string clearId = ServerHandles.RegisterKey(
             new ServerHandles.TableSelectionHandle { Table = t.Table, Clear = true }, tablePath + "|selclear");
         sb.Append("<p><button type=\"button\" id=\"").Append(allId)
-          .Append("\" onclick=\"act('").Append(allId).Append("')\">Select all</button> ")
-          .Append("<button type=\"button\" id=\"").Append(clearId)
+          .Append("\" onclick=\"act('").Append(allId).Append("')\">Select all</button> ");
+        if (t.PageCount > 1)
+        {
+            string pageId = ServerHandles.RegisterKey(
+                new ServerHandles.TableSelectionHandle { Table = t.Table, PageTablePath = tablePath },
+                tablePath + "|selpage");
+            sb.Append("<button type=\"button\" id=\"").Append(pageId)
+              .Append("\" onclick=\"act('").Append(pageId).Append("')\">Select all on page</button> ");
+        }
+        sb.Append("<button type=\"button\" id=\"").Append(clearId)
           .Append("\" onclick=\"act('").Append(clearId).Append("')\">Clear selection</button></p>");
     }
 
@@ -3120,7 +3128,7 @@ internal static class HtmlRenderer
     // interactive element carries its own handle keyed by its position in the cell, so the action
     // dispatches to the right control even when a cell holds several.
     internal static string RegisterCellHandle(VisualElement table, string tablePath,
-        int dataIndex, int col, int element, string nativeIdentity, bool disclosure = false)
+        int dataIndex, int col, int element, string nativeIdentity, bool disclosure = false, bool manySelector = false)
     {
         var key = tablePath + (nativeIdentity == null ? "@" + dataIndex : "@record:" + nativeIdentity)
             + "," + col + "#" + element;
@@ -3128,6 +3136,7 @@ internal static class HtmlRenderer
         {
             Table = table, Row = dataIndex, Col = col, ElementIndex = element,
             NativeRowIdentity = nativeIdentity, IsSelectionDisclosure = disclosure,
+            IsManySelectRowSelector = manySelector,
         }, key);
     }
 
@@ -3196,7 +3205,7 @@ internal static class HtmlRenderer
                 // standalone RenderNode checkbox case: the input conveys role and checked state to
                 // the screen reader, and onclick=act dispatches the same CellHandle the button path
                 // used (verified to flip the game checkbox), then the body refresh re-reads state.
-                string id = elem.IsDisabled ? null : RegisterCellHandle(table, tablePath, dataIndex, col, e, row.NativeIdentity);
+                string id = elem.IsDisabled ? null : RegisterCellHandle(table, tablePath, dataIndex, col, e, row.NativeIdentity, manySelector: elem.IsManySelectRowSelector);
                 string inputType = elem.IsRadio ? "radio" : "checkbox";
                 sb.Append("<input type=\"").Append(inputType).Append('"');
                 if (id != null) sb.Append(" id=\"").Append(id).Append('"');

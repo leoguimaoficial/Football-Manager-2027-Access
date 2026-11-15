@@ -3,6 +3,15 @@ using FM27Access.Platform;
 using FM27Access.Speech;
 using FM27Access.Build;
 
+if (args.Length == 3 && args[0] == "validate-api")
+{
+    var contract = JsonSerializer.Deserialize<ManagedApiContract.TypeContract[]>(File.ReadAllText(args[1]));
+    string[] errors = ManagedApiContract.Validate(contract!, args[2]);
+    Console.WriteLine(JsonSerializer.Serialize(new { supported = errors.Length == 0, errors }));
+    Environment.ExitCode = errors.Length == 0 ? 0 : 1;
+    return;
+}
+
 if (args.Length == 2 && args[0] == "describe-build-references")
 {
     var manifest = BuildReferenceBundle.Describe(args[1]);

@@ -43,6 +43,76 @@ public sealed class Fixture : IDisposable
 
 public sealed class InstallationTests
 {
+    private static void PlatformFixture(Fixture f, bool xbox)
+    {
+        Fixture.Write(f.Game, "fm.exe", "synthetic executable");
+        Fixture.Write(f.Game, "fm_Data/app.info", "Sports Interactive\nFootball Manager 27\n");
+        Fixture.Write(f.Game, "fm_Data/globalgamemanagers", "fixture\0" + "6000.3.18f1\0");
+        byte[] pe = new byte[256]; pe[0] = (byte)'M'; pe[1] = (byte)'Z';
+        System.Buffers.Binary.BinaryPrimitives.WriteInt32LittleEndian(pe.AsSpan(60), 128);
+        System.Buffers.Binary.BinaryPrimitives.WriteUInt32LittleEndian(pe.AsSpan(128), 0x4550);
+        System.Buffers.Binary.BinaryPrimitives.WriteUInt16LittleEndian(pe.AsSpan(132), 0x8664);
+        File.WriteAllBytes(Path.Combine(f.Game, "GameAssembly.dll"), pe);
+        byte[] metadata = new byte[8];
+        System.Buffers.Binary.BinaryPrimitives.WriteUInt32LittleEndian(metadata, 0xFAB11BAF);
+        System.Buffers.Binary.BinaryPrimitives.WriteInt32LittleEndian(metadata.AsSpan(4), 39);
+        string path = Path.Combine(f.Game, "fm_Data/il2cpp_data/Metadata/global-metadata.dat");
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!); File.WriteAllBytes(path, metadata);
+        if (xbox) Fixture.Write(f.Game, "MicrosoftGame.config", "<Game><Identity Name='SportsInteractive.FootballManager27' Version='0.9.2435.0'/></Game>");
+    }
+
+    [Theory]
+    [InlineData(true, "winhttp.dll", "version.dll")]
+    [InlineData(false, "version.dll", "winhttp.dll")]
+    public async Task OneCanonicalPackageInstallsOnlyTheStoreProxyWithExactOwnership(bool xbox, string selected, string absent)
+    {
+        using var f = new Fixture(); PlatformFixture(f, xbox);
+        var manifest = RenameProxy(f) with { MinimumInstallerVersion = "1.0.4", LoaderProxyPolicy = FM27Access.Speech.LoaderProxyPolicy.ByStore };
+        string expected = Distribution.Hash(Path.Combine(f.Staged, "version.dll"));
+        await f.Service().InstallAsync(f.Game, f.Staged, manifest, null, default);
+        var state = new InstallationStateService(); var receipt = state.Read(f.Game)!;
+        Assert.Equal(expected, Distribution.Hash(Path.Combine(f.Game, selected)));
+        Assert.False(File.Exists(Path.Combine(f.Game, absent)));
+        Assert.True(receipt.Files.Single(file => file.Path == selected).Owned);
+        Assert.DoesNotContain(receipt.Files, file => file.Path == absent);
+        Assert.Empty(state.Verify(f.Game, receipt));
+    }
+
+    [Theory]
+    [InlineData(true, "version.dll", "winhttp.dll")]
+    [InlineData(false, "winhttp.dll", "version.dll")]
+    public async Task StorePolicyMigratesOnlyOwnedUnchangedProxyAndRollbackRestoresIt(bool xbox, string oldProxy, string selected)
+    {
+        using var f = new Fixture(); PlatformFixture(f, xbox);
+        if (oldProxy == "version.dll") RenameProxy(f);
+        await f.Service().InstallAsync(f.Game, f.Staged, f.Manifest, null, default);
+        byte[] oldReceipt = File.ReadAllBytes(InstallationStateService.StatePath(f.Game, "installation.json"));
+        string oldHash = Distribution.Hash(Path.Combine(f.Game, oldProxy));
+        if (oldProxy == "winhttp.dll") RenameProxy(f);
+        var next = f.Build("0.1.1") with { MinimumInstallerVersion = "1.0.4", LoaderProxyPolicy = FM27Access.Speech.LoaderProxyPolicy.ByStore };
+        await Assert.ThrowsAsync<IOException>(() => f.Service(i => { if (i == 1) throw new IOException("fixture rollback"); })
+            .InstallAsync(f.Game, f.Staged, next, null, default));
+        Assert.Equal(oldReceipt, File.ReadAllBytes(InstallationStateService.StatePath(f.Game, "installation.json")));
+        Assert.Equal(oldHash, Distribution.Hash(Path.Combine(f.Game, oldProxy)));
+        Assert.False(File.Exists(Path.Combine(f.Game, selected)));
+        await f.Service().InstallAsync(f.Game, f.Staged, next, null, default);
+        Assert.False(File.Exists(Path.Combine(f.Game, oldProxy)));
+        Assert.Equal(oldHash, Distribution.Hash(Path.Combine(f.Game, selected)));
+        var state = new InstallationStateService(); Assert.Empty(state.Verify(f.Game, state.Read(f.Game)!));
+    }
+
+    [Fact]
+    public void StorePolicyCannotBeUsedWithAnOldEngineMinimumOrANoncanonicalPackage()
+    {
+        using var f = new Fixture();
+        var policy = f.Manifest with { LoaderProxyPolicy = FM27Access.Speech.LoaderProxyPolicy.ByStore };
+        Assert.Throws<InvalidDataException>(() => Distribution.Validate(policy));
+        Assert.Throws<InvalidDataException>(() => Distribution.Validate(policy with { MinimumInstallerVersion = "1.0.4" }));
+        var canonical = RenameProxy(f) with { MinimumInstallerVersion = "1.0.4", LoaderProxyPolicy = FM27Access.Speech.LoaderProxyPolicy.ByStore };
+        Distribution.Validate(canonical);
+        Assert.Throws<InvalidDataException>(() => Distribution.Validate(canonical with { LoaderProxyPolicy = "guess" }));
+    }
+
     private static DistributionManifest RenameProxy(Fixture f, string from = "winhttp.dll", string to = "version.dll")
     {
         File.Move(Distribution.Target(f.Staged, from), Distribution.Target(f.Staged, to));

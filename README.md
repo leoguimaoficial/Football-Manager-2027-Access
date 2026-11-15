@@ -4,14 +4,14 @@ FM27 Access (Football Manager 2027 Access) is an unofficial accessibility mod
 that aims to help blind players manage their football clubs using a screen
 reader and keyboard navigation.
 
-**FM27 Access 0.1.0** is the first public release.
+**FM27 Access 0.1.1** improves large-screen loading, table selection and Xbox/Microsoft Store compatibility.
 
 ## Download
 
 - [Download the universal Windows installer](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-Installer.exe) — recommended.
-- [Download the complete 0.1.0 ZIP](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/download/v0.1.0/FM27Access-v0.1.0.zip) — manual or offline installation.
+- [Download the complete 0.1.1 ZIP](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/download/v0.1.1/FM27Access-v0.1.1.zip) — offline installation through **Install ZIP**.
 - [Download the multilingual user guide](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-UserGuide.html).
-- [Release notes and all downloads](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.0).
+- [Release notes and all downloads](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.1).
 
 You need Windows 10 or 11 x64, Football Manager 2027, a screen reader such as
 NVDA, and Microsoft Edge WebView2, which normally comes with Microsoft Edge.
@@ -28,11 +28,13 @@ few minutes without speech; wait for the Companion window, then use it with your
 screen reader. You do not need to install .NET or BepInEx separately. The BepInEx
 console stays closed.
 
-Steam is the primary development target. If you installed the original 0.1.0
-package and startup stops at the logos, use the current installer and **Repair**
-0.1.0. Engine 1.0.1 or newer safely replaces the installation's old Doorstop proxy;
-the mod version stays 0.1.0. See the [compatibility record](docs/NATIVE_COMPATIBILITY.md)
-for the tested Steam build and the limits of Xbox/Epic qualification.
+Steam is the primary development target. For Steam startup freezes or an Xbox/
+Microsoft Store compatibility error with 0.1.0, close the game and Companion,
+update the installer to **1.0.4** or newer, then update the mod to **0.1.1**.
+The same installer selects the appropriate files for each store; updating the
+installer alone does not update the installed mod. Saves and settings are kept.
+See the [compatibility record](docs/NATIVE_COMPATIBILITY.md) for actual evidence
+and the remaining fresh Xbox/Epic live-test limits.
 
 Use the same installer to update, repair or uninstall. Your saves, bookmarks and
 settings are kept. See [installation help](INSTALL.md) and the
@@ -66,8 +68,10 @@ choices and rules remain the source of the information presented to players.
 - Choose from 20 installer and user-guide languages, including Brazilian Portuguese.
 
 The installer detects Steam, Epic and Xbox PC installations and checks whether
-the selected package can be installed. Current in-game evidence comes from
-targeted Xbox PC scenarios. See [known issues](docs/KNOWN_ISSUES.md) for specific
+the selected package can be installed. Current evidence includes targeted Steam
+screens and historical Xbox PC scenarios. The Xbox 0.1.1 correction is checked
+against preserved real Xbox compiler/API inputs; a fresh Xbox launch remains
+pending. See [known issues](docs/KNOWN_ISSUES.md) for specific
 limitations and [the changelog](CHANGELOG.md) for the changes in this release.
 
 The [universal installer](installer/README.md) uses the same

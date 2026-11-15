@@ -44,6 +44,10 @@ if($stage.Copied -ne 2 -or $stage.ExcludedMods -ne 2){throw 'Loader payload boun
 if((Test-Path -LiteralPath "$staged/winhttp.dll") -or (Get-LoaderProxy $staged) -ne 'version.dll' -or
     (Get-FileHash -LiteralPath "$staged/version.dll").Hash -ne (Get-FileHash -LiteralPath "$bundle/winhttp.dll").Hash){throw 'Supported proxy rename did not preserve exact pinned bytes.'}
 if((Get-LoaderProxy $bundle) -ne 'winhttp.dll'){throw 'Legacy source proxy discovery failed.'}
+$xboxStaged=Join-Path $root 'xbox-runtime-only'
+$null=Copy-LoaderRuntimePayload $bundle $xboxStaged -ProxyName winhttp.dll
+if((Get-LoaderProxy $xboxStaged) -ne 'winhttp.dll' -or (Test-Path -LiteralPath "$xboxStaged/version.dll") -or
+    (Get-FileHash -LiteralPath "$xboxStaged/winhttp.dll").Hash -ne (Get-FileHash -LiteralPath "$bundle/winhttp.dll").Hash){throw 'Xbox staging did not retain the original supported proxy and exact bytes.'}
 if(Test-Path -LiteralPath "$staged/BepInEx/plugins"){throw 'Loader staged a diagnostic plugin.'}
 if(Test-Path -LiteralPath "$staged/BepInEx/patchers"){throw 'Loader staged a diagnostic patcher.'}
 if((Get-FileHash -LiteralPath "$staged/BepInEx/core/runtime.dll").Hash -ne (Get-FileHash -LiteralPath "$bundle/BepInEx/core/runtime.dll").Hash){throw 'Loader runtime changed while staging.'}

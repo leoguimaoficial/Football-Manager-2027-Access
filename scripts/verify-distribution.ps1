@@ -25,6 +25,11 @@ foreach($line in Get-Content -LiteralPath "$root/SHA256SUMS.txt"){
 }
 if($sums.Count -ne $required.Count -or @(Get-ChildItem -LiteralPath $root -Recurse -File).Count -ne $required.Count+1){throw 'Incomplete or extra distribution assets.'}
 $m=Get-Content -LiteralPath "$root/FM27Access-Manifest.json" -Raw | ConvertFrom-Json
+if($m.PSObject.Properties.Name -contains 'loaderProxyPolicy' -and $m.loaderProxyPolicy){
+    if($m.loaderProxyPolicy -ne 'by-store' -or [version]$m.minimumInstallerVersion -lt [version]'1.0.4'){
+        throw 'Invalid store-specific proxy policy or minimum installer version.'
+    }
+}
 if($m.schema -ne 1 -or $m.version -ne $ExpectedVersion -or $m.package -ne "FM27Access-v$ExpectedVersion.zip" -or
    $m.packageSha256 -ne $sums[$m.package] -or $m.packageSize -ne (Get-Item -LiteralPath (Join-Path $root $m.package)).Length -or
    $m.bepInExVersion -ne '6.0.0-be.793+dbc82f0' -or $m.minimumInstallerVersion -ne $info.installerVersion -or $m.files.Count -eq 0){throw 'Invalid distribution manifest.'}
@@ -49,6 +54,16 @@ try {
         $stream=$entry.Open()
         try {$hash=[Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($stream))}finally{$stream.Dispose()}
         if($hash -ne $expected[$entry.FullName].sha256){throw 'ZIP file integrity failure.'}
+        if($entry.FullName -eq 'BepInEx/plugins/FM27Access/native-build.json'){
+            $reader=[IO.StreamReader]::new($entry.Open())
+            try {$profile=$reader.ReadToEnd() | ConvertFrom-Json}finally{$reader.Dispose()}
+            if($profile.LoaderProxyPolicy -ne $m.loaderProxyPolicy){throw 'Native profile and installer proxy policies differ.'}
+            if($m.loaderProxyPolicy -eq 'by-store' -and
+               (@($profile.LoaderFiles | Where-Object Relative -In @('version.dll','winhttp.dll')).Count -ne 1 -or
+                !@($profile.LoaderFiles | Where-Object Relative -EQ 'version.dll').Count)){
+                throw 'Store-specific native profile must use one canonical version.dll proxy.'
+            }
+        }
         if($entry.FullName -eq 'BepInEx/config/BepInEx.cfg'){
             $reader=[IO.StreamReader]::new($entry.Open())
             try {$configuration=$reader.ReadToEnd()}finally{$reader.Dispose()}

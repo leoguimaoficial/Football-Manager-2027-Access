@@ -3,9 +3,9 @@
 Project documentation uses English. Official game labels and translations remain
 in the selected game language. Legal notices remain verbatim.
 
-For playing FM27 Access 0.1.0, start with [installation](../INSTALL.md) and the
+For playing FM27 Access 0.1.1, start with [installation](../INSTALL.md) and the
 [multilingual user guide](user/FM27Access-UserGuide.html). Downloads and the
-matching source archive are on the [release page](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.0).
+matching source archive are on the [release page](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.1).
 The pages below contain implementation details, historical audit evidence and
 developer workflows.
 

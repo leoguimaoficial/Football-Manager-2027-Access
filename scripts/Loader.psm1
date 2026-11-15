@@ -25,7 +25,8 @@ function Get-SafeTarget([string]$Root, [string]$Relative) {
     return $target
 }
 
-function Copy-LoaderRuntimePayload([string]$Source, [string]$Destination) {
+function Copy-LoaderRuntimePayload([string]$Source, [string]$Destination,
+    [ValidateSet('winhttp.dll','version.dll')][string]$ProxyName='version.dll') {
     $sourceRoot=[IO.Path]::GetFullPath($Source).TrimEnd('\')+'\'
     $destinationRoot=[IO.Path]::GetFullPath($Destination).TrimEnd('\')+'\'
     if($destinationRoot.StartsWith($sourceRoot,[StringComparison]::OrdinalIgnoreCase) -or
@@ -39,9 +40,8 @@ function Copy-LoaderRuntimePayload([string]$Source, [string]$Destination) {
     foreach($file in $files){
         $relative=[IO.Path]::GetRelativePath($sourceRoot,$file.FullName)
         $normalized=$relative.Replace('\','/')
-        # Official Doorstop proxy rename: preserve the pinned bytes and leave
-        # Steam's native WinHTTP loading path alone.
-        if($normalized -eq 'winhttp.dll'){$relative='version.dll'}
+        # Keep the pinned Doorstop bytes; install just the store's supported name.
+        if($normalized -in 'winhttp.dll','version.dll'){$relative=$ProxyName}
         # Loader bundles used for development can retain example/diagnostic
         # mods. Plugins and patchers have independent ownership/deployment;
         # restoring the loader must never silently reinstall either subtree.

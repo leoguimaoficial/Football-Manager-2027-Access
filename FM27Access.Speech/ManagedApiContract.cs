@@ -99,7 +99,7 @@ public static class ManagedApiContract
     private static string Generics(MetadataReader reader, Signatures signatures, GenericParameterHandleCollection handles) =>
         string.Join(";", handles.Select(h => { var p = reader.GetGenericParameter(h); return p.Index + ":" + (int)p.Attributes + ":" + string.Join(",", p.GetConstraints().Select(c => signatures.Entity(reader, reader.GetGenericParameterConstraint(c).Type)).OrderBy(s => s, StringComparer.Ordinal)); }));
 
-    private static TypeContract Describe(Image image, TypeDefinitionHandle handle)
+    private static TypeContract Describe(Image image, TypeDefinitionHandle handle, ISet<string>? referencedMembers = null)
     {
         var reader = image.Reader;
         var type = reader.GetTypeDefinition(handle);
@@ -112,12 +112,14 @@ public static class ManagedApiContract
         {
             var method = reader.GetMethodDefinition(h);
             if ((method.Attributes & MethodAttributes.MemberAccessMask) == MethodAttributes.Private) continue;
+            if (referencedMembers != null && !referencedMembers.Contains(reader.GetString(method.Name))) continue;
             members.Add(Hash("M|" + reader.GetString(method.Name) + "|" + (int)method.Attributes + "|" + Method(method.DecodeSignature(signatures, null)) + "|" + Generics(reader, signatures, method.GetGenericParameters())));
         }
         foreach (var h in type.GetFields())
         {
             var field = reader.GetFieldDefinition(h);
             if ((field.Attributes & FieldAttributes.FieldAccessMask) == FieldAttributes.Private) continue;
+            if (referencedMembers != null && !referencedMembers.Contains(reader.GetString(field.Name))) continue;
             string value = "";
             if (!field.GetDefaultValue().IsNil) { var constant = reader.GetConstant(field.GetDefaultValue()); value = constant.TypeCode + ":" + Convert.ToBase64String(reader.GetBlobBytes(constant.Value)); }
             members.Add(Hash("F|" + reader.GetString(field.Name) + "|" + (int)field.Attributes + "|" + field.DecodeSignature(signatures, null) + "|" + field.GetOffset() + "|" + value));
@@ -125,8 +127,15 @@ public static class ManagedApiContract
         return new TypeContract { Assembly = image.Name, Name = DefinitionName(reader, handle), Header = Hash(header), Members = members.OrderBy(s => s, StringComparer.Ordinal).ToArray() };
     }
 
-    /// <summary>Include public contracts of referenced interop types and their interop bases.
-    /// Captures reflection/patch targets on these types as well as directly called members.</summary>
+    // Application is used only through direct static calls (runInBackground/isFocused),
+    // never as a reflection or patch target. Its unrelated advertising API differs by
+    // store. Capture its actual binary references instead of requiring unused APIs.
+    // All other types retain the conservative full public/reflection contract.
+    private static bool DirectMembersOnly(string assembly, string name) =>
+        assembly == "UnityEngine.CoreModule" && name == "UnityEngine.Application";
+
+    /// <summary>Include public contracts of referenced interop types and their interop bases,
+    /// with actual member references for the explicitly audited direct-only Application API.</summary>
     public static TypeContract[] Capture(string[] modAssemblies, string interopDirectory)
     {
         var images = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase);
@@ -135,11 +144,22 @@ public static class ManagedApiContract
             foreach (var path in Directory.EnumerateFiles(interopDirectory, "*.dll"))
             { var image = new Image(path); if (!images.TryAdd(image.Name, image)) { image.Dispose(); throw new InvalidDataException("Duplicate interop assembly identity."); } }
             var pending = new Queue<(string assembly, string name)>();
+            var directMembers = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
             foreach (string path in modAssemblies)
             {
                 using var mod = new Image(path);
                 foreach (var handle in mod.Reader.TypeReferences)
                 { var reference = Reference(mod.Reader, handle); if (images.ContainsKey(reference.assembly)) pending.Enqueue(reference); }
+                foreach (var handle in mod.Reader.MemberReferences)
+                {
+                    var member = mod.Reader.GetMemberReference(handle);
+                    if (member.Parent.Kind != HandleKind.TypeReference) continue;
+                    var reference = Reference(mod.Reader, (TypeReferenceHandle)member.Parent);
+                    if (!DirectMembersOnly(reference.assembly, reference.name)) continue;
+                    string key = reference.assembly + "::" + reference.name;
+                    if (!directMembers.TryGetValue(key, out var names)) directMembers.Add(key, names = new(StringComparer.Ordinal));
+                    names.Add(mod.Reader.GetString(member.Name));
+                }
             }
             var contracts = new Dictionary<string, TypeContract>(StringComparer.Ordinal);
             while (pending.Count > 0)
@@ -149,7 +169,8 @@ public static class ManagedApiContract
                 if (contracts.ContainsKey(key)) continue;
                 var image = images[reference.assembly];
                 if (!image.Types.TryGetValue(reference.name, out var handle)) throw new InvalidDataException("Referenced native type missing: " + key);
-                contracts.Add(key, Describe(image, handle));
+                contracts.Add(key, Describe(image, handle, DirectMembersOnly(reference.assembly, reference.name)
+                    ? directMembers.GetValueOrDefault(key) ?? new HashSet<string>(StringComparer.Ordinal) : null));
                 var parent = image.Reader.GetTypeDefinition(handle).BaseType;
                 var bases = new Signatures(image.Name, type => { if(images.ContainsKey(type.assembly))pending.Enqueue(type); });
                 bases.Entity(image.Reader, parent); // Includes generic base definitions/arguments.

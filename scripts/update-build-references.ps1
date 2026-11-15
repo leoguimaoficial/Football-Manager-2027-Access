@@ -11,7 +11,7 @@ if($LASTEXITCODE -ne 0){throw 'Reference inspection failed. Let the pinned BepIn
 $result=$raw|ConvertFrom-Json
 $pin=Get-Content -LiteralPath $baseline -Raw|ConvertFrom-Json
 if($pin.identity -eq $result.identity){Write-Output 'Cloud compiler references are already current.';return}
-$work=Join-Path $ProjectRoot ('.tools/reference-refresh-'+[Guid]::NewGuid().ToString('N'))
+$work=Join-Path $ProjectRoot ('artifacts/reference-refresh-'+[Guid]::NewGuid().ToString('N'))
 $export=Join-Path $work 'export'
 $checkout=Join-Path $work 'private'
 New-Item -ItemType Directory -Path $work | Out-Null
