@@ -1,0 +1,11 @@
+{
+  "panelName": "HomegrownStatusCard",
+  "headings": [
+    { "match": { "name": "text", "typeName": "SIText", "parentName": "NationEligibility-Frame" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "parentName": "ClubEligibility-Frame" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "parentName": "NationalityEligibility-Frame" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" } }
+  ]
+}

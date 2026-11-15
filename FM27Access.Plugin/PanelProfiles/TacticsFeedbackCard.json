@@ -1,0 +1,7 @@
+{
+  "panelName": "TacticsFeedbackCard",
+  "headings": [
+    { "match": { "name": "header", "typeName": "SIText" }, "level": 2 },
+    { "match": { "typeName": "SIText", "parentName": "Title" }, "level": 2 }
+  ]
+}

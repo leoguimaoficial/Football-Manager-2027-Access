@@ -1,0 +1,28 @@
+{
+  "panelName": "ManagerPersonaDetailsScreen_EditMode",
+  "headings": [
+    { "match": { "name": "Title", "typeName": "SIText", "parentName": "Header" }, "level": 2 },
+    { "match": { "name": "SectionTitle", "typeName": "SIText", "parentName": "header" }, "level": 2 },
+    { "match": { "name": "SectionTitle", "typeName": "SIText", "pathContains": "NameStep" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "Text", "typeName": "SIText", "pathStartsWith": "TemplateContainer > VisualElement(\"Header\") > VisualElement(\"LHS\")" } },
+    { "match": { "name": "text", "typeName": "SIText", "pathContains": "step1-frame" } },
+    { "match": { "typeName": "SIText", "pathContains": "add-nationality" } },
+    { "match": { "typeName": "SIText", "pathContains": "add-language" } }
+  ],
+  "renames": [
+    {
+      "match": { "name": "buttons-controls-pc-default", "pathContains": "show-more-button" },
+      "label": "Show more name options"
+    },
+    {
+      "match": { "name": "buttons-controls-pc-default", "pathContains": "add-nationality" },
+      "label": "Add nationality"
+    },
+    {
+      "match": { "name": "buttons-controls-pc-default", "pathContains": "add-language" },
+      "label": "Add language"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "panelName": "JobCentre",
+  "hides": [
+    {
+      "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" }
+    }
+  ]
+}

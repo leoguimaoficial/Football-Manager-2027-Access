@@ -1,0 +1,9 @@
+{
+  "panelName": "SquadTargetsCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"CustomContent\")", "childIndex": 0 },
+      "level": 2
+    }
+  ]
+}

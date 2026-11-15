@@ -1,0 +1,18 @@
+{
+  "panelName": "MedicalCentreSeasonSummaryCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"medicial-injury history\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement > VisualElement(\"Frame 1000002751\")" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "typeName": "SIImage", "pathContains": "medicial-injury history" }
+    }
+  ]
+}

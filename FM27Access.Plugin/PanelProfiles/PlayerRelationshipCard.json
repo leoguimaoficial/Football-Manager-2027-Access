@@ -1,0 +1,14 @@
+{
+  "panelName": "PlayerRelationshipCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"card states-relationship with you frame\")" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "typeName": "SIImage", "pathContains": "card states-relationship with you frame" }
+    }
+  ]
+}

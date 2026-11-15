@@ -1,0 +1,14 @@
+{
+  "panelName": "OnThePitchPenaltiesCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "Auto Layout Horizontal frame" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "Bib", "typeName": "SIImage" }
+    }
+  ]
+}

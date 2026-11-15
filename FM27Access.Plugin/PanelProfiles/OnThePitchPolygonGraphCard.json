@@ -1,0 +1,9 @@
+{
+  // Paths are LEAF-FIRST (immediate parent first), the reverse of how /classify prints them.
+  "panelName": "OnThePitchPolygonGraphCard",
+  "headings": [
+    // "Summary" titles the written analysis. Its prose sibling sits in a named Frame, so the
+    // unnamed-parent path below picks up the title alone.
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Frame\")" }, "level": 2 }
+  ]
+}

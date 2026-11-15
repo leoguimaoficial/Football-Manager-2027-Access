@@ -1,0 +1,10 @@
+{
+  "panelName": "GameCreationCustomLeagueSetup",
+  "headings": [
+    { "match": { "parentName": "Header", "typeName": "SIText" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "typeName": "SIText", "childIndex": 0, "pathStartsWith": "VisualElement(\"frame\") > BindingRoot > Panel(\"GameCreationCustomLeagueSetup\")" } }
+  ],
+  "renames": []
+}

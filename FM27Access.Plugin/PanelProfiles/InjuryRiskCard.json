@@ -1,0 +1,19 @@
+{
+  "panelName": "InjuryRiskCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "name": "text", "parentName": "VisibleInjured", "pathContains": "frame-fitness-injury risks" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "name": "text", "parentName": "VisibleNormal", "pathStartsWith": "SIVisible(\"VisibleNormal\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > SIStyleSetter(\"frame-fitness-injury risks\")" },
+      "level": 2
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "data_display-graphs-stepper-step_bar", "typeName": "SIStepper" },
+      "label": "Level"
+    }
+  ]
+}

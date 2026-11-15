@@ -1,0 +1,13 @@
+{
+  "panelName": "MatchPreviewCard",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "ClubButton" }
+    },
+    {
+      "match": { "typeName": "SIProgressBar", "pathContains": "MatchPrediction" }
+    }
+  ],
+  "renames": []
+}

@@ -1,0 +1,9 @@
+{
+  "panelName": "RecruitmentWageBudgetCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"frames-wage budget-graph\")" },
+      "level": 2
+    }
+  ]
+}

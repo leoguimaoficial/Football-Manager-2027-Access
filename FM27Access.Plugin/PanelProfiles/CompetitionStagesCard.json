@@ -1,0 +1,19 @@
+{
+  "panelName": "CompetitionStagesCard",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "prev", "pathContains": "SelectPrevEnable" },
+      "label": "Previous season"
+    },
+    {
+      "match": { "name": "next", "pathContains": "SelectNextEnabled" },
+      "label": "Next season"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "fm27-access-companion-tests",
+  "private": true,
+  "scripts": {
+    "test": "pwsh -NoProfile -File ../../scripts/test-web.ps1",
+    "test:unit": "node --test core-history.test.cjs message-return-focus.test.cjs production-report.test.cjs command-method.test.cjs startup-recovery.test.cjs browser-launch-options.test.cjs shared-navigation-reference.test.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.61.1",
+    "@axe-core/playwright": "4.11.1"
+  }
+}

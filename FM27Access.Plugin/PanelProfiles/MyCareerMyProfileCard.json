@@ -1,0 +1,59 @@
+{
+  "panelName": "MyCareerMyProfileCard",
+  "headings": [
+    // FM27 builds these sections as named blocks with ordinary title texts.
+    { "match": { "name": "text", "typeName": "SIText", "childIndex": 0, "pathStartsWith": "VisualElement > VisualElement > VisualElement(\"Frame\") > ComponentElement > TemplateContainer > BlockElement", "pathContains": "BindableVariableSizedGridElement(\"MyProfileAttributesBlock\")" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement > VisualElement(\"Container\") > BindingExpect > TemplateContainer > BlockElement", "pathContains": "BindableVariableSizedGridElement(\"MyProfileCoachingInfoBlock\")" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement > VisualElement(\"Frame\") > BindingExpect > TemplateContainer > BlockElement", "pathContains": "BindableVariableSizedGridElement(\"MyProfilePersonalInfoBlock\")" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement > VisualElement(\"Frame\") > BindingExpect > TemplateContainer > BlockElement", "pathContains": "BindableVariableSizedGridElement(\"MyProfileTendenciesBlock\")" }, "level": 2 },
+    {
+      "match": { "parentName": "Header-Coaching", "name": "attribute-name", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "parentName": "Header-Mental", "name": "attribute-name", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "parentName": "Header-Knowledge", "name": "attribute-name", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "parentName": "Header-Info", "name": "name", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "parentName": "Header-Tendencies", "name": "name", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "parentName": "tile-t 2x4-states-template-headings-3-Icon String frame" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    // The old attribute-value header exclusion, adapted to the new title row.
+    { "match": { "name": "text", "typeName": "SIText", "childIndex": 1, "pathStartsWith": "VisualElement > VisualElement > VisualElement(\"Frame\") > ComponentElement > TemplateContainer > BlockElement", "pathContains": "BindableVariableSizedGridElement(\"MyProfileAttributesBlock\")" } },
+    {
+      "match": { "name": "ClubButton", "pathContains": "ClubIcon" }
+    },
+    {
+      "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" }
+    },
+    {
+      "match": { "typeName": "SIButton", "pathContains": "Frame 1000003782" }
+    },
+    {
+      "match": { "parentName": "Header-Coaching", "name": "attribute-value", "typeName": "SIText" }
+    },
+    {
+      "match": { "parentName": "Header-Mental", "name": "attribute-value", "typeName": "SIText" }
+    },
+    {
+      "match": { "parentName": "Header-Knowledge", "name": "attribute-value", "typeName": "SIText" }
+    },
+    {
+      "match": { "parentName": "frame-staff", "typeName": "SIText" }
+    }
+  ]
+}

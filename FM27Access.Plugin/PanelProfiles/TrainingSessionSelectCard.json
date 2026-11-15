@@ -1,0 +1,13 @@
+{
+  "panelName": "TrainingSessionSelectCard",
+  "headings": [
+    {
+      "match": {
+        "name": "text",
+        "typeName": "SIText",
+        "pathContains": "VisualElement(\"Frame\") > VisualElement(\"titleframe\")"
+      },
+      "level": 2
+    }
+  ]
+}

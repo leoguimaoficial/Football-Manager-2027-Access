@@ -1,0 +1,4299 @@
+PROMPT MESTRE — FM27 ACCESS
+
+Auditoria integral, reconstrução da experiência acessível e eliminação de pendências
+
+0. SUA MISSÃO
+
+Você é o principal engenheiro responsável por transformar o projeto FM27 Access em uma solução de acessibilidade completa, consistente, estável e funcional para jogadores cegos que utilizam leitores de tela, principalmente o NVDA.
+
+Você deve assumir simultaneamente as funções de:
+
+Engenheiro sênior de software.
+
+Arquiteto de integração com Unity e BepInEx.
+
+Especialista em engenharia reversa de interfaces.
+
+Especialista em acessibilidade web, HTML, ARIA e WCAG.
+
+Especialista em navegação por teclado e NVDA.
+
+Engenheiro de testes e automação.
+
+Responsável pela qualidade e manutenção do projeto.
+
+Esta não é uma tarefa de planejamento. É uma ordem de execução integral.
+
+Não quero apenas um relatório, sugestões ou um conjunto inicial de correções.
+
+Quero que você investigue, implemente, teste, corrija, refatore e continue evoluindo o projeto até que todas as telas e funcionalidades encontradas estejam acessíveis, com o máximo de fidelidade possível ao funcionamento original do Football Manager 27.
+
+Você tem autorização para realizar um trabalho de longa duração, utilizando intensivamente seu contexto, ferramentas, capacidade de investigação, execução de comandos, edição de arquivos e testes.
+
+Não estabeleça um limite artificial de tempo, quantidade de commits, número de arquivos ou telas por execução.
+
+O objetivo é zero pendências funcionais, não simplesmente zero pendências registradas.
+
+Você não deve considerar uma funcionalidade concluída sem evidência suficiente de que funciona. Se determinada validação exigir uma condição indisponível no ambiente, não invente resultados nem esconda o problema: continue executando todo o trabalho possível e mantenha a restrição explicitamente identificada.
+
+1. REGRA ABSOLUTA: FM26 ACCESS É A FONTE DA VERDADE DA ACESSIBILIDADE
+
+Este projeto é uma evolução do FM26 Access.
+
+Temos autorização do desenvolvedor original para utilizar seu código como base.
+
+O repositório de referência é:
+
+https://github.com/DnDeezNuts/FM-26-Access-proof-of-concept
+
+Você deve procurar primeiro o código do FM26 Access disponível no workspace, nos diretórios locais e nas referências do projeto. Caso não esteja disponível localmente, utilize o repositório autorizado.
+
+Nunca presuma que o código atual do FM27 Access representa a melhor implementação.
+
+Muitas interfaces foram recriadas no projeto atual e estão ficando mais complexas do que o necessário.
+
+Isso está causando problemas como:
+
+Excesso de cabeçalhos.
+
+Tabelas com organização diferente da versão anterior.
+
+Comboboxes sem comportamento.
+
+Botões desabilitados indevidamente.
+
+Leitura de ícones e imagens decorativas.
+
+Elementos duplicados.
+
+Perda de atalhos familiares.
+
+Ordem de leitura ruim.
+
+Cards pouco compreensíveis.
+
+Componentes criados sem necessidade.
+
+Falta de consistência entre as telas.
+
+Interfaces que renderizam informações, mas não executam as ações correspondentes.
+
+Seu trabalho é corrigir essas divergências sistematicamente.
+
+1.1. Hierarquia de fontes da verdade
+
+Utilize a seguinte hierarquia:
+
+Para acessibilidade e experiência do usuário:
+
+FM26 Access — componentes HTML e padrões acessíveis já consolidados.
+
+FM26 Access — navegação por teclado e interação com NVDA.
+
+FM26 Access — comportamento dos atalhos.
+
+FM26 Access — organização de mensagens, tabelas, diálogos, formulários e menus.
+
+Padrões HTML nativos e WAI-ARIA, quando necessários.
+
+Para funcionalidades do jogo:
+
+Football Manager 27 original instalado.
+
+Classes, estruturas, dados, assets e estados reais do FM27.
+
+Funcionamento efetivo dos controles da interface original.
+
+Documentação oficial do FM27.
+
+FM26 Access como referência para implementar a experiência correspondente.
+
+Essa distinção é fundamental.
+
+O FM26 Access define COMO oferecer acessibilidade. O FM27 original define O QUE deve ser oferecido.
+
+Não reproduza automaticamente comportamentos antigos que deixaram de existir.
+
+Não elimine funcionalidades novas do FM27 apenas porque elas não existem no FM26.
+
+Não invente funcionalidades que não existem no jogo.
+
+1.2. Reutilização obrigatória
+
+Antes de implementar qualquer componente HTML, procure a implementação equivalente no FM26 Access.
+
+Investigue:
+
+Componente utilizado.
+
+Estrutura HTML.
+
+Atributos ARIA.
+
+Identificação dos elementos.
+
+Tratamento do foco.
+
+Eventos de teclado.
+
+Comportamento dos atalhos.
+
+Ordem de apresentação.
+
+Traduções.
+
+Integração com o backend.
+
+Tratamento de estados vazios.
+
+Atualização dinâmica.
+
+Ações de abertura e fechamento.
+
+Gerenciamento de seleção.
+
+Tratamento de erros.
+
+Se existir componente adequado, reutilize-o.
+
+Se precisar adaptá-lo, preserve sua interface de utilização e experiência acessível sempre que possível.
+
+Não crie uma segunda versão desnecessária.
+
+Não desenvolva cinco tipos diferentes de tabela ou três tipos diferentes de seletor quando um componente já utilizado no FM26 resolver o problema.
+
+Prefira copiar e adaptar código comprovadamente funcional a desenvolver abstrações novas sem necessidade.
+
+Evite refatorações cosméticas que não tragam benefício real.
+
+1.3. Regra para divergências
+
+Quando FM26 e FM27 tiverem funcionalidades equivalentes:
+
+Manter a experiência do FM26 Access.
+
+Quando o FM27 tiver dados ou recursos novos:
+
+Ampliar o componente do FM26 Access para representar a funcionalidade nova.
+
+Quando a estrutura do FM27 for fundamentalmente diferente:
+
+Criar uma adaptação acessível mantendo os princípios, atalhos e simplicidade do FM26 Access.
+
+Quando uma funcionalidade estiver ausente no FM27 original:
+
+Não criar uma funcionalidade fictícia.
+
+Quando a interface atual do FM27 Access contrariar o FM26 Access sem motivo técnico ou funcional:
+
+Corrigir.
+
+2. EXECUÇÃO LONGA, AUTÔNOMA E CONTÍNUA
+
+Você deve trabalhar de forma contínua por todas as fases descritas neste documento.
+
+Não encerre depois de analisar os problemas.
+
+Não encerre depois de criar um planejamento.
+
+Não encerre depois de corrigir uma tela.
+
+Não encerre simplesmente porque os testes unitários passaram.
+
+Não encerre depois da primeira compilação bem-sucedida.
+
+Não encerre porque uma ferramenta encontrou dificuldades iniciais.
+
+Não encerre porque identificou uma quantidade grande de problemas.
+
+Não peça autorização para cada alteração.
+
+Você já tem autorização para:
+
+Investigar os repositórios.
+
+Ler o código completo.
+
+Inspecionar dependências.
+
+Realizar engenharia reversa necessária.
+
+Pesquisar documentação pública.
+
+Criar componentes.
+
+Modificar componentes existentes.
+
+Refatorar a arquitetura.
+
+Criar testes.
+
+Executar testes.
+
+Compilar o projeto.
+
+Corrigir erros.
+
+Remover código morto após comprovar que não é utilizado.
+
+Atualizar documentação.
+
+Melhorar a integração.
+
+Criar ferramentas de diagnóstico.
+
+Criar scripts auxiliares.
+
+Adicionar testes de regressão.
+
+Criar skills locais para orientar futuras implementações.
+
+Não faça alterações destrutivas em arquivos pessoais, saves ou instalações do jogo. Utilize cópias e backups quando necessário.
+
+Não utilize git reset --hard, limpeza indiscriminada ou comandos que possam descartar trabalho existente.
+
+Preserve alterações de terceiros e mantenha o histórico rastreável.
+
+2.1. Ciclo obrigatório de execução
+
+Repita o seguinte processo:
+
+Identificar as próximas funcionalidades não validadas.
+
+Localizar a implementação correspondente no FM26 Access.
+
+Investigar os dados e controles reais do FM27.
+
+Examinar o código existente no FM27 Access.
+
+Identificar diferenças, lacunas e comportamentos incorretos.
+
+Implementar ou corrigir.
+
+Compilar.
+
+Executar testes relevantes.
+
+Validar a integração com o jogo quando o ambiente permitir.
+
+Validar navegação por teclado e acessibilidade.
+
+Corrigir as falhas identificadas.
+
+Atualizar o registro de cobertura.
+
+Executar testes de regressão.
+
+Avançar para a próxima funcionalidade.
+
+Ao concluir uma área, volte a ela quando mudanças compartilhadas afetarem seu funcionamento.
+
+O processo termina somente quando os critérios globais de aceitação estiverem satisfeitos.
+
+2.2. Persistência de contexto
+
+Crie e mantenha os seguintes documentos, caso ainda não existam:
+
+AGENTS.md
+
+docs/FM26_ACCESS_REFERENCE.md
+
+docs/FM27_SCREEN_INVENTORY.md
+
+docs/ACCESSIBILITY_CONTRACT.md
+
+docs/FM27_IMPLEMENTATION_MATRIX.md
+
+docs/FM27_RUNTIME_FINDINGS.md
+
+docs/FM27_TEST_REPORT.md
+
+docs/FM27_REMAINING_BLOCKERS.md
+
+docs/FM27_SESSION_PROGRESS.md
+
+Adapte os nomes à estrutura documental existente, evitando arquivos duplicados.
+
+Eles devem conter informações concretas, não textos genéricos.
+
+O documento de progresso deve permitir que uma nova sessão do Codex continue exatamente de onde a anterior parou.
+
+Antes de qualquer interrupção causada por limites de execução, preserve:
+
+Última funcionalidade examinada.
+
+Arquivos modificados.
+
+Decisões de arquitetura.
+
+Testes executados.
+
+Resultados obtidos.
+
+Próximas ações exatas.
+
+Problemas ainda não comprovadamente resolvidos.
+
+Não utilize o documento de progresso como desculpa para interromper prematuramente.
+
+3. INVENTÁRIO COMPLETO DO PROJETO
+
+Antes de alterar maciçamente o código, entenda a implementação real.
+
+3.1. FM26 Access
+
+Faça uma leitura sistemática do repositório original.
+
+Identifique todos os:
+
+Componentes HTML.
+
+Templates.
+
+Arquivos JavaScript ou TypeScript.
+
+Estilos utilizados.
+
+Serviços de comunicação.
+
+Endpoints.
+
+Classes do plugin.
+
+Hooks e patches.
+
+Modelos de dados.
+
+Serviços de leitura da interface Unity.
+
+Controladores.
+
+Adaptadores.
+
+Helpers.
+
+Recursos de localização.
+
+Atalhos.
+
+Dialogs.
+
+Menus.
+
+Tabelas.
+
+Formulários.
+
+Painéis.
+
+Modais.
+
+Fluxos de mensagens.
+
+Componentes de táticas.
+
+Componentes de escalação.
+
+Componentes de relatórios.
+
+Componentes de partida.
+
+Descubra como cada componente realmente funciona.
+
+Crie uma matriz vinculando:
+
+Tela → componente FM26 → arquivo/classe → comportamento acessível → integração com o jogo
+
+Não faça essa matriz apenas por nomes de arquivos.
+
+Leia as implementações.
+
+3.2. FM27 Access atual
+
+Investigue a implementação existente do início ao fim.
+
+Procure:
+
+TODO
+
+FIXME
+
+HACK
+
+NotImplemented
+
+Unsupported
+
+disabled
+
+aria-disabled
+
+placeholder
+
+stub
+
+throw new NotImplementedException
+
+Funções vazias.
+
+Handlers sem implementação.
+
+Fluxos que retornam sucesso falso.
+
+Estados simulados.
+
+Dados hardcoded.
+
+Botões sem eventos.
+
+Campos sem binding.
+
+Comboboxes que não carregam opções.
+
+Endpoints não utilizados.
+
+Endpoints sem consumidores.
+
+Logs de falha recorrente.
+
+Recursos novos não integrados.
+
+Áreas marcadas como parcialmente implementadas.
+
+Inclua também problemas já conhecidos no histórico, nas issues, no AGENTS.md e nos demais documentos do projeto.
+
+Corrija o que for encontrado.
+
+3.3. Jogo FM27 original
+
+O FM27 está instalado no ambiente de desenvolvimento, incluindo a instalação Xbox PC/Game Pass referenciada pelo projeto.
+
+A implementação também deve ser compatível com a versão Steam para Windows.
+
+Não presuma caminhos fixos.
+
+Descubra a instalação e a estrutura real.
+
+Investigue:
+
+Estruturas Unity.
+
+Tipos relevantes.
+
+Hierarquia das telas.
+
+Elementos interativos.
+
+Assets de texto.
+
+Identificadores de localização.
+
+ViewModels.
+
+Dados observáveis.
+
+Controladores.
+
+Comandos.
+
+Eventos.
+
+Menus.
+
+Fluxos de navegação.
+
+Estados.
+
+Ações disponibilizadas pelo jogo.
+
+Mudanças desde o FM26.
+
+Novas funcionalidades.
+
+Fluxos assíncronos.
+
+Atualizações de interface.
+
+Requisitos específicos da versão instalada.
+
+Utilize inspeção e instrumentação somente dentro do ambiente autorizado.
+
+Evite depender exclusivamente de nomes de GameObjects ou posições na árvore Unity se houver APIs e identificadores mais estáveis.
+
+Evite seletores frágeis baseados em índices.
+
+Documente dependências de versão.
+
+4. CONTRATO GLOBAL DE ACESSIBILIDADE
+
+Toda tela e todo componente devem obedecer a um conjunto único de regras.
+
+4.1. HTML simples e semântico
+
+Prefira elementos HTML nativos:
+
+button
+
+input
+
+select
+
+textarea
+
+table
+
+thead
+
+tbody
+
+tr
+
+th
+
+td
+
+fieldset
+
+legend
+
+dialog, quando adequado
+
+nav
+
+main
+
+section, quando semanticamente justificável
+
+Utilize ARIA apenas quando necessário.
+
+Não substitua um botão nativo por uma div com eventos de clique.
+
+Não utilize role="button" quando um botão HTML resolver a situação.
+
+Não adicione role="grid" a toda tabela apenas por preferência arquitetural.
+
+Utilize uma grid interativa somente quando o padrão de navegação realmente exigir esse comportamento e corresponder à experiência existente no FM26.
+
+4.2. Hierarquia de títulos
+
+Os cabeçalhos atuais estão excessivos.
+
+Corrija globalmente.
+
+Cada página deve apresentar hierarquia coerente, sem repetição desnecessária do nome da área.
+
+Evite vários níveis de títulos apenas para representar elementos visuais.
+
+Não transforme cada card, estatística ou campo em um cabeçalho.
+
+Não produza níveis de cabeçalho artificiais.
+
+Ao entrar em Mensagens, por exemplo, não quero ouvir:
+
+Mensagens
+
+MENSAGENS
+
+Isso deve aparecer uma única vez como identificação principal, salvo quando existirem duas informações semanticamente diferentes.
+
+Inspecione as estruturas do FM26 e reproduza seus padrões.
+
+4.3. Remoção de imagens decorativas
+
+Existe um problema global de leitura indevida de imagens.
+
+Exemplos atuais:
+
+Club, image
+
+Card-frame, image
+
+Icon
+
+Image
+
+Esses textos não devem ser anunciados quando representam elementos meramente decorativos.
+
+Faça uma busca completa em todas as telas.
+
+Investigue componentes compartilhados, ícones, wrappers e imagens renderizadas dinamicamente.
+
+Aplique:
+
+alt="" para imagens decorativas HTML.
+
+aria-hidden="true" em elementos decorativos apropriados.
+
+Remoção de papéis e nomes acessíveis desnecessários.
+
+Exclusão de elementos decorativos da ordem de foco.
+
+Correção de componentes geradores de cards e imagens.
+
+Não oculte imagens que transmitam informação real.
+
+Um gráfico relevante, um mapa tático ou um indicador funcional deve ter representação textual acessível.
+
+Não resolva o problema ocultando contêineres inteiros e perdendo dados.
+
+4.4. Foco
+
+O foco deve ser previsível.
+
+Ao abrir uma tela ou modal:
+
+Identifique seu conteúdo.
+
+Posicione o foco adequadamente.
+
+Preserve contexto.
+
+Evite que o foco volte ao início da página sem necessidade.
+
+Ao fechar um modal:
+
+Retorne o foco para o elemento que o abriu, quando ainda existir.
+
+Caso contrário, escolha um destino lógico.
+
+Ao atualizar uma lista:
+
+Preserve a seleção sempre que possível.
+
+Não reposicione o usuário arbitrariamente.
+
+Ao abrir um diálogo de confirmação:
+
+O teclado deve funcionar.
+
+A escolha deve ser anunciada.
+
+O foco não deve ficar atrás do diálogo.
+
+4.5. Estados e anúncios
+
+Identifique corretamente:
+
+Expandido ou recolhido.
+
+Selecionado ou não selecionado.
+
+Marcado ou desmarcado.
+
+Disponível ou indisponível.
+
+Carregando.
+
+Atualizado.
+
+Sem resultados.
+
+Erro.
+
+Confirmação.
+
+Alterações pendentes.
+
+Mensagens de atualização devem ser anunciadas sem transformar a página inteira em uma região aria-live.
+
+Não crie anúncios repetitivos.
+
+4.6. Botões indisponíveis
+
+Faça uma auditoria global.
+
+Para cada botão ou controle indisponível:
+
+Localize a origem.
+
+Descubra sua função real.
+
+Verifique se está indisponível no jogo original.
+
+Verifique se falta implementação no mod.
+
+Verifique se o estado não está sendo calculado incorretamente.
+
+Verifique permissões, contexto e requisitos.
+
+Verifique se existe ação equivalente em outra área.
+
+Corrija a implementação.
+
+Teste.
+
+Não deixe botões desabilitados por ausência de handler.
+
+Não deixe botões sem funcionalidade que apenas aparentam estar operacionais.
+
+Também não habilite ações impossíveis no jogo.
+
+Uma indisponibilidade legítima deve ter uma explicação acessível, quando útil.
+
+Se um item é apenas uma informação, não deve ser anunciado como botão.
+
+4.7. Ordem de leitura
+
+A ordem de leitura deve acompanhar a ordem lógica do conteúdo.
+
+Evite:
+
+Dados do rodapé aparecendo antes do conteúdo.
+
+Comboboxes sem nome antes do título.
+
+Informações de jogador fora da linha correspondente.
+
+Ações contextuais espalhadas por pontos arbitrários.
+
+Campos com conteúdo desassociado.
+
+Espaços vazios representados por elementos sem nome.
+
+Compare com o FM26 Access.
+
+Só altere a ordem familiar quando o FM27 exigir uma mudança real.
+
+5. COMPONENTES HTML PADRÃO DO PROJETO
+
+Crie um catálogo dos componentes aprovados do FM26 Access.
+
+Estabeleça implementações reutilizáveis para:
+
+Navegação principal.
+
+Submenus.
+
+Listas de mensagens.
+
+Filtros.
+
+Busca.
+
+Tabelas.
+
+Linhas interativas.
+
+Dialogs.
+
+Comboboxes.
+
+Botões de ações.
+
+Cards informativos.
+
+Cards personalizáveis.
+
+Gauges.
+
+Áreas de notícias.
+
+Informações adicionais.
+
+Perfis de jogadores.
+
+Perfis de clubes.
+
+Seletores de posições.
+
+Escalação.
+
+Seletores táticos.
+
+Instruções.
+
+Avisos.
+
+Confirmações.
+
+Relatórios.
+
+Paginação.
+
+Esses itens não precisam se tornar obrigatoriamente 25 classes separadas.
+
+Use a arquitetura que melhor corresponda ao projeto original.
+
+O objetivo é consistência sem introduzir complexidade artificial.
+
+Qualquer novo componente deve ser documentado com:
+
+Justificativa.
+
+Equivalente no FM26.
+
+Diferença funcional do FM27.
+
+Contrato de teclado.
+
+Contrato de foco.
+
+Contrato de leitura.
+
+Testes associados.
+
+6. PROBLEMAS PRIORITÁRIOS JÁ IDENTIFICADOS
+
+Esta seção contém problemas observados diretamente durante a utilização do FM27 Access.
+
+Trate-os como problemas reais que exigem investigação.
+
+Não descarte os relatos porque os testes automatizados não conseguiram reproduzi-los inicialmente.
+
+6.1. Portal e tela inicial
+
+A tela inicial está muito diferente da experiência do FM26 Access.
+
+Problemas:
+
+Cabeçalhos demais.
+
+Organização excessivamente fragmentada.
+
+Navegação pouco familiar.
+
+Elementos decorativos anunciados pelo NVDA.
+
+Cards confusos.
+
+Informações adicionais aparentemente sem suporte.
+
+Personalização de cards pouco compreensível.
+
+Reorganize a página com base nos componentes e padrões do FM26 Access.
+
+Não copie cegamente a interface visual antiga: preserve os dados e novas funcionalidades do FM27.
+
+Alt+I
+
+O atalho de informações adicionais aparentemente desapareceu.
+
+Localize a implementação original no FM26 Access.
+
+Reproduza o comportamento correspondente.
+
+Identifique corretamente quais elementos da nova interface possuem informações adicionais.
+
+Quando existir informação contextual, faça o usuário conseguir consultá-la sem precisar navegar por vários botões e links auxiliares.
+
+Preserve o comportamento e a experiência do FM26.
+
+Não implemente um Alt+I genérico que sempre abre o mesmo texto.
+
+O conteúdo deve corresponder ao item selecionado.
+
+Portal (+2)
+
+O NVDA está anunciando algo semelhante a:
+
+Portal
+
+(+2)
+
+Descubra exatamente o significado de (+2).
+
+Pode ser um contador, um indicador de elementos adicionais, um agrupamento ou outra informação do jogo.
+
+Não assuma o significado sem investigar.
+
+Se representar opções ocultas ou adicionais, anuncie o contexto de forma compreensível.
+
+Se for apenas uma informação visual sem relevância semântica, remova o ruído.
+
+Se houver opções adicionais, elas precisam ser navegáveis e utilizáveis pelo teclado.
+
+Cards e Tile Options
+
+Investigação prioritária.
+
+O FM27 introduziu Tile Swapping, permitindo a troca de determinados tiles por outros de tamanho equivalente.
+
+Fontes oficiais:
+
+https://community.sports-interactive.com/forums/topic/611875-fm27-clearer-interface-smoother-navigation/
+
+https://community.sports-interactive.com/forums/topic/611878-fm27-uiux-faq/
+
+Investigue a implementação real no jogo instalado.
+
+Descubra:
+
+Quais cards são personalizáveis.
+
+Quais são fixos.
+
+Quais opções existem para cada card.
+
+Como as opções variam por tipo de card.
+
+Quais opções dependem do contexto.
+
+Como a configuração é armazenada.
+
+Como as alterações são aplicadas.
+
+Se há alguma opção de restauração.
+
+Se há diferenças entre Portal, Recrutamento, partidas e outras telas.
+
+Como o jogo representa esses controles internamente.
+
+Não implemente uma lista fixa de opções inventadas.
+
+Utilize as opções reais fornecidas pelo FM27.
+
+Nome do controle
+
+Atualmente aparece:
+
+Tile options
+
+Ou:
+
+NÍVEL DE FELICIDADE, Tile options, caixa de combinação, recolhido
+
+Melhore a identificação.
+
+Por exemplo, quando confirmado pelo contexto:
+
+Personalizar card Nível de felicidade
+
+ou utilize o texto localizado equivalente fornecido pelo jogo.
+
+O usuário deve compreender que aquele controle serve para alterar o conteúdo apresentado pelo card.
+
+Não exponha nomes técnicos internos.
+
+Cards fixos
+
+Foi observado que o card de agenda aparentemente não pode ser removido.
+
+Investigue se ele é fixo ou apenas não possui algumas possibilidades de personalização.
+
+Não invente a capacidade de removê-lo se o jogo não oferece isso.
+
+Se um card for fixo, não apresente uma combobox falsa.
+
+Se for personalizável, todas as opções reais devem funcionar.
+
+Atualização
+
+Ao selecionar outro tipo de card:
+
+A mudança deve chegar ao jogo.
+
+O conteúdo novo deve ser carregado.
+
+O foco deve permanecer em posição lógica.
+
+O NVDA deve anunciar a alteração.
+
+A configuração deve persistir segundo o comportamento original.
+
+O conteúdo do novo card deve ficar acessível.
+
+6.2. Mensagens — reconstrução com base no FM26
+
+Essa é uma das áreas mais importantes do projeto.
+
+Atualmente, a organização parece ter sido reconstruída usando tabelas e está diferente do FM26 Access.
+
+Quero recuperar a experiência original do mod anterior.
+
+Localize o componente responsável pelas mensagens no FM26.
+
+Reaproveite:
+
+Lista de mensagens.
+
+Filtros.
+
+Seleção.
+
+Atualização.
+
+Navegação.
+
+Estado de leitura.
+
+Busca.
+
+Abertura da mensagem.
+
+Fechamento.
+
+Ações.
+
+Conteúdo.
+
+Atalhos.
+
+Gerenciamento de foco.
+
+Verifique os filtros existentes, incluindo os equivalentes a:
+
+Todas.
+
+Novas.
+
+Não lidas.
+
+Tarefas.
+
+Outros filtros disponibilizados pelo jogo.
+
+Não invente filtros inexistentes.
+
+Se o FM27 mudou sua estrutura de categorias, adapte os dados mantendo uma interface familiar.
+
+Mensagens não lidas
+
+Deve existir uma maneira clara de acessar mensagens não lidas.
+
+Utilize botões e filtros semelhantes ao FM26 Access.
+
+Estados e quantidades precisam ser atualizados corretamente.
+
+Não confunda:
+
+Mensagens novas.
+
+Não lidas.
+
+Mensagens com ações pendentes.
+
+Mensagens já processadas.
+
+Pesquisa
+
+Ao ativar Pesquisar nas mensagens, atualmente uma nova interface aparece, mas o NVDA não recebe o foco adequado.
+
+Corrija preferencialmente colocando o foco diretamente no campo de edição da busca.
+
+O campo deve ter nome acessível.
+
+Ao retornar da busca, restaure o foco quando apropriado.
+
+Teste:
+
+Abrir busca.
+
+Digitar.
+
+Limpar.
+
+Submeter, se exigido pelo jogo.
+
+Navegar pelos resultados.
+
+Abrir resultado.
+
+Voltar.
+
+Fechar a busca.
+
+Não depender exclusivamente de uma mensagem informativa pedindo para o usuário localizar o campo.
+
+O foco direto é a experiência preferida.
+
+Notícias e mensagens abertas
+
+O FM27 passou a apresentar mais conteúdo e ações diretamente nas mensagens.
+
+Isso não significa que precisamos expor dezenas de botões desorganizados.
+
+Recrie a experiência do FM26 Access e adapte os novos dados.
+
+O conteúdo principal precisa ser lido de maneira limpa.
+
+Informações extras devem ser acessíveis por padrões conhecidos, especialmente Alt+I quando aplicável.
+
+Investigue todos os tipos de mensagens:
+
+Notícias.
+
+Relatórios de olheiros.
+
+Transferências.
+
+Ofertas.
+
+Contratos.
+
+Solicitações da direção.
+
+Mensagens da equipe técnica.
+
+Informações sobre jogadores.
+
+Mensagens de competição.
+
+Eventos de partida.
+
+Mensagens com múltiplas propostas.
+
+Mensagens que exigem confirmação.
+
+Mensagens com links e informações detalhadas.
+
+Os controles de ação precisam funcionar dentro do contexto.
+
+Alt+I nas notícias
+
+Restabeleça o comportamento do FM26 Access para informações adicionais.
+
+O usuário não deve ser obrigado a percorrer vários botões desnecessários para conhecer o conteúdo.
+
+Verifique tooltips, dados adicionais, detalhes e links contextuais.
+
+Duplicação de título
+
+Ao pressionar Alt+1, atualmente o NVDA anuncia duas vezes:
+
+Mensagens
+
+MENSAGENS
+
+Corrija a duplicação na origem.
+
+Investigue título da página, cabeçalhos e anúncios de navegação.
+
+Não resolva apenas ocultando texto sem verificar sua função.
+
+Atualização e sincronização
+
+Preserve as melhorias do FM26 Access relacionadas a:
+
+Atualização confiável.
+
+Estados de leitura.
+
+Estabilidade da seleção.
+
+Preservação de foco.
+
+Processamento de mensagens.
+
+Abertura de itens.
+
+Filtros.
+
+Ausência de duplicações.
+
+Tratamento de respostas assíncronas.
+
+Não introduza regressões.
+
+6.3. Botão Ações
+
+Existem botões Ações em várias telas que aparentemente não estão funcionando.
+
+Faça uma investigação global.
+
+Procure todas as ocorrências:
+
+Barra superior.
+
+Perfil de jogador.
+
+Perfil de clube.
+
+Plantel.
+
+Táticas.
+
+Recrutamento.
+
+Transferências.
+
+Treino.
+
+Finanças.
+
+Equipe técnica.
+
+Relatórios.
+
+Outros contextos.
+
+Descubra o comportamento esperado no jogo original.
+
+Identifique por que o evento atual não abre o menu ou executa a operação.
+
+Verifique bindings, estados e identificação de contexto.
+
+Use o componente do FM26 quando adequado.
+
+Menus devem funcionar com teclado, ter nomes acessíveis e anunciar estados.
+
+Não associe um botão genérico a ações erradas porque os identificadores parecem semelhantes.
+
+6.4. Escalação
+
+Atualmente a navegação informa:
+
+Formation. Arrow keys move between players.
+
+Goalkeeper, number 1
+
+Mas parece faltar o nome do jogador.
+
+Isso não é aceitável quando o jogador está efetivamente escalado.
+
+Localize o componente de formação do FM26 Access.
+
+Reaproveite sua navegação.
+
+Cada posição preenchida deve apresentar as informações relevantes, por exemplo:
+
+Posição.
+
+Nome do jogador.
+
+Número.
+
+Função.
+
+Tarefa, se aplicável.
+
+Estado de seleção.
+
+Informações contextuais relevantes.
+
+A ordem deve acompanhar o FM26.
+
+Posições vazias precisam ser identificadas como vazias.
+
+Jogadores não devem desaparecer do anúncio por falhas de mapeamento.
+
+Investigue:
+
+Titulares.
+
+Reservas.
+
+Substituições.
+
+Mudança de posição.
+
+Troca entre jogadores.
+
+Seleção por teclado.
+
+Alteração de formação.
+
+Funções.
+
+Tarefas.
+
+Instruções.
+
+Estados de disponibilidade.
+
+Jogadores lesionados ou suspensos.
+
+Contexto de partida versus pré-jogo.
+
+Teste novamente após mudanças táticas.
+
+6.5. Plantel — representação das posições
+
+Na visão geral aparecem botões com abreviações:
+
+GR
+
+DD
+
+DCD
+
+DCE
+
+DE
+
+MDC
+
+MCD
+
+MCE
+
+MOD
+
+MOE
+
+Investigue como o FM26 Access apresenta essa região.
+
+Identifique se ela representa:
+
+Seletores de posição.
+
+Representação de formação.
+
+Filtros.
+
+Jogadores por posição.
+
+Outro recurso do FM27.
+
+Use o comportamento correto e preserve a simplicidade do FM26.
+
+Se as abreviações forem as do jogo, não substitua arbitrariamente os dados.
+
+Forneça contexto acessível quando necessário.
+
+Cada botão precisa ter uma ação real ou ser convertido em elemento não interativo quando for apenas informativo.
+
+6.6. Informações ausentes nas tabelas
+
+Exemplo relatado:
+
+Inf, coluna 3, botão, Pretendida
+
+Desejado pelo Barcelona
+
+Verifique como o FM26 apresenta informações adicionais de uma linha.
+
+Mapeie corretamente estados, indicadores, tooltips e descrições.
+
+O usuário deve conseguir descobrir que determinado jogador é desejado por um clube específico.
+
+Mas não deve precisar atravessar múltiplos botões redundantes.
+
+Preserve o valor da coluna, seu contexto e o acesso a detalhes.
+
+Investigue todas as colunas com abreviações ou indicadores visuais.
+
+Não se limite à coluna Inf.
+
+6.7. Perfil e relatório de jogador
+
+Problema observado:
+
+Relatório de jogador
+
+Steph Catley
+
+O nome do jogador é apresentado como botão indisponível.
+
+Investigue o comportamento no jogo original e no FM26 Access.
+
+O nome deveria ser um botão?
+
+É um link para o perfil?
+
+É apenas um cabeçalho?
+
+É um seletor de navegação?
+
+É um botão dependente de contexto?
+
+Corrija conforme a funcionalidade real.
+
+Não deixe elementos informativos sendo anunciados como botões indisponíveis.
+
+Tabelas no perfil
+
+A organização atual está diferente do FM26 Access.
+
+Existem informações fora das tabelas e colunas em ordem inadequada.
+
+Reestruture:
+
+Dados gerais.
+
+Atributos.
+
+Contrato.
+
+Informações pessoais.
+
+Estatísticas.
+
+Histórico.
+
+Relatórios.
+
+Desenvolvimento.
+
+Posições.
+
+Comparações.
+
+Dados físicos.
+
+Informações de recrutamento.
+
+Condição e disponibilidade.
+
+Outras seções reais.
+
+Mantenha a ordem do FM26 quando os dados forem equivalentes.
+
+Adapte novas colunas do FM27 sem quebrar a relação entre cabeçalho e valor.
+
+Navegação superior
+
+Atualmente existe uma sequência parecida com:
+
+S. Catley
+
+Visão geral
+
+Vários elementos vazios.
+
+Comparação
+
+(+2)
+
+Algumas comboboxes aparecem no meio sem nome compreensível.
+
+Analise a estrutura original do FM27.
+
+Verifique a correspondência com os submenus do FM26.
+
+Elimine focos vazios.
+
+Cada menu deve ser compreensível e operável.
+
+Os controles da navegação superior do FM27 precisam estar acessíveis, mas a experiência deve continuar familiar para quem utiliza o FM26 Access.
+
+Não crie um segundo menu desnecessário se um único mecanismo resolver a navegação.
+
+6.8. Cards de informações e carreira
+
+Exemplo atual:
+
+DADOS DA CARREIRA
+
+Clubes
+
+6
+
+Pres
+
+310
+
+Golos
+
+16
+
+26-27
+
+Arsenal
+
+0
+
+-
+
+Esse conteúdo está fragmentado e difícil de interpretar.
+
+Reorganize semanticamente.
+
+Os dados devem ser apresentados como pares de rótulo e valor ou como tabela, conforme o significado real.
+
+Para histórico por temporada, utilize uma tabela adequada.
+
+Identifique:
+
+Temporada.
+
+Clube.
+
+Presenças.
+
+Gols.
+
+Outras estatísticas.
+
+Totais.
+
+Campos sem valor.
+
+Não misture agregados de carreira com linhas de temporadas sem separação lógica.
+
+Não invente cabeçalhos nem associe números às colunas erradas.
+
+Faça essa revisão para todos os cards informativos do jogo, não apenas esse exemplo.
+
+6.9. Gauges e indicadores
+
+Exemplo:
+
+Gauge, gauge, 100 of 0 to 100 Global
+
+Existe repetição desnecessária.
+
+Investigue o componente.
+
+O valor pode estar correto, mas a leitura não está limpa.
+
+Se o indicador representa um valor de 0 a 100, apresente nome, valor e escala de forma coerente.
+
+Não duplique o papel do controle.
+
+Não transforme indicadores apenas informativos em botões.
+
+Não esconda os valores.
+
+Eficácia Tática
+
+Exemplo:
+
+Tactical effectiveness, 63 of 100, botão, indisponível
+
+Investigue se o indicador é realmente clicável no FM27 original.
+
+Se não for, deve ser apresentado como valor ou indicador.
+
+Se abrir detalhes, implemente a ação corretamente.
+
+O novo sistema de Eficácia Tática inclui dimensões como:
+
+Tactical Understanding.
+
+Player Ability.
+
+Player Buy-In.
+
+Next Match Information.
+
+Também se relaciona com Tactical Complexity e outras informações do jogo.
+
+Fonte oficial:
+
+https://www.footballmanager.com/fm27/features/fm27-training-and-tactical-effectiveness
+
+Inspecione a estrutura real instalada e garanta acesso a todos os dados relevantes.
+
+Não limite o trabalho ao número geral de eficácia.
+
+6.10. Análise de Risco
+
+No Plantel aparece uma combobox:
+
+Análise de Risco, caixa de combinação, recolhido
+
+Ao tentar ativá-la, aparentemente nada acontece.
+
+Verifique:
+
+Se o controle deveria abrir um menu.
+
+Se deveria alternar uma visão.
+
+Se é um seletor de subtelas.
+
+Se o evento está desconectado.
+
+Se o componente está recebendo dados incorretos.
+
+Se existe uma condição não satisfeita.
+
+Se a interface não atualiza após a ação.
+
+Implemente o comportamento real.
+
+Faça a mesma verificação para todas as comboboxes do projeto.
+
+7. INVENTÁRIO OBRIGATÓRIO DE TELAS
+
+A lista seguinte é o mínimo obrigatório de cobertura.
+
+Não considere a lista exaustiva.
+
+Você também deve descobrir todas as telas e subtelas não mencionadas.
+
+Use os nomes em português como referências de descoberta, considerando variantes de localização e nomes internos em inglês.
+
+Cada tela deve ser investigada individualmente, incluindo seus estados e fluxos.
+
+7.1. Portal
+
+Cobrir:
+
+Portal principal.
+
+Mensagens.
+
+Mensagens não lidas.
+
+Filtros.
+
+Busca.
+
+Notícias.
+
+Agenda.
+
+Calendário.
+
+Próximas partidas.
+
+Resultados.
+
+Cards de informações.
+
+Tile Options.
+
+Indicadores e contadores.
+
+Notificações.
+
+Mensagens com ações.
+
+Informações adicionais.
+
+Áreas de navegação.
+
+Todos os tipos de mensagens disponíveis.
+
+Qualquer tela acessada a partir de um card.
+
+Informações de competições.
+
+Fluxos de continuar o jogo.
+
+Outras subtelas encontradas.
+
+7.2. Plantel e equipa
+
+Cobrir:
+
+Visão geral do Plantel.
+
+Equipe principal.
+
+Outras equipes disponíveis.
+
+Lista de jogadores.
+
+Visualizações personalizadas.
+
+Filtros.
+
+Ordenação.
+
+Seleção de posições.
+
+Informações adicionais.
+
+Perfil de jogador.
+
+Relatório de jogador.
+
+Comparação de jogadores.
+
+Desenvolvimento.
+
+Dinâmica.
+
+Situação contratual.
+
+Disponibilidade.
+
+Lesões.
+
+Empréstimos.
+
+Ações contextuais.
+
+Reuniões de equipa.
+
+Seleção de equipe.
+
+Escalação.
+
+Qualquer menu relacionado.
+
+Área médica
+
+Revisar individualmente:
+
+Lesões Actuais.
+
+Análise de Risco.
+
+Regressada Recentemente.
+
+Resumo do Jogador.
+
+Resumo da Época.
+
+Não ignore suas abas, tabelas, detalhes e controles.
+
+7.3. Táticas
+
+Cobrir toda a seção.
+
+Prioridade máxima para reutilização do FM26 Access.
+
+Investigue:
+
+Visão geral.
+
+Formação.
+
+Titulares.
+
+Reservas.
+
+Posições.
+
+Funções.
+
+Tarefas.
+
+Instruções de equipe.
+
+Instruções de jogadores.
+
+Mentalidade.
+
+Organização com bola.
+
+Organização sem bola.
+
+Transições, quando aplicáveis.
+
+Alterações de formação.
+
+Estratégias.
+
+Estilos táticos.
+
+Seletores.
+
+Informações contextuais.
+
+Eficácia Tática.
+
+Familiaridade ou equivalentes.
+
+Complexidade.
+
+Importação.
+
+Salvamento.
+
+Cópia.
+
+Seleção de táticas.
+
+Troca de jogadores.
+
+Mudanças durante partidas.
+
+Confirmações.
+
+Outros recursos reais.
+
+Compare cada ação com o FM26 Access.
+
+Não crie uma interface mais complicada do que a anterior.
+
+Bolas paradas
+
+Auditoria completa de:
+
+Visão geral.
+
+Cantos ofensivos.
+
+Cantos defensivos.
+
+Livres ofensivos.
+
+Livres defensivos.
+
+Lançamentos.
+
+Atribuições.
+
+Batedores.
+
+Rotinas.
+
+Prioridades.
+
+Seleção de jogadores.
+
+Edição.
+
+Salvamento.
+
+Remoção.
+
+Reordenação.
+
+Configurações.
+
+Informações adicionais.
+
+Utilize somente os tipos efetivamente disponíveis no FM27 instalado, acrescentando outros identificados.
+
+Pênaltis
+
+Cobrir:
+
+Lista de cobradores.
+
+Prioridades.
+
+Reordenação.
+
+Configuração.
+
+Seleção.
+
+Informações.
+
+Ações durante partidas, quando aplicável.
+
+Adversário
+
+Cobrir:
+
+Visão geral do adversário.
+
+Instruções ao adversário.
+
+Relatórios.
+
+Análise.
+
+Escalação provável.
+
+Jogadores relevantes.
+
+Características.
+
+Ajustes de estratégia.
+
+Recomendações.
+
+Ações.
+
+Relatórios táticos
+
+Cobrir:
+
+Relatório sobre oponentes.
+
+Prioridades do relatório de equipa.
+
+Feedback de Tácticas.
+
+Eficácia Tática.
+
+Dados e análises relacionadas.
+
+7.4. Central de Dados
+
+Cobrir:
+
+Visão geral.
+
+Análises.
+
+Relatórios.
+
+Estatísticas.
+
+Comparações.
+
+Gráficos.
+
+Indicadores.
+
+Informações de desempenho.
+
+Tendências.
+
+Análises de equipe.
+
+Análises de jogadores.
+
+Seletores.
+
+Filtros.
+
+Relatórios personalizados.
+
+Novidades do FM27.
+
+Todos os gráficos que possuam dados relevantes precisam de equivalentes textuais.
+
+Não exponha apenas uma descrição genérica como Chart.
+
+7.5. Recrutamento
+
+Revisar individualmente:
+
+Visão geral do Recrutamento.
+
+Base de Dados de Jogadores.
+
+Relatório de Olheiros.
+
+Foco de Recrutamento.
+
+Tarefas.
+
+Âmbito de Observação.
+
+Prioridades do Olheiro.
+
+Lista de Jogadores sem Interesse.
+
+Planificador do Plantel.
+
+Melhor Onze Actual.
+
+Contratos.
+
+Saídas TransferRoom.
+
+Entradas TransferRoom.
+
+Ofertas de Agentes.
+
+Actividade de Transferências.
+
+Janela de Transferências.
+
+Histórico de Transferências.
+
+Objectivos do Recrutamento.
+
+Cláusulas.
+
+Feedback do Recrutamento.
+
+Listas Preferenciais.
+
+Planificador do Plantel
+
+Investigar:
+
+Posições.
+
+Necessidades.
+
+Jogadores atuais.
+
+Planejamento futuro.
+
+Contratos.
+
+Sucessão.
+
+Profundidade do elenco.
+
+Melhor onze.
+
+Seleção.
+
+Mudanças.
+
+Navegação.
+
+Comparação.
+
+TransferRoom
+
+Investigar todos os fluxos realmente disponíveis.
+
+Não presumir que saídas e entradas são telas meramente informativas.
+
+Identifique ações, requisitos, filtros, seletores e respostas.
+
+Transferências
+
+Cobrir fluxos completos de:
+
+Procurar jogador.
+
+Abrir perfil.
+
+Avaliar.
+
+Adicionar à lista preferencial.
+
+Solicitar observação.
+
+Criar oferta.
+
+Editar proposta.
+
+Contraproposta.
+
+Negociação.
+
+Contratos.
+
+Empréstimos.
+
+Rejeitar.
+
+Aceitar.
+
+Cancelar.
+
+Confirmar.
+
+Respeitar as regras e permissões do jogo.
+
+Não habilitar ofertas quando o jogo realmente não permite.
+
+Scouting
+
+Verifique:
+
+Filtros.
+
+Busca.
+
+Atributos.
+
+Informações ocultas.
+
+Conhecimento do jogador.
+
+Relatórios.
+
+Recomendações.
+
+Prioridades.
+
+Responsáveis.
+
+Progresso.
+
+Estados.
+
+Ações.
+
+Não revele informações que o jogo original ainda não disponibiliza ao jogador.
+
+7.6. Equipe técnica
+
+Revisar:
+
+Base de Dados da Equipe Técnica.
+
+Mudanças na Equipe Técnica.
+
+Lista Preferencial de Eq. Técnica.
+
+Anúncios para Elementos da Equipa Técnica.
+
+Cobrir:
+
+Perfis.
+
+Busca.
+
+Filtros.
+
+Comparações.
+
+Atributos.
+
+Contratos.
+
+Contratação.
+
+Negociação.
+
+Responsabilidades.
+
+Anúncios de vagas.
+
+Candidatos.
+
+Ações de contratação.
+
+Demissão.
+
+Delegação.
+
+Confirmações.
+
+7.7. Treino
+
+Revisar:
+
+Visão geral do Treino.
+
+Eficácia Táctica.
+
+Treino Individual.
+
+Orientar.
+
+Intensidade de Treino.
+
+Tarefas de Preparadores.
+
+Verifique também as novidades reais do FM27.
+
+A experiência deve cobrir:
+
+Agenda de treino.
+
+Sessões.
+
+Calendário.
+
+Preparação de jogo.
+
+Configurações.
+
+Tipos de treino.
+
+Seleção de sessões.
+
+Repetição de sessões.
+
+Cópia de planos.
+
+Treino individual.
+
+Focos de desenvolvimento.
+
+Orientação.
+
+Carga.
+
+Intensidade.
+
+Condição física.
+
+Risco.
+
+Eficácia Tática.
+
+Atribuições aos preparadores.
+
+Responsabilidades.
+
+Feedback.
+
+Atualização de informações.
+
+Confirmações.
+
+O FM27 reformulou partes importantes do treino.
+
+Não tente encaixar dados novos artificialmente em modelos incompatíveis do FM26.
+
+Adapte as estruturas de dados, preservando a simplicidade e os componentes acessíveis.
+
+7.8. Clube
+
+Revisar:
+
+Visão geral do Clube.
+
+Perfil do Clube.
+
+Notícias.
+
+Info do Clube.
+
+Factos.
+
+Estatísticas.
+
+Infra-estruturas.
+
+Clubes Parceiros.
+
+Cobrir:
+
+Dados do clube.
+
+Identidade.
+
+Competições.
+
+História.
+
+Estádio.
+
+Instalações.
+
+Reputação.
+
+Informações financeiras relevantes.
+
+Estatísticas.
+
+Parceiros.
+
+Ações.
+
+Navegação para outros clubes.
+
+Menus e subtelas.
+
+7.9. Direção
+
+Revisar:
+
+Visão do Clube.
+
+Feedback de Desempenho.
+
+Membros da Direcção.
+
+Cobrir:
+
+Objetivos.
+
+Expectativas.
+
+Avaliações.
+
+Solicitações.
+
+Reuniões.
+
+Feedback.
+
+Confiança.
+
+Aprovações.
+
+Ações.
+
+Promessas ou compromissos, quando existentes.
+
+7.10. Adeptos
+
+Cobrir:
+
+Visão geral.
+
+Expectativas.
+
+Confiança.
+
+Opiniões.
+
+Grupos.
+
+Indicadores.
+
+Reações.
+
+Objetivos.
+
+Informações contextuais.
+
+Ações e subtelas.
+
+7.11. Equipa Técnica do Clube
+
+Cobrir:
+
+Visão geral.
+
+Estrutura.
+
+Responsabilidades.
+
+Funções.
+
+Profissionais.
+
+Contratos.
+
+Atribuições.
+
+Avaliações.
+
+Tarefas.
+
+Interações.
+
+7.12. Responsabilidades
+
+Essa área deve receber atenção especial.
+
+Verifique se o usuário consegue:
+
+Listar responsabilidades.
+
+Identificar responsável atual.
+
+Alterar delegação.
+
+Selecionar pessoas.
+
+Confirmar alterações.
+
+Recuperar o estado atual.
+
+Identificar o que pertence ao treinador.
+
+Identificar o que foi delegado.
+
+Não deixe comboboxes que aparentam alterar uma configuração, mas não persistem.
+
+7.13. Finanças
+
+Revisar individualmente:
+
+Visão geral de Finanças.
+
+Sumário.
+
+Receitas.
+
+Despesas.
+
+Salários.
+
+Patrocínio.
+
+Projecções.
+
+Dívidas e Empréstimos.
+
+Orçamento para Transferências.
+
+Orçamento Salarial.
+
+Orçamento para Observação.
+
+Cláusulas.
+
+Investigue:
+
+Tabelas.
+
+Gráficos.
+
+Comparações.
+
+Projeções.
+
+Detalhes.
+
+Valores monetários.
+
+Períodos.
+
+Saldos.
+
+Limites.
+
+Restrições.
+
+Transferências de orçamento.
+
+Ações disponíveis.
+
+Confirmações.
+
+Valores precisam ser anunciados com unidade monetária e contexto adequados.
+
+Não misture dados de meses diferentes ou totais com valores periódicos.
+
+7.14. Histórico do Clube
+
+Revisar individualmente:
+
+Visão geral do Histórico.
+
+Títulos.
+
+Histórico do Clube.
+
+Melhor Onze de Sempre.
+
+Marcos.
+
+Histórico de Treinador.
+
+Investigue:
+
+Temporadas.
+
+Conquistas.
+
+Estatísticas.
+
+Jogadores.
+
+Treinadores.
+
+Competições.
+
+Recordes.
+
+Tabelas.
+
+Cards.
+
+Seletores.
+
+Navegação para detalhes.
+
+Mantenha relações corretas entre títulos, anos e clubes.
+
+7.15. Telas adicionais obrigatórias por descoberta
+
+Além da lista acima, procure todas as demais áreas acessíveis no FM27.
+
+Inclua, quando presentes:
+
+Configurações.
+
+Preferências.
+
+Atalhos de teclado.
+
+Favoritos.
+
+Personalização dos menus.
+
+Tela inicial do aplicativo.
+
+Seleção de carreira.
+
+Carregar jogo.
+
+Salvar jogo.
+
+Criar carreira.
+
+Seleção de treinador.
+
+Perfil do treinador.
+
+Competições.
+
+Tabelas de ligas.
+
+Resultados.
+
+Calendários.
+
+Classificações.
+
+Estatísticas de competições.
+
+Partidas.
+
+Pré-jogo.
+
+Durante o jogo.
+
+Intervalo.
+
+Pós-jogo.
+
+Análise de partida.
+
+Substituições.
+
+Instruções durante a partida.
+
+Palestras.
+
+Feedback.
+
+Eventos importantes.
+
+Coletivas.
+
+Entrevistas.
+
+Reuniões.
+
+Notificações.
+
+Contratos.
+
+Negociações.
+
+Premiações.
+
+Notícias internacionais.
+
+Outras telas de clubes e jogadores.
+
+Diálogos de confirmação.
+
+Menus de contexto.
+
+Modais.
+
+Seletores de data.
+
+Pop-ups de informação.
+
+Telas de erro.
+
+Estados de carregamento.
+
+Qualquer tela nova encontrada na versão instalada.
+
+Não considere uma tela secundária fora do escopo porque foi aberta por um botão de outra tela.
+
+Todo caminho de navegação precisa terminar em uma interface acessível.
+
+8. AUDITORIA PROFUNDA DE CADA TELA
+
+Não faça uma auditoria superficial.
+
+Para cada tela, execute uma inspeção de ponta a ponta.
+
+8.1. Estrutura
+
+Verifique:
+
+Título.
+
+Hierarquia.
+
+Navegação.
+
+Submenus.
+
+Menus adicionais.
+
+Ordem.
+
+Elementos interativos.
+
+Dados exibidos.
+
+Regiões informativas.
+
+Conteúdo oculto.
+
+Estados carregados.
+
+Cards.
+
+Tabelas.
+
+Gráficos.
+
+Tooltips.
+
+Modais.
+
+8.2. Teclado
+
+Verifique:
+
+Tab.
+
+Shift+Tab.
+
+Setas.
+
+Enter.
+
+Espaço.
+
+Escape.
+
+Atalhos próprios do FM26 Access.
+
+Atalhos próprios do FM27.
+
+Teclas de acesso a filtros.
+
+Navegação em tabelas.
+
+Seleção de jogadores.
+
+Abertura de opções.
+
+Retorno.
+
+Cancelamento.
+
+Confirmação.
+
+Não capture atalhos globais quando o usuário estiver digitando em campos incompatíveis com esses comandos.
+
+Não quebre atalhos configuráveis do FM27.
+
+8.3. Foco
+
+Verifique cada transição:
+
+Entrada na tela.
+
+Seleção.
+
+Atualização.
+
+Abertura de modal.
+
+Fechamento.
+
+Mudança de filtro.
+
+Mudança de aba.
+
+Busca.
+
+Confirmação.
+
+Cancelamento.
+
+Erro.
+
+8.4. Dados
+
+Verifique:
+
+Se os valores estão corretos.
+
+Se vêm do jogo.
+
+Se estão atualizados.
+
+Se os textos correspondem aos valores.
+
+Se existem dados novos do FM27 não mapeados.
+
+Se colunas estão ausentes.
+
+Se células aparecem fora da tabela.
+
+Se indicadores importantes são ignorados.
+
+Se contextos são perdidos.
+
+8.5. Ações
+
+Para cada elemento interativo:
+
+Identifique a ação.
+
+Acione pelo teclado.
+
+Verifique a chamada do frontend.
+
+Verifique o backend.
+
+Verifique a integração com o jogo.
+
+Verifique o estado resultante.
+
+Verifique a atualização no companion.
+
+Verifique o anúncio ao usuário.
+
+Verifique o foco.
+
+Verifique tratamento de erro.
+
+Um evento de clique executado sem erro não é prova suficiente de funcionamento.
+
+8.6. Subtelas
+
+Abra todas as opções disponíveis.
+
+Repita integralmente a auditoria.
+
+Inclua estados alternativos e ações contextuais.
+
+Não se limite à primeira aba ou ao primeiro card.
+
+8.7. Variações de estado
+
+Teste sempre que aplicável:
+
+Lista vazia.
+
+Lista preenchida.
+
+Um item.
+
+Muitos itens.
+
+Dados incompletos.
+
+Jogador sem contrato.
+
+Jogador lesionado.
+
+Jogador emprestado.
+
+Opção indisponível.
+
+Opção disponível.
+
+Mensagem já lida.
+
+Mensagem não lida.
+
+Filtro sem resultados.
+
+Carregamento.
+
+Erro.
+
+Atualização.
+
+Alteração de contexto.
+
+Troca de equipe.
+
+Mudança de temporada.
+
+9. TABELAS: PADRÃO FM26 ACCESS
+
+As tabelas precisam manter a experiência familiar.
+
+Não reinvente componentes.
+
+Consulte a implementação original.
+
+9.1. Estrutura
+
+Toda tabela deve ter:
+
+Identificação.
+
+Cabeçalhos corretos.
+
+Dados alinhados às colunas.
+
+Ordem de leitura correta.
+
+Estados apropriados.
+
+Ações identificáveis.
+
+Tratamento de valores ausentes.
+
+Use th e associação semântica adequada.
+
+Evite inserir botões que não pertencem à linha.
+
+9.2. Ordenação
+
+Preserve sempre que possível a ordem original dos dados e colunas.
+
+Não reordene arbitrariamente.
+
+Se o FM27 mudou o significado das colunas, adapte a estrutura.
+
+Se o FM26 oferecia uma maneira conhecida de ordenar, preserve o comportamento.
+
+Verifique ordenação ascendente e descendente quando disponível.
+
+9.3. Informações adicionais
+
+Ícones de informações e abreviações devem ter textos compreensíveis.
+
+Evite controles repetidos sem contexto.
+
+Uma coluna pode apresentar um valor curto e permitir acesso ao detalhe completo usando o padrão FM26.
+
+9.4. Tabelas grandes
+
+Verifique desempenho com muitos jogadores.
+
+Não recrie toda a árvore DOM a cada atualização simples se isso prejudicar foco, navegação e desempenho.
+
+Preserve seleção.
+
+Evite leituras intermináveis causadas por anúncios automáticos excessivos.
+
+9.5. Perfil de jogadores
+
+Reorganize todas as tabelas do perfil de acordo com o FM26 Access.
+
+Não deixe informações soltas que pertencem a linhas específicas.
+
+10. CARDS: PADRÃO ÚNICO E ACESSÍVEL
+
+Todos os cards devem ser classificados.
+
+10.1. Card informativo
+
+Apresenta dados, sem ação própria.
+
+Não deve ser anunciado como botão.
+
+10.2. Card navegável
+
+Abre uma tela, relatório ou detalhe.
+
+Deve informar a ação.
+
+10.3. Card personalizável
+
+Permite trocar o conteúdo apresentado.
+
+Deve oferecer controle de personalização funcional.
+
+10.4. Card com ações
+
+Contém operações internas.
+
+Cada ação deve ser identificada sem gerar uma lista confusa de controles repetidos.
+
+10.5. Card com gráfico
+
+Deve oferecer representação textual dos valores e relações relevantes.
+
+10.6. Card com tabela
+
+Utilize tabela semântica.
+
+Não transforme células em parágrafos desconectados.
+
+10.7. Eliminação global de ruído
+
+Remova leituras como:
+
+Card-frame, image
+
+Icon
+
+Club, image
+
+Frame
+
+Outros nomes técnicos de elementos visuais.
+
+Não elimine informação relevante.
+
+11. NAVEGAÇÃO PRINCIPAL DO FM27
+
+O FM27 introduziu mudanças importantes em sua navegação.
+
+A documentação oficial descreve:
+
+Navegação principal.
+
+Navegação secundária.
+
+Mais páginas em tela cheia.
+
+Painéis de ações.
+
+Personalização de destinos dos menus.
+
+Atalhos configuráveis.
+
+Favoritos com textos.
+
+Troca de tiles.
+
+Você deve mapear essas funcionalidades para o companion.
+
+11.1. Experiência familiar
+
+Os usuários do FM26 Access devem reconhecer:
+
+Como acessar mensagens.
+
+Como navegar.
+
+Como abrir informações.
+
+Como voltar.
+
+Como selecionar tabelas.
+
+Como utilizar atalhos.
+
+Como alterar configurações.
+
+Não obrigue o usuário a aprender uma estrutura completamente nova sem necessidade.
+
+11.2. Menus superiores
+
+Verifique se cada controle está nomeado.
+
+Comboboxes sem identificação são inaceitáveis.
+
+Indicadores como (+2) precisam ter contexto.
+
+Menus precisam abrir, fechar e atualizar.
+
+Evite elementos vazios na ordem de Tab.
+
+11.3. Configuração do destino inicial
+
+O FM27 permite personalizar a página de destino de algumas opções principais da navegação.
+
+Investigue no jogo.
+
+Torne essas configurações acessíveis.
+
+11.4. Favoritos
+
+Investigue:
+
+Adicionar.
+
+Remover.
+
+Reordenar.
+
+Nomear ou exibir nome.
+
+Navegar.
+
+Persistir.
+
+Atualizar.
+
+Se a interface original utilizar arrastar e soltar, forneça uma alternativa acessível por teclado.
+
+11.5. Atalhos configuráveis
+
+Investigue como o FM27 armazena e aplica os atalhos.
+
+Não crie conflitos desnecessários.
+
+Preserve os atalhos tradicionais do FM26 Access onde aplicáveis.
+
+12. ALT+I, ALT+1 E DEMAIS ATALHOS
+
+Crie uma auditoria específica de todos os atalhos do FM26 Access.
+
+Não presuma suas funções apenas pelo nome.
+
+Localize a implementação real.
+
+Para cada atalho, documente:
+
+Tecla.
+
+Contexto.
+
+Componente associado.
+
+Ação.
+
+Estado inicial.
+
+Resultado.
+
+Gerenciamento de foco.
+
+Compatibilidade FM27.
+
+Teste de regressão.
+
+Alt+I
+
+Prioridade máxima.
+
+Precisa recuperar o comportamento de informações adicionais nas áreas correspondentes.
+
+Alt+1
+
+Precisa navegar corretamente para Mensagens, mantendo a experiência familiar e eliminando anúncios duplicados.
+
+Outros atalhos
+
+Descubra todos os atalhos existentes no FM26 Access.
+
+Inclua-os no inventário.
+
+Preserve os que continuam aplicáveis.
+
+Não altere teclas sem necessidade.
+
+Teste conflitos com campos de texto e com os atalhos configuráveis do FM27.
+
+13. TRADUÇÕES E LOCALIZAÇÃO
+
+A fonte primária dos textos deve ser o FM27 original.
+
+Use os identificadores e recursos de localização do jogo.
+
+Não crie uma tradução paralela para tudo.
+
+13.1. Idioma
+
+Respeite o idioma configurado.
+
+O usuário pode utilizar português ou inglês.
+
+Investigue variantes de português existentes no jogo.
+
+Não misture textos arbitrariamente quando houver tradução disponível.
+
+13.2. Textos do mod
+
+Para conteúdos exclusivos do companion que não existem no jogo, utilize os textos estabelecidos no FM26 Access.
+
+O inglês do FM26 Access é referência para textos técnicos exclusivos do mod.
+
+Se forem adicionadas traduções, mantenha uma estrutura clara de localização.
+
+13.3. Fallback
+
+Quando faltar uma tradução:
+
+Procure o texto localizado no FM27.
+
+Procure o equivalente existente no FM26.
+
+Utilize fallback documentado.
+
+Nunca exiba silenciosamente um identificador interno incompreensível.
+
+13.4. Estados e unidades
+
+Garanta valores compreensíveis para:
+
+Percentuais.
+
+Moedas.
+
+Datas.
+
+Temporadas.
+
+Durações.
+
+Posições.
+
+Status.
+
+Escalas.
+
+Contratos.
+
+Valores de atributos.
+
+14. INTEGRAÇÃO COM O JOGO
+
+Mantenha a arquitetura de companion web com servidor local e plugin de integração, seguindo o FM26 Access.
+
+Não substitua a arquitetura por uma completamente nova sem necessidade técnica comprovada.
+
+14.1. Separação de responsabilidades
+
+O jogo fornece dados, estados e ações.
+
+O backend faz a integração.
+
+O frontend apresenta a experiência acessível.
+
+Não replique regras de negócio complexas do FM27 no JavaScript se o jogo já as possui.
+
+14.2. Dados reais
+
+Proibido:
+
+Inventar valores.
+
+Simular sucesso de operações.
+
+Marcar uma ação como concluída sem integração.
+
+Utilizar dados de exemplo como dados reais.
+
+Atualizar apenas o companion sem alterar o estado correspondente no jogo.
+
+14.3. Estados assíncronos
+
+Trate:
+
+Carregamento.
+
+Falhas.
+
+Timeouts.
+
+Mudança de tela.
+
+Atualizações atrasadas.
+
+Requisições concorrentes.
+
+Seleção obsoleta.
+
+Mudança de contexto.
+
+Ações duplicadas.
+
+Evite condições de corrida.
+
+14.4. Robustez
+
+Não permita que uma tela inesperada derrube todo o companion.
+
+Trate dados opcionais.
+
+Registre falhas relevantes.
+
+Evite capturar exceções e ignorá-las silenciosamente.
+
+Não use fallback vazio para esconder erros de mapeamento.
+
+14.5. Compatibilidade Game Pass e Steam
+
+Investigue diferenças reais entre as instalações.
+
+Separe a lógica compartilhada da localização de arquivos.
+
+Evite caminhos absolutos dependentes da máquina.
+
+Documente versões de runtime, BepInEx e dependências.
+
+Não declare compatibilidade Steam testada se apenas a versão Xbox/Game Pass tiver sido executada.
+
+Nesse caso, implemente compatibilidade estrutural e registre precisamente o que ainda exige validação na instalação Steam.
+
+15. AUDITORIA AUTOMATIZADA DE ACESSIBILIDADE
+
+Crie ferramentas automatizadas para encontrar problemas recorrentes.
+
+Utilize a tecnologia adequada ao projeto existente.
+
+Pode utilizar Playwright e ferramentas de inspeção de acessibilidade quando compatíveis.
+
+15.1. Procurar elementos suspeitos
+
+Identificar:
+
+Botões sem nome.
+
+Inputs sem label.
+
+Imagens decorativas anunciadas.
+
+Links vazios.
+
+Elementos focáveis invisíveis.
+
+Tabindex inadequado.
+
+Títulos duplicados.
+
+Níveis de heading desnecessários.
+
+Comboboxes sem opções.
+
+Comboboxes sem evento.
+
+Botões desabilitados sem explicação.
+
+Controles sem handlers.
+
+ARIA inválido.
+
+IDs duplicados.
+
+Tabelas sem cabeçalhos.
+
+Regiões de atualização excessivas.
+
+15.2. Auditoria de botões
+
+Crie um inventário dos botões do companion.
+
+Para cada botão, identifique:
+
+Tela.
+
+Nome acessível.
+
+Função.
+
+Handler.
+
+Endpoint.
+
+Ação do jogo.
+
+Estado.
+
+Teste.
+
+Não considere apenas a presença de um onClick.
+
+15.3. Auditoria de rotas
+
+Percorra todas as rotas e telas registradas.
+
+Verifique se cada uma:
+
+Renderiza sem erro.
+
+Possui título.
+
+Possui dados.
+
+Permite navegação.
+
+Não apresenta controles inválidos.
+
+Tem saída ou retorno lógico.
+
+15.4. Auditoria de foco
+
+Crie testes para transições comuns.
+
+Evite depender de temporizadores arbitrários.
+
+Use eventos e estados observáveis sempre que possível.
+
+15.5. Testes de NVDA
+
+Quando houver ambiente compatível, utilize testes reais com NVDA.
+
+Inspecione a árvore de acessibilidade e os nomes calculados.
+
+Quando não for possível controlar o NVDA diretamente, utilize testes semânticos e de teclado como cobertura complementar, deixando claro que isso não substitui validação real com leitor de tela.
+
+16. TESTES FUNCIONAIS REAIS
+
+Os testes devem verificar mais do que renderização.
+
+Crie testes separados por níveis.
+
+16.1. Unitários
+
+Validar:
+
+Transformações de dados.
+
+Formatação.
+
+Localização.
+
+Conversão de estados.
+
+Mapeamento de posições.
+
+Relacionamento entre dados e labels.
+
+Identificação de disponibilidade.
+
+Componentes compartilhados.
+
+16.2. Componentes
+
+Validar:
+
+Tabelas.
+
+Menus.
+
+Dialogs.
+
+Comboboxes.
+
+Cards.
+
+Busca.
+
+Filtros.
+
+Seletores.
+
+Indicadores.
+
+Navegação.
+
+16.3. Integração
+
+Verificar comunicação frontend/backend e comportamento dos serviços.
+
+16.4. Integração com o FM27
+
+Executar ações contra o jogo real quando tecnicamente disponível.
+
+Comparar o estado antes e depois.
+
+Não confundir mock com integração real.
+
+16.5. Fluxos completos
+
+Exemplos obrigatórios:
+
+Fluxo A — Mensagens
+
+Abrir mensagens por Alt+1.
+
+Selecionar filtro de não lidas.
+
+Abrir uma mensagem.
+
+Ler conteúdo.
+
+Consultar Alt+I, quando aplicável.
+
+Executar uma ação permitida.
+
+Voltar.
+
+Confirmar atualização.
+
+Preservar seleção.
+
+Fluxo B — Busca
+
+Abrir mensagens.
+
+Ativar busca.
+
+Receber foco no campo.
+
+Digitar texto.
+
+Encontrar resultados.
+
+Abrir um resultado.
+
+Voltar.
+
+Limpar ou fechar busca.
+
+Recuperar foco.
+
+Fluxo C — Escalação
+
+Abrir Táticas.
+
+Acessar escalação.
+
+Navegar entre posições.
+
+Ouvir os nomes dos jogadores.
+
+Selecionar um jogador.
+
+Alterar posição ou substituto, quando permitido.
+
+Confirmar.
+
+Verificar mudança no jogo.
+
+Conferir estado atualizado.
+
+Fluxo D — Card
+
+Abrir Portal.
+
+Localizar um card personalizável.
+
+Ativar Tile Options.
+
+Identificar as opções reais.
+
+Selecionar outro conteúdo.
+
+Verificar atualização do card.
+
+Verificar persistência.
+
+Verificar leitura acessível.
+
+Fluxo E — Jogador
+
+Abrir plantel.
+
+Localizar jogador.
+
+Abrir perfil.
+
+Consultar tabelas.
+
+Consultar relatório.
+
+Abrir informações adicionais.
+
+Executar uma ação disponível.
+
+Voltar.
+
+Preservar contexto.
+
+Fluxo F — Treino
+
+Abrir Treino.
+
+Acessar Eficácia Tática.
+
+Ler o indicador geral.
+
+Acessar dimensões relevantes.
+
+Alterar uma configuração permitida.
+
+Confirmar.
+
+Verificar alteração no jogo.
+
+Fluxo G — Recrutamento
+
+Buscar jogador.
+
+Filtrar.
+
+Selecionar.
+
+Abrir relatório.
+
+Adicionar à lista, quando permitido.
+
+Confirmar.
+
+Verificar estado.
+
+Fluxo H — Navegação
+
+Percorrer o menu principal.
+
+Abrir submenus.
+
+Navegar pelas telas de nível 2 e 3.
+
+Voltar.
+
+Utilizar atalhos.
+
+Verificar ausência de controles vazios.
+
+Verificar títulos únicos.
+
+Adicione outros fluxos descobertos.
+
+17. MATRIZ DE COBERTURA — OBRIGATÓRIA
+
+Crie uma matriz rastreável com uma linha para cada tela, subtela ou fluxo significativo.
+
+Campos mínimos:
+
+Identificador.
+
+Área.
+
+Tela.
+
+Subtela.
+
+Rota.
+
+Componente FM26 correspondente.
+
+Componente FM27.
+
+Diferenças do FM27.
+
+Dados mapeados.
+
+Ações mapeadas.
+
+Teste de teclado.
+
+Teste de foco.
+
+Teste semântico.
+
+Teste de integração.
+
+Teste no jogo real.
+
+Resultado.
+
+Evidência.
+
+Observações.
+
+Os estados precisam distinguir:
+
+Não investigado.
+
+Em análise.
+
+Em implementação.
+
+Implementado.
+
+Testado parcialmente.
+
+Validado.
+
+Bloqueado por condição externa.
+
+Não transforme Implementado automaticamente em Validado.
+
+Não marque uma tela como validada se existem subtelas relevantes ignoradas.
+
+Não marque um botão como funcional apenas porque não gerou exceção.
+
+18. PLANO DE EXECUÇÃO EM FASES
+
+Execute todas as fases, não apenas a primeira.
+
+Fase 1 — Inventário e comparação
+
+Investigar FM26 Access.
+
+Investigar FM27 Access.
+
+Inspecionar FM27.
+
+Criar inventário.
+
+Criar matriz.
+
+Localizar componentes reutilizáveis.
+
+Identificar problemas globais.
+
+Fase 2 — Infraestrutura de acessibilidade
+
+Corrigir:
+
+Semântica.
+
+Cabeçalhos.
+
+Foco.
+
+Imagens.
+
+Ícones.
+
+Botões.
+
+Comboboxes.
+
+Anúncios.
+
+Atalhos.
+
+Navegação.
+
+Tratamento de erro.
+
+Fase 3 — Portal e Mensagens
+
+Implementar integralmente:
+
+Portal.
+
+Cards.
+
+Tile Options.
+
+Mensagens.
+
+Busca.
+
+Filtros.
+
+Notícias.
+
+Alt+I.
+
+Alt+1.
+
+Ações.
+
+Atualização.
+
+Fase 4 — Plantel, jogador e Táticas
+
+Implementar integralmente:
+
+Plantel.
+
+Perfis.
+
+Relatórios.
+
+Tabelas.
+
+Escalação.
+
+Táticas.
+
+Bolas paradas.
+
+Pênaltis.
+
+Adversário.
+
+Eficácia Tática.
+
+Fase 5 — Recrutamento e Transferências
+
+Implementar integralmente todos os menus, subtelas, filtros, relatórios e fluxos de ação.
+
+Fase 6 — Treino e equipe técnica
+
+Implementar todas as funcionalidades, principalmente as mudanças do FM27.
+
+Fase 7 — Clube, Direção, Finanças e Histórico
+
+Implementar todas as telas e suas subtelas.
+
+Fase 8 — Telas restantes e fluxos de partida
+
+Cobrir todas as áreas descobertas que ainda não foram validadas.
+
+Fase 9 — Pendências históricas
+
+Revisitar o código e a documentação.
+
+Resolver pendências anteriormente identificadas.
+
+Eliminar implementações temporárias.
+
+Investigar avisos recorrentes.
+
+Revisar componentes pouco utilizados.
+
+Fase 10 — Regressão integral
+
+Percorrer novamente todo o projeto.
+
+Reexecutar testes.
+
+Validar navegação.
+
+Validar mensagens.
+
+Validar táticas.
+
+Validar dados.
+
+Validar ações.
+
+Confirmar que correções globais não introduziram regressões.
+
+Fase 11 — Revisão final de qualidade
+
+Realizar uma inspeção crítica como se você fosse um usuário cego utilizando NVDA e tentando jogar uma temporada completa.
+
+Identificar barreiras que os testes automatizados não encontraram.
+
+Corrigir essas barreiras.
+
+19. REVISÃO DAS PENDÊNCIAS ANTERIORES DO PROJETO
+
+Depois de resolver as telas e seus fluxos, revisite todas as pendências já registradas no FM27 Access.
+
+Não se limite aos problemas descritos neste prompt.
+
+Investigue:
+
+Documentação anterior.
+
+Commits recentes.
+
+Issues.
+
+TODOs.
+
+Testes ignorados.
+
+Features incompletas.
+
+Componentes provisórios.
+
+Mapeamentos ausentes.
+
+Compatibilidade.
+
+Inicialização.
+
+Performance.
+
+Problemas de atualização.
+
+Traduções.
+
+Atalhos.
+
+Falhas de foco.
+
+Modais.
+
+Configurações.
+
+Fluxos de partida.
+
+Estados excepcionais.
+
+Resolva o que for encontrado.
+
+Não crie listas de futuras melhorias para substituir implementação de funcionalidades necessárias.
+
+20. DESEMPENHO E ESTABILIDADE
+
+A interface deve permanecer rápida e responsiva.
+
+Utilize as melhorias e experiências do FM26 Access.
+
+Investigue:
+
+Tempo de abertura das telas.
+
+Tempo de atualização.
+
+Requisições redundantes.
+
+Listas grandes.
+
+Consultas ao jogo.
+
+Mapeamentos custosos.
+
+Erros de sincronização.
+
+Polling excessivo.
+
+Descarte de eventos.
+
+Reconexão.
+
+Falhas de inicialização.
+
+Consumo de memória.
+
+Exceções.
+
+Travamentos.
+
+Perda de seleção.
+
+Não introduza atrasos artificiais apenas para tentar estabilizar o foco.
+
+Prefira mecanismos determinísticos.
+
+Não faça otimizações que modifiquem silenciosamente a funcionalidade do jogo.
+
+21. SKILL LOCAL DE DESENVOLVIMENTO
+
+Se a estrutura de desenvolvimento utilizada suportar skills locais, crie uma skill dedicada ao FM27 Access.
+
+Nome sugerido:
+
+fm27-access-development
+
+Essa skill deve ensinar futuras sessões do Codex a:
+
+Consultar primeiro o FM26 Access.
+
+Investigar a funcionalidade real do FM27.
+
+Reutilizar componentes existentes.
+
+Respeitar atalhos.
+
+Usar traduções do jogo.
+
+Preservar a ordem das tabelas.
+
+Controlar foco.
+
+Não expor imagens decorativas.
+
+Não criar botões falsos.
+
+Não deixar comboboxes sem ação.
+
+Testar integração real.
+
+Atualizar matriz de cobertura.
+
+Registrar diferenças estruturais.
+
+Evitar mudanças desnecessárias na UX.
+
+Verificar regressões.
+
+Mantenha instruções curtas, operacionais e vinculadas aos documentos detalhados.
+
+Se o ambiente não suportar skills locais, implemente as regras no AGENTS.md e na documentação do projeto.
+
+22. ATUALIZAÇÃO OBRIGATÓRIA DO AGENTS.MD
+
+O AGENTS.md deve transmitir claramente as regras permanentes.
+
+Inclua, de forma inequívoca:
+
+FM26 Access é a principal referência para componentes HTML, acessibilidade, navegação, atalhos, foco e experiência do usuário.
+
+FM27 original é a principal referência para dados, funcionalidades e comportamentos do jogo.
+
+Antes de criar um componente novo, investigar a implementação correspondente no FM26 Access.
+
+Nunca inventar interfaces mais complexas quando já existir um componente adequado.
+
+Utilizar traduções do jogo sempre que possível.
+
+Preservar a ordem familiar dos dados.
+
+Não expor imagens decorativas ao leitor de tela.
+
+Não criar controles falsamente indisponíveis.
+
+Não declarar funcionalidade implementada sem integração efetiva.
+
+Não declarar funcionalidade validada sem testes.
+
+Cada nova tela ou subtela deve ser adicionada à matriz de cobertura.
+
+Alterações compartilhadas exigem testes de regressão.
+
+O companion deve continuar simples e previsível para usuários cegos.
+
+Essas regras devem continuar válidas nas próximas sessões.
+
+23. CONDIÇÕES DE QUALIDADE NÃO NEGOCIÁVEIS
+
+Considere estes problemas como falhas de aceitação:
+
+Um botão sem comportamento.
+
+Uma combobox que não abre quando deveria.
+
+Uma ação que altera apenas o HTML, mas não o jogo.
+
+Uma informação importante ausente.
+
+Uma posição de escalação sem nome de jogador quando preenchida.
+
+Uma notícia sem conteúdo relevante.
+
+Uma tabela com dados associados às colunas erradas.
+
+Um modal sem foco.
+
+Uma busca que não recebe foco.
+
+Um atalho do FM26 desaparecido sem justificativa.
+
+Uma imagem decorativa anunciada.
+
+Um Icon genérico anunciado desnecessariamente.
+
+Um Card-frame, image anunciado.
+
+Uma página com cabeçalhos duplicados.
+
+Um card personalizável sem opção acessível.
+
+Um menu sem nome.
+
+Uma subtela inacessível.
+
+Uma região interativa que exige mouse quando há alternativa de teclado possível.
+
+Um indicador anunciado falsamente como botão.
+
+Uma operação que comunica sucesso sem realmente acontecer.
+
+Um erro engolido silenciosamente.
+
+Um teste ignorado e registrado como sucesso.
+
+Uma regressão conhecida sem correção.
+
+Estados indisponíveis legítimos do próprio jogo são permitidos, desde que representados corretamente.
+
+Não force uma ação que o FM27 não permite.
+
+24. CRITÉRIOS GLOBAIS DE CONCLUSÃO
+
+Você só pode declarar a auditoria integralmente concluída quando:
+
+Todas as telas descobertas estiverem inventariadas.
+
+Todas as subtelas relevantes estiverem inventariadas.
+
+Todas as ações disponibilizadas pelo companion estiverem mapeadas.
+
+Todos os componentes equivalentes do FM26 tiverem sido analisados.
+
+Todas as diferenças funcionais relevantes do FM27 tiverem sido tratadas.
+
+Todos os problemas relatados neste prompt estiverem resolvidos.
+
+Não existirem botões falsamente indisponíveis.
+
+Não existirem controles sem implementação funcional.
+
+Não existirem imagens decorativas indevidamente expostas.
+
+Não existirem cabeçalhos duplicados desnecessários.
+
+Não existirem campos interativos sem nome.
+
+Não existirem tabelas com associações incorretas conhecidas.
+
+Todas as operações implementadas refletirem o estado real do jogo.
+
+As telas possuírem navegação por teclado.
+
+Os fluxos de foco estiverem corretos.
+
+Os atalhos do FM26 aplicáveis estiverem preservados.
+
+As novidades do FM27 estiverem acessíveis.
+
+Os testes de regressão relevantes passarem.
+
+Os testes de integração disponíveis passarem.
+
+Nenhum teste ignorado for apresentado como validado.
+
+Nenhuma pendência funcional conhecida continuar aberta.
+
+A documentação corresponder ao código realmente implementado.
+
+O projeto compilar corretamente.
+
+O companion iniciar e operar corretamente no ambiente de jogo disponível.
+
+Não houver bloqueios não resolvidos para afirmar a cobertura integral.
+
+Se existir qualquer item não comprovado, não use a expressão 100% concluído.
+
+O propósito é chegar a zero pendências, mas jamais mediante ocultação de falhas ou resultados fictícios.
+
+25. REGRAS PARA IMPEDIR FINALIZAÇÃO PREMATURA
+
+Não pare após os primeiros resultados positivos.
+
+Não substitua testes reais por afirmações.
+
+Não apresente a criação da matriz de cobertura como conclusão.
+
+Não apresente a criação de documentação como conclusão.
+
+Não diga que a funcionalidade está resolvida apenas porque encontrou o código correto no FM26.
+
+Não diga que está resolvida apenas porque compilou.
+
+Não diga que está resolvida apenas porque uma tela renderiza.
+
+Não diga que uma ação funciona apenas porque o frontend dispara um evento.
+
+Não marque estados indisponíveis como corrigidos removendo os controles sem avaliar a necessidade.
+
+Não delete funcionalidades difíceis para atingir artificialmente zero pendências.
+
+Não elimine a informação adicional apenas para simplificar a interface.
+
+Não crie um grande sistema genérico que mascare a falta de mapeamentos específicos.
+
+Não deixe os problemas mais difíceis para uma fase futura que nunca será executada.
+
+Você deve efetivamente percorrer todas as fases.
+
+26. ESTRATÉGIA CONTRA REGRESSÕES
+
+Como muitos componentes serão compartilhados, qualquer correção global pode afetar várias telas.
+
+Após modificar:
+
+Tabelas: testar Plantel, Perfis, Recrutamento, Finanças, Histórico e Relatórios.
+
+Mensagens: testar Inbox, busca, filtros, leitura, notícias e ações.
+
+Menus: testar navegação principal, secundária, contextos e atalhos.
+
+Cards: testar Portal, perfis, relatórios, recrutamento e outras telas com tiles.
+
+Foco: testar dialogs, buscas, telas completas, modais e atualizações.
+
+Gauges: testar Eficácia Tática, atributos e demais indicadores.
+
+Traduções: testar diferentes tipos de dados e idiomas disponíveis.
+
+Integração: testar carregamento, mudanças de tela, ações e atualização do estado.
+
+Não permita que a correção de um problema local danifique a experiência já validada em outra área.
+
+27. PROTOCOLO DE INVESTIGAÇÃO DE FUNCIONALIDADES NOVAS
+
+Quando encontrar algo que não existe no FM26 Access:
+
+Identifique o nome e função no FM27.
+
+Examine a interface original.
+
+Localize os dados reais.
+
+Localize as ações reais.
+
+Entenda os requisitos e estados.
+
+Procure um componente FM26 que possa ser reaproveitado.
+
+Adapte esse componente.
+
+Se não houver equivalente, crie uma representação HTML simples e acessível.
+
+Integre com o jogo.
+
+Teste os estados.
+
+Documente a diferença.
+
+Adicione cobertura automatizada.
+
+Não crie funcionalidades baseadas apenas em aparência visual.
+
+O comportamento deve ser fundamentado no jogo.
+
+28. REVISÃO CRÍTICA FINAL COMO USUÁRIO CEGO
+
+Após completar a matriz inicial, faça uma nova passagem por todo o projeto simulando a experiência de um usuário que depende exclusivamente de teclado e leitor de tela.
+
+Questione cada fluxo:
+
+Eu consigo entender onde estou?
+
+Consigo identificar a tela?
+
+Consigo navegar até a informação?
+
+Consigo entender o que cada controle faz?
+
+Consigo descobrir os detalhes de um jogador?
+
+Consigo alterar uma tática?
+
+Consigo organizar a escalação?
+
+Consigo utilizar mensagens?
+
+Consigo responder a propostas?
+
+Consigo realizar contratações?
+
+Consigo configurar treino?
+
+Consigo gerenciar contratos?
+
+Consigo personalizar cards?
+
+Consigo navegar pelas finanças?
+
+Consigo consultar relatórios?
+
+Consigo utilizar atalhos?
+
+Consigo desfazer ou cancelar ações quando permitido?
+
+Consigo perceber erros?
+
+Consigo recuperar o foco depois de abrir algo?
+
+Consigo voltar sem me perder?
+
+Consigo jogar de maneira contínua sem recorrer ao mouse ou à visão?
+
+Se encontrar um obstáculo, trate-o como problema funcional.
+
+Não espere um relato posterior do usuário para corrigir algo que pode ser identificado agora.
+
+Quando houver evidência real de comportamento no NVDA, utilize-a. Não afirme ter realizado testes com NVDA se o ambiente não permitir esse teste.
+
+29. ENTREGÁVEIS FINAIS
+
+O principal entregável é o código funcional.
+
+Não substitua o código por documentação.
+
+Ao terminar, apresente:
+
+Implementação
+
+Principais funcionalidades corrigidas.
+
+Componentes do FM26 reaproveitados.
+
+Funcionalidades novas do FM27 adaptadas.
+
+Problemas de acessibilidade eliminados.
+
+Mudanças arquiteturais relevantes.
+
+Cobertura
+
+Total de telas descobertas.
+
+Total de subtelas descobertas.
+
+Total de ações mapeadas.
+
+Total de telas validadas.
+
+Total de funcionalidades validadas.
+
+Resultado dos testes.
+
+Qualidade
+
+Resultado da compilação.
+
+Resultado dos testes unitários.
+
+Resultado dos testes de componentes.
+
+Resultado dos testes de integração.
+
+Resultado dos testes reais no FM27, se disponíveis.
+
+Resultado das verificações de acessibilidade.
+
+Compatibilidade efetivamente testada.
+
+Pendências
+
+O objetivo é:
+
+Zero pendências funcionais conhecidas.
+
+Se algum bloqueio externo impedir comprovação integral, apresente-o explicitamente, com evidência e sem alegar conclusão total.
+
+Não classifique como pendência resolvida algo que ainda não funciona.
+
+30. ORDEM FINAL DE EXECUÇÃO
+
+A partir deste momento:
+
+Leia o AGENTS.md atual.
+
+Investigue integralmente o FM26 Access.
+
+Investigue o estado atual do FM27 Access.
+
+Analise a integração com o FM27 instalado.
+
+Mapeie todas as telas e subtelas.
+
+Identifique componentes compartilhados.
+
+Corrija os problemas globais de acessibilidade.
+
+Reconstrua Portal e Mensagens com os padrões do FM26.
+
+Restabeleça Alt+I e demais atalhos aplicáveis.
+
+Corrija imagens decorativas e excesso de headings.
+
+Corrija Tile Options e personalização de cards.
+
+Corrija botões Ações e controles indisponíveis indevidamente.
+
+Corrija perfis, tabelas e informações adicionais.
+
+Corrija escalação, Plantel e Táticas.
+
+Corrija Bolas Paradas, Pênaltis e Adversário.
+
+Corrija Eficácia Tática.
+
+Percorra e implemente todas as demais telas do inventário.
+
+Descubra e implemente subtelas que não foram mencionadas.
+
+Resolva pendências anteriores do projeto.
+
+Faça uma nova auditoria global.
+
+Execute todos os testes possíveis.
+
+Corrija as regressões.
+
+Repita a auditoria de áreas não validadas.
+
+Atualize documentação e AGENTS.md.
+
+Faça a revisão final de toda a experiência.
+
+Não encerre a execução apenas por ter chegado ao último item desta lista.
+
+Se a revisão final revelar problemas, volte à implementação.
+
+Continue o ciclo de investigação, implementação, testes e correção enquanto houver problemas acionáveis dentro do ambiente.
+
+31. DIRETRIZ FINAL
+
+O objetivo deste projeto não é criar uma interface web nova e sofisticada para o Football Manager 27.
+
+O objetivo é permitir que uma pessoa cega tenha acesso à experiência real do Football Manager 27 de maneira tão completa, simples e consistente quanto possível.
+
+O FM26 Access já demonstrou uma forma de interação familiar e funcional.
+
+Você deve aproveitar intensivamente esse trabalho.
+
+Não reinvente a roda.
+
+Não complique menus simples.
+
+Não substitua botões conhecidos por estruturas experimentais.
+
+Não transforme todas as informações em cabeçalhos.
+
+Não crie tabelas que misturam dados e controles sem necessidade.
+
+Não exponha nomes de assets, imagens decorativas ou componentes internos.
+
+Não faça o usuário navegar por dez elementos quando poderia acessar a mesma informação em um único componente bem construído.
+
+Não sacrifique funcionalidades novas do FM27 para preservar uma interface antiga.
+
+Preserve a experiência acessível do FM26, mas ofereça todo o conteúdo e as funcionalidades reais do FM27.
+
+Pense no usuário que passa várias horas seguidas jogando Football Manager com NVDA.
+
+Ele precisa conseguir navegar rapidamente, entender informações, abrir relatórios, montar táticas, administrar elenco, negociar, configurar treino, acompanhar partidas e tomar decisões sem ficar lutando contra a interface.
+
+Cada ação precisa ser previsível.
+
+Cada informação precisa ter contexto.
+
+Cada menu precisa funcionar.
+
+Cada tela precisa fazer sentido.
+
+Cada controle precisa representar sua função real.
+
+Cada subtela precisa ser alcançável.
+
+Cada operação precisa produzir o resultado correto no jogo.
+
+Sua responsabilidade é entregar um FM27 Access consistente, completo e verdadeiramente funcional, e não apenas um projeto que parece estar completo.
+
+Execute agora.
+
+Trabalhe com autonomia.
+
+Consulte o FM26 Access constantemente.
+
+Inspecione o FM27 original.
+
+Implemente efetivamente as mudanças.
+
+Valide o comportamento.
+
+Corrija os problemas encontrados.
+
+Continue enquanto houver trabalho acionável.
+
+Não entregue apenas um diagnóstico.
+
+Não encerre após uma primeira rodada de alterações.
+
+A meta final é deixar o FM27 Access sem pontas soltas para o jogador cego.

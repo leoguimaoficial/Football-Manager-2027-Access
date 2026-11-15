@@ -1,0 +1,21 @@
+{
+  "panelName": "SelectPenaltyTakersBeforeShootoutCard",
+  "headings": [
+    {
+      "match": {
+        "typeName": "SIText",
+        "name": "text",
+        "pathContains": "VisualElement(\"Auto Layout Horizontal frame\")"
+      },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "Bib", "typeName": "SIImage" }
+    },
+    {
+      "match": { "name": "Number", "typeName": "SIText" }
+    }
+  ]
+}

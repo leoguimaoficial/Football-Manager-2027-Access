@@ -1,0 +1,10 @@
+{
+  "panelName": "AddRemoveLeaguesCard",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "StaticTitle", "typeName": "SIText" }
+    }
+  ],
+  "renames": []
+}

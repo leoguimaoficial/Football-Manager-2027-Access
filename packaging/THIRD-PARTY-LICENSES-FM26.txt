@@ -1,0 +1,68 @@
+FM26 Accessibility Mod — Third-Party Components
+================================================
+
+This package redistributes the following third-party software. The mod itself does
+NOT include or redistribute any Football Manager 2026 game files.
+
+Full license texts are bundled in the licenses\ folder next to this file.
+
+------------------------------------------------------------------------------------
+The mod itself
+------------------------------------------------------------------------------------
+The FM26 Accessibility Mod's own code (FM26Access.Host.dll, FM26Access.Plugin.dll,
+FM26Access.Speech.dll, FM26Access.Navigation.dll, the companion app, the panel
+profiles and the sound cues) is licensed under the GNU General Public License v3.0.
+
+  Source:   attached to every release as FM26Access-v<version>-source.zip
+            https://github.com/DnDeezNuts/Football-Manager-2026-Access/releases
+  License:  GNU General Public License v3.0 (GPL-3.0)
+            -> licenses\FM26Access-LICENSE.txt
+
+------------------------------------------------------------------------------------
+BepInEx 6 (IL2CPP) and Unity Doorstop
+------------------------------------------------------------------------------------
+The mod loader that starts this mod when the game launches. Files: winhttp.dll,
+doorstop_config.ini, .doorstop_version, the dotnet\ CoreCLR runtime, and everything
+under BepInEx\core and BepInEx\unity-libs.
+
+  Project:  https://github.com/BepInEx/BepInEx
+  Doorstop: https://github.com/NeighTools/UnityDoorstop
+  License:  GNU Lesser General Public License v2.1 (LGPL-2.1)
+            -> licenses\BepInEx-LICENSE.txt
+
+------------------------------------------------------------------------------------
+Prism TTS (prism.dll)
+------------------------------------------------------------------------------------
+The in-game text-to-speech engine. File: BepInEx\plugins\FM26Access\prism\native\
+win-x64\prism.dll.
+
+  License:  Mozilla Public License 2.0 (with bundled components under LGPL-2.1,
+            Apache-2.0, and the nvgt license)
+            -> licenses\Prism\ (NOTICE and the individual license texts)
+
+------------------------------------------------------------------------------------
+Mono C# compiler (mcs.dll) — SOURCE BUNDLE ONLY, not in this package
+------------------------------------------------------------------------------------
+Listed for completeness: mcs.dll is NOT installed on a player's machine. It ships only
+inside FM26Access-v<version>-source.zip, where it is needed to compile the dev driver's
+/eval endpoint. Its absence here is why /eval cannot compile anything on a player install.
+
+  Upstream: https://github.com/sinai-dev/mcs-unity (a Unity build of Mono.CSharp)
+  License:  MIT X11, taken from the compiler's dual MIT X11 / GNU GPL license
+            -> lib\mcs-LICENSE.txt in the source bundle
+
+------------------------------------------------------------------------------------
+Microsoft.Web.WebView2
+------------------------------------------------------------------------------------
+Powers the companion window that displays the accessible page your screen reader
+reads. Support DLLs live in BepInEx\plugins\FM26Access\companion\.
+
+  Project:  https://developer.microsoft.com/microsoft-edge/webview2/
+  License:  Microsoft Software License Terms (redistributable)
+
+------------------------------------------------------------------------------------
+.NET runtime (bundled into the companion executable)
+------------------------------------------------------------------------------------
+The companion app is published self-contained, so the .NET runtime is embedded.
+
+  License:  MIT — https://github.com/dotnet/runtime/blob/main/LICENSE.TXT

@@ -1,0 +1,10 @@
+{
+  "panelName": "PlayerInstructionsEditCard",
+  "headings": [
+    { "match": { "name": "staff-feedback-title" }, "level": 3 }
+  ],
+  "hides": [
+    { "match": { "name": "title", "pathContains": "title-and-description" } },
+    { "match": { "name": "RowText", "pathContains": "TextRowMapper" } }
+  ]
+}

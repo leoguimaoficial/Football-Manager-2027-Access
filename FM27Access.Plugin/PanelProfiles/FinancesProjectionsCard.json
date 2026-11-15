@@ -1,0 +1,9 @@
+{
+  "panelName": "FinancesProjectionsCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement > BindingVariables > VisualElement(\"Balance\")" },
+      "level": 2
+    }
+  ]
+}

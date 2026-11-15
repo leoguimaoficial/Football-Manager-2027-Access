@@ -1,0 +1,10 @@
+{
+  "panelName": "GameCreationGameSummaryScreen",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "parentName": "Header", "typeName": "SIText" }
+    }
+  ],
+  "renames": []
+}

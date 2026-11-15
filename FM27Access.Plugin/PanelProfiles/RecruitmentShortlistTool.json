@@ -1,0 +1,15 @@
+{
+  "panelName": "RecruitmentShortlistTool",
+  "headings": [
+    {
+      "match": { "name": "shortlist-title", "typeName": "SIText" },
+      "level": 2
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "create-shortlist-button", "typeName": "SIButton" },
+      "label": "Create shortlist"
+    }
+  ]
+}

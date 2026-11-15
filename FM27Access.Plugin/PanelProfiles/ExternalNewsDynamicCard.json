@@ -1,0 +1,11 @@
+{
+  "panelName": "ExternalNewsDynamicCard",
+  "headings": [
+    { "match": { "name": "newsHeadlineText", "typeName": "SIText" }, "level": 2 },
+    { "match": { "name": "reactionsTitleText", "typeName": "SIText" }, "level": 2 },
+    { "match": { "pathContains": "title-area-frame", "typeName": "SIText" }, "level": 2 }
+  ],
+  "renames": [
+    { "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" }, "label": "Club crest" }
+  ]
+}

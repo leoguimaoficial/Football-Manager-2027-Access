@@ -1,0 +1,39 @@
+{
+  "panelName": "ClubAllStaffTool",
+  "headings": [
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathContains": "CoachingStaffHeader" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathContains": "RecruitmentStaffHeader" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathContains": "MedicalStaffHeader" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "heading frame", "pathContains": "feedback frame" },
+      "level": 3
+    },
+    {
+      "match": { "name": "AllStaffStaticLabel" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "typeName": "SIImage", "pathContains": "MedicalStaffHeader" }
+    },
+    {
+      "match": { "name": "NationButton" }
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "stat frame" }
+    },
+    {
+      "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" }
+    }
+  ]
+}

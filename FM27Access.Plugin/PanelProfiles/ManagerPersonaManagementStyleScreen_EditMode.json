@@ -1,0 +1,10 @@
+{
+  "panelName": "ManagerPersonaManagementStyleScreen_EditMode",
+  "headings": [
+    { "match": { "name": "Title", "typeName": "SIText", "parentName": "Header" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "typeName": "SIText", "parentName": "Breadcrumbs" } }
+  ],
+  "renames": []
+}

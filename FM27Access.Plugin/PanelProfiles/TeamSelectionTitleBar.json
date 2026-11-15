@@ -1,0 +1,17 @@
+{
+  "panelName": "TeamSelectionTitleBar",
+  "headings": [],
+  "hides": [
+    { "match": { "typeName": "SIText", "name": "MainTabText" } }
+  ],
+  "renames": [
+    {
+      "match": { "typeName": "SIDropdown", "pathContains": "FMMenuDropdown" },
+      "label": "FM Menu"
+    },
+    {
+      "match": { "name": "ClubButton" },
+      "label": "Club crest"
+    }
+  ]
+}

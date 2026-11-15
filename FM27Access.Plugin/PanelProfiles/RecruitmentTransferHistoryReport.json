@@ -1,0 +1,22 @@
+{
+  "panelName": "RecruitmentTransferHistoryReport",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" }
+    },
+    {
+      "match": { "typeName": "SIText", "parentName": "Frame", "childIndex": 1 }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "prev" },
+      "label": "Previous season"
+    },
+    {
+      "match": { "name": "next" },
+      "label": "Next season"
+    }
+  ]
+}

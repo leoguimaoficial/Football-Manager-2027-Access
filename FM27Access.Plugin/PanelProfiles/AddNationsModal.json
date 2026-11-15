@@ -1,0 +1,16 @@
+{
+  "panelName": "AddNationsModal",
+  "headings": [],
+  "hides": [
+    {
+      "match": {
+        "typeName": "SIText",
+        "name": "text",
+        "pathStartsWith": "BindableSwitchElement > VisualElement > VisualElement > VisualElement(\"frame\")"
+      }
+    }
+  ],
+  "renames": [
+    { "match": { "name": "ContinentTabs", "typeName": "SIRadioGroup" }, "label": "Continents" }
+  ]
+}

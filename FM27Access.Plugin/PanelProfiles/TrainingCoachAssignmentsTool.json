@@ -1,0 +1,29 @@
+{
+  "panelName": "TrainingCoachAssignmentsTool",
+  "headings": [
+    { "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement > ComponentElement > TemplateContainer > BlockElement", "pathContains": "BindableVariableSizedGridElement(\"TrainingCoachAssignment\")" }, "level": 2 },
+    { "match": { "name": "attribute-name", "typeName": "SIText", "parentName": "Header-Coaching" }, "level": 2 },
+    { "match": { "name": "attribute-name", "typeName": "SIText", "parentName": "Header-Coachingtwo" }, "level": 2 },
+    { "match": { "name": "attribute-name", "typeName": "SIText", "parentName": "Header-Mental" }, "level": 2 },
+    {
+      "match": { "typeName": "SIText", "pathContains": "Frame 1000002422\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathContains": "frame 1000002673\")" },
+      "level": 3
+    },
+    {
+      "match": { "typeName": "SIText", "pathContains": "Frame 1000002438\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathContains": "Frame 1000002440\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathContains": "Frame 1000002448\")" },
+      "level": 2
+    }
+  ]
+}

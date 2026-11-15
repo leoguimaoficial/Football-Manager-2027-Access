@@ -1,0 +1,8 @@
+{
+  "panelName": "BestXICard",
+  "hides": [
+    {
+      "match": { "name": "HasTacticsText", "typeName": "SIText" }
+    }
+  ]
+}

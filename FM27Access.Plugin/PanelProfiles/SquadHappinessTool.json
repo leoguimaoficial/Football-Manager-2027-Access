@@ -1,0 +1,11 @@
+{
+  "panelName": "SquadHappinessTool",
+  "headings": [
+    { "match": { "typeName": "SIText", "pathStartsWith": "SIVisible(\"CanShowHappiness\") > VisualElement(\"Frame 1000003049\")" }, "level": 2 },
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame 1000003044\") > VisualElement(\"Frame 1000003049\")" }, "level": 2 },
+    { "match": { "typeName": "SIText", "pathStartsWith": "SIVisible(\"CanShowHierarchy\") > VisualElement(\"Frame 1000003049\")" }, "level": 3 },
+    { "match": { "typeName": "SIText", "pathStartsWith": "SIVisible(\"CanShowExpectations\") > VisualElement(\"Frame 1000003049\")" }, "level": 3 },
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame 1000003059\") > VisualElement(\"unity-content-container\")" }, "level": 3 },
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame 1000003060\") > VisualElement(\"unity-content-container\")" }, "level": 3 }
+  ]
+}

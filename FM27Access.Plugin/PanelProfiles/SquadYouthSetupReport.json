@@ -1,0 +1,22 @@
+{
+  "panelName": "SquadYouthSetupReport",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathContains": "Frame 1000003039\")" },
+      "level": 2
+    },
+    // Every tile is a section of the screen — facilities, loans, the youth intake, each team's
+    // squad and fixture list. Heading the tile's own button makes each a landmark to jump
+    // between while it keeps its action, and its content now prints underneath it.
+    {
+      "match": { "name": "layout-tile-interaction-button", "typeName": "SIButton" },
+      "level": 2
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "title-to-be-replaced", "typeName": "SIText" },
+      "label": "Youth Environment"
+    }
+  ]
+}

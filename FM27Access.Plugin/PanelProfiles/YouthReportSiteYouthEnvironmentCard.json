@@ -1,0 +1,31 @@
+{
+  "panelName": "YouthReportSiteYouthEnvironmentCard",
+  "headings": [
+    // The summary block's own title (its parent frame's name carries the game's trailing space),
+    // and the issues block's.
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame \") > VisualElement(\"TopFrame\") > VisualElement(\"Heading frame\")" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement > VisualElement(\"issues frame\")" },
+      "level": 2
+    },
+    {
+      "match": { "name": "layout-tile-interaction-button", "typeName": "SIButton" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    // Each summary block prints its title three times: the block title, the label drawn inside
+    // the radial gauge, and a caption under the prose. The title (headed above) carries the name;
+    // the other two are the same words again with nothing attached to them. The gauge itself
+    // carries no readable value, so its label loses nothing.
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"TopFrame\")" }
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement(\"BottomFrame\") > VisualElement(\"Heading frame\")" }
+    }
+  ]
+}

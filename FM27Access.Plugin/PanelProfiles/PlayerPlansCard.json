@@ -1,0 +1,9 @@
+{
+  "panelName": "PlayerPlansCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"frames-plans\")" },
+      "level": 2
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "panelName": "PortalScreen",
+  "headings": [
+    { "match": { "typeName": "SIText", "parentName": "Heading" }, "level": 2 },
+    { "match": { "typeName": "SIButton", "name": "title-link-button" }, "level": 2 },
+    { "match": { "typeName": "SIText", "parentName": "DateStyle", "pathContains": "Header" }, "level": 3 },
+    {
+      "match": { "parentName": "IsDateSeparator" }
+    }
+  ],
+  "hides": [
+    // The transfer-deadline banner retains its written heading and live countdown.
+    { "match": { "name": "banner-image", "typeName": "SIImage", "pathContains": "TabGroup" } },
+    { "match": { "typeName": "SIProgressBar", "pathContains": "tile-states-transfer-budget-medium" } },
+    { "match": { "typeName": "SIProgressBar", "pathContains": "tile-states-wage-budget-medium" } }
+  ],
+  "renames": [
+    { "match": { "typeName": "SIDropdown", "name": "dropdown-icon-base", "pathContains": "MenuDropdown" }, "label": "Message actions" },
+    { "match": { "typeName": "SIButton", "name": "SearchButton" }, "label": "Search messages" },
+    {
+      "match": {
+        "name": "dropdown-icon-base",
+        "pathContains": "AdviceDropdown"
+      },
+      "label": "Advice actions"
+    },
+    {
+      "match": {
+        "name": "dropdown-icon-base",
+        "pathContains": "MenuDropdown"
+      },
+      "label": "Message actions"
+    },
+    {
+      "match": { "name": "MarkAllReadButton" },
+      "label": "Mark All Read"
+    }
+  ]
+}

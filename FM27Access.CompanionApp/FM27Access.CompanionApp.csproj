@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Standalone companion app. NOT part of the mod build and NOT in the BepInEx runtime,
+    so it is free to use the Windows Desktop runtime and WebView2. Build and run it
+    separately with dotnet run on this project. Requires the WebView2 Evergreen runtime
+    (ships with Edge; present on most Win10/11).
+  -->
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RuntimeFrameworkVersion>10.0.15</RuntimeFrameworkVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>FM27AccessCompanion</AssemblyName>
+
+    <!--
+      Distributed to end users, so publish self-contained: bundle the .NET runtime into a
+      single exe that needs no .NET install (only the WebView2 Evergreen runtime, which
+      ships with Edge on Win10/11). The mod publishes this with:
+        dotnet publish -c Release
+      and launches the resulting companion/FM27AccessCompanion.exe at game startup.
+    -->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2792.45" />
+    <Compile Include="..\FM27Access.Speech\BoundedLogFile.cs" Link="BoundedLogFile.cs" />
+  </ItemGroup>
+
+</Project>

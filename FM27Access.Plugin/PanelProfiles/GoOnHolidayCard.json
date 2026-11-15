@@ -1,0 +1,10 @@
+{
+  "panelName": "GoOnHolidayCard",
+  "headings": [
+    { "match": { "name": "Header", "typeName": "SIText" }, "level": 2 },
+    { "match": { "parentName": "Title", "typeName": "SIText" }, "level": 3 }
+  ],
+  "renames": [
+    { "match": { "typeName": "BindableIntEditBox" }, "label": "Days on vacation" }
+  ]
+}

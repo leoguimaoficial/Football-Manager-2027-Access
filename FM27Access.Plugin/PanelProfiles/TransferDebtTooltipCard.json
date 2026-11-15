@@ -1,0 +1,10 @@
+{
+  "panelName": "TransferDebtTooltipCard",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "TitleText", "typeName": "SIText" }
+    }
+  ],
+  "renames": []
+}

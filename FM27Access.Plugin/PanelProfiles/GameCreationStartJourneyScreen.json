@@ -1,0 +1,26 @@
+{
+  "panelName": "GameCreationStartJourneyScreen",
+  "headings": [],
+  "hides": [
+    {
+      "match": {
+        "parentName": "Header",
+        "typeName": "SIText"
+      }
+    },
+    {
+      "match": {
+        "name": "text",
+        "typeName": "SIText",
+        "pathContains": "global-footers-tile-bottom-bar-template"
+      }
+    },
+    {
+      "match": {
+        "parentName": "NewBadge",
+        "typeName": "SIText"
+      }
+    }
+  ],
+  "renames": []
+}

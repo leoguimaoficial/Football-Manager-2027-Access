@@ -1,0 +1,7 @@
+{
+  "panelName": "TransferRoomOutTool",
+  "hides": [
+    { "match": { "name": "transfer-room-logo", "typeName": "SIImage" } },
+    { "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" } }
+  ]
+}

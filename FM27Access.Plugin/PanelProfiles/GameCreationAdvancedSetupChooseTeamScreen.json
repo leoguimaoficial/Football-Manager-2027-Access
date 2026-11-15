@@ -1,0 +1,20 @@
+{
+  "panelName": "GameCreationAdvancedSetupChooseTeamScreen",
+  "headings": [
+    {
+      "match": { "parentName": "Frame 1597", "childIndex": 0, "typeName": "SIText", "pathContains": "IconAndName" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "parentName": "Header", "typeName": "SIText", "pathContains": "ChooseTeam" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "CheckboxClub", "pathContains": "UnemployedCheckbox" },
+      "label": "Start Unemployed"
+    }
+  ]
+}

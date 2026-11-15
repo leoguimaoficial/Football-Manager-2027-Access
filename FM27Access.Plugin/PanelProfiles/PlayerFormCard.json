@@ -1,0 +1,62 @@
+{
+  "panelName": "PlayerFormCard",
+  "headings": [
+    {
+      "match": {
+        "typeName": "SIText",
+        "pathStartsWith": "VisualElement(\"frame\") > VisualElement(\"frame states-player-form-full block\")"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "typeName": "SIText",
+        "name": "text",
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"frame\") > VisualElement(\"frame states-player-form-full block\")"
+      },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": {
+        "typeName": "SIText",
+        "pathContains": "VisualElement(\"VisualElement\") > VisualElement(\"Frame\") > VisualElement(\"frame states-player-form-full block\")"
+      }
+    }
+  ],
+  "renames": [
+    {
+      "match": {
+        "typeName": "SIDropdown",
+        "name": "SIDropdown",
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"frame\") > VisualElement(\"frame states-player-form-full block\")",
+        "childIndex": 0
+      },
+      "label": "Team filter"
+    },
+    {
+      "match": {
+        "typeName": "SIDropdown",
+        "name": "SIDropdown",
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"frame\") > VisualElement(\"frame states-player-form-full block\")",
+        "childIndex": 1
+      },
+      "label": "Competition filter"
+    },
+    {
+      "match": {
+        "typeName": "SIDropdown",
+        "name": "Outfielder"
+      },
+      "label": "Stats view"
+    },
+    {
+      "match": {
+        "typeName": "SIDropdown",
+        "name": "GoalkeeperDropdown"
+      },
+      "label": "Stats view"
+    }
+  ]
+}

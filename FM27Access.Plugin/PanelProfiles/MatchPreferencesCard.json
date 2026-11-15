@@ -1,0 +1,26 @@
+{
+  "panelName": "MatchPreferencesCard",
+  "headings": [
+    { "match": { "name": "HeaderText", "typeName": "SIText", "parentName": "VisualElement" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "childIndex": 0, "pathStartsWith": "VisualElement > VisualElement > VisualElement(\"miscellaneous\")" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "parentName": "interface-frame" }, "level": 2 },
+    { "match": { "name": "title", "typeName": "SIText", "pathContains": "MatchAdaptivePreference" }, "level": 3 },
+    { "match": { "name": "text", "typeName": "SIText", "childIndex": 0, "pathStartsWith": "VisualElement > VisualElement(\"unity-content-container\") > VisualElement(\"unity-content-viewport\") > VisualElement(\"unity-content-and-vertical-scroll-container\") > SIScrollView" }, "level": 2 },
+    { "match": { "typeName": "SIText", "parentName": "interface frame", "pathContains": "CameraBlock" }, "level": 2 },
+    { "match": { "name": "replays-title" }, "level": 2 },
+    { "match": { "typeName": "SIText", "parentName": "Frame", "pathContains": "VisualElement(\"miscellaneous\")" }, "level": 2 },
+    { "match": { "typeName": "SIText", "parentName": "content frame", "pathContains": "VisualElement(\"highlights\")" }, "level": 2 }
+  ],
+  "renames": [],
+  "hides": [
+    { "match": { "typeName": "SIRadialGauge", "pathContains": "SIRadioGroup(\"HighlightModes\")" } },
+    { "match": { "typeName": "SIText", "pathContains": "Heading frame" } },
+    { "match": { "typeName": "SIText", "pathContains": "inputs-switch-toggle-label" } },
+    { "match": { "name": "show-opposition-replays-text" } },
+    { "match": { "name": "show-replays-text" } },
+    { "match": { "name": "show-replays-on-off-text" } },
+    { "match": { "typeName": "SIText", "pathContains": "QualityDropdown" } },
+    { "match": { "typeName": "SIText", "parentName": "mode frame" } },
+    { "match": { "typeName": "SIText", "parentName": "frame" } }
+  ]
+}

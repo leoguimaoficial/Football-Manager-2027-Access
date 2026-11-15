@@ -1,0 +1,34 @@
+{
+  "panelName": "FullScreenTeamSelection",
+  "renames": [
+    {
+      "match": { "name": "dropdown-base-no-background", "pathContains": "tactics-picker-focusser" },
+      "label": "Tactic options"
+    },
+    {
+      "match": { "name": "dropdown-base-no-background", "pathContains": "tactics-picker" },
+      "label": "Add tactic"
+    },
+    {
+      "match": { "name": "NationButton" },
+      "label": "Opposition"
+    },
+    {
+      "match": { "name": "ClubButton", "pathContains": "ActiveClub" },
+      "label": "Opposition club site"
+    }
+  ],
+  "hides": [
+    { "match": { "name": "PlayerNameText" } },
+    { "match": { "name": "ForwardPhase", "pathContains": "pitch-remapper" } },
+    { "match": { "name": "MidfieldPhase", "pathContains": "pitch-remapper" } },
+    { "match": { "name": "GoalkeeperPhase", "pathContains": "pitch-remapper" } },
+    { "match": { "name": "buttons-button-base-default", "pathContains": "view-pitch-checkboxes" } },
+    { "match": { "name": "analysis-button", "pathStartsWith": "SIEnabled > BindingSetter > SIVisible" } },
+    { "match": { "name": "analysis-button", "pathStartsWith": "BindingSetter > SIEnabled" } },
+    { "match": { "typeName": "SIButton", "pathContains": "buttons-hybrid-split-button" } },
+    { "match": { "pathContains": "tactics-pitch-both-sub section" } },
+    { "match": { "pathContains": "FMDraggableObject(\"FMDraggableObject\") > VisualElement(\"FM\")" } },
+    { "match": { "name": "XIButton" } }
+  ]
+}

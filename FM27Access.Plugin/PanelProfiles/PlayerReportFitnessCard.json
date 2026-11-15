@@ -1,0 +1,23 @@
+{
+  "panelName": "PlayerReportFitnessCard",
+  "headings": [
+    {
+      "match": { "name": "Name", "typeName": "SIText", "pathContains": "interaction-hub-body-message_sender-primary" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "name": "text", "parentName": "Frame", "pathContains": "SIVisible(\"VisibleInjury\")", "childIndex": 0 },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "name": "text", "pathContains": "SIVisible(\"VisibleNoInjury\")", "childIndex": 0 },
+      "level": 2
+    }
+  ],
+  "hides": [
+    { "match": { "name": "InjuryBackground", "typeName": "SIImage" } },
+    { "match": { "name": "InjuryBackgroundFront", "typeName": "SIImage" } },
+    { "match": { "name": "InjuryBackgroundBack", "typeName": "SIImage" } },
+    { "match": { "name": "image", "typeName": "SIImage", "pathContains": "scaling-icons-condition-large" } }
+  ]
+}

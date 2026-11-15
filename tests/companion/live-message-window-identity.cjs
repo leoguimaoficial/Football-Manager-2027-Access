@@ -1,0 +1,35 @@
+// Actual native inbox window paging and reference identity. No fabricated rows,
+// message selection, save or simulation. A stale off-window command is refused.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {default:AxeBuilder}=require('@axe-core/playwright');
+(async()=>{
+ const c=await require('./original-client.cjs')({networkDiagnostics:true}),{page,poll,settled,activate}=c;
+ const checks=[],audits=[],observations={},out=path.resolve(__dirname,'../../artifacts/tests/web');let mvid;
+ const snapshot=()=>page.locator('tr[data-fm-message-id]').evaluateAll(rs=>rs.map(r=>({message:r.dataset.fmMessageId,id:r.querySelector('button[onclick*="msgview.open"]')?.id})));
+ async function audit(name){const a=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();audits.push({name,violations:a.violations.map(v=>v.id)});assert.deepEqual(a.violations,[]);}
+ async function native(){
+  const id=(await snapshot())[0].id;
+  const code='foreach(var a in System.AppDomain.CurrentDomain.GetAssemblies())if(a.ManifestModule.ModuleVersionId.ToString()=="'+mvid+'"){var f=System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.Static;var sh=a.GetType("FM27Access.Plugin.Server.ServerHandles");var hs=(System.Collections.IDictionary)sh.GetField("_handles",f).GetValue(null);foreach(System.Collections.DictionaryEntry p in hs){var hf=p.Value.GetType().GetField("El",f);var ad=hf==null?null:hf.GetValue(p.Value);if(ad==null||ad.GetType().Name!="MessageButtonAdapter")continue;System.Console.WriteLine("HANDLE|"+p.Key+"|"+p.Value.GetType().GetField("MessageId",f).GetValue(p.Value)+"|"+ad.GetType().GetProperty("MessageId",f).GetValue(ad,null));}var h=hs["'+id+'"];var adapter=h.GetType().GetField("El",f).GetValue(h);var el=(UnityEngine.UIElements.VisualElement)sh.GetMethod("NativeElement",f).Invoke(null,new object[]{adapter});for(var up=el;up!=null;up=up.parent){var name=up.GetIl2CppType().Name;if(name!="MessagesStreamedObjectList"&&name!="VirtualisedList")continue;foreach(var na in System.AppDomain.CurrentDomain.GetAssemblies()){var t=na.GetType(name=="MessagesStreamedObjectList"?"FM.UI.MessagesStreamedObjectList":"SI.UI.VirtualisedList");if(t==null)continue;var obj=System.Activator.CreateInstance(t,new object[]{up.Pointer});if(name=="VirtualisedList")System.Console.WriteLine("VIEW|"+t.GetProperty("ActiveView",f).GetValue(obj,null));else System.Console.WriteLine("OFFSET|"+t.GetProperty("ScrollOffset",f).GetValue(obj,null));break;}}}';
+  const raw=await page.evaluate(async code=>(await fetch('/eval',{method:'POST',body:code})).text(),code);assert.doesNotMatch(raw,/\[exception\]|\[compile\].*error/);
+  const handles=new Map([...raw.matchAll(/^HANDLE\|([^|]+)\|(\d+)\|(\d+)/gm)].map(m=>{assert.equal(m[2],m[3],'Registered native record agrees immediately with its current binding');return[m[1],m[3]];}));
+  for(const r of await snapshot())assert.equal(handles.get(r.id),r.message,'DOM row maps to its own actual native NewsItem');
+  const offset=Number(raw.match(/^OFFSET\|([^\r\n]+)/m)[1].replace(',','.'));assert.ok(Number.isFinite(offset));return{raw,offset};
+ }
+ function common(before,after){const b=new Map(before.map(r=>[r.message,r.id])),shared=after.filter(r=>b.has(r.message));assert.ok(shared.length>=2,'Real native windows overlap');for(const r of shared)assert.equal(r.id,b.get(r.message),'A message keeps its ID when its physical row moves');return shared.map(r=>r.message);}
+ try{
+  mvid=JSON.parse(await c.fetchText('/health')).coreMvid;
+  await page.keyboard.press('Alt+1');await poll(()=>page.getByRole('heading',{name:'Mensagens',exact:true}).count(),'actual inbox');await settled();
+  const all=page.getByRole('tab',{name:'Tudo',exact:true});if(await all.getAttribute('aria-selected')!=='true')await activate(all);
+  observations.newer=await c.newestMessages();await settled();const before=await snapshot();assert.ok(before.length>4);observations.before=before;observations.nativeBefore=await native();assert.ok(observations.nativeBefore.offset<1);assert.equal(await page.getByRole('button',{name:'Show newer messages',exact:true}).count(),0);await audit('Native inbox at its actual physical start');
+  checks.push('Newer paging reaches real native scroll0, including the final overscan-only step, before removing its original paging control');
+  const owner=await page.evaluate(()=>FMTOKEN);await activate(page.getByRole('button',{name:'Show older messages',exact:true}));await poll(async()=>JSON.stringify(await snapshot())!==JSON.stringify(before),'actual older native window');await settled();const older=await snapshot();observations.older=older;observations.sharedOlder=common(before,older);observations.nativeOlder=await native();assert.ok(observations.nativeOlder.offset>0);await audit('Native older window with stable message identities');
+  checks.push('Actual older paging changes native viewport/rows while every overlapping NewsItem keeps its DOM ID and maps to its own current native reference');
+  const evicted=before.find(r=>!older.some(x=>x.message===r.message));assert.ok(evicted,'Actual old record left the realized window');const paneBefore=await c.fetchText('/nodeprobe?type=MessageTitle&depth=1');const reply=await c.fetchText('/message/open?id='+evicted.id+'&screen='+encodeURIComponent(owner));assert.match(reply,/Unknown element|no longer on screen|screen changed|message changed/i);assert.equal(await page.locator('[data-fm-message-view-id]').count(),0);assert.equal(await c.fetchText('/nodeprobe?type=MessageTitle&depth=1'),paneBefore);observations.evicted={...evicted,reply};
+  checks.push('An old off-window message command is refused without selecting the recycled row or changing the native reading pane');
+  observations.returnPaging=await c.newestMessages();await settled();const after=await snapshot();assert.equal(after[0].message,before[0].message);observations.sharedReturn=common(before,after);observations.nativeAfter=await native();assert.ok(observations.nativeAfter.offset<1);await audit('Original newest message and native start restored');
+  checks.push('Native newer paging restores the original first NewsItem and its stable ID at real scroll0, without opening or processing any message');
+  assert.deepEqual(c.errors,[]);assert.deepEqual(c.requestFailures,[]);assert.deepEqual(c.network.failures,[]);
+  fs.writeFileSync(path.join(out,'message-window-identity.json'),JSON.stringify({success:true,mvid,checks,audits,observations,errors:c.errors,requestFailures:c.requestFailures,network:c.network,saveSubmitted:false,simulationAdvanced:false,manualNVDA:false},null,2));
+ }catch(error){fs.writeFileSync(path.join(out,'message-window-identity-failure.json'),JSON.stringify({success:false,error:error.stack,mvid,checks,audits,observations,errors:c.errors,requestFailures:c.requestFailures,network:c.network},null,2));throw error;}
+ finally{await c.browser.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});

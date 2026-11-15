@@ -1,0 +1,23 @@
+{
+  "panelName": "RecruitmentTransferActivityTool",
+  "headings": [
+    { "match": { "name": "most-recent-offers-text", "typeName": "SIText" }, "level": 3 },
+    { "match": { "typeName": "SIText", "pathContains": "PlayerNameFrame" }, "level": 3 },
+    { "match": { "typeName": "SIText", "parentName": "Frame", "pathContains": "SiVisible-ValidatePerson-contract-frame" }, "level": 3 },
+    { "match": { "typeName": "SIText", "parentName": "Frame_Wages_TItle" }, "level": 3 }
+  ],
+  "hides": [
+    { "match": { "typeName": "SIImage", "pathContains": "inputs-hybrid-task_switch_button-regular" } },
+    { "match": { "name": "transfer-room-logo", "typeName": "SIImage" } }
+  ],
+  "renames": [
+    { "match": { "name": "ClubButton", "pathContains": "ActiveClubIconSetter" }, "label": "Club" },
+    { "match": { "name": "create-group-button" }, "label": "Create group" },
+    { "match": { "name": "accept-button" }, "label": "Accept" },
+    { "match": { "name": "stall-button" }, "label": "Stall" },
+    { "match": { "name": "inputs-combobox-default-default", "pathContains": "group-select-dropdown" }, "label": "Group" },
+    { "match": { "name": "inputs-combobox-default-default", "pathContains": "group-priority-dropdown" }, "label": "Priority" },
+    { "match": { "name": "inputs-switch-toggle-large-default", "pathContains": "active-toggle" }, "label": "Active offers only" },
+    { "match": { "typeName": "SICheckBox", "pathContains": "transfer-activity-multiselect-actions-frame" }, "label": "Select all offers" }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "panelName": "ScoutingReportCard",
+  "headings": [
+    {
+      "match": {
+        "pathStartsWith": "VisualElement > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"overall-recommendation\")",
+        "name": "text",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"transfer-info\") > BindingExpect",
+        "name": "text",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"pros\")",
+        "name": "text",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"cons\")",
+        "name": "text",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > BindingVariables > BindingRemapper > BindingExpect > TemplateContainer > VisualElement(\"right-column\")",
+        "name": "text",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      // The Scout and Analyst tabs' "Scout Recommendation" / "Analyst Recommendation" title (the
+      // game's own spelling, "scout-recomendation" / "analyst-recomendation"): the first text of
+      // its own frame (the grade and verdict sit in the frame after it).
+      "match": {
+        "pathContains": "-recomendation",
+        "parentName": "Auto Layout Horizontal frame",
+        "typeName": "SIText",
+        "childIndex": 0
+      },
+      "level": 2
+    },
+    {
+      // The Analyst tab's "Player Analysis" title, beside its icon.
+      "match": {
+        "pathContains": "player-analysis",
+        "parentName": "Frame",
+        "typeName": "SIText"
+      },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": {
+        "name": "game concepts-red card",
+        "pathContains": "data_display-string-list-item"
+      }
+    },
+    {
+      "match": {
+        "name": "NationButton",
+        "pathContains": "NationFlag_Small"
+      }
+    },
+    {
+      "match": {
+        "name": "ClubButton",
+        "pathContains": "ClubIcon"
+      }
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "panelName": "OnThePitchOppositionInstructionsCard",
+  "headings": [
+    { "match": { "name": "label-text", "pathContains": "AdviceLabel" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" } }
+  ],
+  "renames": []
+}

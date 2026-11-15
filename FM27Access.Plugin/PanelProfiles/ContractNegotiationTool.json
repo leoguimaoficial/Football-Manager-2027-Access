@@ -1,0 +1,14 @@
+{
+  "panelName": "ContractNegotiationTool",
+  "headings": [
+    { "match": { "name": "Name", "pathContains": "interaction-hub-body-message_sender-primary" }, "level": 2 },
+    { "match": { "parentName": "Title", "classification": "Text" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "ClubButton", "pathContains": "club-icon-remapper" } },
+    { "match": { "classification": "Text", "parentName": "Frame", "pathContains": "terms-block-top-bar" } },
+    { "match": { "classification": "Text", "parentName": "Frame", "pathContains": "buttons-read-only-offer-enabled" } },
+    { "match": { "typeName": "SIStepIntButton" } },
+    { "match": { "typeName": "SIStepFloatButton" } }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "panelName": "TrainingLoadCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "name": "text", "parentName": "Frame", "pathContains": "frame-fitness-training loads", "childIndex": 0 },
+      "level": 2
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "data_display-graphs-stepper-step_bar", "typeName": "SIStepper" },
+      "label": "Level"
+    }
+  ]
+}

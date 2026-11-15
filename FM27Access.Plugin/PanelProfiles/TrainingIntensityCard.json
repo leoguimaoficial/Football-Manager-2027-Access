@@ -1,0 +1,9 @@
+{
+  "panelName": "TrainingIntensityCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathContains": "left_side frame", "childIndex": 0 },
+      "level": 2
+    }
+  ]
+}

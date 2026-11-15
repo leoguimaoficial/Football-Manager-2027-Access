@@ -1,0 +1,20 @@
+{
+  "panelName": "JobMarketReport",
+  "headings": [
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "header" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "NationButton", "typeName": "SIButton" }
+    },
+    {
+      "match": { "name": "NationImage", "typeName": "SIImage" }
+    },
+    {
+      "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" }
+    }
+  ]
+}

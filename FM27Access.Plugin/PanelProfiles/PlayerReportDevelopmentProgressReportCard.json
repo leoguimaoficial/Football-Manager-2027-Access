@@ -1,0 +1,17 @@
+{
+  "panelName": "PlayerReportDevelopmentProgressReportCard",
+  "headings": [
+    {
+      "match": { "name": "Name", "typeName": "SIText", "pathContains": "interaction-hub-body-message_sender-primary" },
+      "level": 2
+    },
+    {
+      "match": { "name": "YaxisLabel", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "name": "Y-axis-label", "typeName": "SIText" },
+      "level": 2
+    }
+  ]
+}

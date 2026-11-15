@@ -1,0 +1,13 @@
+{
+  "panelName": "PlayerRecommendationsAdvancedSettingsDialog",
+  "headings": [],
+  "renames": [],
+  "hides": [
+    {
+      "match": {
+        "typeName": "SIText",
+        "pathContains": "HeaderTextContainer"
+      }
+    }
+  ]
+}

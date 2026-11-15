@@ -1,0 +1,15 @@
+{
+  "panelName": "MatchController",
+  "headings": [],
+  "hides": [],
+  "renames": [
+    {
+      "match": { "name": "rewind", "typeName": "SIButton" },
+      "label": "Rewind"
+    },
+    {
+      "match": { "name": "skip", "typeName": "SIButton" },
+      "label": "Skip"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+// Actual unknown public recruitment row -> unscouted native profile -> Back.
+// Inspect widget visibility only. Never query hidden attributes or request scouting.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {default:AxeBuilder}=require('@axe-core/playwright');
+const root=path.resolve(__dirname,'../..'),out=path.join(root,'artifacts/tests/web');
+(async()=>{
+ const c=await require('./original-client.cjs')({networkDiagnostics:true}),{page,poll,settled,activate}=c;
+ const report={at:new Date().toISOString(),success:false,checks:[],audits:[],hiddenAttributeValuesRead:false,scoutingSubmitted:false,saveSubmitted:false,simulationAdvanced:false,manualNVDA:false};
+ async function audit(stage){const a=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();report.audits.push({stage,violations:a.violations.map(v=>v.id)});assert.deepEqual(a.violations,[]);}
+ const table=()=>page.locator('#fmroot table').filter({has:page.getByRole('columnheader',{name:'Eficácia',exact:true})});
+ async function publicRows(){return table().evaluate(t=>{const hs=[...t.querySelectorAll('thead th')].map(h=>h.textContent.trim());for(const name of ['Jogadora','Capacidade','Potencial','Eficácia','Observação'])if(!hs.includes(name))throw Error('Actual native column required: '+name);return[...t.querySelectorAll('tbody tr')].map(r=>({name:r.cells[hs.indexOf('Jogadora')].textContent,ability:r.cells[hs.indexOf('Capacidade')].textContent,potential:r.cells[hs.indexOf('Potencial')].textContent,effectiveness:r.cells[hs.indexOf('Eficácia')].textContent,scouting:r.cells[hs.indexOf('Observação')].textContent}));});}
+ try{
+  report.health=JSON.parse(await c.fetchText('/health'));assert.equal(report.health.developerTools,true,'Native visibility corroboration requires the actual Debug game');
+  await c.dropdown('FM Menu');await c.choose('Gravar Jogo Como');report.checkpoint=await page.getByRole('textbox',{name:'File name',exact:true}).inputValue();assert.match(report.checkpoint,/^FM27Access QA /);await activate(page.getByRole('button',{name:'Cancelar',exact:true}));
+  const target=page.locator('#fmnav-tree [role=treeitem][data-uid="3173313024"][data-obj="2000104296"]').first(),search=page.getByRole('textbox',{name:'Search all screens',exact:true});await search.fill(await target.locator(':scope > span').textContent());await target.focus();const nav=page.waitForResponse(r=>new URL(r.url()).pathname==='/navigator/go');nav.catch(()=>{});await page.keyboard.press('Enter');assert.match(await(await nav).text(),/^Opening /);await settled();await search.fill('');await settled();
+  assert.equal(await table().count(),1);const rows=await publicRows();report.visibleRows=rows.length;
+  report.candidate=rows.find(r=>r.ability==='Desconhecido'&&r.potential==='Desconhecido'&&r.effectiveness.includes('Desconhecido')&&r.scouting==='Nenhuma');assert.ok(report.candidate,'Require an actual public unknown/no-scouting row; never manufacture a fixture or change knowledge');
+  const player=table().getByRole('button',{name:report.candidate.name,exact:true});assert.equal(await player.count(),1);report.origin=await player.getAttribute('id');await audit('Actual recruitment unknown markers');
+  await activate(player);await poll(async()=>await page.title()==='Relatório de jogador','actual unscouted player report');await settled();assert.ok((await page.locator('#fmroot').innerText()).includes(report.candidate.name));
+  const banner=page.locator('#fmroot table').filter({has:page.getByRole('rowheader',{name:'Contract',exact:true})});assert.equal(await banner.count(),1);
+  report.header=await banner.innerText();assert.doesNotMatch(report.header,/\bstars?\b/i,'The observed completely unscouted branch must not announce hidden/fabricated star values');assert.equal(await banner.getByRole('button',{name:'Observar jogador',exact:true}).count(),1,'Preserve the actual native scouting action without executing it');
+  assert.equal(await banner.locator('th').filter({hasText:/^\s*$/}).count(),0,'Unscouted field rows retain names and native Actions is not an unnamed scalar');
+  report.nativeVisibleStars=await require('./native-profile-star-visibility.cjs')(c,report.health.coreMvid);assert.equal(report.nativeVisibleStars.count,0);await audit('Actual unscouted profile without star values');report.checks.push('A real row with unknown ability/potential/effectiveness and no scouting opens its correct native profile; visible native header star count is zero and no star values are announced; genuine scouting action remains available but untouched');
+  await activate(page.locator('[data-fm-history="back"]'));await poll(()=>page.locator('#'+report.origin).count(),'actual recruitment result return');await settled();await poll(()=>page.evaluate(id=>document.activeElement.id===id,report.origin),'exact unknown-player origin focus');
+  assert.deepEqual((await publicRows()).find(r=>r.name===report.candidate.name),report.candidate,'Unknown knowledge and no-scouting state remain unchanged after browsing');await audit('Restored native unknown recruitment row');report.checks.push('Native Back restores exact person-row focus and unchanged unknown/no-scouting values without altering filters or requesting hidden data');
+  assert.deepEqual(c.errors,[]);assert.deepEqual(c.requestFailures,[]);assert.deepEqual(c.network.failures,[]);report.success=true;
+ }catch(error){report.failure=error.stack||String(error);throw error;}
+ finally{report.jsErrors=c.errors;report.requestFailures=c.requestFailures;report.network=c.network;fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'unscouted-profile.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));await c.browser.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});

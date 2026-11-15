@@ -1,0 +1,9 @@
+{
+  "panelName": "MyCareerMyBadgesCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "qualification-ladder" },
+      "level": 2
+    }
+  ]
+}

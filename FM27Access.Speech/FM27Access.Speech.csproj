@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\tools\game-inspect\InstallationInspector.cs" Link="Platform\InstallationInspector.cs" />
+    <EmbeddedResource Include="..\packaging\native-profiles.json" LogicalName="FM27Access.NativeProfiles.json" />
+  </ItemGroup>
+
+</Project>

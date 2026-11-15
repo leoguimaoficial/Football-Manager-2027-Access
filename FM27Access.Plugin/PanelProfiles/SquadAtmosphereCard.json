@@ -1,0 +1,18 @@
+{
+  "panelName": "SquadAtmosphereCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Issues frame\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame \") > VisualElement(\"TopFrame\")" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "typeName": "SIText", "parentName": "BottomFrame" }
+    }
+  ]
+}

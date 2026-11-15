@@ -1,0 +1,7 @@
+{
+  "panelName": "FMpediaSectionScreen",
+  "hides": [
+    { "match": { "name": "SectionIcon", "typeName": "SIImage" } },
+    { "match": { "name": "CurrentTitle", "typeName": "SIText" } }
+  ]
+}

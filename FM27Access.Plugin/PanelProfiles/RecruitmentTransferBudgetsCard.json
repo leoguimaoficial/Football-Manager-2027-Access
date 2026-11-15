@@ -1,0 +1,9 @@
+{
+  "panelName": "RecruitmentTransferBudgetsCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "frames-transfer budget-graph" },
+      "level": 2
+    }
+  ]
+}

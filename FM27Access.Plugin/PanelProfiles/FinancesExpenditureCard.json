@@ -1,0 +1,15 @@
+{
+  "panelName": "FinancesExpenditureCard",
+  "headings": [
+    {
+      "match": { "pathContains": "FinancesExpenditureBlock", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "name": "Title", "pathContains": "FinancesExpenditureBreakdwonBlock" },
+      "level": 2
+    }
+  ],
+  "hides": [],
+  "renames": []
+}

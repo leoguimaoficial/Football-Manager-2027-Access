@@ -1,0 +1,15 @@
+{
+  "panelName": "TunnelInterviewPanel",
+  "headings": [
+    { "match": { "name": "text", "pathContains": "NameAndHierarhy", "parentName": "Frame" }, "level": 2 },
+    { "match": { "name": "Name", "pathContains": "message_sender-primary" }, "level": 2 },
+    { "match": { "name": "GroupTitle" }, "level": 3 }
+  ],
+  "hides": [
+    { "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" } },
+    { "match": { "name": "PanelTitleText" } },
+    { "match": { "name": "Name", "pathContains": "NonPlayerInfo" } },
+    { "match": { "name": "Publication", "pathContains": "NonPlayerInfo" } }
+  ],
+  "renames": []
+}

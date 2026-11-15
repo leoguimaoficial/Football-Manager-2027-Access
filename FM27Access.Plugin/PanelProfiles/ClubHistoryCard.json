@@ -1,0 +1,18 @@
+{
+  "panelName": "ClubHistoryCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Club\") > BindableSwitchElement(\"Background\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Header\") > VisualElement(\"Club\")" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "Icon", "typeName": "SIImage" }
+    }
+  ]
+}

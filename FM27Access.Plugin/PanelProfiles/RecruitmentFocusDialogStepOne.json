@@ -1,0 +1,35 @@
+{
+  "panelName": "RecruitmentFocusDialogStepOne",
+  "headings": [
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "title-panel", "childIndex": 0 },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "inputs-switch-checkbox-label" }
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "Frame 1000002619" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "CheckboxDefault", "pathContains": "any-position-tactic-selector" },
+      "label": "Any Position"
+    },
+    {
+      "match": { "name": "dropdown-base-regular-row-template-trailing-icon", "pathContains": "any-position-tactic-selector" },
+      "label": "Tactic"
+    },
+    {
+      "match": { "name": "buttons-controls-console-default", "pathContains": "-decrement-enabled" },
+      "label": "Decrease"
+    },
+    {
+      "match": { "name": "buttons-controls-console-default", "pathContains": "-increment-enabled" },
+      "label": "Increase"
+    }
+  ]
+}

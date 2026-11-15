@@ -1,0 +1,16 @@
+{
+  "panelName": "TeamTalkPanel",
+  "headings": [
+    { "match": { "name": "Title", "pathContains": "TitleHeader" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" } },
+    { "match": { "name": "PanelTitleText" } }
+  ],
+  "renames": [
+    {
+      "match": { "name": "Title", "pathContains": "TitleHeader" },
+      "label": "Player Reactions"
+    }
+  ]
+}

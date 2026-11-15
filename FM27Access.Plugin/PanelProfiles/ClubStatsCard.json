@@ -1,0 +1,9 @@
+{
+  "panelName": "ClubStatsCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "CategoryTiltleFrame" },
+      "level": 2
+    }
+  ]
+}

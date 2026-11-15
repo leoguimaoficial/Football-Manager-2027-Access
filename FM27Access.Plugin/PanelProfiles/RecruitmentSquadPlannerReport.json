@@ -1,0 +1,23 @@
+{
+  "panelName": "RecruitmentSquadPlannerReport",
+  "headings": [],
+  "hides": [],
+  "renames": [
+    {
+      "match": { "typeName": "SIButton", "pathContains": "upenabled" },
+      "label": "Move up"
+    },
+    {
+      "match": { "typeName": "SIButton", "pathContains": "downenabled" },
+      "label": "Move down"
+    },
+    {
+      "match": { "name": "inputs-switch-toggle-default" },
+      "label": "Show Position Issues"
+    },
+    {
+      "match": { "typeName": "SIDropdown", "pathContains": "tacticdropdown" },
+      "label": "Tactic"
+    }
+  ]
+}

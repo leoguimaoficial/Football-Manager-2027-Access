@@ -1,0 +1,9 @@
+{
+  "panelName": "MatchDetailLevel",
+  "headings": [
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathContains": "nav panel frame" },
+      "level": 2
+    }
+  ]
+}

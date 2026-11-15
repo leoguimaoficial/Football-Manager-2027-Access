@@ -1,0 +1,9 @@
+{
+  "panelName": "SquadFeedbackCard",
+  "headings": [
+    {
+      "match": { "name": "header", "typeName": "SIText" },
+      "level": 2
+    }
+  ]
+}

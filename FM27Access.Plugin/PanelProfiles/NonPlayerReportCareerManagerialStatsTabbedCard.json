@@ -1,0 +1,9 @@
+{
+  "panelName": "NonPlayerReportCareerManagerialStatsTabbedCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathContains": "TIFO-TableHeaderTemplate" },
+      "level": 2
+    }
+  ]
+}

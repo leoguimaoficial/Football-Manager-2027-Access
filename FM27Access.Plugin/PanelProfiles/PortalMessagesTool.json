@@ -1,0 +1,49 @@
+{
+  "panelName": "PortalMessagesTool",
+  "headings": [
+    {
+      "match": { "name": "MessageTitle" }
+    },
+    {
+      "match": { "parentName": "IsDateSeparator" }
+    },
+    {
+      "match": { "name": "AttachmentsText" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    // The same native inbox banner is reused outside the dashboard.
+    { "match": { "name": "banner-image", "typeName": "SIImage", "pathContains": "TabGroup" } },
+    // The action bar's warning icon repeats its visible response-status caption.
+    { "match": { "name": "Icon", "typeName": "SIImage", "parentName": "IconVisible", "pathContains": "VisualElement(\"ActionBar\")" } },
+    {
+      "match": { "name": "ToolBackgroundImage" }
+    },
+    {
+      "match": { "name": "ClubButton", "pathContains": "ActiveClubIconSetter" }
+    }
+  ],
+  "renames": [
+    { "match": { "typeName": "SIDropdown", "name": "dropdown-icon-base", "pathContains": "MenuDropdown" }, "label": "Message actions" },
+    { "match": { "typeName": "SIButton", "name": "SearchButton" }, "label": "Search messages" },
+    {
+      "match": {
+        "name": "dropdown-icon-base",
+        "pathContains": "AdviceDropdown"
+      },
+      "label": "Advice actions"
+    },
+    {
+      "match": {
+        "name": "dropdown-icon-base",
+        "pathContains": "MenuDropdown"
+      },
+      "label": "Message actions"
+    },
+    {
+      "match": { "name": "MarkAllReadButton" },
+      "label": "Mark all as read"
+    }
+  ]
+}

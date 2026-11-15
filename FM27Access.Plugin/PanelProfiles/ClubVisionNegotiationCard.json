@@ -1,0 +1,21 @@
+{
+  "panelName": "ClubVisionNegotiationCard",
+  "headings": [
+    { "match": { "typeName": "SIText", "childIndex": 1, "pathStartsWith": "VisualElement > VisualElement(\"Values\") > ComponentElement" }, "level": 3 },
+    { "match": { "typeName": "SIText", "parentName": "MeetingInfo" }, "level": 2 },
+    { "match": { "name": "text", "parentName": "Frame", "pathContains": "NameAndHierarhy" }, "level": 2 },
+    { "match": { "name": "NoObjectivesText", "parentName": "Frame" }, "level": 2 },
+    { "match": { "name": "ActionableTitle" }, "level": 2 },
+    { "match": { "name": "InformationalTitle" }, "level": 2 },
+    { "match": { "name": "ClubVisionName" }, "level": 3 }
+  ],
+  "hides": [
+    { "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" } },
+    { "match": { "name": "ObjectiveIcon", "typeName": "SIImage" } },
+    { "match": { "name": "CompetitionIcon", "typeName": "SIImage" } }
+  ],
+  "renames": [
+    { "match": { "name": "inputs-combobox-default-default", "parentName": "SelectedObjectiveBindingVariable" },
+      "label": "Competition objective" }
+  ]
+}

@@ -1,0 +1,56 @@
+FM27 Access — third-party notices
+
+FM27 Access derives from FM26 Access 0.2.16, commit
+4d38a0256f29b97376845ef59edfcd64d7f165ed. The mod's own code, companion,
+panel profiles and sound cues remain GPL-3.0. See ../LICENSE, CREDITS.md
+and licenses/FM27Access-LICENSE.txt. The original third-party notice is
+preserved as THIRD-PARTY-LICENSES-FM26.txt for provenance, not current
+package contents.
+
+BepInEx 6 / Unity Doorstop
+Official candidate tested: Unity.IL2CPP win-x64 6.0.0-be.793+dbc82f0.
+Upstream: https://github.com/BepInEx/BepInEx
+Supplied license: licenses/BepInEx-LICENSE.txt (LGPL-2.1).
+The loader is downloaded separately, never copied from the FM26 installation.
+Its runtime/native dependencies retain their supplied licenses.
+
+Prism TTS
+Source: https://github.com/ethindp/prism
+The supplied runtime is unchanged from the FM26 Access source baseline above.
+Upstream NOTICE and component licenses: licenses/Prism/ and ../Prism/NOTICE.
+MPL-2.0; NVDA RPC portions LGPL-2.1; simdutf Apache-2.0; NVGT notice included.
+The dynamic binary remains in the source bundle and player payload. The permanent
+Host loads Prism for the inherited speech pipeline.
+
+Idiomorph 0.7.3
+Upstream tag license: Zero-Clause BSD, licenses/Idiomorph-LICENSE.txt.
+https://github.com/bigskysoftware/idiomorph/tree/v0.7.3
+The original vendored header describes it as MIT. The upstream tag's actual
+LICENSE was inspected and preserved; the JavaScript implementation is unchanged.
+
+Microsoft.Web.WebView2 1.0.2792.45
+Microsoft Software License Terms and notices from the restored NuGet package:
+licenses/WebView2-LICENSE.txt and licenses/WebView2-NOTICE.txt.
+The Evergreen browser runtime has its own Microsoft distribution terms.
+
+.NET runtime
+MIT, licenses/dotnet-LICENSE.txt. The companion publishes self-contained for
+win-x64 so the player does not need a development SDK. SDK 10.0.403 is used
+for development; the companion targets net10.0-windows and pins runtime 10.0.15.
+The exact player runtime is recorded in manifest.json. Its Microsoft license
+and third-party notices are included in the package.
+
+Mono C# compiler / mcs-unity
+Explicit Debug/developer-opt-in dependency for the C# evaluator; ../lib/mcs-LICENSE.txt
+contains the supplied MIT X11 option. Release excludes both the compiler binary
+and the evaluator. The compiler is supplied locally and excluded from Git/source
+bundles; its license/provenance notice remains in source.
+
+Development tooling
+xUnit, Microsoft.NET.Test.Sdk, coverlet, Playwright and axe are development
+dependencies and are not player runtime components. Versions are declared
+in csproj and tests/companion/package-lock.json; retain upstream notices
+if distributing the tools themselves.
+
+No Football Manager proprietary binary, asset, save or generated game interop
+assembly is part of the source or player package.

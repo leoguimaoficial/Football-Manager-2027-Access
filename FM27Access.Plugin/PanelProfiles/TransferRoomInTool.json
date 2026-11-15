@@ -1,0 +1,14 @@
+{
+  "panelName": "TransferRoomInTool",
+  "headings": [
+    {
+      "match": { "name": "ClubText", "typeName": "SIText" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    { "match": { "name": "transfer-room-logo", "typeName": "SIImage" } },
+    { "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" } },
+    { "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRemapper" } }
+  ]
+}

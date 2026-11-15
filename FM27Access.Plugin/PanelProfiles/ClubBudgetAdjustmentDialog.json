@@ -1,0 +1,19 @@
+{
+  "panelName": "ClubBudgetAdjustmentDialog",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "Title", "typeName": "SIText" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "AdjustDownButton" },
+      "label": "Decrease"
+    },
+    {
+      "match": { "name": "AdjustUpButon" },
+      "label": "Increase"
+    }
+  ]
+}

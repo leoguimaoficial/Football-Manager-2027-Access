@@ -1,0 +1,12 @@
+{
+  "panelName": "MatchSharpnessCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "name": "text", "parentName": "Frame", "pathContains": "frame-fitness-match sharpness", "childIndex": 0 },
+      "level": 2
+    }
+  ],
+  "hides": [
+    { "match": { "name": "image", "typeName": "SIImage", "pathContains": "scaling-icons-sharpness" } }
+  ]
+}

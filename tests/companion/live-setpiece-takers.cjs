@@ -1,0 +1,49 @@
+// Reuse the inherited FM26 priority table against actual FM27 inline records.
+// All real priority/removal edits have an observed native inverse. No Save.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {default:AxeBuilder}=require('@axe-core/playwright');
+(async()=>{
+ const c=await require('./original-client.cjs')({networkDiagnostics:true}),{page,poll,settled,activate}=c;
+ const checks=[],audits=[],observations={};let mvid,success=false,release;
+ const tables=()=>page.locator('table[data-takers]');
+ const names=()=>tables().evaluateAll(ts=>ts.map(t=>[...t.querySelectorAll('tr[data-taker-row]')].map(r=>r.dataset.takerRow)));
+ const row=(side,name)=>tables().nth(side).locator('tr[data-taker-row]').filter({has:page.getByRole('button',{name,exact:true})});
+ const action=(side,name,kind)=>row(side,name).locator('button[data-taker-action="'+kind+'"]');
+ async function go(uid){const entry=page.locator('#fmnav-tree [role=treeitem][data-uid="'+uid+'"]').first(),q=page.getByRole('textbox',{name:'Search all screens',exact:true});await q.fill(await entry.locator(':scope > span').textContent());await entry.focus();const r=page.waitForResponse(r=>new URL(r.url()).pathname==='/navigator/go');r.catch(()=>{});await page.keyboard.press('Enter');assert.match(await(await r).text(),/^Opening /);await settled();await q.fill('');await settled();}
+ async function nativeOrder(){
+  const gui=await c.fetchText('/gui'),lines=gui.split('\n'),left=lines.findIndex(l=>l.includes('name="SetPieceTakersBlockTemplateLeft"')),right=lines.findIndex(l=>l.includes('name="SetPieceTakersBlockTemplateRight"'));assert.ok(left>=0&&right>left);
+  return[lines.slice(left,right),lines.slice(right)].map(block=>block.filter(l=>/SIText name="primary-text"/.test(l)).map(l=>l.match(/<style="Norml">([^<]+)/)?.[1]).filter(Boolean));
+ }
+ async function nativeIdentity(id){
+  const code='foreach(var a in System.AppDomain.CurrentDomain.GetAssemblies())if(a.ManifestModule.ModuleVersionId.ToString()=="'+mvid+'"){var f=System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.Static;var hs=(System.Collections.IDictionary)a.GetType("FM27Access.Plugin.Server.ServerHandles").GetField("_handles",f).GetValue(null);var h=hs["'+id+'"];System.Console.WriteLine("IDENTITY|"+h.GetType().GetField("NativeRowIdentity",f).GetValue(h));}';
+  const raw=await page.evaluate(async code=>(await fetch('/eval',{method:'POST',body:code})).text(),code);assert.doesNotMatch(raw,/\[compile\]|\[exception\]/);const identity=raw.match(/^IDENTITY\|([^\r\n]+)/m)?.[1];assert.match(identity||'',/^set-piece:[^|]+\|FM\.UI\.PersonReference\|/);return identity;
+ }
+ async function audit(name){const a=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();audits.push({name,violations:a.violations.map(v=>v.id)});assert.deepEqual(a.violations,[]);}
+ async function expectOrder(expected){await poll(async()=>JSON.stringify(await names())===JSON.stringify(expected),'actual priority DOM order');await settled();assert.deepEqual(await nativeOrder(),expected);}
+ try{
+  mvid=JSON.parse(await c.fetchText('/health')).coreMvid;await c.dropdown('FM Menu');await c.choose('Gravar Jogo Como');const filename=page.getByRole('textbox',{name:'File name',exact:true});await poll(()=>filename.count(),'owned QA identity');observations.ownedSave=await filename.inputValue();assert.match(observations.ownedSave,/^FM27Access QA /);await activate(page.getByRole('button',{name:'Cancelar',exact:true}));
+  await go(2263778048);const opener=page.getByRole('button',{name:/^MC, /});assert.equal(await opener.count(),1);observations.origin=await opener.getAttribute('id');await activate(opener);await poll(async()=>await tables().count()===2,'both inherited priority tables');await settled();
+  const baseline=await names();assert.ok(baseline.every(list=>list.length>=3));observations.baseline=baseline;assert.deepEqual(await nativeOrder(),baseline);
+  assert.deepEqual(await tables().evaluateAll(ts=>ts.map(t=>[...t.querySelectorAll('thead th')].map(h=>h.textContent))),[['Prioridade','Nome','Remover'],['Prioridade','Nome','Remover']]);
+  observations.identities=[];for(let side=0;side<2;side++)for(const person of baseline[side]){const id=await action(side,person,'up').getAttribute('id');observations.identities.push({side,person,id,native:await nativeIdentity(id)});}
+  await audit('Actual four-column native template adapted to original semantic priority tables');checks.push('Both native template instances reuse FM26 tables; every command retains actual PersonReference plus native set-piece type/side, with named headers and contextual actions');
+  const person=baseline[0][1],old=await action(0,person,'up').getAttribute('id'),owner=await page.evaluate(()=>FMTOKEN),expected=baseline.map(xs=>xs.slice());[expected[0][0],expected[0][1]]=[expected[0][1],expected[0][0]];
+  const gate=new Promise(r=>release=r);let held=0;await page.route('**/body?*',async route=>{held++;await gate;try{await route.continue();}catch{}});
+  try{
+   const response=page.waitForResponse(r=>new URL(r.url()).pathname==='/activate');response.catch(()=>{});await action(0,person,'up').focus();await page.keyboard.press('Enter');observations.firstMoveReply=await(await response).text();assert.match(observations.firstMoveReply,/^Activated /);await poll(()=>held>0,'replacement body held before native compose');await poll(async()=>JSON.stringify(await nativeOrder())===JSON.stringify(expected),'native reorder while old document remains');
+   const stale=await c.fetchText('/activate?id='+old+'&screen='+encodeURIComponent(owner));assert.deepEqual(await nativeOrder(),expected);observations.stale={id:old,identity:observations.identities.find(x=>x.id===old).native,reply:stale,heldBodies:held};assert.match(stale,/row (?:changed|is no longer available)/i,'Retained priority command must refuse the changed native row before acting');
+  }finally{release();release=null;await page.unrouteAll({behavior:'wait'});await page.evaluate(()=>FM.core.refresh(true));await settled();}
+  await expectOrder(expected);assert.equal(await page.evaluate(person=>document.activeElement?.closest('tr')?.dataset.takerRow===person,person),true);
+  await activate(action(0,person,'down'));await expectOrder(baseline);assert.equal(await action(0,person,'down').evaluate(e=>e===document.activeElement),true);checks.push('Native left reorder persists while replacement HTML is held; old row command refuses without moving another player; inverse restores every list and exact logical player focus');
+  const rightPerson=baseline[1][1],rightExpected=baseline.map(xs=>xs.slice());[rightExpected[1][0],rightExpected[1][1]]=[rightExpected[1][1],rightExpected[1][0]];await activate(action(1,rightPerson,'up'));await expectOrder(rightExpected);await activate(action(1,rightPerson,'down'));await expectOrder(baseline);checks.push('Independent native right-foot list reorders and inverts while the entire left-foot list remains unchanged');
+  const removed=baseline[0].at(-1),without=baseline.map(xs=>xs.slice());without[0].pop();await activate(action(0,removed,'remove'));await expectOrder(without);
+  const available=page.locator('table').filter({has:page.getByRole('columnheader',{name:'Pé preferido',exact:true})}),availableRow=available.getByRole('row').filter({has:page.getByRole('button',{name:removed,exact:true})});assert.equal(await availableRow.count(),1);await activate(availableRow.getByRole('checkbox'),'Space');await poll(()=>page.getByRole('button',{name:'Adicionar aos canhotos',exact:true}).isEnabled(),'actual eligible Add action');await activate(page.getByRole('button',{name:'Adicionar aos canhotos',exact:true}));await expectOrder(baseline);checks.push('Remove changes the native list; the same actual player is selected and added back through the native left-foot action, restoring exact original order and other list');
+  observations.addFocus=await page.evaluate(()=>{const e=document.activeElement;return{id:e.id,tag:e.tagName,disabled:e.disabled===true,person:e.closest('tr[data-taker-row]')?.dataset.takerRow};});
+  const addId=await page.getByRole('button',{name:'Adicionar aos canhotos',exact:true}).getAttribute('id');
+  assert.ok(observations.addFocus.person===removed||observations.addFocus.id===addId&&!observations.addFocus.disabled,'Native Add must focus its actual added player or its still-enabled origin');
+  await audit('All priority changes and removal inverses restored');await activate(page.getByRole('button',{name:'Fechar',exact:true}));await poll(()=>page.locator('#'+observations.origin).count(),'original native taker opener');await settled();assert.equal(await page.evaluate(id=>document.activeElement.id===id,observations.origin),true);
+  await activate(page.locator('#'+observations.origin));await expectOrder(baseline);await audit('Exact native lists persist after close/reopen');await activate(page.getByRole('button',{name:'Fechar',exact:true}));checks.push('Close returns to the exact original opener; reopening retains both restored native lists');
+  assert.equal(JSON.parse(await c.fetchText('/health')).coreMvid,mvid);assert.deepEqual(c.errors,[]);assert.deepEqual(c.requestFailures,[]);assert.deepEqual(c.network.failures,[]);success=true;
+ }catch(error){observations.failure=error.stack;observations.currentNames=await names().catch(()=>null);throw error;}
+ finally{if(release)release();fs.writeFileSync(path.resolve(__dirname,'../../artifacts/tests/web/setpiece-takers.json'),JSON.stringify({success,mvid,checks,audits,observations,errors:c.errors,requestFailures:c.requestFailures,networkFailures:c.network.failures,restorationRequired:!success,saveSubmitted:false,simulationAdvanced:false,manualNVDA:false},null,2));await c.browser.close();}
+})().catch(error=>{console.error(error);process.exitCode=1;});

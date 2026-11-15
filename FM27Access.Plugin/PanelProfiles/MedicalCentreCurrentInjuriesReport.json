@@ -1,0 +1,14 @@
+{
+  "panelName": "MedicalCentreCurrentInjuriesReport",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"frame\")", "childIndex": 0 },
+      "level": 2
+    }
+  ],
+  "hides": [
+    { "match": { "name": "PlayerBodyIcon", "typeName": "SIImage" } },
+    { "match": { "name": "PlayerBodyIconBack", "typeName": "SIImage" } },
+    { "match": { "name": "injury-silhouett-base", "typeName": "SIImage" } }
+  ]
+}

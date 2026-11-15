@@ -1,0 +1,36 @@
+{
+  "panelName": "RecruitmentFocusTool",
+  "headings": [
+    {
+      "match": {
+        "name": "text",
+        "typeName": "SIText",
+        "pathStartsWith": "VisualElement > VisualElement(\"Frame 1000002522\")",
+        "pathContains": "Frame 1000002706"
+      },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "typeName": "SIImage", "name": "Icon" }
+    },
+    {
+      "match": { "typeName": "SIImage", "name": "LargeIcon" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "button-base-leading-icon", "pathContains": "SIVisible-RemoveFocus" },
+      "label": "Remove Focus"
+    },
+    {
+      "match": { "name": "buttons-controls-pc-default", "pathContains": "SIVisible-RestartFocus" },
+      "label": "Restart Focus"
+    },
+    {
+      "match": { "name": "buttons-dropdown-icon-base-default-single-icon", "pathContains": "Frame 1000002706" },
+      "label": "Filter by status"
+    }
+  ]
+}

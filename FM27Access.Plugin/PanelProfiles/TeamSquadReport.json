@@ -1,0 +1,20 @@
+{
+  "panelName": "TeamSquadReport",
+  "headings": [
+    {
+      "match": { "name": "SIButton_OpenClubSite", "pathContains": "NextOpponent" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "pathContains": "TeamOrSubStyle", "typeName": "SIButton" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" },
+      "label": "Club crest"
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "panelName": "PlayerReport",
+  "headings": [
+    {
+      "match": {
+        "pathContains": "Frame 1000003381",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "parentName": "Technical",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "parentName": "Setpieces",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "parentName": "MentalsFrame",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathContains": "\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Outfielder\")",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathStartsWith": "VisualElement(\"Frame\") > SIVisible > VisualElement(\"Frame\") > VisualElement(\"Outfielder\")",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"frames-player attributes-full block\")",
+        "name": "text",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathContains": "\"Goalkeeper\") > VisualElement(\"Frame\") > VisualElement(\"Goalkeeper\")",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathContains": "\"Physical\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Goalkeeper\")",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "parentName": "GKTechnical",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathStartsWith": "VisualElement(\"Frame\") > BindingExpect > TemplateContainer > BindingRemapper(\"PersonPersonal\")",
+        "name": "text",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "name": "title-to-be-replaced",
+        "typeName": "SIText"
+      },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": {
+        "name": "ClubButton",
+        "pathContains": "ClubIcon"
+      }
+    },
+    {
+      "match": {
+        "name": "NationButton",
+        "pathContains": "NationFlag_Medium"
+      }
+    }
+  ]
+}

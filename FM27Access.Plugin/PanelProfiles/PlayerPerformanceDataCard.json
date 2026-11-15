@@ -1,0 +1,9 @@
+{
+  "panelName": "PlayerPerformanceDataCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "TopFrame" },
+      "level": 2
+    }
+  ]
+}

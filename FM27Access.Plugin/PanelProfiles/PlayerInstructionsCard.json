@@ -1,0 +1,17 @@
+{
+  "panelName": "PlayerInstructionsCard",
+  "headings": [
+    {
+      "match": { "name": "ApplyToText", "parentName": "ApplyToButtons" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "pathContains": "HasPlayerSwitch" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    { "match": { "name": "text", "pathContains": "locked-cell" } },
+    { "match": { "name": "text", "pathContains": "tweaked-cell" } }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "panelName": "TrainingUnitsReport",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathContains": "Frame 1000002400\")" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "image", "typeName": "SIImage", "pathContains": "Frame 1000002400\")" }
+    }
+  ]
+}

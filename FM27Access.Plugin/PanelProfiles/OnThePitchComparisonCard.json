@@ -1,0 +1,15 @@
+{
+  "panelName": "OnThePitchComparisonCard",
+  "headings": [
+    { "match": { "typeName": "SIText", "parentName": "Inside Coach Report frame" }, "level": 3 },
+    { "match": { "typeName": "SIText", "parentName": "Frame", "pathContains": "(\"pros\")" }, "level": 3 },
+    { "match": { "typeName": "SIText", "parentName": "Frame", "pathContains": "(\"cons\")" }, "level": 3 },
+    { "match": { "typeName": "SIText", "parentName": "Attributes frame" }, "level": 2 },
+    { "match": { "typeName": "SIText", "parentName": "Body frame" }, "level": 2 },
+    { "match": { "typeName": "SIText", "parentName": "Frame", "pathContains": "Body frame" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "typeName": "SIImage", "pathContains": "data_display-string-list-item-pro-con" } },
+    { "match": { "typeName": "SIText", "pathContains": "role_selector-standard" } }
+  ]
+}

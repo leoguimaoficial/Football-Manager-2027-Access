@@ -1,0 +1,9 @@
+{
+  "panelName": "TransferStatus",
+  "headings": [
+    {
+      "match": { "name": "Title", "typeName": "SIText" },
+      "level": 2
+    }
+  ]
+}

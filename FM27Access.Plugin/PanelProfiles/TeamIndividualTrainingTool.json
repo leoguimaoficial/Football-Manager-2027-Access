@@ -1,0 +1,27 @@
+{
+  "panelName": "TeamIndividualTrainingTool",
+  "headings": [
+    {
+      "match": { "name": "Name", "typeName": "SIText", "pathContains": "interaction-hub-body-message_sender-primary" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement(\"Name\") > VisualElement(\"Player\")" },
+      "level": 2
+    },
+    { "match": { "parentName": "TechnicalFrame", "typeName": "SIText" }, "level": 2 },
+    { "match": { "parentName": "SetPiecesFrame", "typeName": "SIText" }, "level": 2 },
+    { "match": { "parentName": "MentalsFrame", "typeName": "SIText" }, "level": 2 },
+    { "match": { "parentName": "PhysicalFrame", "typeName": "SIText" }, "level": 2 },
+    { "match": { "parentName": "GK_Rating", "typeName": "SIText" }, "level": 2 },
+    { "match": { "parentName": "GKTechnical", "typeName": "SIText" }, "level": 2 },
+    { "match": { "parentName": "Goalkeeping", "typeName": "SIText" }, "level": 2 },
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"pros\")" }, "level": 2 },
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"cons\")" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "NationButton", "pathContains": "NationFlag_Small" } },
+    { "match": { "typeName": "SIText", "pathContains": "TemplateContainer(\"AttributesKey\")" } },
+    { "match": { "name": "Icon", "typeName": "SIImage", "pathContains": "data_display-cell-combo_cell-default-type-icon-icon-size-medium-orientation-vertical-combo-1-cell-1-string" } }
+  ]
+}

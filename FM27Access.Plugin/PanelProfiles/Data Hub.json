@@ -1,0 +1,45 @@
+{
+  // Heading rules are grouped by the analysis tab they serve. Paths are LEAF-FIRST — the
+  // immediate parent comes first — which is the reverse of how /classify prints them.
+  "panelName": "Data Hub",
+  "headings": [
+    { "match": { "name": "Header", "typeName": "SIText" }, "level": 2 },
+
+    // Set Piece Analysis: Data Insights, and its Attacking / Defensive phases.
+    { "match": { "typeName": "SIText", "parentName": "Body frame" }, "level": 2 },
+    // Set Piece Analysis: the Left and Right flank groups under each phase.
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Body frame\")" }, "level": 3 },
+
+    // Goal Analysis: the Scoring and Conceding halves.
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > BindingVariables > BindingRemapper" }, "level": 2 },
+    // FM27 separates the half into a component under the native GoalsSection.
+    { "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > ComponentElement > TemplateContainer > VisualElement(\"GoalsSection\")" }, "level": 2 },
+    // Goal Analysis: the Goal Areas and Goal Types blocks within each half.
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame \")" }, "level": 3 },
+    { "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement > VisualElement(\"Frame\") > ComponentElement > TemplateContainer(\"GoalsTemplate\")" }, "level": 3 },
+    // Goal Analysis: the Goal Times block within each half.
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame \") > VisualElement > BindingVariables" }, "level": 3 },
+    { "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement > ComponentElement > TemplateContainer(\"GoalsTemplate\")" }, "level": 3 },
+    // FM27's insights title and native attacking/defending group captions.
+    { "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement > VisualElement(\"Frame\") > ComponentElement > TemplateContainer > BlockElement", "pathContains": "BindableVariableSizedGridElement(\"SetPieceDataInsights\")" }, "level": 2 },
+
+    // Last Match: the written summary above the tiles. Key Findings' equivalent is recovered
+    // automatically from its title text; this one sits in a Summary frame and is not.
+    // childIndex pins the title: the summary prose is its sibling in the same frame and must
+    // stay a paragraph.
+    { "match": { "typeName": "SIText", "parentName": "Summary", "childIndex": 0 }, "level": 2 },
+
+    // Every analysis tab is a stack of tiles, each now printing its full text on the page. The
+    // tile's own button heads its block so H-navigation steps tile to tile instead of walking
+    // paragraph by paragraph; the heading wraps the button, so it stays activatable.
+    { "match": { "name": "layout-tile-interaction-button", "typeName": "SIButton" }, "level": 2 },
+
+    // Formation Analysis: the in-possession and out-of-possession halves.
+    { "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Txt frame\")" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "pathContains": "VisualElement(\"Title-Frame\")" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "pathContains": "VisualElement(\"oop-title-frame\")" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" } }
+  ]
+}

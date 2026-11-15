@@ -1,0 +1,9 @@
+{
+  "panelName": "RecruitmentContractsCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathContains": "Frame 1000002303\")" },
+      "level": 2
+    }
+  ]
+}

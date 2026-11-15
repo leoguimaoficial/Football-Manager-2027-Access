@@ -1,0 +1,21 @@
+<Project>
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <LangVersion>latest</LangVersion>
+    <FM27GameDir Condition="'$(FM27GameDir)' == ''">$(FM27_GAME_DIR)</FM27GameDir>
+    <BepInExDir Condition="'$(BepInExDir)' == '' and '$(FM27GameDir)' != ''">$(FM27GameDir)\BepInEx</BepInExDir>
+    <Version>0.1.0</Version>
+    <FM27DeveloperTools Condition="'$(FM27DeveloperTools)' == ''">false</FM27DeveloperTools>
+    <DefineConstants Condition="'$(FM27DeveloperTools)' == 'true'">$(DefineConstants);FM27_DEVELOPER_TOOLS</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <Target Name="ValidateFM27BuildProfile" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(FM27DeveloperTools)' != 'true' and '$(FM27DeveloperTools)' != 'false'"
+           Text="FM27DeveloperTools must be true or false." />
+    <Error Condition="'$(FM27DeveloperTools)' == 'true' and '$(Configuration)' != 'Debug'"
+           Text="Developer tools require an explicit Debug build. Production builds cannot enable diagnostics." />
+  </Target>
+</Project>

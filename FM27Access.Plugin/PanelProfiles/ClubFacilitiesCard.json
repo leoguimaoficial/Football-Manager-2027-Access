@@ -1,0 +1,21 @@
+{
+  "panelName": "ClubFacilitiesCard",
+  "headings": [
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "header" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Facilities frame\")" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathContains": "ClubFacilitiesTraining" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathContains": "ClubFacilitiesCorporate" },
+      "level": 2
+    }
+  ]
+}

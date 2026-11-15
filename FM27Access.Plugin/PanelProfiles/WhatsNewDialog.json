@@ -1,0 +1,10 @@
+{
+  "panelName": "WhatsNewDialog",
+  "headings": [
+    { "match": { "name": "TitleText", "typeName": "SIText" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "Title", "typeName": "SIText", "pathContains": "Header" } }
+  ],
+  "renames": []
+}

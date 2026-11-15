@@ -1,0 +1,9 @@
+{
+  "panelName": "ClubSupportersCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "left-side", "childIndex": 0 },
+      "level": 2
+    }
+  ]
+}

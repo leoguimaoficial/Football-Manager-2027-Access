@@ -1,0 +1,8 @@
+{
+  "panelName": "ZoneMapCard",
+  "hides": [
+    // The colour key's scale maximum ("29%"): always the busiest zone's own share, which the zone
+    // table already reads, and a stray bare percentage after it.
+    { "match": { "typeName": "SIText", "pathContains": "attributes key frame" } }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "panelName": "FinancesDebtsAndLoansCard",
+  "hides": [
+    { "match": { "name": "ColoredCircle", "typeName": "SIImage" } }
+  ]
+}

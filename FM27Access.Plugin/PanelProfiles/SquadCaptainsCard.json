@@ -1,0 +1,13 @@
+{
+  "panelName": "SquadCaptainsCard",
+  "headings": [
+    {
+      "match": { "name": "Header", "typeName": "SIText", "pathContains": "Captains\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"LeftFrame\") > VisualElement(\"AllPlayers\")" },
+      "level": 2
+    }
+  ]
+}

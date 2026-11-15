@@ -1,0 +1,21 @@
+{
+  "panelName": "OverviewHeader",
+  "headings": [
+    // The pending-tactical-changes toast's title line ("(Tactical changes pending)"). Its two
+    // texts are same-named SIText siblings under the toast's text_and_icon frame; childIndex 0
+    // is the title, 1 the "Will take place at the next break in play" detail, which stays plain.
+    {
+      "match": { "typeName": "SIText", "pathContains": "notifications-toast", "childIndex": 0 },
+      "level": 2
+    }
+  ],
+  "hides": [],
+  "renames": [
+    // The play/pause button is NOT renamed here: ButtonAdapter composes its label from the live
+    // play/pause sprite ("Pause (match playing)"), and a static rename would mask that state.
+    {
+      "match": { "typeName": "SICheckBox", "pathContains": "ShowMatchControllerButtonFocusser" },
+      "label": "Match Controller"
+    }
+  ]
+}

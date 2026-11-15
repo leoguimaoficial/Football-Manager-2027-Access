@@ -1,0 +1,10 @@
+{
+  "panelName": "GenericModalDialog",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "dialog-title", "typeName": "SIText" }
+    }
+  ],
+  "renames": []
+}

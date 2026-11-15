@@ -1,0 +1,15 @@
+{
+  "panelName": "FinancesIncomeCard",
+  "headings": [
+    {
+      "match": { "pathContains": "FinancesIncomeBlock", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "name": "Title", "pathContains": "FinancesIncomeBreakdownBlock" },
+      "level": 2
+    }
+  ],
+  "hides": [],
+  "renames": []
+}

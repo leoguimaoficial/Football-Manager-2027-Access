@@ -1,0 +1,13 @@
+{
+  "panelName": "CompetitionFixturesTool",
+  "renames": [
+    {
+      "match": { "name": "prev", "typeName": "SIButton" },
+      "label": "Previous date"
+    },
+    {
+      "match": { "name": "next", "typeName": "SIButton" },
+      "label": "Next date"
+    }
+  ]
+}

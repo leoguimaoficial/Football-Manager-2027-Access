@@ -1,0 +1,6 @@
+{
+  "panelName": "AddShortcutDialog",
+  "headings": [],
+  "hides": [{ "match": { "name": "title-text" } }],
+  "renames": []
+}

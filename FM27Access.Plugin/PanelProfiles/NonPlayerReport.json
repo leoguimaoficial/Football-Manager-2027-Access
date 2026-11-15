@@ -1,0 +1,116 @@
+{
+  "panelName": "NonPlayerReport",
+  "headings": [
+    {
+      "match": {
+        "parentName": "Header-Coaching",
+        "name": "attribute-name",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "parentName": "Header-Mental",
+        "name": "attribute-name",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "parentName": "Header-Knowledge",
+        "name": "attribute-name",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "parentName": "Header-Scouting",
+        "name": "attribute-name",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "parentName": "Header-Medical",
+        "name": "attribute-name",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "parentName": "Header-Info",
+        "name": "name",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "parentName": "Header-Tendencies",
+        "name": "name",
+        "typeName": "SIText"
+      },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": {
+        "name": "ClubButton",
+        "pathContains": "ClubIcon"
+      }
+    },
+    {
+      "match": {
+        "typeName": "SIButton",
+        "pathContains": "Frame 1000003782"
+      }
+    },
+    {
+      "match": {
+        "parentName": "Header-Coaching",
+        "name": "attribute-value",
+        "typeName": "SIText"
+      }
+    },
+    {
+      "match": {
+        "parentName": "Header-Mental",
+        "name": "attribute-value",
+        "typeName": "SIText"
+      }
+    },
+    {
+      "match": {
+        "parentName": "Header-Knowledge",
+        "name": "attribute-value",
+        "typeName": "SIText"
+      }
+    },
+    {
+      "match": {
+        "parentName": "Header-Scouting",
+        "name": "attribute-value",
+        "typeName": "SIText"
+      }
+    },
+    {
+      "match": {
+        "parentName": "Header-Medical",
+        "name": "attribute-value",
+        "typeName": "SIText"
+      }
+    },
+    {
+      "match": {
+        "parentName": "frame-staff",
+        "typeName": "SIText"
+      }
+    }
+  ]
+}

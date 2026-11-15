@@ -1,0 +1,7 @@
+{
+  "panelName": "ClubAffiliatesCard",
+  "hides": [
+    { "match": { "name": "NationButton", "typeName": "SIButton" } },
+    { "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" } }
+  ]
+}

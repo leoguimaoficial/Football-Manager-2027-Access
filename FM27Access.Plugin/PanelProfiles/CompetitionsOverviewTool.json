@@ -1,0 +1,10 @@
+{
+  "panelName": "CompetitionsOverviewTool",
+  "headings": [
+    // The competition owns its objective, standing/round and player leaders.
+    // Reuse FM26's heading renderer, including the native competition link.
+    { "match": { "name": "CompName", "typeName": "SIText" }, "level": 2 },
+    // This is a subsection of that competition, not another peer competition.
+    { "match": { "name": "title-text", "typeName": "SIText", "parentName": "StageSetter" }, "level": 3 }
+  ]
+}

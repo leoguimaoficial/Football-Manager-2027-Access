@@ -1,0 +1,18 @@
+{
+  "panelName": "TeamNewsPanel",
+  "headings": [
+    { "match": { "name": "TitleText", "pathContains": "OppositionTeamChanges" }, "level": 2 },
+    { "match": { "typeName": "SIText", "parentName": "divider" }, "level": 2 },
+    { "match": { "name": "SIText", "pathContains": "referee-has-value" }, "level": 2 },
+    { "match": { "name": "TitleText", "pathContains": "StaffAdvice" }, "level": 2 },
+    { "match": { "name": "Title", "pathContains": "PreMatchAdvice" }, "level": 3 }
+  ],
+  "hides": [
+    { "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" } },
+    { "match": { "name": "PanelTitleText" } },
+    { "match": { "typeName": "SIText", "pathContains": "TeamBlock" } },
+    { "match": { "name": "CompetitionName" } },
+    { "match": { "name": "WeatherIcon" } }
+  ],
+  "renames": []
+}

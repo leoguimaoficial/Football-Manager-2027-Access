@@ -1,0 +1,14 @@
+{
+  "panelName": "ClubVisionCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "Title" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "CompetitionIcon", "typeName": "SIImage" }
+    }
+  ]
+}

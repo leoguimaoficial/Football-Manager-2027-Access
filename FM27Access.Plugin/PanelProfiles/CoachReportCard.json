@@ -1,0 +1,63 @@
+{
+  "panelName": "CoachReportCard",
+  "headings": [
+    {
+      "match": {
+        "parentName": "Title-Frame",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"pros\")",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"cons\")",
+        "typeName": "SIText"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"right-column\")",
+        "name": "text",
+        "typeName": "SIText"
+      },
+      "level": 2
+    }
+  ],
+  "renames": [
+    {
+      "match": {
+        "name": "SIDropdown",
+        "pathContains": "VisualElement(\"Dropdown\") > VisualElement(\"right-column\")"
+      },
+      "label": "Position"
+    }
+  ],
+  "hides": [
+    {
+      "match": {
+        "name": "ClubButton",
+        "pathContains": "ClubRatioFitter"
+      }
+    },
+    {
+      "match": {
+        "name": "NationButton",
+        "pathContains": "NationFlag_Small"
+      }
+    },
+    {
+      "match": {
+        "name": "Icon",
+        "pathContains": "data_display-cell-combo_cell-default-type-icon"
+      }
+    }
+  ]
+}

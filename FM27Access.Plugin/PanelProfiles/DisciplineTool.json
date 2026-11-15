@@ -1,0 +1,9 @@
+{
+  "panelName": "DisciplineTool",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "Header" },
+      "level": 2
+    }
+  ]
+}

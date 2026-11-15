@@ -1,0 +1,21 @@
+{
+  "panelName": "YouthReportSiteYouthCandidatesTool",
+  "headings": [
+    // The intake verdict ("Excellent Intake", above its star rating and summary) and the
+    // candidates preview table's title, plus a landmark on each tile.
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathContains": "VisualElement(\"Title\")" },
+      "level": 2
+    },
+    {
+      "match": { "name": "layout-tile-interaction-button", "typeName": "SIButton" },
+      "level": 2
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "title-to-be-replaced", "typeName": "SIText" },
+      "label": "Youth Development"
+    }
+  ]
+}

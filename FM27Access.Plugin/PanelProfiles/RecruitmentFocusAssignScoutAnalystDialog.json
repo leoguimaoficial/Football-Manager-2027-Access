@@ -1,0 +1,15 @@
+{
+  "panelName": "RecruitmentFocusAssignScoutAnalystDialog",
+  "headings": [],
+  "hides": [
+    { "match": { "name": "title", "typeName": "SIText" } },
+    { "match": { "name": "text", "typeName": "SIText", "pathContains": "checkbox-any-scout" } },
+    { "match": { "name": "text", "typeName": "SIText", "pathContains": "checkbox-any-analyst" } }
+  ],
+  "renames": [
+    { "match": { "name": "CheckboxDefault", "pathContains": "checkbox-any-scout" },
+      "label": "Assign Any Scouts" },
+    { "match": { "name": "CheckboxDefault", "pathContains": "checkbox-any-analyst" },
+      "label": "Assign Any Analyst" }
+  ]
+}

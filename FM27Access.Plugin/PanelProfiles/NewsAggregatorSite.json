@@ -1,0 +1,6 @@
+{
+  "panelName": "NewsAggregatorSite",
+  "headings": [
+    { "match": { "name": "ForYouTitle" }, "level": 2 }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "panelName": "GameCreationDeleteManagerWindow",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "Title", "typeName": "SIText" }
+    }
+  ],
+  "renames": []
+}

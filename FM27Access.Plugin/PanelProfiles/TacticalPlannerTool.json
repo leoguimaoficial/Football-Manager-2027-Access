@@ -1,0 +1,129 @@
+{
+  "panelName": "TacticalPlannerTool",
+  "headings": [
+    {
+      "match": {
+        "name": "text",
+        "parentName": "title frame",
+        "pathContains": "team-instruction-header"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "name": "PhaseText",
+        "parentName": "PhaseHeader"
+      },
+      "level": 3
+    },
+
+    // --- The create-a-tactic wizard (the tool's state when the club has no tactic yet) ---
+
+    // The step title in the tool header ("Choose a Tactical Style", "Choose Formation (In
+    // Possession)") — the only thing on the page that names the step the player is on.
+    {
+      "match": {
+        "typeName": "SIText",
+        "pathStartsWith": "BindableSwitchElement > VisualElement(\"header\") > BindingExpect"
+      },
+      "level": 2
+    },
+    // Step 1's detail pane: the selected style's name heads its description, staff feedback and
+    // instruction lists. Scoped to the style pane's shape — the formation steps reuse the same
+    // element name for their preview values, one level deeper under a BindingRemapper.
+    {
+      "match": {
+        "name": "selected-tactic-name",
+        "pathStartsWith": "BindableSwitchElement > VisualElement(\"regular-state\")"
+      },
+      "level": 2
+    },
+    { "match": { "name": "staff-feedback-title" }, "level": 3 },
+    // The "In Possession" / "Out of Possession" titles over step 1's instruction lists.
+    {
+      "match": {
+        "typeName": "SIText",
+        "pathStartsWith": "BindingRemapper > VisualElement > VisualElement(\"unity-content-container\") > VisualElement(\"unity-content-viewport\")"
+      },
+      "level": 3
+    },
+    // The step bar's own title, so the step roadmap trailing every step is one skippable block.
+    {
+      "match": { "typeName": "SIText", "parentName": "other-info" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    { "match": { "name": "ForwardPhase", "pathContains": "pitch-remapper" } },
+    { "match": { "name": "MidfieldPhase", "pathContains": "pitch-remapper" } },
+    { "match": { "name": "GoalkeeperPhase", "pathContains": "pitch-remapper" } },
+    { "match": { "name": "sub", "parentName": "FMDraggableObject" } },
+    { "match": { "name": "name", "parentName": "FMDraggableObject" } },
+    { "match": { "name": "position", "parentName": "FMDraggableObject" } },
+    { "match": { "name": "PlayerSelectionCard" } },
+    { "match": { "name": "buttons-button-base-default", "pathContains": "view-pitch-checkboxes" } },
+    { "match": { "name": "analysis-button", "pathStartsWith": "SIEnabled > BindingSetter > SIVisible" } },
+    { "match": { "name": "analysis-button", "pathStartsWith": "BindingSetter > SIEnabled" } },
+    // Keep the expand action on the collapsed pitch: native Both is unavailable
+    // until it expands. The walker retains the original expanded-grid chrome.
+    // Reuse FM26's hidden substitutes strip, including its header/count and
+    // deep empty-slot controls. Player selection remains in the actual table.
+    { "match": { "pathContains": "tactics-pitch-both-sub section" } },
+    { "match": { "pathContains": "VisualElement(\"NoPlayer\")" } },
+    // FM27's XIButton opens the native picker for an empty position/substitute.
+    // The Player-cell dropdown can be disabled ("No Choices"), so retain it.
+    // The substitute rows' Pkd-cell dropdown, a slot list that moves the pick between slots. Per
+    // user: hidden. The Player cell's own menu still changes or removes who holds the slot; only
+    // slot-to-slot reordering goes with this. Its "Interactions" wrapper is what separates it from
+    // that Player-cell dropdown, which sits under BindingVariables in the same cell template.
+    {
+      "match": {
+        "name": "dropdown-base-no-background",
+        "pathStartsWith": "TemplateContainer > BindableSwitchElement(\"Interactions\")"
+      }
+    },
+    // The wizard's empty-state pane repeats the step title it sits beside ("Select In Possession
+    // Formation" under "Choose Formation (In Possession)"); its sibling hint text stays.
+    { "match": { "name": "text", "pathContains": "VisualElement(\"empty-states\")" } }
+  ],
+  "renames": [
+    {
+      "match": {
+        "name": "dropdown-base-no-background",
+        "pathContains": "tactics-picker-focusser"
+      },
+      "label": "Tactic options"
+    },
+    {
+      "match": {
+        "name": "dropdown-base-no-background",
+        "pathContains": "tactics-picker"
+      },
+      "label": "Add tactic"
+    },
+    {
+      "match": {
+        "name": "text",
+        "parentName": "title frame",
+        "pathContains": "team-instruction-header"
+      },
+      "label": "Instruction details"
+    },
+    {
+      "match": { "name": "PhasesDropdown" },
+      "label": "Instruction category"
+    },
+    {
+      "match": { "name": "ClubButton", "pathContains": "ActiveClub" },
+      "label": "Opposition club site"
+    },
+    // The wizard's step-back control. The game labels it "Back", which on this page is
+    // indistinguishable from the title bar's screen-history Back; its own text names no
+    // destination, so replacing it outright loses nothing. The forward controls DO name their
+    // destination, so those keep the game's text and gain "Advance to " in CoreEntry.
+    {
+      "match": { "pathStartsWith": "SIVisible(\"back-vis\")" },
+      "label": "Previous step"
+    }
+  ]
+}

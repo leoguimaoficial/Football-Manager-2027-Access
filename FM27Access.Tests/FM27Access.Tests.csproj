@@ -1,0 +1,72 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FM27Access.Speech\FM27Access.Speech.csproj" />
+    <ProjectReference Include="..\FM27Access.Navigation\FM27Access.Navigation.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\FM27Access.Plugin\NavigationSpeechMute.cs" Link="Plugin\NavigationSpeechMute.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\ReplacedMessageStep.cs" Link="Server\ReplacedMessageStep.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\ChoiceCaptionMatch.cs" Link="Server\ChoiceCaptionMatch.cs" />
+    <Compile Include="..\FM27Access.Plugin\Adapters\ImageStyleLabel.cs" Link="Adapters\ImageStyleLabel.cs" />
+    <Compile Include="..\FM27Access.Plugin\Adapters\ProgressCaptionValue.cs" Link="Adapters\ProgressCaptionValue.cs" />
+    <Compile Include="..\FM27Access.Plugin\Adapters\LineChartTrend.cs" Link="Adapters\LineChartTrend.cs" />
+    <Compile Include="..\FM27Access.Plugin\Contexts\NativeBindingReadiness.cs" Link="Contexts\NativeBindingReadiness.cs" />
+    <Compile Include="..\FM27Access.Plugin\PanelObservationPolicy.cs" Link="Plugin\PanelObservationPolicy.cs" />
+    <!-- Pure navigation-model policy compiled from the production source so its placeholder
+         contract is testable without loading the game's Unity/IL2CPP assemblies. -->
+    <Compile Include="..\FM27Access.Plugin\Server\PossessionArbiter.cs" Link="Server\PossessionArbiter.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\LastTouchTracker.cs" Link="Server\LastTouchTracker.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\TurnoverClaim.cs" Link="Server\TurnoverClaim.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\NavigatorEntryPolicy.cs" Link="Server\NavigatorEntryPolicy.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\MatchIncidentLabel.cs" Link="Server\MatchIncidentLabel.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\HttpRequestTrace.cs" Link="Server\HttpRequestTrace.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\HttpRequestReader.cs" Link="Server\HttpRequestReader.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\HttpResponseWriter.cs" Link="Server\HttpResponseWriter.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\InlineTextSpacing.cs" Link="Server\InlineTextSpacing.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\DateCalendarNavigation.cs" Link="Server\DateCalendarNavigation.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\SettingsFileWriter.cs" Link="Server\SettingsFileWriter.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\MessageVerificationKey.cs" Link="Server\MessageVerificationKey.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\MatchEventWindow.cs" Link="Server\MatchEventWindow.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\HarvestSlicer.cs" Link="Server\HarvestSlicer.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\RuntimeSurface.cs" Link="Server\RuntimeSurface.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\DocumentLanguage.cs" Link="Server\DocumentLanguage.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\ActionScreen.cs" Link="Server\ActionScreen.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\MainThreadDispatcher.cs" Link="Server\MainThreadDispatcher.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\ComposedShape.cs" Link="Server\ComposedShape.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\RadarColumns.cs" Link="Server\RadarColumns.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\CoachSeasonStats.cs" Link="Server\CoachSeasonStats.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\LastMatchTables.cs" Link="Server\LastMatchTables.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\ScatterSummary.cs" Link="Server\ScatterSummary.cs" />
+    <Compile Include="..\FM27Access.Plugin\Server\EntityLinkName.cs" Link="Server\EntityLinkName.cs" />
+    <Compile Include="..\FM27Access.Plugin\Tactics\PitchMoveConfirmation.cs" Link="Tactics\PitchMoveConfirmation.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\FM27Access.Plugin\PanelProfiles\GameCreationCustomLeagueSetup.json;..\FM27Access.Plugin\PanelProfiles\GameCreationManagerSelectionScreen.json;..\FM27Access.Plugin\PanelProfiles\GameCreationLoadDataBaseDialogScreen.json;..\FM27Access.Plugin\PanelProfiles\AddNationsModal.json">
+      <Link>PanelProfiles\%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

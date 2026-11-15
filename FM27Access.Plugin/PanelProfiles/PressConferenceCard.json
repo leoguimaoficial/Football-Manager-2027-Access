@@ -1,0 +1,11 @@
+{
+  "panelName": "PressConferenceCard",
+  "hides": [
+    // Both native chrome captions repeat the card's existing section title.
+    { "match": { "typeName": "SIText", "parentName": "PressInfo" } },
+    { "match": { "typeName": "SIText", "name": "MainTabText" } }
+  ],
+  "renames": [
+    { "match": { "name": "ProgressIndicator", "typeName": "SIRadialGauge" }, "label": "Progress" }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "panelName": "MatchLoadCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "name": "text", "parentName": "Frame", "pathContains": "frame-fitness-match load", "childIndex": 0 },
+      "level": 2
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "data_display-graphs-stepper-step_bar", "typeName": "SIStepper" },
+      "label": "Level"
+    }
+  ]
+}

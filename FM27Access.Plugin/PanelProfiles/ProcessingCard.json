@@ -1,0 +1,14 @@
+{
+  "panelName": "ProcessingCard",
+  "headings": [
+    { "match": { "name": "CurrentDateLabel" }, "level": 2 },
+    { "match": { "name": "NextMatchStaticLabel" }, "level": 2 },
+    { "match": { "name": "TitleText", "pathContains": "PortalMessagesTitleBar" }, "level": 2 }
+  ],
+  "renames": [
+    { "match": { "name": "ClubButton", "pathContains": "NationOrClub" }, "label": "Club crest" }
+  ],
+  "hides": [
+    { "match": { "name": "reports-header-fmpedia-button", "typeName": "SIButton" } }
+  ]
+}

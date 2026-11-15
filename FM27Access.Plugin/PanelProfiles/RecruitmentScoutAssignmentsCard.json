@@ -1,0 +1,13 @@
+{
+  "panelName": "RecruitmentScoutAssignmentsCard",
+  "headings": [
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "LeftPanel" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathContains": "RightPanel" },
+      "level": 3
+    }
+  ]
+}

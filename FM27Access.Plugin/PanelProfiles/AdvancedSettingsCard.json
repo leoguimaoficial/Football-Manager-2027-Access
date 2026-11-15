@@ -1,0 +1,10 @@
+{
+  "panelName": "AdvancedSettingsCard",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "typeName": "SIText", "parentName": "Frame 1000003312" }
+    }
+  ],
+  "renames": []
+}

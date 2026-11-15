@@ -1,0 +1,9 @@
+{
+  "panelName": "FatigueCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "name": "text", "parentName": "Frame", "pathContains": "frame-fitness-energy", "childIndex": 0 },
+      "level": 2
+    }
+  ]
+}

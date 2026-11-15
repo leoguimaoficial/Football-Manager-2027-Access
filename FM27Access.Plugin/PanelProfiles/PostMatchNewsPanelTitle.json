@@ -1,0 +1,9 @@
+{
+  "panelName": "PostMatchNewsPanelTitle",
+  "hides": [
+    { "match": { "name": "comp-icon", "typeName": "SIImage" } }
+  ],
+  "renames": [
+    { "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" }, "label": "Club crest" }
+  ]
+}

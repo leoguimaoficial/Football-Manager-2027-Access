@@ -1,0 +1,14 @@
+{
+  "panelName": "AddRemoveLeaguesGameplayCard",
+  "headings": [
+    {
+      "match": { "name": "ActiveNations_Header", "typeName": "SIText" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "NationButton", "pathContains": "NationFlag_Medium" }
+    }
+  ]
+}

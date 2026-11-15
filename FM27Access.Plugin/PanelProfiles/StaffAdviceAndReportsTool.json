@@ -1,0 +1,19 @@
+{
+  "panelName": "StaffAdviceAndReportsTool",
+  "headings": [
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathContains": "VisualElement(\"Frame 1000003162\")" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathContains": "VisualElement(\"Frame 1000003183\")" },
+      "level": 3
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "data_display-cell-standard-regular" },
+      "level": 3
+    }
+  ],
+  "hides": [],
+  "renames": []
+}

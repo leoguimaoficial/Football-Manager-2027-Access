@@ -1,0 +1,22 @@
+{
+  "panelName": "OverviewPrototype",
+  "headings": [],
+  "hides": [
+    // The squad strip's collapse/expand chevron ("Squad, button", SIButton_Collapse in the
+    // Squad Info Sidebar title). Purely visual utility - it shrinks the strip to show more
+    // pitch - and activating it would empty the page's player list until re-expanded. The
+    // strip content itself stays; only the collapse control is hidden.
+    { "match": { "name": "SIButton_Collapse", "pathContains": "Squad Info Sidebar" } }
+  ],
+  "renames": [
+    // The Match Controller toggle physically lives in the OverviewHeader score bug, but the HTML
+    // surface moves its stop to the end of this panel's section so the transport strip it opens
+    // appears directly below it (AccessibilityServer.MoveMatchControllerToggleToPageEnd). Renames
+    // resolve against the profile active at render time, so the moved stop needs the same rename
+    // here as in OverviewHeader.json.
+    {
+      "match": { "typeName": "SICheckBox", "pathContains": "ShowMatchControllerButtonFocusser" },
+      "label": "Match Controller"
+    }
+  ]
+}

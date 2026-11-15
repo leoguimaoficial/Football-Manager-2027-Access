@@ -1,0 +1,40 @@
+// A real diagnostic read must not clear the companion's command/value maps or
+// dismiss its actual native dropdown. No native value edit or Save is submitted.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {default:AxeBuilder}=require('@axe-core/playwright');
+(async()=>{
+ const c=await require('./original-client.cjs')({networkDiagnostics:true}),{page,poll,activate}=c;
+ const checks=[],audits=[],observations=[],out=path.resolve(__dirname,'../../artifacts/tests/web/read-isolation.json');let mvid,ownedSave,original;
+ async function native(id){assert.match(id,/^e[0-9a-f]+$/);const code=`foreach(var a in System.AppDomain.CurrentDomain.GetAssemblies())if(a.ManifestModule.ModuleVersionId.ToString()=="${mvid}"){
+ var f=System.Reflection.BindingFlags.Public|System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.Static;
+ var hs=(System.Collections.IDictionary)a.GetType("FM27Access.Plugin.Server.ServerHandles").GetField("_handles",f).GetValue(null);var vs=(System.Collections.IDictionary)a.GetType("FM27Access.Plugin.Server.LiveValues").GetField("_sources",f).GetValue(null);
+ foreach(object key in hs.Keys)System.Console.WriteLine("HANDLE|"+key);foreach(object key in vs.Keys)System.Console.WriteLine("VALUE|"+key);
+ var dm=a.GetType("FM27Access.Plugin.Server.DropdownSessionManager");var levels=(System.Collections.ICollection)dm.GetField("_levels",f).GetValue(null);System.Console.WriteLine("OWNER|"+dm.GetField("_ownerId",f).GetValue(null));System.Console.WriteLine("LEVELS|"+(levels==null?0:levels.Count));
+ var renderer=a.GetType("FM27Access.Plugin.Server.HtmlRenderer");System.Console.WriteLine("PITCH|"+renderer.GetField("_pitchCount",f).GetValue(null)+"|"+renderer.GetField("_hasEditablePitch",f).GetValue(null));
+ var h=hs["${id}"];if(h!=null){var ad=h.GetType().GetField("El",f).GetValue(h);System.Console.WriteLine("POPUP|"+ad.GetType().GetMethod("IsPopupVisible",f).Invoke(ad,null));}
+ }`;
+  const raw=await page.evaluate(async code=>await(await fetch('/eval',{method:'POST',body:code})).text(),code);assert.doesNotMatch(raw,/\[compile\]|\[exception\]/);
+  return{handles:[...raw.matchAll(/^HANDLE\|([^\r\n]+)/gm)].map(m=>m[1]).sort(),values:[...raw.matchAll(/^VALUE\|([^\r\n]+)/gm)].map(m=>m[1]).sort(),owner:raw.match(/^OWNER\|([^\r\n]*)/m)?.[1],levels:Number(raw.match(/^LEVELS\|(\d+)/m)?.[1]),popup:raw.match(/^POPUP\|(True|False)/m)?.[1]==='True',pitchCount:Number(raw.match(/^PITCH\|(\d+)\|/m)?.[1]),editablePitch:raw.match(/^PITCH\|\d+\|(True|False)/m)?.[1]==='True',raw};}
+ async function go(uid){const entry=page.locator('#fmnav-tree [data-uid="'+uid+'"]').first(),search=page.getByRole('textbox',{name:'Search all screens',exact:true});await search.fill(await entry.locator(':scope > span').textContent());await entry.focus();const reply=page.waitForResponse(r=>new URL(r.url()).pathname==='/navigator/go');reply.catch(()=>{});await page.keyboard.press('Enter');assert.match(await(await reply).text(),/^Opening /);await poll(()=>page.evaluate(uid=>FMTOKEN.includes(String(uid)),uid),'actual native destination');await c.settled();await search.fill('');await c.settled();}
+ async function preferences(){await c.dropdown('FM Menu');await c.choose('Preferências');await poll(()=>page.getByRole('combobox',{name:'Idioma',exact:true}).count(),'actual native preferences');await c.settled();}
+ async function snapshot(){return page.locator('#fmroot').evaluate(e=>({tabs:[...e.querySelectorAll('[role=tab][aria-selected=true]')].map(x=>x.textContent),selects:[...e.querySelectorAll('select')].filter(x=>!['World','FM Menu'].includes(x.getAttribute('aria-label'))).map(x=>({name:x.getAttribute('aria-label'),value:x.options[x.selectedIndex]?.textContent})),checks:[...e.querySelectorAll('input[type=checkbox]')].map(x=>({name:x.labels?.[0]?.textContent,checked:x.checked}))}));}
+ let failure=null,cleanupError=null,opened=false;
+ try{
+  mvid=JSON.parse(await c.fetchText('/health')).coreMvid;await c.dropdown('FM Menu');await c.choose('Gravar Jogo Como');const file=page.getByRole('textbox',{name:'File name',exact:true});await poll(()=>file.count(),'owned QA identity');ownedSave=await file.inputValue();assert.match(ownedSave,/^FM27Access QA Dialog Regression /);await activate(page.getByRole('button',{name:'Cancelar',exact:true}));
+  await preferences();opened=true;original=await snapshot();const control=await c.dropdown('Idioma'),id=await control.getAttribute('id'),before=await native(id);assert.ok(before.handles.length>0&&before.values.length>0);assert.equal(before.owner,id);assert.equal(before.popup,true);assert.ok(before.levels>0);
+  const read=await c.fetchText('/read');assert.ok(read.length>0);assert.doesNotMatch(read,/\[host error\]/);const after=await native(id);observations.push({id,before,after,readLength:read.length,reading:read});
+  assert.deepEqual(after.handles,before.handles,'Diagnostic read must retain every current command registration');assert.deepEqual(after.values,before.values,'Diagnostic read must retain current value sources');checks.push('Actual /read retains every native command and live-value registration');
+  assert.equal(after.owner,before.owner);assert.equal(after.levels,before.levels);assert.equal(after.popup,true,'Actual native dropdown remains open');assert.equal(await control.getAttribute('data-loaded')!==null,true);assert.equal(await control.evaluate(e=>e===document.activeElement),true);checks.push('Actual native dropdown owner, depth, popup and companion focus survive the diagnostic read');
+  await c.cancelDropdown();assert.deepEqual(await snapshot(),original);checks.push('Original Escape still cancels the same native dropdown and preserves every preference');
+  const a=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();audits.push({name:'Native preferences after isolated diagnostic read',violations:a.violations.map(x=>x.id)});assert.deepEqual(a.violations,[]);
+  await activate(page.getByRole('button',{name:'Close',exact:true}));opened=false;await c.settled();
+  await go(195478016);const menuId=await page.getByRole('combobox',{name:'FM Menu',exact:true}).getAttribute('id'),pitchBefore=await native(menuId),pitchRead=await c.fetchText('/read');assert.doesNotMatch(pitchRead,/\[host error\]/);const pitchAfter=await native(menuId);
+  assert.equal(pitchAfter.pitchCount,pitchBefore.pitchCount);assert.equal(pitchAfter.editablePitch,pitchBefore.editablePitch);assert.ok(pitchAfter.handles.length>0);observations.push({kind:'Tactics',before:pitchBefore,after:pitchAfter,readLength:pitchRead.length});
+  await c.dropdown('FM Menu');await c.cancelDropdown();const tacticAudit=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();audits.push({name:'Native Tactics after isolated diagnostic read',violations:tacticAudit.violations.map(x=>x.id)});assert.deepEqual(tacticAudit.violations,[]);checks.push('Tactics diagnostic read preserves actual pitch state and native commands remain functional');
+  await go(989379584);assert.deepEqual(c.errors,[]);assert.deepEqual(c.requestFailures,[]);assert.deepEqual(c.network.failures,[]);
+ }catch(error){failure=error.stack;throw error;}
+ finally{
+  try{if(await page.evaluate(()=>!!FM.core.dd||!!FM.dropdown.pending))await c.cancelDropdown();if(opened){await page.evaluate(()=>FM.core.refresh(false,true));await c.settled();if(original)assert.deepEqual(await snapshot(),original);await activate(page.getByRole('button',{name:'Close',exact:true}));await c.settled();}}catch(error){cleanupError=error.stack;process.exitCode=1;}
+  fs.writeFileSync(out,JSON.stringify({success:!failure&&!cleanupError,mvid,ownedSave,checks,audits,observations,failure,cleanupError,errors:c.errors,requestFailures:c.requestFailures,networkFailures:c.network.failures,saveSubmitted:false,simulationAdvanced:false,manualNVDA:false},null,2));await c.browser.close();
+ }
+})().catch(e=>{console.error(e);process.exitCode=1;});

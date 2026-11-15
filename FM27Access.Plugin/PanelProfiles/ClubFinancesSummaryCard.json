@@ -1,0 +1,9 @@
+{
+  "panelName": "ClubFinancesSummaryCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "Frame 1" },
+      "level": 2
+    }
+  ]
+}

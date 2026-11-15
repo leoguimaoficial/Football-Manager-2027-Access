@@ -1,0 +1,35 @@
+{
+  "panelName": "GameCreationQuickStart",
+  "headings": [
+    {
+      "match": { "parentName": "Title", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "parentName": "Description", "pathContains": "ClubContent", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "parentName": "ClubsTitle", "typeName": "SIText" },
+      "level": 3
+    },
+    {
+      "match": { "parentName": "NationsTitle", "typeName": "SIText" },
+      "level": 3
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "ContinentImage", "typeName": "SIImage" }
+    },
+    {
+      "match": { "pathContains": "LeagueKey", "typeName": "SIText" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "Checkbox", "pathContains": "UnemployedCheckbox" },
+      "label": "Unemployed"
+    }
+  ]
+}

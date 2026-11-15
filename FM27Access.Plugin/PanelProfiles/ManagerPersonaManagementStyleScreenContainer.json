@@ -1,0 +1,11 @@
+{
+  "panelName": "ManagerPersonaManagementStyleScreenContainer",
+  "headings": [
+    { "match": { "name": "text", "typeName": "SIText", "parentName": "header", "childIndex": 0 }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "Text", "typeName": "SIText", "pathStartsWith": "TemplateContainer > VisualElement(\"step1-frame\")" } },
+    { "match": { "name": "Text", "typeName": "SIText", "pathStartsWith": "TemplateContainer > VisualElement(\"step2-frame\")" } }
+  ],
+  "renames": []
+}

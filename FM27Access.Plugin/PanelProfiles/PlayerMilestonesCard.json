@@ -1,0 +1,8 @@
+{
+  "panelName": "PlayerMilestonesCard",
+  "hides": [
+    {
+      "match": { "typeName": "SIText", "pathContains": "unity-radio-button-group__container" }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "panelName": "MyCareerMyContractCard",
+  "headings": [
+    {
+      "match": { "name": "static_title", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Duration\")" },
+      "level": 2
+    }
+  ]
+}

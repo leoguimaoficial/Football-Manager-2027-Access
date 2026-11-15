@@ -1,0 +1,13 @@
+{
+  "panelName": "SquadNumbersTool",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathContains": "VisualElement(\"frames\")", "childIndex": 0 },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"TableView\")" },
+      "level": 2
+    }
+  ]
+}

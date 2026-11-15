@@ -1,0 +1,10 @@
+{
+  "panelName": "GameCreationLoadingScreen",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "ChangingRoom", "typeName": "SIImage" }
+    }
+  ],
+  "renames": []
+}

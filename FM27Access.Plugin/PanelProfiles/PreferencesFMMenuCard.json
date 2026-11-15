@@ -1,0 +1,13 @@
+{
+  "panelName": "PreferencesFMMenuCard",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "PreviewText" }
+    },
+    {
+      "match": { "pathContains": "PreviewContainer" }
+    }
+  ],
+  "renames": []
+}

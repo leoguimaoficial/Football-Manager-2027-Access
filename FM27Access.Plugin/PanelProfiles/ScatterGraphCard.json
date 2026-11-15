@@ -1,0 +1,8 @@
+{
+  "panelName": "ScatterGraphCard",
+  "headings": [
+    // childIndex pins the title: the written analysis is its sibling in the same frame and must
+    // stay a paragraph.
+    { "match": { "typeName": "SIText", "parentName": "SummaryContent", "childIndex": 0 }, "level": 2 }
+  ]
+}

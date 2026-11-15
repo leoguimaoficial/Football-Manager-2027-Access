@@ -1,0 +1,32 @@
+{
+  "panelName": "StaffResponsibilitiesCard",
+  "headings": [
+    {
+      "match": { "name": "ResponsibilityGroupName" },
+      "level": 2
+    },
+    {
+      "match": { "parentName": "Header", "pathContains": "VisualElement(\"Selected\")", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "parentName": "data_display-cell-standard-regular", "typeName": "SIText" },
+      "level": 3
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "Frame", "childIndex": 0, "pathContains": "DropTarget(\"View\")" },
+      "level": 3
+    }
+  ],
+  "hides": [
+    {
+      "match": { "pathContains": "VisualElement(\"FrameOverall\")", "typeName": "SIText" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "SIDropdown_AssignableStaff" },
+      "label": "Assigned to"
+    }
+  ]
+}

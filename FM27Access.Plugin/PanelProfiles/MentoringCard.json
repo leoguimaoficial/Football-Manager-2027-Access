@@ -1,0 +1,17 @@
+{
+  "panelName": "MentoringCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "name": "Name", "pathContains": "interaction-hub-body-message_sender-primary" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathContains": "data_display-icon_with_string-single-default frame" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "name": "group_name" },
+      "level": 2
+    }
+  ]
+}

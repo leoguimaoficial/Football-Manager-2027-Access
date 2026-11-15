@@ -1,0 +1,6 @@
+{
+  "panelName": "PlayerReportDisciplineCard",
+  "hides": [
+    { "match": { "name": "CompButton", "typeName": "SIButton", "pathContains": "CompRatioFitter" } }
+  ]
+}

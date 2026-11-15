@@ -1,0 +1,15 @@
+{
+  "panelName": "TransferOfferTool",
+  "headings": [
+    { "match": { "name": "curr-offer-text" }, "level": 2 },
+    { "match": { "name": "players-to-exchange-title" }, "level": 2 },
+    { "match": { "name": "fees-title" }, "level": 2 },
+    { "match": { "name": "clauses-title" }, "level": 2 },
+    { "match": { "name": "offer-information-title-2" }, "level": 2 },
+    { "match": { "name": "TextPlayerInfo", "pathContains": "Frame_TransferStatus" }, "level": 2 },
+    { "match": { "name": "TextPlayerInfo", "pathContains": "Frame_PlayerInfo" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "ClubButton", "pathContains": "ActiveClubIconSetter" } }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "panelName": "AboutRulesCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame 1\") > VisualElement(\"Header\")" },
+      "level": 2
+    },
+    {
+      "match": { "name": "StageName", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "parentName": "GeneralRules" },
+      "level": 2
+    }
+  ]
+}

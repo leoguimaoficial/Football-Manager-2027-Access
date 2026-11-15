@@ -1,0 +1,34 @@
+{
+  "panelName": "GameCreationManagerSelectionScreen",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "parentName": "Header", "typeName": "SIText", "childIndex": 0 }
+    },
+    {
+      "match": { "parentName": "AddNewManager", "typeName": "SIText" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "AddNewManagerButtonNewGame" },
+      "label": "Create new head coach profile"
+    },
+    {
+      "match": { "name": "AddNewManagerButtonGameStarted" },
+      "label": "Create new head coach profile"
+    },
+    {
+      "match": { "name": "EditButton" },
+      "label": "Edit"
+    },
+    {
+      "match": { "name": "EditButton_editsession" },
+      "label": "Edit"
+    },
+    {
+      "match": { "name": "DeleteManagerButton" },
+      "label": "Delete"
+    }
+  ]
+}

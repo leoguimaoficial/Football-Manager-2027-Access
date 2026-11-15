@@ -1,0 +1,23 @@
+{
+  "panelName": "OverviewTitleBar",
+  "headings": [],
+  "hides": [],
+  "renames": [
+    {
+      "match": { "typeName": "SIDropdown", "pathContains": "FMMenuDropdown" },
+      "label": "FM Menu"
+    },
+    {
+      "match": { "name": "BackButton" },
+      "label": "Back"
+    },
+    {
+      "match": { "name": "ForwardButton" },
+      "label": "Forward"
+    },
+    {
+      "match": { "name": "YourWorldDropdown" },
+      "label": "World"
+    }
+  ]
+}

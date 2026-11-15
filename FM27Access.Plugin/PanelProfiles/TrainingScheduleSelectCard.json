@@ -1,0 +1,9 @@
+{
+  "panelName": "TrainingScheduleSelectCard",
+  "headings": [
+    {
+      "match": { "name": "title", "typeName": "SIText", "pathContains": "text section frame" },
+      "level": 2
+    }
+  ]
+}

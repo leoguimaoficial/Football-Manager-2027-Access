@@ -1,0 +1,8 @@
+{
+  "panelName": "GameCreationLoadDataBaseDialogScreen",
+  "headings": [],
+  "hides": [
+    { "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement > VisualElement(\"frame\") > VisualElement(\"notifications-modal-dialog-default-default\")" } }
+  ],
+  "renames": []
+}

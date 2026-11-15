@@ -1,0 +1,35 @@
+{
+  "panelName": "OnThePitchSetPiecesTool",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathContains": "VisualElement(\"TopText\")", "childIndex": 0 },
+      "level": 2
+    },
+    {
+      "match": { "name": "SIText", "typeName": "SIText", "parentName": "Instructions-Frame" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "parentName": "ContainerHorizontal" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "Frame 1000003500" }
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "aimfor" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "typeName": "SIDropdown", "name": "SIDropdown_AddPlan" },
+      "label": "Add routine"
+    },
+    {
+      "match": { "typeName": "SIDropdown", "pathContains": "dropdown-base-regular-1" },
+      "label": "Add routine"
+    }
+  ]
+}

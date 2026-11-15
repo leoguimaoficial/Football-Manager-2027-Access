@@ -1,0 +1,61 @@
+mcs.dll — the Mono C# compiler
+==============================
+
+This folder vendors `mcs.dll`, a Unity-targeted build of the Mono C# compiler
+(assembly identity: mcs, Version=6.13.0.0). The FM26 Accessibility Mod uses it for
+one purpose: the dev driver's POST /eval endpoint, which compiles arbitrary C# against
+the live game. It is a development tool and is NOT shipped in the player package.
+
+Provenance
+----------
+Built from the mcs-unity line of forks, which adapt Mono.CSharp for Unity modding
+(backporting the C# 7 compiler to older runtimes, removing the System.XML dependency,
+and taking the CoreCLR AssemblyBuilder path that the stock Mono.CSharp NuGet lacks):
+
+  https://github.com/sinai-dev/mcs-unity   (used by UnityExplorer; archived 2023)
+  https://github.com/ghorsington/mcs-unity (the upstream of that fork)
+  https://github.com/kkdevs/mcs            (source of the C# 7 backport)
+
+These forks carry no root license file. Mono has always placed its grant in per-file
+headers instead, and those headers travel with the forked source. For example,
+mcs/eval.cs — the REPL this mod actually drives — reads:
+
+    // eval.cs: Evaluation and Hosting API for the C# compiler
+    //
+    // Authors:
+    //   Miguel de Icaza (miguel@gnome.org)
+    //   Marek Safar (marek.safar@gmail.com)
+    //
+    // Dual licensed under the terms of the MIT X11 or GNU GPL
+    //
+    // Copyright 2001, 2002, 2003 Ximian, Inc (http://www.ximian.com)
+    // Copyright 2004-2011 Novell, Inc
+    // Copyright 2011 Xamarin Inc
+
+The Mono C# compiler has been dual licensed under the MIT X11 license and the GNU GPL
+since 2008. This project redistributes it under the MIT X11 option, reproduced below.
+
+MIT X11 License
+---------------
+
+Copyright (c) 2001-2003 Ximian, Inc.
+Copyright (c) 2004-2011 Novell, Inc.
+Copyright (c) 2011 Xamarin Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

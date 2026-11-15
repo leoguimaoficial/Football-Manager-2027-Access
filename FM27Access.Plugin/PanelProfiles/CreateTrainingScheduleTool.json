@@ -1,0 +1,9 @@
+{
+  "panelName": "CreateTrainingScheduleTool",
+  "renames": [
+    {
+      "match": { "name": "EditBox", "pathContains": "DescriptionInput" },
+      "label": "Description"
+    }
+  ]
+}

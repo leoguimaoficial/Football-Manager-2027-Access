@@ -1,0 +1,10 @@
+{
+  "panelName": "RecruitmentTransferWindowCard",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "typeName": "SIProgressBar" }
+    }
+  ],
+  "renames": []
+}

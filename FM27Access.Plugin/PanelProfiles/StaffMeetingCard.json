@@ -1,0 +1,18 @@
+{
+  "panelName": "StaffMeetingCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "BindingExpect" },
+      "level": 2
+    },
+    {
+      "match": { "name": "label-text", "pathContains": "AdviceLabel" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "layout-tile-interaction-button" }
+    }
+  ]
+}

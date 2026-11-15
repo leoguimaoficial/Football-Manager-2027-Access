@@ -1,0 +1,100 @@
+{
+  "panelName": "MatchTactics",
+  // The tactics panel as it appears during a match. It is a distinct panel from the out-of-match
+  // Tactics Planner ("TacticalPlannerTool") but renders the same templates, so it needed its own
+  // copy of that profile's rules — profiles are keyed by panel name and nothing was reaching here.
+  //
+  // This is the planner's non-wizard rule set, ported verbatim where the templates are shared. The
+  // create-a-tactic wizard rules are deliberately absent: the wizard is the planner's state when
+  // the club has no tactic yet, which cannot be reached from inside a match.
+  "headings": [
+    // The Team Instructions sub-view, reached from this panel's "Team Instructions" button.
+    {
+      "match": {
+        "name": "text",
+        "parentName": "title frame",
+        "pathContains": "team-instruction-header"
+      },
+      "level": 2
+    },
+    {
+      "match": {
+        "name": "PhaseText",
+        "parentName": "PhaseHeader"
+      },
+      "level": 3
+    }
+  ],
+  "hides": [
+    // Pitch-graphic phase overlays. The mod renders the formation as its own grid, so these are
+    // decoration over a picture nobody here can see.
+    { "match": { "name": "ForwardPhase", "pathContains": "pitch-remapper" } },
+    { "match": { "name": "MidfieldPhase", "pathContains": "pitch-remapper" } },
+    { "match": { "name": "GoalkeeperPhase", "pathContains": "pitch-remapper" } },
+    // The draggable player chips on the pitch and in the substitutes strip. Every one of them is
+    // already a cell of the formation grid or a row of the selection table.
+    { "match": { "name": "sub", "parentName": "FMDraggableObject" } },
+    { "match": { "name": "name", "parentName": "FMDraggableObject" } },
+    { "match": { "name": "position", "parentName": "FMDraggableObject" } },
+    { "match": { "name": "PlayerSelectionCard" } },
+    // The three pitch view-mode controls. They repaint the pitch graphic; the suitability view in
+    // particular is painted, not built from elements, so it carries nothing readable.
+    { "match": { "name": "buttons-button-base-default", "pathContains": "view-pitch-checkboxes" } },
+    { "match": { "name": "analysis-button", "pathStartsWith": "SIEnabled > BindingSetter > SIVisible" } },
+    { "match": { "name": "analysis-button", "pathStartsWith": "BindingSetter > SIEnabled" } },
+    { "match": { "typeName": "SIButton", "pathContains": "buttons-hybrid-split-button" } },
+    // The pitch's expand/collapse toggle, beside the Formation button in the pitch header's RHS.
+    // Two SIVisible wrappers is what separates it from the Formation button, which has one.
+    { "match": { "typeName": "SIButton", "pathStartsWith": "SIVisible > SIVisible > VisualElement(\"RHS\")" } },
+    // The whole substitutes strip under the selection table: every slot it offers is already a row
+    // of that table. Its header is within matcher reach of the section wrapper; an unfilled slot's
+    // "Sn"/"Pick"/picker trio sits far deeper and is caught by the NoPlayer container instead.
+    { "match": { "pathContains": "tactics-pitch-both-sub section" } },
+    { "match": { "pathContains": "VisualElement(\"NoPlayer\")" } },
+    // The Pkd cell's picker button. It duplicates the row it sits in — the Player cell's own
+    // dropdown changes who fills the slot — so the cell keeps only its pitch position, as text.
+    { "match": { "name": "XIButton" } },
+    // The substitute rows' Pkd-cell dropdown, a slot list that moves the pick between slots. Per
+    // user: hidden. The Player cell's own menu still changes or removes who holds the slot; only
+    // slot-to-slot reordering goes with this. Its "Interactions" wrapper is what separates it from
+    // that Player-cell dropdown, which sits under BindingVariables in the same cell template.
+    {
+      "match": {
+        "name": "dropdown-base-no-background",
+        "pathStartsWith": "TemplateContainer > BindableSwitchElement(\"Interactions\")"
+      }
+    }
+  ],
+  "renames": [
+    {
+      "match": {
+        "name": "dropdown-base-no-background",
+        "pathContains": "tactics-picker-focusser"
+      },
+      "label": "Tactic options"
+    },
+    {
+      "match": {
+        "name": "dropdown-base-no-background",
+        "pathContains": "tactics-picker"
+      },
+      "label": "Add tactic"
+    },
+    {
+      "match": {
+        "name": "text",
+        "parentName": "title frame",
+        "pathContains": "team-instruction-header"
+      },
+      "label": "Instruction details"
+    },
+    {
+      "match": { "name": "PhasesDropdown" },
+      "label": "Instruction category"
+    },
+    {
+      "match": { "name": "ClubButton", "pathContains": "ActiveClub" },
+      "label": "Opposition club site"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "panelName": "CalendarTool",
+  "headings": [
+    {
+      "match": { "name": "Date", "typeName": "SIText", "pathContains": "HasData" },
+      "level": 2
+    },
+    {
+      "match": { "name": "ContextTeamNews" },
+      "level": 3
+    },
+    {
+      "match": { "name": "OpponentTeamNews" },
+      "level": 3
+    },
+    {
+      "match": {
+        "typeName": "SIText",
+        "pathContains": "VisualElement(\"VisualElement\")",
+        "childIndex": 1
+      },
+      "level": 2
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "SeasonDropdown" },
+      "label": "Season"
+    },
+    {
+      "match": { "name": "ClubButton", "pathContains": "IsClickable" },
+      "label": "Club page"
+    }
+  ]
+}

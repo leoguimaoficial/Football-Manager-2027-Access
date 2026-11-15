@@ -1,0 +1,8 @@
+{
+  "panelName": "ManagerCreationCloseConfirmWindow",
+  "headings": [],
+  "hides": [
+    { "match": { "name": "Title", "typeName": "SIText", "parentName": "container" } }
+  ],
+  "renames": []
+}

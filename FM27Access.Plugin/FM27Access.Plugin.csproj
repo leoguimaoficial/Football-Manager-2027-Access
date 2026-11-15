@@ -1,0 +1,253 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <!-- Companion-app client assets, served by AccessibilityServer from the assembly -->
+  <ItemGroup>
+    <EmbeddedResource Include="Server\app.js" />
+    <EmbeddedResource Include="Server\idiomorph.min.js" />
+    <EmbeddedResource Include="PanelProfiles/*.json" LogicalName="FM27Access.Plugin.PanelProfiles.%(Filename).json" />
+    <!-- Match audio-cue sounds. Authored filenames have spaces; LogicalName gives each a clean,
+         space-free resource id (FM27Access.Plugin.Sounds.<name>.wav) that SoundAssets loads and
+         AccessibilityServer serves at GET /sound?name=<name>. -->
+    <EmbeddedResource Include="..\FM27Access.Sounds\Low tick.wav" LogicalName="FM27Access.Plugin.Sounds.low.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\Medium tick.wav" LogicalName="FM27Access.Plugin.Sounds.medium.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\high tick.wav" LogicalName="FM27Access.Plugin.Sounds.high.wav" />
+    <!-- Opposition possession metronome (the 'oppcue' SSE channel): one steady tick, the parallel of medium. -->
+    <EmbeddedResource Include="..\FM27Access.Sounds\Opposition tik 2.wav" LogicalName="FM27Access.Plugin.Sounds.opptick.wav" />
+    <!-- One-shot match events (the 'sfx' SSE channel): ball out of play, goals, and a good defensive play.
+         The out-of-play restart is named by the engine event stream: a throw-in (touchline, either team),
+         a goal kick (either team), or a corner split by team (yours vs the opposition). The good-defence
+         one-shot (gooddefence / oppgooddefence) fires on the engine's own defensive commentary events. -->
+    <EmbeddedResource Include="..\FM27Access.Sounds\Out of touch-line double tick.wav" LogicalName="FM27Access.Plugin.Sounds.touchline.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\out of goal-line triple tick for goalkick.wav" LogicalName="FM27Access.Plugin.Sounds.goalkick.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\Out of play for player corner.wav" LogicalName="FM27Access.Plugin.Sounds.cornerfor.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\Out of play for opposition corner.wav" LogicalName="FM27Access.Plugin.Sounds.corneragainst.wav" />
+    <!-- The ball put back into play (kick-off, or a throw-in / goal kick / corner / free kick / penalty
+         being taken), from the engine's KickOff/Take* commentary events. -->
+    <EmbeddedResource Include="..\FM27Access.Sounds\Put in play .wav" LogicalName="FM27Access.Plugin.Sounds.putinplay.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\you score.wav" LogicalName="FM27Access.Plugin.Sounds.goalfor.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\They score.wav" LogicalName="FM27Access.Plugin.Sounds.goalagainst.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\Player good defence.wav" LogicalName="FM27Access.Plugin.Sounds.gooddefence.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\Opposition good defence.wav" LogicalName="FM27Access.Plugin.Sounds.oppgooddefence.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\Shot attempt.wav" LogicalName="FM27Access.Plugin.Sounds.shotattempt.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\Header at goal .wav" LogicalName="FM27Access.Plugin.Sounds.headerattempt.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\Near touch line drone.wav" LogicalName="FM27Access.Plugin.Sounds.dronenear.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\Far touch line drone.wav" LogicalName="FM27Access.Plugin.Sounds.dronefar.wav" />
+    <!-- Carrier pressure bed, on the 'pressure' channel: three stems of identical length run as
+         permanently phase-locked loops, unmuted cumulatively as pressure on the man with the ball rises
+         (low, then low+medium, then all three). Only their gains ever move. -->
+    <EmbeddedResource Include="..\FM27Access.Sounds\Low pressure indicator loop.wav" LogicalName="FM27Access.Plugin.Sounds.pressurelow.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\Medium pressure indicator loop.wav" LogicalName="FM27Access.Plugin.Sounds.pressuremed.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\High pressure indicator loop.wav" LogicalName="FM27Access.Plugin.Sounds.pressurehigh.wav" />
+    <!-- Sustained loop (Web Audio loop=true) while both teams contest the ball, on the 'contested' channel. -->
+    <EmbeddedResource Include="..\FM27Access.Sounds\Contested.wav" LogicalName="FM27Access.Plugin.Sounds.contested.wav" />
+    <!-- One long clip (played once, not looped) while the ball is in the air uncontested, on the 'air'
+         channel: starts from the beginning each time the status turns on, stops when it is interrupted. -->
+    <EmbeddedResource Include="..\FM27Access.Sounds\In the air.wav" LogicalName="FM27Access.Plugin.Sounds.air.wav" />
+    <!-- Stereo loop on the 'ff' channel while the game fast-forwards between highlights. Played
+         straight to the destination (never panned with the ball); on 'off' the current pass
+         finishes rather than being cut. -->
+    <EmbeddedResource Include="..\FM27Access.Sounds\Fast forwarding.wav" LogicalName="FM27Access.Plugin.Sounds.fastforwarding.wav" />
+    <!-- Replay start/end markers on the 'replay' channel: centred one-shots, exempt from the ball
+         pan, the tick duck, and the fast-forward mute. -->
+    <EmbeddedResource Include="..\FM27Access.Sounds\Starting replay.wav" LogicalName="FM27Access.Plugin.Sounds.replaystart.wav" />
+    <EmbeddedResource Include="..\FM27Access.Sounds\exiting replay .wav" LogicalName="FM27Access.Plugin.Sounds.replayend.wav" />
+  </ItemGroup>
+  <!-- The dev driver's POST /eval (arbitrary C# against the live game) compiles via mcs.dll, the
+       mcs-unity build of the Mono C# compiler (assembly name "mcs", same Mono.CSharp namespace).
+       The stock Mono.CSharp NuGet emits via the .NET Framework AppDomain.DefineDynamicAssembly
+       overload that CoreCLR removed, so it throws MissingMethodException at first eval; mcs-unity
+       uses the CoreCLR AssemblyBuilder path and is the build RuntimeUnityEditor / UnityExplorer
+       ship for BepInEx 6 IL2CPP. Supplied locally at lib/mcs.dll (ignored), and deployed
+       only for an explicit Debug/developer opt-in. -->
+  <Target Name="ValidateLocalDeveloperCompiler" BeforeTargets="ResolveReferences" Condition="'$(FM27DeveloperTools)' == 'true'">
+    <Error Condition="!Exists('$(MSBuildThisFileDirectory)..\lib\mcs.dll')"
+           Text="Explicit developer builds require a compatible local lib/mcs.dll. It is excluded from Git and production packages; see lib/mcs-LICENSE.txt." />
+  </Target>
+  <ItemGroup>
+    <Reference Include="mcs" Condition="'$(FM27DeveloperTools)' == 'true'">
+      <HintPath>$(MSBuildThisFileDirectory)..\lib\mcs.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(FM27DeveloperTools)' != 'true'">
+    <Compile Remove="Server\Dev\*.cs" />
+    <Compile Include="Server\Dev\DevEndpoints.cs" />
+    <Compile Remove="Server\HttpRequestTrace.cs" />
+    <Compile Remove="DebugTools.cs;Diagnostics\*.cs" />
+  </ItemGroup>
+  <!-- BepInEx core references -->
+  <ItemGroup>
+    <Reference Include="BepInEx.Core">
+      <HintPath>$(BepInExDir)\core\BepInEx.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BepInEx.Unity.IL2CPP">
+      <HintPath>$(BepInExDir)\core\BepInEx.Unity.IL2CPP.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>$(BepInExDir)\core\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>$(BepInExDir)\core\Il2CppInterop.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <!-- Unity engine references (IL2CPP interop) -->
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>$(BepInExDir)\interop\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(BepInExDir)\interop\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib">
+      <HintPath>$(BepInExDir)\interop\Il2Cppmscorlib.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <!-- Game interop references -->
+  <ItemGroup>
+    <Reference Include="FM.Input" HintPath="$(BepInExDir)\interop\FM.Input.dll" Private="false" />
+    <Reference Include="SI.Input" HintPath="$(BepInExDir)\interop\SI.Input.dll" Private="false" />
+    <Reference Include="SI.Core">
+      <HintPath>$(BepInExDir)\interop\SI.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SI.Bindable">
+      <HintPath>$(BepInExDir)\interop\SI.Bindable.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- League-history chart read: PropertyIdentifierSet resolves each data point's DynamicReference
+         property ids back to names (LeaguePosition, CompetitionLongName, ...). -->
+    <Reference Include="SI.VisualScripting">
+      <HintPath>$(BepInExDir)\interop\SI.VisualScripting.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SI.Bindable.Reference.Core">
+      <HintPath>$(BepInExDir)\interop\SI.Bindable.Reference.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="FM.UI">
+      <HintPath>$(BepInExDir)\interop\FM.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="FM.Match">
+      <HintPath>$(BepInExDir)\interop\FM.Match.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SI.Match">
+      <HintPath>$(BepInExDir)\interop\SI.Match.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SI.MatchTypes">
+      <HintPath>$(BepInExDir)\interop\SI.MatchTypes.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- PresetLightingSystem carries the live MatchLightingAndWeatherSetup (temperature, precipitation,
+         wind). Weather is NOT on MatchSetup — MatchSetup.Environment holds only kits. -->
+    <Reference Include="FM.Graphics">
+      <HintPath>$(BepInExDir)\interop\FM.Graphics.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- The animation layer's native IMatches wrapper (ball contacts) and the NativeArray/float3 its
+         calls take. -->
+    <Reference Include="FM.GamePlugin">
+      <HintPath>$(BepInExDir)\interop\FM.GamePlugin.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.Collections">
+      <HintPath>$(BepInExDir)\interop\Unity.Collections.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.Mathematics">
+      <HintPath>$(BepInExDir)\interop\Unity.Mathematics.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- BlittableString, the string form the match setup's entity table uses for player names. -->
+    <Reference Include="SI.Marshalling">
+      <HintPath>$(BepInExDir)\interop\SI.Marshalling.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SI.UI">
+      <HintPath>$(BepInExDir)\interop\SI.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>$(BepInExDir)\interop\UnityEngine.UIElementsModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- IPointerEvent (link-tag event GetPooled) transitively references Touch/PenData/PointerEvent
+         from these input modules; needed to construct PointerDown/UpLinkTagEvent for SIText links. -->
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(BepInExDir)\interop\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputForUIModule">
+      <HintPath>$(BepInExDir)\interop\UnityEngine.InputForUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>$(BepInExDir)\interop\Unity.InputSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Dev driver: ScreenCapture (GET /screenshot). IMGUIModule carries EventModifiers, which
+         the UIElements navigation-event types transitively reference. -->
+    <!-- Game-audio mute during highlight fast-forward: AudioListener lives here. -->
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>$(BepInExDir)\interop\UnityEngine.AudioModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>$(BepInExDir)\interop\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(BepInExDir)\interop\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Dev driver /input: UnityEngine.EventSystems.MoveDirection, taken by
+         FMNavigationManager.GetNextNavigatableElement. -->
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(BepInExDir)\interop\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Tactics position-move engine (PitchMoveEngine): PluginDragDropPayload carries InteropEventIDs
+         (FM.GamePlugin) and InteropReference (SI.Interop); BindableDragDropObject's ctor takes an
+         AssetReferenceT (Unity.Addressables). -->
+    <Reference Include="FM.GamePlugin">
+      <HintPath>$(BepInExDir)\interop\FM.GamePlugin.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SI.Interop">
+      <HintPath>$(BepInExDir)\interop\SI.Interop.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.Addressables">
+      <HintPath>$(BepInExDir)\interop\Unity.Addressables.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Bookmark editor toggle: BookmarkInfo.PanelIDRef.LoadAssetAsync() returns an
+         AsyncOperationHandle<PanelID> (WaitForCompletion) so the module toggle can resolve a
+         bookmark's PanelID by identity. -->
+    <Reference Include="Unity.ResourceManager">
+      <HintPath>$(BepInExDir)\interop\Unity.ResourceManager.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <!-- Project references. The Host project is referenced only for the IHostBridge contract; the
+       host loads this (core) assembly by reflection at runtime, so there is no compile-time cycle. -->
+  <ItemGroup>
+    <ProjectReference Include="..\FM27Access.Speech\FM27Access.Speech.csproj" />
+    <ProjectReference Include="..\FM27Access.Navigation\FM27Access.Navigation.csproj" />
+    <ProjectReference Include="..\FM27Access.Host\FM27Access.Host.csproj" />
+  </ItemGroup>
+  <!-- Builds do not modify the game. Deploy through scripts/install.ps1. -->
+</Project>

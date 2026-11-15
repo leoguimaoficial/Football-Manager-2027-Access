@@ -1,0 +1,63 @@
+{
+  "panelName": "PlayerSearchConditionFiltersCard",
+  "headings": [
+    {
+      "match": { "name": "text", "parentName": "player-attributes-technical", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "parentName": "player-attributes-goalkeeping", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "parentName": "player-attributes-mental", "typeName": "SIText" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "parentName": "player-attributes-physical", "typeName": "SIText" },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "text", "parentName": "Frame 1000002841", "typeName": "SIText" }
+    },
+    {
+      "match": { "name": "text", "pathContains": "if-cell-visible", "typeName": "SIText" }
+    }
+  ],
+  "renames": [
+    {
+      "match": { "name": "inputs-combobox-default-default", "pathContains": "inputs-combobox-default-default-base-90" },
+      "label": "Minimum age"
+    },
+    {
+      "match": { "name": "inputs-combobox-default-default", "pathContains": "inputs-combobox-default-default-base-91" },
+      "label": "Maximum age"
+    },
+    {
+      "match": { "name": "inputs-combobox-default-default", "pathContains": "options-dropdown" },
+      "label": "Save or load filter"
+    },
+    {
+      "match": { "name": "adjust-attributes-down-button" },
+      "label": "Decrease all attribute values"
+    },
+    {
+      "match": { "name": "adjust-attributes-up-button" },
+      "label": "Increase all attribute values"
+    },
+    {
+      "match": { "name": "change-order-up-button" },
+      "label": "Move condition up"
+    },
+    {
+      "match": { "name": "change-order-down-button" },
+      "label": "Move condition down"
+    },
+    {
+      "match": { "name": "combobox", "typeName": "FMCombobox" },
+      "label": "Value"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\FM27Access.Speech\ManagedApiContract.cs" Link="Compatibility\ManagedApiContract.cs" />
+    <Compile Include="..\..\FM27Access.Speech\InteropGenerationState.cs" Link="Compatibility\InteropGenerationState.cs" />
+  </ItemGroup>
+</Project>

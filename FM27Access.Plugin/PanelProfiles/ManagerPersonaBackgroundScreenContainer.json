@@ -1,0 +1,16 @@
+{
+  "panelName": "ManagerPersonaBackgroundScreenContainer",
+  "headings": [
+    { "match": { "name": "text", "typeName": "SIText", "parentName": "header" }, "level": 2 },
+    { "match": { "name": "ReputationTitle", "typeName": "SIText" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "Text", "typeName": "SIText", "pathStartsWith": "TemplateContainer > VisualElement(\"body\")" } },
+    { "match": { "name": "Text", "typeName": "SIText", "pathStartsWith": "TemplateContainer > VisualElement(\"content\") > TutorialAnchorElement > VisualElement(\"CoachBadgeStep\")" } },
+    { "match": { "name": "Text", "typeName": "SIText", "pathStartsWith": "TemplateContainer > VisualElement(\"container\") > TutorialAnchorElement > VisualElement(\"ReputationStep\")" } },
+    {
+      "match": { "name": "game-concept", "typeName": "SIImage" }
+    }
+  ],
+  "renames": []
+}

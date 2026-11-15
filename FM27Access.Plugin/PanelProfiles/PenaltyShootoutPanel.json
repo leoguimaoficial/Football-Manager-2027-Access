@@ -1,0 +1,8 @@
+{
+  "panelName": "PenaltyShootoutPanel",
+  "hides": [
+    {
+      "match": { "typeName": "SIText", "pathContains": "VisualElement(\"title\")" }
+    }
+  ]
+}

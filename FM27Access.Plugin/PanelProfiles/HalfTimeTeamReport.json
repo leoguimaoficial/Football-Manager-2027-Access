@@ -1,0 +1,17 @@
+{
+  "panelName": "HalfTimeTeamReport",
+  "headings": [],
+  "hides": [
+    // The two club-crest buttons in the match-result header (unlabeled icon buttons; the team
+    // names are adjacent text). Scoped by ClubRatioFitter per the club-crest lesson: bare
+    // "ClubButton" also matches outer team buttons elsewhere.
+    {
+      "match": { "name": "ClubButton", "pathContains": "ClubRatioFitter" }
+    },
+    // The weather glyph; the condition text ("Strong Wind") sits right beside it.
+    {
+      "match": { "name": "WeatherIcon", "typeName": "SIImage" }
+    }
+  ],
+  "renames": []
+}

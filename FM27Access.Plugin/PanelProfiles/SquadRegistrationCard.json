@@ -1,0 +1,9 @@
+{
+  "panelName": "SquadRegistrationCard",
+  "headings": [
+    { "match": { "parentName": "Frame 1000002904", "typeName": "SIText" }, "level": 2 }
+  ],
+  "hides": [
+    { "match": { "name": "buttons-task-squad_registration-default" } }
+  ]
+}

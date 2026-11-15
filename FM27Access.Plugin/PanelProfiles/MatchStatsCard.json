@@ -1,0 +1,10 @@
+{
+  "panelName": "MatchStatsCard",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "typeName": "SIProgressBar", "pathContains": "ProgressBarBlock" }
+    }
+  ],
+  "renames": []
+}

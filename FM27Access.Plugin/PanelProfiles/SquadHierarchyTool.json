@@ -1,0 +1,9 @@
+{
+  "panelName": "SquadHierarchyTool",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Title frame\")", "childIndex": 1 },
+      "level": 2
+    }
+  ]
+}

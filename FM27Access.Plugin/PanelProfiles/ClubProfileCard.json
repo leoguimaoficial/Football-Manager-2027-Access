@@ -1,0 +1,6 @@
+{
+  "panelName": "ClubProfileCard",
+  "hides": [
+    { "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" } }
+  ]
+}

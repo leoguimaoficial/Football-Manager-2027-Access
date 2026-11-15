@@ -1,0 +1,36 @@
+{
+  "panelName": "RecruitmentPlayerRecommendationsCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"transfer-info\")" },
+      "level": 3
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"tile-states-coach-report-medium\") > VisualElement(\"ability-info\")" },
+      "level": 3
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"pros\")" },
+      "level": 2
+    },
+    {
+      "match": { "name": "text", "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"cons\")" },
+      "level": 2
+    }
+  ],
+  "renames": [],
+  "hides": [
+    {
+      "match": {
+        "name": "game concepts-red card",
+        "pathContains": "data_display-string-list-item"
+      }
+    },
+    {
+      "match": { "name": "NationButton", "typeName": "SIButton" }
+    },
+    {
+      "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" }
+    }
+  ]
+}

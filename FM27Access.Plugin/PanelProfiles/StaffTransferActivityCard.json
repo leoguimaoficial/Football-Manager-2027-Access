@@ -1,0 +1,10 @@
+{
+  "panelName": "StaffTransferActivityCard",
+  "headings": [
+    { "match": { "name": "transfer-impact-title", "typeName": "SIText" }, "level": 2 },
+    { "match": { "name": "wage-impact-title", "typeName": "SIText" }, "level": 2 }
+  ],
+  "renames": [
+    { "match": { "name": "inputs-switch-toggle-large-default", "pathContains": "active-toggle" }, "label": "Active offers only" }
+  ]
+}

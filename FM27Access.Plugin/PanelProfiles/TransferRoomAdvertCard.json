@@ -1,0 +1,22 @@
+{
+  "panelName": "TransferRoomAdvertCard",
+  "headings": [
+    {
+      "match": { "name": "text", "typeName": "SIText", "parentName": "Frame 1000002559", "childIndex": 0 },
+      "level": 2
+    }
+  ],
+  "hides": [
+    { "match": { "name": "transfer-room-logo", "typeName": "SIImage" } }
+  ],
+  "renames": [
+    {
+      "match": {
+        "name": "inputs-combobox-default-default",
+        "typeName": "SIDropdown",
+        "parentName": "inputs-combobox-default-default-base-3"
+      },
+      "label": "Maximum age"
+    }
+  ]
+}

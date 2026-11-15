@@ -1,0 +1,89 @@
+{
+  "panelName": "TeamReportSite",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement > BindingRemapper > BindingExpect > TemplateContainer > BindingRemapper(\"TeamReportManagerInformation\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Body frame\") > BindingExpect(\"BindingExpect\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "parentName": "HeaderFrame" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"PreviousMeetingsFrame\")" },
+      "level": 3
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"FormFrame\")" },
+      "level": 3
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"TeamNewsFrame\")" },
+      "level": 3
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"MatchSummaryFrame\")", "childIndex": 0 },
+      "level": 3
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Txt frame\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > BindingVariables > BindingRemapper > BindingExpect > TemplateContainer > VisualElement(\"GoalsSection\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame \")" },
+      "level": 3
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame \")" },
+      "level": 3
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > BindingRemapper > BindingExpect > TemplateContainer > BindingRemapper(\"ManagerSetPiecePreference\")" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "parentName": "Body frame" },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Body frame\")" },
+      "level": 3
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > BindingExpect(\"BindingExpect\") > TemplateContainer > VisualElement(\"Frame\")", "childIndex": 0 },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"text only frame\")" },
+      "level": 3
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "BindingExpect > VisualElement(\"ExpectedTacticDescriptionView\")", "childIndex": 0 },
+      "level": 2
+    },
+    {
+      "match": { "typeName": "SIText", "pathStartsWith": "VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"Frame\") > VisualElement(\"MainFrame\")", "childIndex": 0 },
+      "level": 2
+    }
+  ],
+  "hides": [
+    {
+      "match": { "name": "ClubButton", "typeName": "SIButton", "pathContains": "ClubRatioFitter" }
+    },
+    {
+      "match": { "name": "KitImage", "typeName": "SIImage" }
+    },
+    {
+      "match": { "typeName": "SIText", "pathContains": "unity-radio-button-group__container" }
+    }
+  ],
+  "renames": []
+}

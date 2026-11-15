@@ -1,0 +1,10 @@
+{
+  "panelName": "PlayerSearchReport",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "name": "HideTilesButton", "typeName": "SIButton" }
+    }
+  ],
+  "renames": []
+}

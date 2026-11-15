@@ -1,0 +1,8 @@
+{
+  "panelName": "TacticalEffectivenessCard",
+  "headings": [
+    { "match": { "typeName": "SIText", "parentName": "BreakdownContent", "childIndex": 1 }, "level": 2 },
+    { "match": { "typeName": "SIText", "pathContains": "VisualElement > TutorialAnchorElement > BindingExpect > TemplateContainer", "childIndex": 1 }, "level": 3 },
+    { "match": { "typeName": "SIText", "pathStartsWith": "BindableSwitchElement > VisualElement > TutorialAnchorElement > BindingExpect > TemplateContainer", "childIndex": 0 }, "level": 3 }
+  ]
+}

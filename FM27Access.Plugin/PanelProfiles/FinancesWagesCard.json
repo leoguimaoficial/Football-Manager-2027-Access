@@ -1,0 +1,10 @@
+{
+  "panelName": "FinancesWagesCard",
+  "headings": [],
+  "hides": [
+    {
+      "match": { "typeName": "SIProgressBar" }
+    }
+  ],
+  "renames": []
+}

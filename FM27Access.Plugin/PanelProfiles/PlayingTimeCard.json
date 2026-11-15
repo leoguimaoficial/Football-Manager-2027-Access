@@ -1,0 +1,9 @@
+{
+  "panelName": "PlayingTimeCard",
+  "headings": [
+    {
+      "match": { "typeName": "SIText", "parentName": "remap" },
+      "level": 2
+    }
+  ]
+}
