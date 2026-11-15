@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace FM27Access.Installer;
 
-public sealed record InstallerUpdate(int Schema, string Version, string Sha256, long Size, Uri Url);
+public sealed record InstallerUpdate(int Schema, string Version, string Sha256, long Size, Uri Url, string? SourceCommit = null, long? BuildRunId = null);
 public sealed record InstallerUpdateReceipt(string PreviousHash, string CurrentHash, string HelperName, string HelperHash);
 public sealed class InstallerUpdateService(DownloadService download, string cache)
 {

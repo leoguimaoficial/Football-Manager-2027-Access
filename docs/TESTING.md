@@ -1,3 +1,28 @@
+## Installer 1.0.2 and beginner manual
+
+The local production installer builds successfully and 59 installer cases pass.
+New cases cover old/new engine metadata, actual newer/current version selection,
+official executable URL/size/hash mismatch refusal and readable release notes.
+Five distribution contracts pass. The existing full public 0.1.0 bundle still
+passes verification with its original mod source/run identity.
+
+Windows UI Automation on the local 1.0.2 app identifies the actual installed
+Steam 0.1.0 receipt, exactly one Repair button, the engine version in the title,
+and release text without Markdown. Its screenshot unexpectedly showed another
+window and is excluded from visual evidence. A later Computer Use call reported
+an Escape interruption; app input stopped. This is a tool observation, not an
+assertion about physical user input. No mod repair, uninstall, game action or
+manual NVDA test was performed in this installer-only session.
+
+The guide keeps twenty core language editions, with expanded beginner chapters
+in English and both Portuguese variants. Publisher links document FM27 features
+without expanding mod coverage claims. The browser checks cover all editions,
+headings/tables/unique anchors, keyboard skip and contents focus, HTTPS links,
+320px reflow, dark/high-contrast/print states, no-JavaScript reading and axe.
+The new narrow-layout case found and fixed overflow of the Dutch title.
+Publication, public downloads and end-to-end updater evidence are recorded
+separately after they occur; a source test is not a completed self-update.
+
 ## Steam startup and same-version repair — F206
 
 Actual Steam build26577676, Unity6000.3.18f1, metadata39, pinned BepInEx793:

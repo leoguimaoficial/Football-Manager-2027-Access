@@ -85,6 +85,11 @@ Its GPL source and dependency notices are distributed with the source/manual pac
   releases, verifies HTTPS/size/hash, stages a sibling executable and waits for
   the original process identity before replacing/restarting. The old executable
   is retained for recovery. Self-update is separate from mod installation.
+  Every startup checks for an engine update, independently of the mod catalog's
+  online/cache result. A newer engine opens a native Yes/No prompt after startup
+  discovery finishes, with No selected by default. No update means no dialog.
+  Declining keeps the available version on the update button; a refresh does
+  not repeatedly prompt. The current engine version appears in the window title.
 
 ## Localization and accessibility
 
@@ -112,7 +117,13 @@ recent progress, warnings and errors available for later reading. Error-dialog
 explanations are Tab stops too. A standard Windows information dialog confirms
 completed installation/update/repair and removal, then returns to the installer.
 Startup discovery and version checks do not request automatic announcements or
-restore focus a second time. User-initiated operations retain progress announcements.
+restore focus a second time. An available engine update has its own native
+confirmation dialog. User-initiated operations retain progress announcements.
+The primary action becomes Repair for the installed mod version; the separate
+Repair button is shown only when another version is selected. Release Markdown
+is converted to plain text in the native read-only information field, retaining
+paragraphs, bullets and link captions. Release authors must write player-facing
+outcomes there; compiler, loader, hash and test details belong in developer docs.
 
 ## Distribution and publication
 

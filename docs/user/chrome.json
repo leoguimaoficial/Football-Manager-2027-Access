@@ -1,0 +1,22 @@
+{
+  "en": ["Skip to the manual", "In this manual", "Back to the start"],
+  "pt-BR": ["Pular para o manual", "Neste manual", "Voltar ao início"],
+  "pt-PT": ["Saltar para o manual", "Neste manual", "Voltar ao início"],
+  "es": ["Saltar al manual", "En este manual", "Volver al inicio"],
+  "es-419": ["Saltar al manual", "En este manual", "Volver al inicio"],
+  "fr": ["Aller au manuel", "Dans ce manuel", "Retour au début"],
+  "de": ["Zum Handbuch springen", "In diesem Handbuch", "Zurück zum Anfang"],
+  "it": ["Vai al manuale", "In questo manuale", "Torna all’inizio"],
+  "nl": ["Ga naar de handleiding", "In deze handleiding", "Terug naar het begin"],
+  "da": ["Gå til vejledningen", "I denne vejledning", "Tilbage til starten"],
+  "sv": ["Hoppa till handboken", "I den här handboken", "Tillbaka till början"],
+  "nb": ["Hopp til veiledningen", "I denne veiledningen", "Tilbake til starten"],
+  "pl": ["Przejdź do instrukcji", "W tej instrukcji", "Wróć na początek"],
+  "tr": ["Kılavuza geç", "Bu kılavuzda", "Başa dön"],
+  "ru": ["Перейти к руководству", "В этом руководстве", "Вернуться к началу"],
+  "el": ["Μετάβαση στο εγχειρίδιο", "Σε αυτό το εγχειρίδιο", "Επιστροφή στην αρχή"],
+  "ja": ["マニュアルへ移動", "このマニュアルの内容", "先頭に戻る"],
+  "ko": ["설명서로 건너뛰기", "설명서 목차", "처음으로 돌아가기"],
+  "zh": ["跳到使用手册", "手册目录", "返回开头"],
+  "ar": ["انتقل إلى الدليل", "في هذا الدليل", "العودة إلى البداية"]
+}

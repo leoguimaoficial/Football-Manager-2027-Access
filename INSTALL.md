@@ -26,6 +26,16 @@ Use Tab to reach Installer messages and reread any progress, warning or error.
 A standard Windows dialog confirms completion; press OK to return to the installer.
 Opening the installer does not trigger an automatic status announcement. Use
 the standard Windows controls to explore the installation and version information.
+Installer engine 1.0.2 checks for its own updates at startup and asks before
+downloading/restarting; the current engine version is shown in the title.
+The installed mod version has a single primary Repair action.
+
+For Xbox/Microsoft Store, the actual destination is **Content**, containing
+`fm.exe`, for example `C:\XboxGames\Football Manager 27\Content`. If a parent
+folder is selected, the installer can resolve its Content child; it still
+installs inside Content. Never extract beside Content or into XboxGames itself.
+Steam is the current tested package; the changed loader has not been retested
+end to end on Xbox/Microsoft Store or Epic. Store detection is not a coverage claim.
 
 For a downloaded package, keep the versioned ZIP and `FM27Access-Manifest.json`
 together and choose **Install ZIP**, then select the manifest. This offline path

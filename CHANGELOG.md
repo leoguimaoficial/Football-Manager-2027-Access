@@ -8,6 +8,27 @@ Version 0.1.0 is the first public release.
 
 ## [Unreleased]
 
+### Installer
+
+- The installer checks for its own updates when it opens and asks before
+  downloading and restarting. The prompt shows the current and available versions.
+- An installed mod now has one Repair action when its version is selected.
+- Version notes are displayed as readable text with paragraphs and bullets,
+  without Markdown punctuation. Public notes describe changes for players.
+- Installer engine 1.0.2 can be delivered independently of the unchanged
+  FM27 Access 0.1.0 game package.
+
+### User guide
+
+- Expanded beginner guidance in English and Portuguese covers the first day,
+  delegation, players, tactics, training, deals, finances and the first match.
+  Official FM27 feature references explain what is new without promising
+  accessibility coverage for untested modes.
+- All twenty editions clarify that Xbox game files belong inside Content,
+  distinguish currently tested stores and explain installer startup updates.
+- The offline manual has a new light/dark layout, contents, skip link, visible
+  keyboard focus, mobile reflow, high-contrast support and print styling.
+
 ## [0.1.0] - 2026-11-15
 
 The entries below summarize implemented work supported by the source and

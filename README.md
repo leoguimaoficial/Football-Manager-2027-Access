@@ -30,7 +30,7 @@ console stays closed.
 
 Steam is the primary development target. If you installed the original 0.1.0
 package and startup stops at the logos, use the current installer and **Repair**
-0.1.0. Its engine 1.0.1 safely replaces the installation's old Doorstop proxy;
+0.1.0. Engine 1.0.1 or newer safely replaces the installation's old Doorstop proxy;
 the mod version stays 0.1.0. See the [compatibility record](docs/NATIVE_COMPATIBILITY.md)
 for the tested Steam build and the limits of Xbox/Epic qualification.
 

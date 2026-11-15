@@ -61,14 +61,24 @@ internal sealed class InstallerForm : Form
         game.SelectedIndexChanged += (_, _) => UpdateState();
         version.SelectedIndexChanged += (_, _) => { selectedManifest = null; UpdateState(); };
         previews.CheckedChanged += (_, _) => BindVersions();
-        Shown += async (_, _) => await Run(async ct =>
+        Shown += async (_, _) =>
         {
-            SetStatus(text["checking"]);
-            var games = await Task.Run(() => discovery.Discover(log.Write), ct);
-            foreach (var found in games) game.Items.Add(found);
-            if (game.Items.Count > 0) game.SelectedIndex = 0;
-            await Refresh(ct);
-        }, announce: false);
+            bool completed = false;
+            await Run(async ct =>
+            {
+                SetStatus(text["checking"]);
+                var games = await Task.Run(() => discovery.Discover(log.Write), ct);
+                foreach (var found in games) game.Items.Add(found);
+                if (game.Items.Count > 0) game.SelectedIndex = 0;
+                await Refresh(ct);
+                ct.ThrowIfCancellationRequested();
+                completed = true;
+            }, announce: false);
+            // Ordinary discovery remains quiet. Only an actual newer installer
+            // opens a user-confirmed offer, after startup has released busy state.
+            if (completed && !IsDisposed && !Disposing && installerUpdate is not null)
+                await RequestInstallerUpdate();
+        };
         FormClosing += (_, e) =>
         { if (busy) { e.Cancel = true; operation?.Cancel(); SetStatus(text["cancelling"]); } else lifetime.Cancel(); };
     }
@@ -133,21 +143,25 @@ internal sealed class InstallerForm : Form
             Process.Start(new ProcessStartInfo(new Uri(result.Path).AbsoluteUri + "?lang=" + Uri.EscapeDataString(text.Code)) { UseShellExecute = true });
             if (!result.Online) SetStatus(text["offline"]);
         });
-        selfUpdate.Click += async (_, _) => await Run(async ct =>
-        {
-            var updater = new InstallerUpdateService(download, cache);
-            var update = installerUpdate ?? await updater.FindAsync(ct);
-            if (update is null) { SetStatus(text["noInstallerUpdate"]); return; }
-            if (!Confirm("confirmUpdate")) return;
-            await updater.StageAsync(update, Progress(), ct);
-            BeginInvoke(() => { busy = false; Close(); });
-        });
+        selfUpdate.Click += async (_, _) => await RequestInstallerUpdate();
         recover.Click += async (_, _) => await Run(async ct =>
         { if (game.SelectedItem is GameInstallation selected) { await installation.RecoverAsync(selected.Path, ct); SetStatus(text["success"]); UpdateState(); } });
         cancel.Click += (_, _) => { operation?.Cancel(); cancel.Enabled = false; SetStatus(text["cancelling"]); };
         close.Click += (_, _) => Close();
         CancelButton = close;
     }
+    private Task RequestInstallerUpdate() => Run(async ct =>
+        {
+            var updater = new InstallerUpdateService(download, cache);
+            var update = installerUpdate ?? await updater.FindAsync(ct);
+            if (update is null) { SetStatus(text["noInstallerUpdate"]); return; }
+            string message = text["selfUpdate"] + ": " + Distribution.EngineVersion + " → " + update.Version
+                + Environment.NewLine + Environment.NewLine + text["confirmUpdate"];
+            if (MessageBox.Show(this, message, Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information,
+                MessageBoxDefaultButton.Button2) != DialogResult.Yes) return;
+            await updater.StageAsync(update, Progress(), ct);
+            BeginInvoke(() => { busy = false; Close(); });
+        });
     private static TableLayoutPanel Row(Control control, Button button)
     {
         var row = new TableLayoutPanel { Dock = DockStyle.Top, AutoSize = true, ColumnCount = 2 };
@@ -157,7 +171,7 @@ internal sealed class InstallerForm : Form
     private void ApplyLanguage()
     {
         applyingLanguage = true;
-        Text = AccessibleName = text["title"];
+        Text = AccessibleName = text["title"] + " " + Distribution.EngineVersion;
         RightToLeft = text.Code == "ar" ? RightToLeft.Yes : RightToLeft.No; RightToLeftLayout = text.Code == "ar";
         languageLabel.Text = language.AccessibleName = text["language"];
         gameLabel.Text = game.AccessibleName = text["game"];
@@ -168,6 +182,7 @@ internal sealed class InstallerForm : Form
         overall.AccessibleName = text["overall"]; current.AccessibleName = text["current"];
         foreach (var (button, key) in new[] { (browse, "browse"), (refresh, "refresh"), (repair, "repair"), (remove, "uninstall"), (guide, "guide"),
             (selfUpdate, "selfUpdate"), (cancel, "cancel"), (close, "close"), (recover, "recover") }) button.Text = button.AccessibleName = text[key];
+        UpdateInstallerLabel();
         applyingLanguage = false; UpdateState();
     }
     private void BindVersions()
@@ -193,17 +208,17 @@ internal sealed class InstallerForm : Form
     {
         SetStatus(text["checking"]);
         try { catalog = await releases.GetAsync(ct); }
-        catch (HttpRequestException ex) { log.Write(ex.Message); catalog = new([], false, DateTimeOffset.UtcNow); }
+        catch (Exception ex) when (ex is HttpRequestException or IOException or System.Text.Json.JsonException)
+        { log.Write(ex.Message); catalog = new([], false, DateTimeOffset.UtcNow); }
         BindVersions();
         SetStatus(!catalog.Online ? text["offline"] : version.Items.Count == 0 ? text["noReleases"] : text["ready"]);
-        if (catalog.Online)
-            try
-            {
-                installerUpdate = await new InstallerUpdateService(download, cache).FindAsync(ct);
-                selfUpdate.Text = text["selfUpdate"] + (installerUpdate is null ? "" : " (" + installerUpdate.Version + ")");
-            }
-            catch (Exception ex) when (ex is HttpRequestException or IOException or System.Text.Json.JsonException) { log.Write("Installer update check: " + ex.Message); }
+        installerUpdate = null;
+        try { installerUpdate = await new InstallerUpdateService(download, cache).FindAsync(ct); }
+        catch (Exception ex) when (ex is HttpRequestException or IOException or System.Text.Json.JsonException) { log.Write("Installer update check: " + ex.Message); }
+        UpdateInstallerLabel();
     }
+    private void UpdateInstallerLabel() => selfUpdate.Text = selfUpdate.AccessibleName =
+        text["selfUpdate"] + (installerUpdate is null ? "" : " (" + installerUpdate.Version + ")");
     private void UpdateState()
     {
         try
@@ -214,6 +229,9 @@ internal sealed class InstallerForm : Form
             var release = choice?.Release;
             string action = choice is null ? "install" : InstallationStateService.Action(installed?.Version, choice.Version);
             primary.Text = primary.AccessibleName = text[action];
+            // Keep repair available while another version is selected, but do
+            // not duplicate the primary repair action for the installed version.
+            repair.Visible = installed is not null && action != "repair";
             primary.Enabled = !busy && selected is not null && choice is not null;
             localPackage.Enabled = !busy && selected is not null;
             repair.Enabled = remove.Enabled = !busy && installed is not null;
@@ -226,7 +244,7 @@ internal sealed class InstallerForm : Form
                 text["installed"] + ": " + (installed?.Version ?? (selected is null ? null : InstallationStateService.ExistingVersion(selected.Path)) ?? text["none"]),
                 installed is null && selected is not null && InstallationStateService.ExistingVersion(selected.Path) is not null ? text["unmanaged"] : "",
                 (catalog?.Online == false ? text["cached"] : text["latest"]) + ": " + (latest ?? text["none"]),
-                release is null ? "" : release.Version + " — " + release.Published.ToLocalTime().ToString("d"), release?.Notes ?? "",
+                release is null ? "" : release.Version + " — " + release.Published.ToLocalTime().ToString("d"), ReleaseNotesText.Format(release?.Notes),
                 "" });
         }
         catch (Exception ex) { log.Write(ex.ToString()); primary.Enabled = repair.Enabled = remove.Enabled = false; SetStatus(text["failed"]); }

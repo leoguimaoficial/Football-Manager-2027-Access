@@ -3,7 +3,10 @@
 param([Parameter(Mandatory)][string]$Path,
       [Parameter(Mandatory)][string]$ExpectedCommit,
       [Parameter(Mandatory)][string]$ExpectedRunId,
-      [Parameter(Mandatory)][string]$ExpectedVersion)
+      [Parameter(Mandatory)][string]$ExpectedVersion,
+      [string]$ExpectedInstallerVersion,
+      [string]$ExpectedInstallerCommit,
+      [long]$ExpectedInstallerRunId)
 $ErrorActionPreference='Stop'
 $root=[IO.Path]::GetFullPath($Path)
 if($ExpectedCommit -notmatch '^[0-9a-f]{40}$' -or $ExpectedVersion -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$'){throw 'Invalid expected identity.'}
@@ -61,7 +64,13 @@ foreach($name in 'FM27Access.Host.dll','FM27Access.Plugin.dll','FM27Access.Navig
 foreach($name in 'version.dll','doorstop_config.ini','.doorstop_version','BepInEx/core/BepInEx.Unity.IL2CPP.dll','BepInEx/config/BepInEx.cfg'){if(!$expected.ContainsKey($name)){throw "Missing loader: $name"}}
 if($expected.ContainsKey('winhttp.dll')){throw 'Distribution must not install conflicting WinHTTP and version proxies.'}
 $installer=Get-Content -LiteralPath "$root/FM27Access-Installer.json" -Raw | ConvertFrom-Json
-if($installer.schema -ne 1 -or $installer.version -ne $info.installerVersion -or $installer.sha256 -ne $sums['FM27Access-Installer.exe'] -or
+if(!$ExpectedInstallerVersion){$ExpectedInstallerVersion=$info.installerVersion}
+if($ExpectedInstallerVersion -ne $info.installerVersion){
+    if($ExpectedInstallerVersion -notmatch '^\d+\.\d+\.\d+$' -or [version]$ExpectedInstallerVersion -le [version]$info.installerVersion -or
+       $ExpectedInstallerCommit -notmatch '^[0-9a-f]{40}$' -or $ExpectedInstallerRunId -le 0 -or
+       $installer.sourceCommit -ne $ExpectedInstallerCommit -or $installer.buildRunId -ne $ExpectedInstallerRunId){throw 'Independent installer provenance does not match the selected build.'}
+}
+if($installer.schema -ne 1 -or $installer.version -ne $ExpectedInstallerVersion -or $installer.sha256 -ne $sums['FM27Access-Installer.exe'] -or
    $installer.size -ne (Get-Item -LiteralPath "$root/FM27Access-Installer.exe").Length -or
    $installer.url -ne "https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/download/v$ExpectedVersion/FM27Access-Installer.exe"){throw 'Invalid installer metadata.'}
 $source=[IO.Compression.ZipFile]::OpenRead("$root/FM27Access-v$ExpectedVersion-source.zip")

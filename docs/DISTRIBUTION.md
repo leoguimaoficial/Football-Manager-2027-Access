@@ -16,8 +16,8 @@ were backed up and retained until all replacement downloads were verified.
 All eight public downloads were fetched without authentication and compared with
 the original artifact; sizes, hashes, source provenance and the public tag match.
 The actual installer service finds one stable version, 0.1.0, validates its
-260-file manifest and retrieves the online guide. Installer engine 1.0.1 is current;
-the manifest requires it for owned proxy migration. Player ZIP SHA-256:
+260-file manifest and retrieves the online guide. This mod build included installer
+engine 1.0.1; the manifest still requires 1.0.1 for owned proxy migration. Player ZIP SHA-256:
 `C3E708F96E458721427904ED41666CBCBA94CC68BE54197BD1660DE4EB28729C`.
 That exact hosted/public payload cold-started on Steam as core `12107ea9` and
 passed the four-audit native main-menu action/focus suite before publication.
@@ -159,6 +159,29 @@ follows the latest stable release. Every mod release must
 attach the universal installer and engine metadata. Use the last validated
 engine binary when its version has not changed; do not relabel the mod version
 as an engine version.
+
+An explicitly authorized installer-only update replaces just the executable,
+`FM27Access-Installer.json` and their entries in `SHA256SUMS.txt`. Preserve the
+mod ZIP, source ZIP, manifest, build-info, guide and mod tag byte for byte.
+Select the exact successful hosted installer artifact; record its independent
+`sourceCommit` and `buildRunId` in the schema-1 installer metadata. These optional
+fields remain compatible with older engines. The public repository commit is
+the corresponding installer source; the historical mod source ZIP remains
+unchanged. Verify the full downloads with `verify-distribution.ps1`, supplying
+`ExpectedInstallerVersion`, `ExpectedInstallerCommit` and `ExpectedInstallerRunId`
+as well as the original mod identity. Keep the previous installer until public
+download/hash checks pass. Never substitute a newly rebuilt mod distribution.
+
+Release notes shown to players should explain what they can do and what changed
+in ordinary language. Keep native runtime details, hashes, build IDs and test
+counts in this document and the testing records. The installer renders release
+Markdown as readable native text, not raw formatting punctuation.
+
+The current request also authorizes a separately improved user manual. Its
+generated standalone HTML can be refreshed alongside the installer; the
+canonical manual on main is fetched by both old and new installers. This does
+not replace the historical mod/source ZIPs, game manifest, build-info or tag.
+Retain their exact original hashes and record the new manual's source separately.
 
 The guide's maintained source is `docs/user/locales/`. Run
 `node docs/user/build-guide.cjs` after editing it. The generated HTML contains
