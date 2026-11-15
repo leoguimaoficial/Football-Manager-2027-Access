@@ -52,6 +52,15 @@ Historical game qualification
 and unresolved issues below remain unchanged; no new game installation or manual
 NVDA qualification is claimed by this distribution work.
 
+Post-publication packaging follow-up: actual PowerShell Invoke-RestMethod returns
+a JSON array as one pipeline object. Wrapping it in another array could stop
+catalog pagination and unnecessarily rebuild an unchanged installer when several
+releases exist. The packaging helper now iterates the returned array directly.
+An isolated real-shape fixture covers multiple releases, stable/preview filtering,
+a full 100-item first page, exact engine hash reuse and empty-catalog first-engine
+fallback. All five distribution contracts pass. This changes future packaging,
+not the published installer binary; the 0.1.0 tag/assets remain unchanged.
+
 ## Universal installer, distribution and player guide — before publication
 
 The new explicit distribution request authorizes dedicated installer projects,

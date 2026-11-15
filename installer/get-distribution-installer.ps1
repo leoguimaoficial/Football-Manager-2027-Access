@@ -8,7 +8,9 @@ $repo='leoguimaoficial/Football-Manager-2027-Access'
 $headers=@{'User-Agent'='FM27Access-Build';Accept='application/vnd.github+json'}
 New-Item -ItemType Directory -Force $OutputPath | Out-Null
 for($page=1;$page -le 100;$page++){
-    $releases=@(Invoke-RestMethod -Uri "https://api.github.com/repos/$repo/releases?per_page=100&page=$page" -Headers $headers)
+    # Invoke-RestMethod returns the JSON array as one pipeline object. Assign it
+    # directly so foreach and Count operate on releases rather than a nested array.
+    $releases=Invoke-RestMethod -Uri "https://api.github.com/repos/$repo/releases?per_page=100&page=$page" -Headers $headers
     foreach($release in $releases){
         if($release.draft -or $release.prerelease){continue}
         $metadata=@($release.assets | Where-Object name -eq 'FM27Access-Installer.json')

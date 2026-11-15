@@ -8,6 +8,11 @@ Version 0.1.0 is the first public release.
 
 ## [Unreleased]
 
+### Fixed
+
+- Future release packaging correctly reads GitHub release arrays and full catalog
+  pages, reusing the validated installer engine when its version is unchanged.
+
 ## [0.1.0] - 2026-11-15
 
 The entries below summarize implemented work supported by the source and

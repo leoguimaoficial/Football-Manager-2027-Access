@@ -1,6 +1,10 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
 const root=path.resolve(__dirname,'../..'),read=p=>fs.readFileSync(path.join(root,p),'utf8').replace(/^\uFEFF/,'');
 const resources='installer/FM27Access.Installer/Resources';
+test('Published installer engine reuse handles actual REST array output and pagination',()=>{
+  const output=cp.execFileSync(process.platform==='win32'?'pwsh.exe':'pwsh',['-NoProfile','-File',path.join(root,'scripts/test-distribution-installer.ps1')],{encoding:'utf8'});
+  assert.match(output,/PASS: real JSON-array shape/);
+});
 test('Every installer language has complete real resources and a matching guide',()=>{
   const keys=Object.keys(JSON.parse(read(`${resources}/en.json`))).sort();
   const files=fs.readdirSync(path.join(root,resources)); assert.equal(files.length,20);
