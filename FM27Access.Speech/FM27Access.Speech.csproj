@@ -10,4 +10,15 @@
     <EmbeddedResource Include="..\packaging\native-profiles.json" LogicalName="FM27Access.NativeProfiles.json" />
   </ItemGroup>
 
+  <Target Name="GenerateModBuildVersion" BeforeTargets="CoreCompile">
+    <PropertyGroup>
+      <ModBuildVersionFile>$(IntermediateOutputPath)ModBuildVersion.g.cs</ModBuildVersionFile>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(ModBuildVersionFile)" Overwrite="true" WriteOnlyWhenDifferent="true"
+      Lines="namespace FM27Access.Speech { public static partial class BuildProfile { public const string Version = &quot;$(Version)&quot;%3B } }" />
+    <ItemGroup>
+      <Compile Include="$(ModBuildVersionFile)" />
+    </ItemGroup>
+  </Target>
+
 </Project>

@@ -10,6 +10,15 @@ namespace FM27Access.Tests;
 /// </summary>
 public class SurfaceHealthTests
 {
+    [Fact]
+    public void RuntimeAndHostAttributeVersionMatchTheCompiledMod()
+    {
+        var assembly = typeof(FM27Access.Speech.BuildProfile).Assembly;
+        var info = System.Reflection.CustomAttributeExtensions.GetCustomAttribute<System.Reflection.AssemblyInformationalVersionAttribute>(assembly);
+        Assert.NotNull(info);
+        Assert.Equal(info.InformationalVersion.Split('+')[0], FM27Access.Speech.BuildProfile.Version);
+    }
+
     private const long Fresh = 100;                       // drained a moment ago
     private const long Stale = SurfaceHealth.StallMs + 1; // long enough to count as stalled
 
