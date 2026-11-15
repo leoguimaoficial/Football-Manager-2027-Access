@@ -1,7 +1,6 @@
 # Universal installer and distribution
 
-FM27 Access 0.1.0 can be installed from the complete local package. A public
-GitHub release has not been published. This document describes implementation
+FM27 Access 0.1.0 is distributed through GitHub Releases. This document describes implementation
 and build details; the [player guide](../docs/user/FM27Access-UserGuide.html)
 provides the installation and gameplay instructions.
 The user-facing program is always `FM27Access-Installer.exe`.
@@ -112,6 +111,8 @@ The native read-only multiline Installer messages field is a Tab stop and keeps
 recent progress, warnings and errors available for later reading. Error-dialog
 explanations are Tab stops too. A standard Windows information dialog confirms
 completed installation/update/repair and removal, then returns to the installer.
+Startup discovery and version checks do not request automatic announcements or
+restore focus a second time. User-initiated operations retain progress announcements.
 
 ## Distribution and publication
 

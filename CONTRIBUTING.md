@@ -11,8 +11,9 @@ what happened. For accessibility problems, include your screen reader and input
 method when relevant. Remove private information from reports; do not upload
 game saves, credentials or proprietary files.
 
-There is no official downloadable release yet. Existing checks and outstanding
-limits are described in the [development documentation](docs/README.md).
+Start with the current [public release](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest)
+when reporting a player-facing problem. Include the installed mod version.
+Checks and outstanding limits are described in the [development documentation](docs/README.md).
 
 ## Changing the project
 

@@ -13,10 +13,10 @@
   related changes and explain the player's experience where possible. Do not
   invent historical changes or release dates. Create a versioned entry only
   when that version is actually being released.
-- Keep README.md aligned with actual status and evidence. Version 0.1.0 is in
-  development, not released. Do not advertise incomplete work as available or
-  add end-user installation instructions before a supported release is ready.
-  Existing build/deployment references are developer material, not a release.
+- Keep README.md aligned with actual status and evidence. The user explicitly
+  authorized the first public 0.1.0 release on 2026-11-15. Keep player download
+  links and versioned documentation aligned with the published assets. Preserve
+  developer instructions separately and do not advertise incomplete features.
 - Maintain consistent component versions. Do not create release tags or GitHub
   Releases without explicit authorization; initial repository publication does
   not authorize either.

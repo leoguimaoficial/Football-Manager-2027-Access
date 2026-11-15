@@ -1,3 +1,17 @@
+# Production release record
+
+## FM27 Access 0.1.0
+
+The first public release is authorized on 2026-11-15. Its source, complete player
+ZIP, universal installer, guide, manifests and checksums are tied to the release
+commit and verified build. The installer starts without automatic status speech;
+messages remain reachable by Tab and Windows dialogs confirm completion.
+
+See [distribution](DISTRIBUTION.md) for the publication record and
+[known issues](KNOWN_ISSUES.md) for current limits. The entries below preserve
+their original qualification dates, runtime boundaries and evidence; publication
+does not turn historical partial checks into additional live testing.
+
 ## Latest native setup arrival-title follow-up — F205
 
 853533d4/game2676 passes three country-popup cycles and actual custom-database

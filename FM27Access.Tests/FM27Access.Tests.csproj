@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\tools\game-inspect\BuildReferenceBundle.cs" Link="Build\BuildReferenceBundle.cs" />
     <Compile Include="..\FM27Access.Plugin\NavigationSpeechMute.cs" Link="Plugin\NavigationSpeechMute.cs" />
     <Compile Include="..\FM27Access.Plugin\Server\ReplacedMessageStep.cs" Link="Server\ReplacedMessageStep.cs" />
     <Compile Include="..\FM27Access.Plugin\Server\ChoiceCaptionMatch.cs" Link="Server\ChoiceCaptionMatch.cs" />

@@ -59,26 +59,49 @@ jobs:
           path: artifacts/**/*.trx
           retention-days: 30
   distribution:
-    # Proprietary build references stay on a dedicated trusted Windows machine.
-    # PRs/forks never execute code there. Configure the variable only after setup.
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.FM27_NATIVE_BUILDS == 'enabled'
+    # Private compiler inputs are available to trusted main builds only.
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: portable
-    runs-on: [self-hosted, Windows, X64, fm27-build]
+    runs-on: windows-latest
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
-          clean: true
           persist-credentials: false
-      - name: Verify prerequisites and build exact checkout
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Resolve pinned private input
+        id: references
+        shell: pwsh
+        run: |
+          $pin = Get-Content packaging/build-references.json -Raw | ConvertFrom-Json
+          if ($pin.commit -notmatch '^[0-9a-f]{40}$') { throw 'Invalid private compiler input commit.' }
+          "commit=$($pin.commit)" >> $env:GITHUB_OUTPUT
+      - name: Read private compiler input
+        uses: actions/checkout@v4
+        with:
+          repository: leoguimaoficial/FM27Access-Build-References
+          ref: ${{ steps.references.outputs.commit }}
+          path: .build-references
+          ssh-key: ${{ secrets.FM27_BUILD_REFERENCES_SSH_KEY }}
+          persist-credentials: false
+      - name: Restore and verify private references
         shell: pwsh
         env:
-          GAME_PATH: ${{ vars.FM27_BUILD_GAME_PATH }}
+          INPUT_PATH: ${{ runner.temp }}/fm27-compiler-input
+        run: ./scripts/Restore-BuildReferences.ps1 -InputPath .build-references -Destination $env:INPUT_PATH
+      - name: Build exact checkout on GitHub
+        shell: pwsh
+        env:
+          INPUT_PATH: ${{ runner.temp }}/fm27-compiler-input
           SOURCE_SHA: ${{ github.sha }}
           BUILD_RUN_ID: ${{ github.run_id }}
         run: |
-          if (!(Test-Path -LiteralPath $env:GAME_PATH -PathType Container)) { throw 'Configure FM27_BUILD_GAME_PATH on the build runner.' }
-          ./scripts/package-distribution.ps1 -GamePath $env:GAME_PATH -OutputPath "artifacts/distribution-$env:BUILD_RUN_ID" -RunId $env:BUILD_RUN_ID -Commit $env:SOURCE_SHA
+          ./scripts/package-distribution.ps1 -BuildReferencesPath $env:INPUT_PATH -OutputPath "artifacts/distribution-$env:BUILD_RUN_ID" -RunId $env:BUILD_RUN_ID -Commit $env:SOURCE_SHA
+          if ($LASTEXITCODE -ne 0) { throw 'Distribution build failed.' }
+          $info = Get-Content "artifacts/distribution-$env:BUILD_RUN_ID/build-info.json" -Raw | ConvertFrom-Json
+          @("## Verified FM27 Access build", "", "Version: $($info.version)", "", "Run ID: $env:BUILD_RUN_ID", "", "Commit: $env:SOURCE_SHA", "", "Select this run in **Publish selected verified build** to approve publication of these exact artifacts.") >> $env:GITHUB_STEP_SUMMARY
       - uses: actions/upload-artifact@v4
         with:
           name: distribution-${{ github.run_id }}-${{ github.sha }}

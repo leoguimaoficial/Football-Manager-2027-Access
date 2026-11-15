@@ -30,6 +30,14 @@ The game must already have a compatible BepInEx installation and generated FM27
 interop assemblies. You can also set FM27_GAME_DIR or pass -p:FM27GameDir to dotnet.
 The five-project solution requires these native references. Builds never deploy.
 
+GitHub-hosted builds use an exact private reference bundle pinned in
+`packaging/build-references.json`; the build does not need your computer or a
+game installation on the runner. The normal developer build detects changed
+game/reference hashes. After a game update, let BepInEx regenerate interop, then
+run `./scripts/update-build-references.ps1 -GamePath '<updated game root>'`.
+It updates the private bundle and public pin together. Test and commit the
+adaptation/pin before a release. See [distribution](docs/DISTRIBUTION.md).
+
 Projects, the solution and build/install scripts default to Release with
 `FM27DeveloperTools=false`. Debug alone also leaves developer tools disabled.
 Release rejects an attempt to enable them. Production omits evaluator/probe/reload
@@ -45,8 +53,8 @@ For explicit local investigation only:
 
 That opt-in build requires a locally supplied compatible `lib/mcs.dll`, excluded
 from Git and source/player archives. See lib/mcs-LICENSE.txt and the third-party notices.
-BepInEx, generated interop and game files are local prerequisites, never source
-repository contents. Distribution artifacts belong in future releases.
+BepInEx, generated interop and game files are build prerequisites, never public
+source repository contents. Player downloads belong in GitHub Releases.
 
 Game-independent checks:
 
@@ -59,4 +67,5 @@ The companion builds separately:
 
 Run ./scripts/diagnose.ps1 -GamePath '<game root>' to inspect identity, architecture,
 Unity, metadata and binary fingerprints. Inspection does not modify the game.
-See [INSTALL](INSTALL.md) for receipt-managed deployment and core reload.
+See [developer deployment](docs/DEVELOPER_INSTALLATION.md) for source receipts
+and core reload, and [distribution](docs/DISTRIBUTION.md) for complete packages.

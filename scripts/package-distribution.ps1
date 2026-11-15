@@ -1,6 +1,7 @@
 #Requires -Version 7.2
 [CmdletBinding()]
-param([Parameter(Mandatory)][string]$GamePath,
+param([Parameter(Mandatory,ParameterSetName='Game')][string]$GamePath,
+      [Parameter(Mandatory,ParameterSetName='References')][string]$BuildReferencesPath,
       [string]$OutputPath="$PSScriptRoot/../artifacts/distribution",
       [string]$RunId='local', [string]$Commit)
 . "$PSScriptRoot/Common.ps1"
@@ -18,15 +19,28 @@ $work=Join-Path $ProjectRoot ('artifacts/distribution-work-'+[Guid]::NewGuid().T
 $payload=Join-Path $work 'payload'
 New-Item -ItemType Directory -Path $work,$out | Out-Null
 try {
-    $report=Get-VerifiedGameReport $GamePath
-    $profile=Get-ModDeploymentProfile $report
     $lock=Get-Content -LiteralPath "$ProjectRoot/packaging/loader.lock.json" -Raw | ConvertFrom-Json
     $loaderZip=Join-Path $work 'loader.zip'
     Invoke-WebRequest -Uri $lock.url -OutFile $loaderZip
     if((Get-FileHash -LiteralPath $loaderZip).Hash -ne $lock.sha256){throw 'Pinned loader archive checksum mismatch.'}
     Expand-Archive -LiteralPath $loaderZip -DestinationPath "$work/loader"
+    if($BuildReferencesPath){
+        Invoke-DotNet -Arguments @('build',"$ProjectRoot/tools/game-inspect",'-c','Release','--nologo','--verbosity','quiet')
+        Invoke-DotNet -Arguments @("$ProjectRoot/tools/game-inspect/bin/Release/net10.0/game-inspect.dll",'check-private-reference-baseline',$BuildReferencesPath,"$ProjectRoot/packaging/build-references.json")
+        $raw=& $DotNet "$ProjectRoot/tools/game-inspect/bin/Release/net10.0/game-inspect.dll" validate-build-references ([IO.Path]::GetFullPath($BuildReferencesPath))
+        if($LASTEXITCODE -ne 0){throw 'Private build references failed validation.'}
+        $report=$raw|ConvertFrom-Json
+        $GamePath=$report.Path
+        New-Item -ItemType Directory -Force "$GamePath/BepInEx"|Out-Null
+        Copy-Item -LiteralPath "$work/loader/BepInEx/core" -Destination "$GamePath/BepInEx/core" -Recurse
+        Copy-Item -LiteralPath "$work/loader/winhttp.dll" -Destination "$GamePath/winhttp.dll"
+    }else{
+        $report=Get-VerifiedGameReport $GamePath
+        Invoke-DotNet -Arguments @("$ProjectRoot/tools/game-inspect/bin/Release/net10.0/game-inspect.dll",'check-build-reference-baseline',$GamePath,"$ProjectRoot/packaging/build-references.json")
+    }
+    $profile=Get-ModDeploymentProfile $report
     Invoke-DotNet -Arguments @('build',"$ProjectRoot/FM27Access.sln",'-c','Release',"-p:FM27GameDir=$([IO.Path]::GetFullPath($GamePath))",'-p:FM27DeveloperTools=false','--nologo')
-    New-ModPayload -Destination $payload -NativeReport $report -Configuration Release
+    New-ModPayload -Destination $payload -NativeReport $report -Configuration Release -ReferenceBuild:([bool]$BuildReferencesPath)
     # Add only the pristine redistributable loader. Never copy a local installation,
     # generated interop, caches, Unity libraries, plugins, patchers or game binaries.
     foreach($name in 'winhttp.dll','doorstop_config.ini','.doorstop_version','dotnet','BepInEx/core'){
@@ -65,7 +79,8 @@ try {
     $engine=([xml](Get-Content -LiteralPath "$ProjectRoot/installer/InstallerVersion.props" -Raw)).Project.PropertyGroup.InstallerEngineVersion
     @{schema=1;version=$engine;sha256=(Get-FileHash -LiteralPath "$out/FM27Access-Installer.exe").Hash;size=(Get-Item -LiteralPath "$out/FM27Access-Installer.exe").Length;
         url="https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/download/v$version/FM27Access-Installer.exe"} | ConvertTo-Json | Set-Content -LiteralPath "$out/FM27Access-Installer.json" -Encoding utf8
-    @{schema=1;version=$version;installerVersion=$engine;commit=$Commit;sourceDirty=$sourceDirty;runId=$RunId;configuration='Release';developerTools=$false;createdUtc=[DateTime]::UtcNow.ToString('o')} |
+    $referencePin=Get-Content -LiteralPath "$ProjectRoot/packaging/build-references.json" -Raw|ConvertFrom-Json
+    @{schema=1;version=$version;installerVersion=$engine;commit=$Commit;sourceDirty=$sourceDirty;runId=$RunId;configuration='Release';developerTools=$false;referencesCommit=$referencePin.commit;referencesIdentity=$referencePin.identity;createdUtc=[DateTime]::UtcNow.ToString('o')} |
         ConvertTo-Json | Set-Content -LiteralPath "$out/build-info.json" -Encoding utf8
     # Source is taken from Git's allowlist, never from the build machine's prerequisites.
     & "$PSScriptRoot/package-source.ps1"

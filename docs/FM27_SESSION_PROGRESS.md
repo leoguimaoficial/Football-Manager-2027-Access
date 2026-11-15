@@ -1,5 +1,44 @@
 # FM27 Access session progress
 
+## Authorized 0.1.0 publication and hosted compilation — 2026-11-15
+
+The maintainer explicitly authorized publishing 0.1.0 and updating the principal
+GitHub documentation. This supersedes earlier development-only wording. The
+installer's initial discovery no longer raises automatic live status speech or
+replays focus; user-initiated progress and Tab-accessible messages remain.
+
+The maintainer rejected using their own Windows computer as a build executor
+and explicitly authorized private compiler references instead. The temporary
+runner process was stopped and its GitHub registration removed; no service was
+installed. Automatic approval review rejected deletion of its inert local files
+with `blocked by policy`; the deletion was not retried or bypassed. No current
+workflow uses a local executor.
+
+The private FM27Access-Build-References repository contains only generated managed
+compiler DLLs and checksum/index documentation. The public repository pins its
+exact commit and identity. GitHub-hosted Windows jobs use a dedicated read-only
+deploy key, validate references and compile the actual mod, Companion and player
+package using the pristine locked loader. Private inputs are excluded from public
+Git, workflow artifacts and source/player archives. BepInEx still generates each
+player's own interop on first launch.
+
+Normal developer builds compare the actual game/loader/reference identity to the
+pin. A mismatch identifies the single reference-refresh command, which verifies
+the private destination, exports and pushes the input, then updates the source
+pin for review and game regression. No local daemon, service or scheduled task
+is required. GitHub cannot observe a game update without updated compiler input.
+Local validation passes 1642 C# tests (including nine private-reference integrity
+and changed-baseline cases), 42 installer tests, 83 Companion JavaScript tests,
+four distribution contracts and all 20 guide locales/browser/axe checks. A full
+Release package built using only the restored private references and downloaded
+official loader passes production-binary and source/player/archive integrity
+checks. The reference refresh command recognizes the unchanged baseline without
+uploading. These are build/distribution checks, not new live-game qualification.
+Version 0.1.0 publication is in progress; final run/tag/asset verification is
+recorded after the selected hosted build completes. Historical game qualification
+and unresolved issues below remain unchanged; no new game installation or manual
+NVDA qualification is claimed by this distribution work.
+
 ## Universal installer, distribution and player guide — current continuation
 
 The new explicit distribution request authorizes dedicated installer projects,

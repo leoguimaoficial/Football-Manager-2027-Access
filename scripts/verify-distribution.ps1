@@ -9,7 +9,8 @@ $root=[IO.Path]::GetFullPath($Path)
 if($ExpectedCommit -notmatch '^[0-9a-f]{40}$' -or $ExpectedVersion -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$'){throw 'Invalid expected identity.'}
 $info=Get-Content -LiteralPath "$root/build-info.json" -Raw | ConvertFrom-Json
 if($info.schema -ne 1 -or $info.commit -ne $ExpectedCommit -or $info.runId -ne $ExpectedRunId -or $info.version -ne $ExpectedVersion -or
-   $info.configuration -ne 'Release' -or $info.developerTools -ne $false -or ($ExpectedRunId -ne 'local' -and $info.sourceDirty -ne $false)){throw 'Build provenance does not match selected run/commit/version.'}
+   $info.configuration -ne 'Release' -or $info.developerTools -ne $false -or $info.referencesCommit -notmatch '^[0-9a-f]{40}$' -or $info.referencesIdentity -notmatch '^[0-9A-Fa-f]{64}$' -or
+   ($ExpectedRunId -ne 'local' -and $info.sourceDirty -ne $false)){throw 'Build provenance does not match selected run/commit/version.'}
 $required=@('FM27Access-Installer.exe','FM27Access-Installer.json',"FM27Access-v$ExpectedVersion.zip", "FM27Access-v$ExpectedVersion-source.zip",'FM27Access-UserGuide.html','FM27Access-Manifest.json','build-info.json')
 $sums=@{}
 foreach($line in Get-Content -LiteralPath "$root/SHA256SUMS.txt"){
@@ -68,6 +69,11 @@ try {
     if(!$sourceInfo){throw 'Source archive has no provenance.'}
     $reader=[IO.StreamReader]::new($sourceInfo.Open())
     try {$sourceText=$reader.ReadToEnd()}finally{$reader.Dispose()}
+    $referenceEntry=$source.GetEntry('packaging/build-references.json')
+    if(!$referenceEntry){throw 'Source archive has no private reference pin.'}
+    $reader=[IO.StreamReader]::new($referenceEntry.Open())
+    try {$sourcePin=$reader.ReadToEnd()|ConvertFrom-Json}finally{$reader.Dispose()}
+    if($sourcePin.commit -ne $info.referencesCommit -or $sourcePin.identity -ne $info.referencesIdentity){throw 'Private compiler input provenance differs from selected source.'}
     if($sourceText -notmatch "(?m)^Commit: $ExpectedCommit`r?$" -or $sourceText -notmatch "(?m)^Version: $([regex]::Escape($ExpectedVersion))`r?$" -or
        ($ExpectedRunId -ne 'local' -and $sourceText -notmatch '(?m)^WorkingTreeDirty: false\r?$')){throw 'Source archive differs from the selected build.'}
     foreach($entry in $source.Entries){

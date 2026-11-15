@@ -32,6 +32,7 @@ internal sealed class InstallerForm : Form
     private DistributionManifest? selectedManifest;
     private CancellationTokenSource? operation;
     private bool busy, applyingLanguage;
+    private bool announcementsEnabled;
     private int announcedBucket = -1;
     private string lastStage = "";
     private readonly CancellationTokenSource lifetime = new();
@@ -67,7 +68,7 @@ internal sealed class InstallerForm : Form
             foreach (var found in games) game.Items.Add(found);
             if (game.Items.Count > 0) game.SelectedIndex = 0;
             await Refresh(ct);
-        });
+        }, announce: false);
         FormClosing += (_, e) =>
         { if (busy) { e.Cancel = true; operation?.Cancel(); SetStatus(text["cancelling"]); } else lifetime.Cancel(); };
     }
@@ -278,7 +279,8 @@ internal sealed class InstallerForm : Form
         MessageBoxDefaultButton.Button2) == DialogResult.Yes;
     private void SetStatus(string value)
     {
-        status.Text = value; status.Announce();
+        status.Text = value;
+        if (announcementsEnabled) status.Announce();
         if (messageHistory.LastOrDefault() == value) return;
         messageHistory.Enqueue(value);
         while (messageHistory.Count > 50) messageHistory.Dequeue();
@@ -293,9 +295,11 @@ internal sealed class InstallerForm : Form
         SetStatus(message);
         MessageBox.Show(this, message, text["title"], MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
-    private async Task Run(Func<CancellationToken, Task> action)
+    private async Task Run(Func<CancellationToken, Task> action, bool announce = true)
     {
         if (busy) return;
+        announcementsEnabled = announce;
+        status.LiveSetting = announce ? System.Windows.Forms.Automation.AutomationLiveSetting.Polite : System.Windows.Forms.Automation.AutomationLiveSetting.Off;
         var focus = ActiveControl; busy = true;
         overall.Value = current.Value = 0; announcedBucket = -1; lastStage = "";
         using var source = CancellationTokenSource.CreateLinkedTokenSource(lifetime.Token); operation = source;
@@ -314,7 +318,7 @@ internal sealed class InstallerForm : Form
             operation = null; busy = false; cancel.Enabled = false;
             foreach (var control in new Control[] { language, game, version, previews, browse, refresh, guide, selfUpdate }) control.Enabled = true;
             current.Style = ProgressBarStyle.Continuous; UpdateState();
-            if (focus?.Enabled == true) focus.Focus();
+            if (announce && focus?.Enabled == true) focus.Focus();
         }
     }
     protected override void Dispose(bool disposing)
@@ -337,7 +341,7 @@ internal sealed class InstallerForm : Form
     }
     private sealed class LiveStatus : Label
     {
-        public LiveStatus() { AccessibleRole = AccessibleRole.StaticText; LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Polite; }
+        public LiveStatus() { AccessibleRole = AccessibleRole.StaticText; LiveSetting = System.Windows.Forms.Automation.AutomationLiveSetting.Off; }
         public void Announce() => AccessibilityObject.RaiseLiveRegionChanged();
     }
 }

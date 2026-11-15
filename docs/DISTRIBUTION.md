@@ -1,10 +1,10 @@
 # Distribution, selected builds and publication
 
-FM27 Access 0.1.0 is installable from the complete local package; its first
-public GitHub release has not been published. This infrastructure creates packages;
-it does not establish clean-machine, full-career, Steam/Epic gameplay or manual
-screen-reader qualification. The existing [known issues](KNOWN_ISSUES.md) remain
-in force. No release or tag is created as part of local packaging.
+FM27 Access 0.1.0 is the first public release, explicitly authorized by the
+maintainer on 2026-11-15. GitHub-hosted Windows runners build and verify the full
+distribution. Publication promotes the selected original artifacts after
+approval. The existing [known issues](KNOWN_ISSUES.md) and recorded qualification
+limits remain in force. Local packaging never creates a release or tag.
 
 ## Build a complete candidate
 
@@ -14,8 +14,9 @@ in force. No release or tag is created as part of local packaging.
 ```
 
 The command requires a compatible local game, the exact pinned loader and fresh
-locally generated interop. The proprietary game/interop references stay on the
-build machine. The original five-project solution builds in Release with tools
+locally generated interop. Generated compiler references are also retained in an
+explicitly authorized private repository for hosted builds; they never enter
+public Git, source archives or player downloads. The five-project solution builds in Release with tools
 disabled, and the existing binary inspector verifies production behavior. The
 Companion is an embedded-resource C#/WebView2 app; there is no npm build to invent.
 Its existing JavaScript tests remain separate from native game qualification.
@@ -36,7 +37,7 @@ Assets are:
 | `FM27Access-Manifest.json` | Versioned schema, package and per-file integrity/ownership contract |
 | `FM27Access-vVERSION-source.zip` | Corresponding source and licensed Prism exception |
 | `FM27Access-UserGuide.html` | Standalone offline multilingual guide |
-| `build-info.json` | Run ID, exact commit, dirty flag, mod/engine versions and production flags |
+| `build-info.json` | Run ID, source and private-input commits, reference identity, versions and production flags |
 | `SHA256SUMS.txt` | Exact list of assets and checksums |
 
 Local dirty builds are explicitly marked and cannot be promoted by the release
@@ -46,20 +47,22 @@ settings, saves, generated interop or proprietary game files enter source ZIPs.
 The deployment profile retains the native hash/API evidence needed by the guard;
 it contains no game binary.
 
-## GitHub setup required before the first official build
+## Automatic hosted builds
 
 1. Push the reviewed source/workflows. Hosted Windows CI validates pull requests
    and `main`: game-independent tests, production profile, installer tests,
    Companion tests, multilingual guide/browser/axe checks and self-contained builds.
-2. Supply a **dedicated trusted** Windows x64 self-hosted runner labeled
-   `fm27-build`, with PowerShell 7.2+, the pinned SDK, a legally installed
-   compatible game, exact loader and fresh interop. Keep prerequisites outside
-   the checkout. Never enable this runner for pull-request code. The workflow
-   explicitly excludes PR/fork execution there; restrict repository write access.
-3. Set repository variables `FM27_BUILD_GAME_PATH` to that runner's game root
-   and `FM27_NATIVE_BUILDS=enabled`. Until configured, hosted validation still
-   runs but no full distribution artifact is produced. This condition is visible
-   in the workflow; a portable-only run cannot be published.
+2. Trusted `main` builds read the exact private commit pinned in
+   `packaging/build-references.json`, using the Actions secret
+   `FM27_BUILD_REFERENCES_SSH_KEY`. This is a read-only deploy key restricted to
+   `leoguimaoficial/FM27Access-Build-References`; no personal GitHub token is
+   stored in the workflow. Pull requests and development branches cannot access
+   this input through the distribution job.
+3. The runner verifies the archive checksum, allowed paths, managed PE metadata,
+   every DLL hash and public reference identity. It downloads the official loader
+   from `packaging/loader.lock.json`, checks its hash, builds the mod and Companion
+   and packages the universal installer. It needs no game installation,
+   self-hosted runner or developer computer.
 4. Create environment `fm27-release`, add required reviewer(s), disable
    administrator bypass and restrict deployments to `main`. The workflow checks
    required reviewers before it can reach publication. Verify bypass restrictions
@@ -69,9 +72,36 @@ it contains no game binary.
    their run ID/SHA for 90 days, subject to repository retention limits.
    Preserve the GitHub Actions logs and qualification evidence before approval.
 
-These external settings were not configured or exercised in this local task.
+The private input, read-only secret and required-reviewer environment are
+configured for this repository. New pushes to `main` automatically build full
+distribution artifacts; building alone does not publish a version.
 GitHub's [required reviewers documentation](https://docs.github.com/en/actions/reference/workflows-and-actions/deployments-and-environments)
 describes the actual approval mechanism; no dynamic build picker is claimed.
+
+## When Football Manager updates
+
+BepInEx generates interop locally when a player starts the game. Those generated
+DLLs are not shipped in the mod ZIP. The compiler also needs reference DLLs to
+build the plugin, so GitHub reuses the pinned private copy between mod releases.
+
+The normal developer build (`scripts/build.ps1 -GamePath ...`) checks the real
+game fingerprints, current BepInEx generation state and reference hashes against
+the cloud baseline. A change stops the build with this refresh command:
+
+```powershell
+./scripts/update-build-references.ps1 -GamePath '<updated game root>'
+```
+
+After BepInEx has regenerated current interop, the command exports only managed
+references, confirms the repository is private, creates the checksum index,
+commits and pushes the private bundle, then updates the public pin. It uses the
+maintainer's existing Git Credential Manager authentication for this explicit
+operation. An unchanged identity needs no upload. No background process or
+scheduled task is installed. Test the game adaptation and commit the pin with it;
+future hosted releases use that exact input automatically. GitHub cannot detect
+an uninstalled game update or generate interop without the game. An API change
+can require source adaptations and live regression; replacing compiler input
+alone does not establish gameplay compatibility.
 
 ## Select and approve a release
 
@@ -89,16 +119,15 @@ inspection; it is not automatically published or silently overwritten on retry.
 An expired artifact requires a new validated run at the original commit, as
 described by [GitHub's artifact retention guidance](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts).
 
-The first eventual tag is `v0.1.0`, with title `FM27 Access v0.1.0`. That version
-must not be added to a dated changelog or advertised as available until actually
-approved and published. Source updates must keep the mod version centralized;
+The first tag is `v0.1.0`, with title `FM27 Access v0.1.0`. Source updates keep
+the mod version centralized in `Directory.Build.props` and record the release in
+`CHANGELOG.md` when publication is authorized;
 engine changes independently bump `installer/InstallerVersion.props`.
 
 ## Permanent links, engine updates and independent documentation
 
-Once a first approved release exists, the installer link is
-`https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-Installer.exe`.
-Do not advertise it as a working download beforehand. Every mod release must
+The permanent [installer download](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-Installer.exe)
+follows the latest stable release. Every mod release must
 attach the universal installer and engine metadata. Use the last validated
 engine binary when its version has not changed; do not relabel the mod version
 as an engine version.

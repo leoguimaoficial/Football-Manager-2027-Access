@@ -1,3 +1,10 @@
+# Known issues and testing boundaries
+
+FM27 Access 0.1.0 is the first public release. This page records specific known
+issues and the limits of the existing checks. For installation and normal use,
+see the [player guide](user/FM27Access-UserGuide.html). Historical runtime and
+package references below describe their own test sessions, not separate downloads.
+
 ## Internal automatic setup titles corrected — F205
 
 Early native panel arrivals spoke raw AddNationsModal/DatabaseSelectionCard IDs

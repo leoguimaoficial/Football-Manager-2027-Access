@@ -4,6 +4,10 @@ Use FM27Access-Installer.exe to install, update, repair or remove the mod. You
 need Windows 10 or 11 x64, Football Manager 2027, a screen reader and Microsoft
 Edge WebView2. The package includes .NET and BepInEx.
 
+[Download the universal installer](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-Installer.exe).
+The [release page](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.0)
+also provides the complete ZIP, its manifest and the standalone HTML manual.
+
 ## Install with the universal installer
 
 Open the installer, select a
@@ -14,6 +18,8 @@ explicit confirmation. Repair uses the installed version's own official package.
 Use Check for updates to refresh the catalog; offline results are marked as cached.
 Use Tab to reach Installer messages and reread any progress, warning or error.
 A standard Windows dialog confirms completion; press OK to return to the installer.
+Opening the installer does not trigger an automatic status announcement. Use
+the standard Windows controls to explore the installation and version information.
 
 For a downloaded package, keep the versioned ZIP and `FM27Access-Manifest.json`
 together and choose **Install ZIP**, then select the manifest. This offline path

@@ -4,8 +4,17 @@ FM27 Access (Football Manager 2027 Access) is an unofficial accessibility mod
 that aims to help blind players manage their football clubs using a screen
 reader and keyboard navigation.
 
-**Version 0.1.0 is installable using the universal installer or the complete ZIP.**
-Its first public GitHub release is being prepared and has not been published.
+**FM27 Access 0.1.0** is the first public release.
+
+## Download
+
+- [Download the universal Windows installer](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-Installer.exe) — recommended.
+- [Download the complete 0.1.0 ZIP](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/download/v0.1.0/FM27Access-v0.1.0.zip) — manual or offline installation.
+- [Download the multilingual user guide](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-UserGuide.html).
+- [Release notes and all downloads](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.0).
+
+You need Windows 10 or 11 x64, Football Manager 2027, a screen reader such as
+NVDA, and Microsoft Edge WebView2, which normally comes with Microsoft Edge.
 
 ## Install and start playing
 
@@ -41,31 +50,27 @@ the companion. Spoken feedback supports navigation and actions.
 This approach builds on the established FM26 Access experience. FM27's own text,
 choices and rules remain the source of the information presented to players.
 
-## Development status and current progress
+## What you can do
 
-This repository makes the source code and development progress available to
-follow openly. The existing implementation includes the Companion Web interface,
-speech support and adaptations for FM27's redesigned screens.
+- Read the current screen with familiar headings, lists, tables and form controls.
+- Navigate messages, player information, squad selection, tactics and training.
+- Use a searchable menu, keyboard shortcuts and your own saved bookmarks.
+- Read match information, statistics, team talks and preferences through the Companion.
+- Install, update, repair and remove the mod with a native Windows installer.
+- Choose from 20 installer and user-guide languages, including Brazilian Portuguese.
 
-Targeted checks in the game have exercised messages and inbox navigation, squad
-and player information, tactics, career setup, and parts of the match interface,
-including team talks, statistics and preferences. Recent work improves focus
-return, late-loading controls, table content and spoken screen titles.
-
-These checks cover specific scenarios. Complete career and match accessibility,
-all game variants and a first public installation still need further validation.
-Known problems and testing limits remain recorded in the
-[development notes](docs/README.md) and [known issues](docs/KNOWN_ISSUES.md).
-The [changelog](CHANGELOG.md) describes implemented changes.
+The installer detects Steam, Epic and Xbox PC installations and checks whether
+the selected package can be installed. Current in-game evidence comes from
+targeted Xbox PC scenarios. See [known issues](docs/KNOWN_ISSUES.md) for specific
+limitations and [the changelog](CHANGELOG.md) for the changes in this release.
 
 The [universal installer](installer/README.md) uses the same
 `FM27Access-Installer.exe` to discover official mod versions and manage each game
 installation, with safe update, repair and removal. English and nineteen other
 language resources, including Brazilian Portuguese, are included with an
 [offline HTML user guide](docs/user/FM27Access-UserGuide.html).
-The [distribution workflow](docs/DISTRIBUTION.md) uses a separate approval step;
-building or installing the
-current package does not publish a GitHub release.
+The installer opens quietly and keeps status and errors in a read-only messages
+field you can reach with Tab. Windows dialogs confirm completed operations.
 
 ## Accessibility goals
 
@@ -96,8 +101,9 @@ avoid including private information or game saves in public reports.
 Contributions to testing, documentation and code are welcome. Start with the
 [contribution guide](CONTRIBUTING.md). Developers can find the existing source in
 the `FM27Access.*` directories and prerequisites in [Building FM27 Access](BUILDING.md).
-The `main` branch is maintained as the verified development baseline; it is not
-a released product.
+The `main` branch contains current development. To build the published version,
+use its matching release tag and source archive. The
+[distribution guide](docs/DISTRIBUTION.md) explains builds and release approval.
 
 ## License and disclaimer
 

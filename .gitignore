@@ -1,4 +1,5 @@
 .upstream/
+.build-references/
 .tools/
 **/node_modules/
 artifacts/

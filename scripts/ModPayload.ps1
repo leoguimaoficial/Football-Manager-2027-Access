@@ -2,7 +2,7 @@ function New-ModPayload {
     param([Parameter(Mandatory)][string]$Destination,
           [Parameter(Mandatory)]$NativeReport,
           [ValidateSet('Debug','Release')][string]$Configuration='Release',
-          [switch]$DeveloperTools)
+          [switch]$DeveloperTools,[switch]$ReferenceBuild)
     if($DeveloperTools -and $Configuration -ne 'Debug'){throw 'Developer payload requires explicit Debug configuration.'}
     if(Test-Path -LiteralPath $Destination){throw 'Payload destination already exists; preserved.'}
     $plugin=Join-Path $Destination 'BepInEx/plugins/FM27Access'
@@ -14,7 +14,8 @@ function New-ModPayload {
     @{Schema=2;Version=$NativeReport.GameVersion;Assembly=$NativeReport.AssemblyHash;Metadata=$NativeReport.MetadataHash;
         UnityFamily='6000.3.';MetadataVersion=39;ApiFile='required-api.json';
         LoaderFiles=@($loader | ForEach-Object {@{Relative=$_;Sha256=(Get-FileHash -LiteralPath (Join-Path $NativeReport.Path $_)).Hash}})} | ConvertTo-Json -Depth 6 | Set-Content -LiteralPath "$plugin/native-build.json" -Encoding utf8
-    Invoke-DotNet -Arguments @((Join-Path $ProjectRoot 'tools/game-inspect/bin/Release/net10.0/game-inspect.dll'),'api-contract',$plugin,$NativeReport.Path,"$plugin/required-api.json") | Out-Host
+    $contractCommand=if($ReferenceBuild){'api-contract-from-references'}else{'api-contract'}
+    Invoke-DotNet -Arguments @((Join-Path $ProjectRoot 'tools/game-inspect/bin/Release/net10.0/game-inspect.dll'),$contractCommand,$plugin,$NativeReport.Path,"$plugin/required-api.json") | Out-Host
     if($DeveloperTools){
         Copy-Item -LiteralPath (Join-Path $ProjectRoot 'lib/mcs.dll') -Destination $plugin
         Copy-Item -LiteralPath (Join-Path $ProjectRoot 'lib/mcs-LICENSE.txt') -Destination $plugin

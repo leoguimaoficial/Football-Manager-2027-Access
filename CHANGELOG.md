@@ -4,9 +4,11 @@ All notable changes to FM27 Access will be documented in this file.
 
 The project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 and the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
-Version 0.1.0 is the initial development milestone and has not been released.
+Version 0.1.0 is the first public release.
 
 ## [Unreleased]
+
+## [0.1.0] - 2026-11-15
 
 The entries below summarize implemented work supported by the source and
 development records. In-game checks cover specific scenarios; they do not
@@ -20,6 +22,10 @@ establish complete career, match or screen reader compatibility. See the
   cancellation/rollback, repair, removal and a separate installer update path.
 - Complete distribution packaging with the pinned IL2CPP x64 BepInEx runtime,
   production console-off defaults, manifests, checksums and corresponding source.
+- Full GitHub-hosted compilation using private, pinned compiler references;
+  developer builds detect game/reference updates, and one maintenance command
+  refreshes the private input and public pin. Releases promote approved artifacts
+  without depending on the developer's computer.
 - Twenty installer language resource sets and a self-contained multilingual HTML
   guide with offline fallback and independent documentation updates.
 - Player-oriented setup and gameplay instructions adapted from the public FM26
@@ -66,11 +72,14 @@ establish complete career, match or screen reader compatibility. See the
   Production builds omit developer endpoints, recordings, startup self-tests and
   symbols; the Companion disables WebView developer tools.
 - Preserved existing build and receipt-aware deployment tooling for development,
-  with separate loader and logging ownership. No public installer is provided.
+  with separate loader and logging ownership, alongside the universal player installer.
 - Consolidated maintained documentation in English while preserving official
   game localization, original legal notices and attributed FM26 references.
 
 ### Fixed
+
+- Opening the installer no longer announces automatic discovery/status updates
+  or restores focus a second time. Messages remain available in the Tab sequence.
 
 - Automatic arrivals no longer speak internal panel identifiers when a native
   title has not bound yet. Actual short titles and explicit reading remain.
