@@ -8,14 +8,6 @@ Version 0.1.0 is the first public release.
 
 ## [Unreleased]
 
-### User guide translations
-
-- All twenty languages now contain the complete beginner manual, with the same
-  paragraphs, steps, shortcuts and references. Previously shorter translations
-  have been expanded to match the English and Portuguese editions.
-- The guide build refuses missing content or translations based on an older
-  source revision. Installer 1.0.3 includes the complete offline manual.
-
 ## [0.1.0] - 2026-11-15
 
 The entries below summarize implemented work supported by the source and
@@ -26,6 +18,17 @@ establish complete career, match or screen reader compatibility. See the
 The packages were refreshed for Steam on the same date, at the maintainer's
 explicit request, without changing the mod version. Exact source/build and
 download verification are recorded in [distribution](docs/DISTRIBUTION.md).
+
+### Complete guide in all twenty languages
+
+The full manual and installer 1.0.3 were published on the same date, preserving
+the existing mod package and version.
+
+- All twenty languages now contain the complete beginner manual, with the same
+  paragraphs, steps, shortcuts and references. Previously shorter translations
+  have been expanded to match the English and Portuguese editions.
+- The guide build refuses missing content or translations based on an older
+  source revision. Installer 1.0.3 includes the complete offline manual.
 
 ### Installer and manual refresh
 

@@ -13,7 +13,13 @@ changed shortcut identities. Eight distribution/guide cases cover the complete
 catalog and deliberate omission/stale-source failures. All20 browser editions
 pass keyboard, reflow, theme/print, no-JS and axe checks;59 installer cases pass.
 Installer1.0.3 bundles the complete offline HTML; no game/mod code changes.
-Public/hosted evidence follows in distribution/session progress once available.
+Hosted43753402566 and documentation43753402513 succeed at fda06fb4. The exact
+complete HTML bytes are found in the original hosted installer bundle and its
+compiled resource matches the source hash. All eight public assets were fetched
+without authentication and fully verified against original mod and independent
+engine provenance. Exact original1.0.1 Core discovers public1.0.3 and retrieves
+the new canonical manual; current1.0.3 reports no newer engine and retrieves the
+same manual. No new game action, mod installation or original-user GUI update.
 
 ## Installer 1.0.2 and beginner manual
 

@@ -22,7 +22,31 @@ engine 1.0.1; the manifest still requires 1.0.1 for owned proxy migration. Playe
 That exact hosted/public payload cold-started on Steam as core `12107ea9` and
 passed the four-audit native main-menu action/focus suite before publication.
 
-### Independent installer 1.0.2 and manual refresh
+### Complete twenty-language manual and installer 1.0.3
+
+The maintainer clarified that every language must receive the complete same
+manual. Installer1.0.3 is the unchanged original artifact from successful
+[hosted run43753402566](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43753402566)
+at `fda06fb4f122b88b5063deaf43d5f17b3cc38630`. The complete HTML matches that source
+and successful
+[documentation run43753402513](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43753402513).
+All twenty editions now retain14 sections,257 content units and the same eight
+reference targets. Their revision stamps and structural contract prevent a
+shortened or stale edition from building. See the editorial evidence notes for
+translation assistance and the remaining native-speaker review distinction.
+
+The exact full HTML bytes were verified inside the original hosted single-file
+installer, so its offline copy matches the complete standalone manual. Installer
+SHA-256: `26784C310580E841E7F7CBFD4BE6ACBDA9D7A065204D5C49AB9711B9169CBB73`.
+Manual SHA-256: `F6231B801D718929DF0B7990F29F6CDDBF26E15FF1858AEABC0666BD78EE0AF2`.
+Only installer EXE/metadata, manual and checksums changed. All eight public
+downloads pass full verification, with original mod/source ZIPs, manifest,
+build-info IDs/hashes and tag2a6773ce retained. Release ID446195775 is unchanged.
+The original1.0.1 Core finds exact public1.0.3 and retrieves the complete current
+manual;1.0.3 finds no newer engine and retrieves the same manual. This follow-up
+does not repeat or claim an original-user GUI update or a game reinstall.
+
+### Earlier independent installer 1.0.2 and manual refresh
 
 The maintainer subsequently requested an installer-only update and a fuller
 beginner manual. The installer comes unchanged from successful

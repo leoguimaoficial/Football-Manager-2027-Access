@@ -1,5 +1,30 @@
 # FM27 Access session progress
 
+## Full manual parity across all twenty languages — 2026-11-15
+
+The user explicitly corrected the previous partial-language approach: the whole
+guide must have the same content translated into all twenty languages. Seventeen
+shortened editions were expanded, preserving the complete Portuguese editions.
+Every locale now has14 sections,257 content units and the same eight reference
+targets. The canonical source and locale text hashes are pinned. The generator
+refuses stale source revisions, omitted paragraphs/steps, changed links and
+altered shortcuts. Eight contract cases,59 installer cases and all20 browser
+editions pass. Translation used machine assistance, protected technical terms
+and targeted corrections; this is not native-speaker certification.
+
+Source fda06fb4f122b88b5063deaf43d5f17b3cc38630 passes hosted43753402566 and
+documentation43753402513. Original hosted installer1.0.3 has exact complete
+manual bytes embedded. EXE SHA26784C310580E841E7F7CBFD4BE6ACBDA9D7A065204D5C49AB9711B9169CBB73;
+HTML SHAF6231B801D718929DF0B7990F29F6CDDBF26E15FF1858AEABC0666BD78EE0AF2.
+The same existing release446195775 now has these assets and refreshed metadata/
+checksums. All eight public downloads were independently verified; original
+mod/source ZIPs, manifest, build-info and v0.1.0 tag2a6773ce retain their exact
+bytes/IDs. No game/mod reinstallation or original-user GUI update was performed.
+Exact original1.0.1 Core sees the new public1.0.3 and obtains the complete online
+manual; current1.0.3 sees no newer engine and obtains the same canonical bytes.
+Ignored backups, public downloads and journals are in artifacts/installer-1.0.3.
+The twenty-language policy supersedes the earlier partial editions below.
+
 ## Installer 1.0.2 self-update and beginner manual — 2026-11-15
 
 The user requested startup installer-update offers, one Repair action, readable

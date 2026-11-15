@@ -11,9 +11,19 @@ Update every locale with a source change; do not refresh revision stamps to hide
 missing translation. Native-speaker qualification remains distinct from these
 structural checks. The earlier F207 partial-language scope below is superseded.
 
+This correction is public in installer1.0.3 and the full standalone/canonical
+guide from fda06fb4f122b88b5063deaf43d5f17b3cc38630, hosted43753402566 and
+documentation43753402513. All20 editions have14 sections/257 content units/eight
+identical reference targets. Eight contract cases,59 installer cases and all20
+browser editions pass. Exact complete HTML bytes were verified inside the
+original hosted EXE. All eight public downloads pass full verification; mod ZIP,
+source ZIP, manifest, build-info and tag remain exact2a6773ce. Both current1.0.3
+and original1.0.1 Core retrieve the complete canonical manual; old Core discovers
+the exact new installer. Source/player/game files were not reinstalled.
+
 ## Installer and guide follow-up — F207
 
-Installer1.0.2 and the improved manual are public from d7d2e9a/hosted43751083467;
+Installer1.0.2 and the earlier manual were published from d7d2e9a/hosted43751083467;
 mod0.1.0 payload/source ZIP/manifest/build-info/tag remain exact2a6773ce bytes.
 This second explicit request authorized only the engine and separately requested
 manual, not a new mod package/tag.59 installer cases and all20 guide browser
