@@ -1,5 +1,47 @@
 # FM27 Access session progress
 
+## Installer 1.0.2 self-update and beginner manual — 2026-11-15
+
+The user requested startup installer-update offers, one Repair action, readable
+player-facing notes, then a fuller accessible beginner manual using FM26's guide.
+Source `d7d2e9a65ae9c1570dc8a32fd7ed7387955a1170` is on main and both hosted
+CI43751083467 and documentation43751083600 succeed.59 installer cases, five
+distribution contracts and all20 guide browser editions pass. Tests cover skip/
+contents keyboard focus, real tables, anchors/languages,320px reflow, dark/high
+contrast/print, no-JS reading and axe. Dutch long-title overflow was found/fixed.
+The expanded beginner chapters are English/pt-BR/pt-PT; all20 core editions
+correct Content, store-evidence limits, main navigation and startup-update text.
+The official FM27 sources and FM26 manual attribution are in user/SOURCES.md.
+
+Actual local1.0.2 UIA sees Steam0.1.0 installed, exactly one Repair action,
+engine title and readable notes. The screenshot showed another app and is
+excluded. A later tool reported Escape interruption; app input stopped, with
+no assertion about physical user input. No further Computer Use was performed.
+No mod/game command, save/career action or manual NVDA test occurred here.
+
+Publication retains release446195775 and mod tag2a6773ce. Only installer EXE,
+installer metadata, the additionally requested manual and checksums changed.
+All eight resulting assets were independently downloaded and fully verified.
+Original mod/source ZIPs, manifest and build-info retain exact hashes and IDs.
+Public installer1.0.2 SHA D51D0DD86746D7BDF6A82E95740B3BD9DC574B07978990021B26523FCDE38BB9;
+manual SHA8E729F2E7B3530F383749E1B14F9C4202E796B2789A2AD59560D2F54FC892DA6.
+Installer metadata identifies its independent source commit/run; the historical
+mod source ZIP is intentionally unchanged. Player notes now describe outcomes.
+
+The exact original public1.0.1 Core, built into an isolated qualification host,
+finds the actual public1.0.2 and invokes its real downloaded helper. Parent exit,
+replacement hash, previous backup, receipt, official new-process title1.0.2 and
+helper cleanup all pass. The test's new installer process was stopped afterward.
+The user's Downloads EXE remains hash35C7E073.../engine1.0.1 and PID4036 is left
+running for their own button/confirmation test. The original GUI was not driven
+through update. Explain:1.0.1 requires Update installer;1.0.2 introduces automatic
+startup offers. The new Core's public services find no newer engine, validate
+the unchanged0.1.0 manifest and fetch the exact updated canonical manual. Actual
+Steam receipt and installed Host hashes remain unchanged. No game is running.
+Xbox retesting remains deferred because the user uninstalled that game.
+Raw receipts, old-source host, backups and publication journal are ignored under
+artifacts/installer-1.0.2; see distribution for exact provenance and limits.
+
 ## Verified Steam 0.1.0 replacement and final handoff — 2026-11-15
 
 Successful hosted build [43745356921](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43745356921)

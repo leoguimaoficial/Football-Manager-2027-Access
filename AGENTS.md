@@ -1,5 +1,23 @@
 # FM27 Access maintenance instructions
 
+## Installer and guide follow-up — F207
+
+Installer1.0.2 and the improved manual are public from d7d2e9a/hosted43751083467;
+mod0.1.0 payload/source ZIP/manifest/build-info/tag remain exact2a6773ce bytes.
+This second explicit request authorized only the engine and separately requested
+manual, not a new mod package/tag.59 installer cases and all20 guide browser
+editions pass; startup checks now ask only for an actual newer engine, and the
+same installed version has one Repair action. Public notes must stay player-facing.
+Independent engine metadata records sourceCommit/buildRunId; don't compare its
+version/source to the historical mod source ZIP as though they were rebuilt together.
+The exact original1.0.1 Core completed a real public1.0.2 helper update in an
+isolated host. The user's original Downloads1.0.1 EXE/PID4036 remains untouched
+for their personal GUI test: it requires Update installer; automatic startup offers
+begin in1.0.2. Current game receipt/Host unchanged; no game running. Xbox retest
+is deferred at the user's request after uninstalling it. Expanded beginner
+chapters are English/pt-BR/pt-PT; twenty core editions retain their own language.
+See current session/distribution/testing records; no manual NVDA qualification.
+
 ## Current Steam baseline — F206
 
 Steam is the primary target by the maintainer's latest explicit request. Steam

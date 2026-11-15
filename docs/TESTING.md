@@ -21,7 +21,14 @@ headings/tables/unique anchors, keyboard skip and contents focus, HTTPS links,
 320px reflow, dark/high-contrast/print states, no-JavaScript reading and axe.
 The new narrow-layout case found and fixed overflow of the Dutch title.
 Publication, public downloads and end-to-end updater evidence are recorded
-separately after they occur; a source test is not a completed self-update.
+in distribution/session progress. Hosted43751083467 succeeds with the full
+portable and distribution checks; documentation43751083600 succeeds separately.
+The eight public downloads pass checksums/full verification with original mod
+identity and independent engine provenance. The exact public1.0.1 Core in an
+isolated host discovers/downloads1.0.2 and completes the real helper replacement,
+backup, receipt, restart and cleanup. This is not automation of the user's original
+GUI; their old EXE remains unchanged. The new public engine finds no newer update,
+loads the unchanged0.1.0 manifest and retrieves the exact online manual.
 
 ## Steam startup and same-version repair — F206
 

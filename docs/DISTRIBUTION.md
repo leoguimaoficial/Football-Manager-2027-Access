@@ -7,13 +7,13 @@ approval. The existing [known issues](KNOWN_ISSUES.md) and recorded qualificatio
 limits remain in force. Local packaging never creates a release or tag.
 
 The [published 0.1.0 release](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.0)
-now uses source commit `2a6773ce2dbb2e1434f5dca3b897ae36720db0c5` and successful
+has its mod payload from source commit `2a6773ce2dbb2e1434f5dca3b897ae36720db0c5` and successful
 [hosted build 43745356921](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43745356921).
 The maintainer explicitly authorized this one-time same-version replacement for
 Steam. The existing release ID and `v0.1.0` tag were retained; the tag now points
 to that selected source. No additional release/version was created. Old assets
 were backed up and retained until all replacement downloads were verified.
-All eight public downloads were fetched without authentication and compared with
+At that Steam refresh, all eight public downloads were fetched without authentication and compared with
 the original artifact; sizes, hashes, source provenance and the public tag match.
 The actual installer service finds one stable version, 0.1.0, validates its
 260-file manifest and retrieves the online guide. This mod build included installer
@@ -21,6 +21,37 @@ engine 1.0.1; the manifest still requires 1.0.1 for owned proxy migration. Playe
 `C3E708F96E458721427904ED41666CBCBA94CC68BE54197BD1660DE4EB28729C`.
 That exact hosted/public payload cold-started on Steam as core `12107ea9` and
 passed the four-audit native main-menu action/focus suite before publication.
+
+### Independent installer 1.0.2 and manual refresh
+
+The maintainer subsequently requested an installer-only update and a fuller
+beginner manual. The installer comes unchanged from successful
+[hosted run 43751083467](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43751083467),
+source `d7d2e9a65ae9c1570dc8a32fd7ed7387955a1170`. The manual is byte-identical to
+that source and the separate successful
+[documentation run 43751083600](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/43751083600).
+Only the installer EXE, its metadata, the separately requested manual and the
+checksum file were replaced. All eight resulting public assets were downloaded
+without authentication and fully verified. The four mod/source/manifest/build-info
+assets retain their IDs and exact hashes; `v0.1.0` still points to `2a6773ce`.
+The existing release ID446195775 remains; no new tag or release was created.
+
+Installer SHA-256: `D51D0DD86746D7BDF6A82E95740B3BD9DC574B07978990021B26523FCDE38BB9`.
+Manual SHA-256: `8E729F2E7B3530F383749E1B14F9C4202E796B2789A2AD59560D2F54FC892DA6`.
+Schema-1 installer metadata carries independent source/build provenance; the
+historical mod build-info, minimum engine 1.0.1 and mod source ZIP stay unchanged.
+The corresponding 1.0.2 installer source is publicly available at the selected
+repository commit, linked from the release. Old engines accept the extra metadata.
+
+The exact original public 1.0.1 Core source was compiled into an isolated
+qualification host. Against the real public release it finds 1.0.2, verifies the
+download and invokes the production helper. Parent exit, atomic replacement,
+exact previous backup, receipt, official 1.0.2 restart and helper cleanup pass.
+This qualifies the update engine, not automation of the original user's Yes/No
+dialog. Their Downloads installer remains unchanged at 1.0.1 for a personal test.
+That old UI requires **Update installer**; automatic startup prompts begin in
+1.0.2. The new engine's public service reports no newer update and retrieves the
+exact canonical manual. Actual game receipt and installed Host hashes are unchanged.
 
 The original (superseded) assets used commit
 `6ed06c8b58c5a515b9d46c4fbb30a8cb3c051faa`,

@@ -30,7 +30,10 @@ node tests/distribution/guide-browser.cjs
 The executable is written to ignored `artifacts/installer/`. It is x64,
 self-contained and single-file, including .NET 10.0.15. WebView2 is needed by the
 game's Companion, not the installer. The installer uses no GitHub tokens.
-Its GPL source and dependency notices are distributed with the source/manual package.
+Its GPL source and dependency notices are publicly available. For independent
+engine updates, `sourceCommit` in the installer metadata identifies the exact
+repository source (also linked by the release). The mod source ZIP retains its
+historical build identity and may contain an older installer engine.
 
 ## Runtime contracts
 
