@@ -49,5 +49,6 @@
   "mod": "Instalando FM27 Access y Companion",
   "verify": "Verificando archivos instalados",
   "summary": "Información de instalación y versión",
-  "unmanaged": "Esta instalación se hizo con otro método. Use su desinstalador o recibo original antes de administrarla aquí."
+  "unmanaged": "Esta instalación se hizo con otro método. Use su desinstalador o recibo original antes de administrarla aquí.",
+  "messages": "Mensajes del instalador"
 }

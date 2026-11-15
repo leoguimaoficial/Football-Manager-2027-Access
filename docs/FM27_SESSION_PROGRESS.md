@@ -30,6 +30,13 @@ shows only the usable XboxGames Content destination and recognizes installed
 inert main-screen Technical details button was removed; actual errors provide
 an optional read-only diagnostic view in their own dialog.
 
+The later Tab-access report adds a native multiline read-only Installer messages
+field to the main tab sequence. It retains recent operation/error messages
+without moving focus on progress updates. Error-dialog explanations are also
+read-only multiline Tab stops. Install/update/repair/downgrade and uninstall
+completion use a standard Windows information dialog; the same message remains
+available in the main message field after dismissal.
+
 The public FM26 release v0.2.16 HTML was downloaded and read, alongside its public
 README/INSTALL and the pristine source reference. Its player-oriented structure
 informs the replacement guide: setup, screen-reader settings, Enter-to-confirm

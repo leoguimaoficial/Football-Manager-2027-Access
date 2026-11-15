@@ -17,6 +17,9 @@ internal sealed class InstallerForm : Form
     private readonly Label languageLabel = new(), gameLabel = new(), versionLabel = new(), progressLabel = new();
     private readonly LiveStatus status = new();
     private readonly TextBox information = new();
+    private readonly TextBox messages = new();
+    private readonly GroupBox messagesGroup = new();
+    private readonly Queue<string> messageHistory = new();
     private readonly ProgressBar overall = new(), current = new();
     private readonly Button browse = new(), refresh = new(), primary = new(), localPackage = new(), repair = new(), remove = new(), guide = new(), selfUpdate = new(), cancel = new(), close = new(), recover = new();
     private ReleaseCatalog? catalog;
@@ -70,8 +73,8 @@ internal sealed class InstallerForm : Form
     }
     private void Build()
     {
-        var layout = new TableLayoutPanel { Dock = DockStyle.Fill, AutoScroll = true, Padding = new(16), ColumnCount = 1, RowCount = 13 };
-        for (int i = 0; i < 13; i++) layout.RowStyles.Add(new(i == 8 ? SizeType.Percent : SizeType.AutoSize, i == 8 ? 100 : 0));
+        var layout = new TableLayoutPanel { Dock = DockStyle.Fill, AutoScroll = true, Padding = new(16), ColumnCount = 1, RowCount = 14 };
+        for (int i = 0; i < 14; i++) layout.RowStyles.Add(new(i == 8 ? SizeType.Percent : SizeType.AutoSize, i == 8 ? 100 : 0));
         Controls.Add(layout);
         foreach (var combo in new[] { language, game, version }) { combo.DropDownStyle = ComboBoxStyle.DropDownList; combo.Dock = DockStyle.Fill; }
         foreach (var label in new[] { languageLabel, gameLabel, versionLabel, status, progressLabel }) { label.AutoSize = true; label.MaximumSize = new(850, 0); }
@@ -82,6 +85,10 @@ internal sealed class InstallerForm : Form
         layout.Controls.Add(status);
         information.Multiline = true; information.ReadOnly = true; information.ScrollBars = ScrollBars.Vertical; information.Dock = DockStyle.Fill;
         layout.Controls.Add(information);
+        messages.Multiline = true; messages.ReadOnly = true; messages.TabStop = true;
+        messages.ScrollBars = ScrollBars.Vertical; messages.Dock = DockStyle.Fill;
+        messagesGroup.Dock = DockStyle.Top; messagesGroup.Height = 110; messagesGroup.Controls.Add(messages);
+        layout.Controls.Add(messagesGroup);
         overall.Dock = current.Dock = DockStyle.Top; layout.Controls.Add(progressLabel); layout.Controls.Add(overall); layout.Controls.Add(current);
         var buttons = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, WrapContents = true };
         foreach (var button in new[] { primary, localPackage, repair, remove, refresh, guide, selfUpdate, recover, cancel, close })
@@ -117,7 +124,7 @@ internal sealed class InstallerForm : Form
         remove.Click += async (_, _) =>
         {
             if (game.SelectedItem is not GameInstallation selected || !Confirm("confirmRemove")) return;
-            await Run(async ct => { await installation.UninstallAsync(selected.Path, Progress(), ct); SetStatus(text["success"]); UpdateState(); });
+            await Run(async ct => { await installation.UninstallAsync(selected.Path, Progress(), ct); ShowCompletion(text["success"]); UpdateState(); });
         };
         guide.Click += async (_, _) => await Run(async ct =>
         {
@@ -155,6 +162,7 @@ internal sealed class InstallerForm : Form
         gameLabel.Text = game.AccessibleName = text["game"];
         versionLabel.Text = version.AccessibleName = text["version"];
         previews.Text = text["previews"]; information.AccessibleName = text["summary"];
+        messagesGroup.Text = messages.AccessibleName = text["messages"];
         localPackage.Text = localPackage.AccessibleName = text["install"] + " ZIP…";
         overall.AccessibleName = text["overall"]; current.AccessibleName = text["current"];
         foreach (var (button, key) in new[] { (browse, "browse"), (refresh, "refresh"), (repair, "repair"), (remove, "uninstall"), (guide, "guide"),
@@ -249,7 +257,7 @@ internal sealed class InstallerForm : Form
             await Task.Run(() => InstallationService.ExtractAsync(zip, staged, manifest, Progress(), ct), ct);
             await installation.InstallAsync(selected.Path, staged, manifest, Progress(), ct);
             overall.Value = 5; current.Value = 100;
-            SetStatus(text[BepInExService.NeedsPreparation(selected.Path) ? "pending" : "success"]);
+            ShowCompletion(text[BepInExService.NeedsPreparation(selected.Path) ? "pending" : "success"]);
             UpdateState();
         }
         finally { if (Directory.Exists(work)) Directory.Delete(work, true); }
@@ -268,7 +276,23 @@ internal sealed class InstallerForm : Form
     });
     private bool Confirm(string key) => MessageBox.Show(this, text[key], text["title"], MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
         MessageBoxDefaultButton.Button2) == DialogResult.Yes;
-    private void SetStatus(string value) { status.Text = value; status.Announce(); }
+    private void SetStatus(string value)
+    {
+        status.Text = value; status.Announce();
+        if (messageHistory.LastOrDefault() == value) return;
+        messageHistory.Enqueue(value);
+        while (messageHistory.Count > 50) messageHistory.Dequeue();
+        int start = messages.SelectionStart, length = messages.SelectionLength;
+        messages.Text = string.Join(Environment.NewLine + Environment.NewLine, messageHistory);
+        if (messages.Focused)
+        { messages.Select(Math.Min(start, messages.TextLength), Math.Min(length, Math.Max(0, messages.TextLength - start))); }
+        else { messages.SelectionStart = messages.TextLength; messages.ScrollToCaret(); }
+    }
+    private void ShowCompletion(string message)
+    {
+        SetStatus(message);
+        MessageBox.Show(this, message, text["title"], MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
     private async Task Run(Func<CancellationToken, Task> action)
     {
         if (busy) return;
@@ -300,7 +324,8 @@ internal sealed class InstallerForm : Form
         using var dialog = new Form { Text = text["error"], StartPosition = FormStartPosition.CenterParent, MinimumSize = new(600, 260), Size = new(720, 300), AutoScaleMode = AutoScaleMode.Dpi };
         var layout = new TableLayoutPanel { Dock = DockStyle.Fill, AutoSize = true, Padding = new(16), ColumnCount = 1, RowCount = 3 };
         layout.RowStyles.Add(new(SizeType.AutoSize)); layout.RowStyles.Add(new(SizeType.Percent, 100)); layout.RowStyles.Add(new(SizeType.AutoSize));
-        var explanation = new Label { Text = message, AutoSize = true, MaximumSize = new(650, 0) };
+        var explanation = new TextBox { Text = message, Multiline = true, ReadOnly = true, TabStop = true, Height = 100,
+            Dock = DockStyle.Fill, ScrollBars = ScrollBars.Vertical, AccessibleName = text["messages"] };
         var diagnostic = new TextBox { Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Both, Dock = DockStyle.Fill, AccessibleName = text["details"], Text = exception.ToString(), Visible = false };
         var buttons = new FlowLayoutPanel { Dock = DockStyle.Fill, AutoSize = true };
         var expand = new Button { Text = text["details"], AutoSize = true };

@@ -49,5 +49,6 @@
   "mod": "FM27 Access en Companion installeren",
   "verify": "Geïnstalleerde bestanden controleren",
   "summary": "Installatie- en versiegegevens",
-  "unmanaged": "Deze installatie gebruikt een andere methode. Gebruik eerst het oorspronkelijke verwijderprogramma of ontvangstbewijs."
+  "unmanaged": "Deze installatie gebruikt een andere methode. Gebruik eerst het oorspronkelijke verwijderprogramma of ontvangstbewijs.",
+  "messages": "Berichten van het installatieprogramma"
 }

@@ -108,6 +108,10 @@ bars, accessible names, native focus/disabled state, system colors and DPI
 scaling. Progress announcements are limited to stage/10-percent changes.
 Technical details appear only in an error dialog; there is no inert log button
 on the main screen. See the testing record below for actual evidence limits.
+The native read-only multiline Installer messages field is a Tab stop and keeps
+recent progress, warnings and errors available for later reading. Error-dialog
+explanations are Tab stops too. A standard Windows information dialog confirms
+completed installation/update/repair and removal, then returns to the installer.
 
 ## Distribution and publication
 

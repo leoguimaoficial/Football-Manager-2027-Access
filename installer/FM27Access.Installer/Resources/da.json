@@ -49,5 +49,6 @@
   "mod": "Installerer FM27 Access og Companion",
   "verify": "Kontrollerer installerede filer",
   "summary": "Installations- og versionsoplysninger",
-  "unmanaged": "Denne installation bruger en anden metode. Brug først det oprindelige afinstallationsprogram eller kvitteringen."
+  "unmanaged": "Denne installation bruger en anden metode. Brug først det oprindelige afinstallationsprogram eller kvitteringen.",
+  "messages": "Installationsmeddelelser"
 }

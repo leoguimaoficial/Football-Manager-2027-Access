@@ -49,5 +49,6 @@
   "mod": "Installation de FM27 Access et du Companion",
   "verify": "Vérification des fichiers installés",
   "summary": "Informations sur l’installation et la version",
-  "unmanaged": "Cette installation provient d’une autre méthode. Utilisez son programme de désinstallation ou reçu d’origine avant de la gérer ici."
+  "unmanaged": "Cette installation provient d’une autre méthode. Utilisez son programme de désinstallation ou reçu d’origine avant de la gérer ici.",
+  "messages": "Messages du programme d’installation"
 }

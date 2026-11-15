@@ -25,6 +25,9 @@ establish complete career, match or screen reader compatibility. See the
 - Player-oriented setup and gameplay instructions adapted from the public FM26
   manual: screen-reader setup, Enter-to-confirm lists, searchable navigation,
   table columns, bookmarks, career setup and separate match shortcut tables.
+- Installer messages and error explanations are available as read-only multiline
+  fields in the Tab sequence. Standard Windows dialogs confirm completed installs,
+  updates, repairs and removal, with the result retained for later reading.
 - GitHub validation and selected-build publication workflows, with run/commit
   verification and a required-reviewer environment gate before release publication.
 

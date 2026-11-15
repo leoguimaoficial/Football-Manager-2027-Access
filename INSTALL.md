@@ -12,6 +12,8 @@ official stable mod version. The primary action becomes Install, Update, Repair
 or Downgrade according to the installed version. Older versions require an
 explicit confirmation. Repair uses the installed version's own official package.
 Use Check for updates to refresh the catalog; offline results are marked as cached.
+Use Tab to reach Installer messages and reread any progress, warning or error.
+A standard Windows dialog confirms completion; press OK to return to the installer.
 
 For a downloaded package, keep the versioned ZIP and `FM27Access-Manifest.json`
 together and choose **Install ZIP**, then select the manifest. This offline path

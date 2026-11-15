@@ -49,5 +49,6 @@
   "mod": "FM27 Access ve Companion yükleniyor",
   "verify": "Yüklenen dosyalar doğrulanıyor",
   "summary": "Kurulum ve sürüm bilgileri",
-  "unmanaged": "Bu kurulum başka yöntemle yapılmış. Önce özgün kaldırıcıyı veya makbuzu kullanın."
+  "unmanaged": "Bu kurulum başka yöntemle yapılmış. Önce özgün kaldırıcıyı veya makbuzu kullanın.",
+  "messages": "Yükleyici mesajları"
 }
