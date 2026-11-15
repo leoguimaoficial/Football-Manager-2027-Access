@@ -6,6 +6,11 @@ $ErrorActionPreference='Stop'
 $repository='leoguimaoficial/FM27Access-Build-References'
 $baseline=Join-Path $ProjectRoot 'packaging/build-references.json'
 Invoke-DotNet -Arguments @('build',"$ProjectRoot/tools/game-inspect",'-c','Release','--nologo','--verbosity','quiet')
+$raw=& $DotNet "$ProjectRoot/tools/game-inspect/bin/Release/net10.0/game-inspect.dll" describe-build-references ([IO.Path]::GetFullPath($GamePath))
+if($LASTEXITCODE -ne 0){throw 'Reference inspection failed. Let the pinned BepInEx regenerate interop for the updated game first.'}
+$result=$raw|ConvertFrom-Json
+$pin=Get-Content -LiteralPath $baseline -Raw|ConvertFrom-Json
+if($pin.identity -eq $result.identity){Write-Output 'Cloud compiler references are already current.';return}
 $work=Join-Path $ProjectRoot ('.tools/reference-refresh-'+[Guid]::NewGuid().ToString('N'))
 $export=Join-Path $work 'export'
 $checkout=Join-Path $work 'private'
@@ -13,8 +18,6 @@ New-Item -ItemType Directory -Path $work | Out-Null
 $raw=& $DotNet "$ProjectRoot/tools/game-inspect/bin/Release/net10.0/game-inspect.dll" export-build-references ([IO.Path]::GetFullPath($GamePath)) $export
 if($LASTEXITCODE -ne 0){throw 'Reference export failed. Let the pinned BepInEx regenerate interop for the updated game first.'}
 $result=$raw|ConvertFrom-Json
-$pin=Get-Content -LiteralPath $baseline -Raw|ConvertFrom-Json
-if($pin.identity -eq $result.identity){Write-Output 'Cloud compiler references are already current.';return}
 # Confirm visibility using existing Git Credential Manager authentication. Never
 # store this credential in the checkout, remote URL, pipeline or command output.
 $credentialLines=@('protocol=https','host=github.com','')| & git credential fill 2>$null
