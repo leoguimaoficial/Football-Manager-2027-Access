@@ -27,6 +27,10 @@ pin. A mismatch identifies the single reference-refresh command, which verifies
 the private destination, exports and pushes the input, then updates the source
 pin for review and game regression. No local daemon, service or scheduled task
 is required. GitHub cannot observe a game update without updated compiler input.
+The maintainer requested full automation and enabled repository-local
+`fm27.autoUpdateBuildReferences=true`: their normal requested build refreshes
+changed input automatically, with no copy or upload for an unchanged identity.
+Other checkouts retain validation-only behavior unless their maintainer opts in.
 Local validation passes 1642 C# tests (including nine private-reference integrity
 and changed-baseline cases), 42 installer tests, 83 Companion JavaScript tests,
 four distribution contracts and all 20 guide locales/browser/axe checks. A full

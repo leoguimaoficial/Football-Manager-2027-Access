@@ -92,11 +92,16 @@ the cloud baseline. A change stops the build with this refresh command:
 ./scripts/update-build-references.ps1 -GamePath '<updated game root>'
 ```
 
+The maintainer can enable this refresh automatically inside the normal build:
+`git config --local fm27.autoUpdateBuildReferences true`. It is enabled in the
+maintainer's current checkout. Other contributors keep the validation-only default
+and do not need private repository credentials for an unchanged baseline.
+
 After BepInEx has regenerated current interop, the command exports only managed
 references, confirms the repository is private, creates the checksum index,
 commits and pushes the private bundle, then updates the public pin. It uses the
-maintainer's existing Git Credential Manager authentication for this explicit
-operation. An unchanged identity needs no upload. No background process or
+maintainer's existing Git Credential Manager authentication during a requested
+build or explicit refresh. An unchanged identity needs no copy or upload. No background process or
 scheduled task is installed. Test the game adaptation and commit the pin with it;
 future hosted releases use that exact input automatically. GitHub cannot detect
 an uninstalled game update or generate interop without the game. An API change

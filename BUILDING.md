@@ -37,6 +37,9 @@ game/reference hashes. After a game update, let BepInEx regenerate interop, then
 run `./scripts/update-build-references.ps1 -GamePath '<updated game root>'`.
 It updates the private bundle and public pin together. Test and commit the
 adaptation/pin before a release. See [distribution](docs/DISTRIBUTION.md).
+For maintainer builds, `git config --local fm27.autoUpdateBuildReferences true`
+enables that refresh automatically when references change. This operates only
+while the normal build command runs and installs no background executor.
 
 Projects, the solution and build/install scripts default to Release with
 `FM27DeveloperTools=false`. Debug alone also leaves developer tools disabled.

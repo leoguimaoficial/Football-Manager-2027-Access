@@ -23,8 +23,8 @@ establish complete career, match or screen reader compatibility. See the
 - Complete distribution packaging with the pinned IL2CPP x64 BepInEx runtime,
   production console-off defaults, manifests, checksums and corresponding source.
 - Full GitHub-hosted compilation using private, pinned compiler references;
-  developer builds detect game/reference updates, and one maintenance command
-  refreshes the private input and public pin. Releases promote approved artifacts
+  developer builds detect game/reference updates, and maintainer builds can
+  refresh the private input and public pin automatically. Releases promote approved artifacts
   without depending on the developer's computer.
 - Twenty installer language resource sets and a self-contained multilingual HTML
   guide with offline fallback and independent documentation updates.

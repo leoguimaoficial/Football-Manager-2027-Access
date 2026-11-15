@@ -6,7 +6,11 @@ try {
     if($DeveloperTools -and $Configuration -ne 'Debug'){throw 'Developer tools require explicit -Configuration Debug.'}
     $referenceGame=if($GamePath){$GamePath}else{$env:FM27_GAME_DIR}
     if($referenceGame){
-        Invoke-DotNet -Arguments @('build','tools/game-inspect','-c','Release','--nologo','--verbosity','quiet')
+        if((& git -C $ProjectRoot config --bool fm27.autoUpdateBuildReferences) -eq 'true'){
+            & "$PSScriptRoot/update-build-references.ps1" -GamePath $referenceGame
+        }else{
+            Invoke-DotNet -Arguments @('build','tools/game-inspect','-c','Release','--nologo','--verbosity','quiet')
+        }
         Invoke-DotNet -Arguments @('tools/game-inspect/bin/Release/net10.0/game-inspect.dll','check-build-reference-baseline',$referenceGame,'packaging/build-references.json')
     }
     $arguments=@('build','FM27Access.sln','-c',$Configuration,"-p:FM27DeveloperTools=$($DeveloperTools.IsPresent.ToString().ToLowerInvariant())",'--nologo')
