@@ -1,5 +1,14 @@
 # Native compatibility contract
 
+Final published0.1.1 uses source22dfbddd6f1c54433c8e513a709fae2c33c8fbf1/hosted43772243508.
+Its exact required API contract validates against both preserved Xbox0.9.2435.0
+and actual Steam references. The final259-file receipt installation passes native
+preflight and cold Steam startup with version0.1.1/tools=false. Scoped native men's
+table regressions also pass; a new live Xbox launch remains pending. Host's plugin
+attribute and health now share a compile-time constant generated from central
+Version, with independent assembly-metadata parity coverage. See testing/session
+progress for the complete final artifact and public-download evidence.
+
 ## Xbox refusal corrected for 0.1.1 / installer 1.0.4
 
 The maintainer supplied an actual Xbox0.9.2435.0 log refusing

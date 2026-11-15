@@ -1,5 +1,59 @@
 # FM27 Access session progress
 
+## Published 0.1.1 / installer1.0.4 — F208 — 2026-11-15
+
+[v0.1.1](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.1)
+publishes the unchanged original assets from successful main build43772243508,
+source22dfbddd6f1c54433c8e513a709fae2c33c8fbf1, through approved publication43773043909.
+All eight public downloads pass full verification and equal the selected hosted
+files. Original v0.1.0 tag2a6773ce and all eight asset IDs/digests remain intact.
+Private reference ZIP/main/pin is88df2f483130877ca7efc0d8c5e2c5edee945aad.
+
+Final hosted engine1.0.4 installs the exact259-file payload through its normal
+receipt/transaction service. Steam uses its sole unchanged version.dll, retained
+as shared where the previous receipt did not own it. Native preflight and the
+exact hosted458-type/24,535-member API contract pass actual Steam and preserved
+Xbox references. The latter is not a live Xbox installation. Final Xbox source
+compilation succeeds; the existing BallThird unreachable-code warning remains.
+
+Cold Steam runtime is0.1.1/Plugin5e0a19d8-380c-4e44-afdb-8424c1b4d3ea with tools=false.
+Native MainMenu/What's New/Preferences/load-dialog cancellation, exact focus and
+four axe audits pass. In the unchanged men's QA save,32 Squad rows retain three
+rapid checkbox activations alongside body refreshes, then clear to zero. The
+50-row database selects only the current page, replaces the previous page's
+selection, selects all10000 and clears to zero. Tactics retains33 body rows and
+its actual controls. Database/Tactics add two clean axe audits, with no client
+or transport failures. No day, match, lineup or business action is advanced.
+Native return-to-start succeeds; the save's SHA256 remains5FCDA08675E4336A91587192048A29975E49D311D0506A7CC2F72F1A4A927205.
+Final game30320/sole normal Companion16784 remains at MainMenu.
+
+The first candidate exposed a stale compile-time0.1.0 label in both Host's plugin
+attribute and health. Generate the required constant from central Version through
+Speech's build target and add an independent assembly-metadata parity test. The
+first attempt using a runtime property was rejected by the compiler before any
+commit; the constant solution passes. Final CI covers1,649 C# cases,64 installer,
+89 JS,eight distribution/manual cases and all20 complete guide browser editions.
+The exact installer embeds the canonical959866-byte manual (SHA256599BE86F...),
+with all14 sections/257 units/eight reference targets in every language. Actual
+public1.0.3 Core discovers engine1.0.4 and mod0.1.1, and refuses the new manifest
+until engine update. Current1.0.4 finds no newer engine; both fetch the same full
+canonical guide. No new helper-update GUI run or manual NVDA test is claimed.
+
+An initial compound Steam-launch command was rejected automatically with
+`blocked by policy` and no detailed reason. After the maintainer explicitly
+requested a retry, a limited normal launcher command succeeded; no game/native
+licensing modification was involved. The final release remains explicit about
+fresh Xbox/Epic/external-onboarding and full-career qualification limits.
+
+After consolidating exact publication/runtime/compatibility evidence into ignored
+artifacts/current-verification.json (schema3), the existing recognized-output
+cleanup removed17 outputs plus four installer bin/obj outputs:21 total,
+1,889,369,959 bytes (1.76GiB). Source, pinned SDK10, Prism/legal material, pristine
+FM26 baseline, receipts, installed0.1.1 and saves remain. No new private clone is
+left under .tools; the authorized refreshed clone was under artifacts and was
+cleaned. The two old .tools/reference-refresh copies remain278,890,725 bytes
+(266MiB) under the preceding automatic deletion rejection. No bypass was attempted.
+
 ## Authorized 0.1.1 / engine1.0.4 release preparation — 2026-11-15
 
 The maintainer approves integrating the table trial and publishing mod0.1.1,

@@ -1,5 +1,30 @@
 # Distribution, selected builds and publication
 
+## Published 0.1.1 / installer1.0.4
+
+[v0.1.1](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.1)
+uses exact source22dfbddd6f1c54433c8e513a709fae2c33c8fbf1 and successful trusted
+main build43772243508. Approved publication43773043909 uploaded the eight original
+assets without rebuilding. Every public download passes full verification and
+matches the selected hosted bytes. v0.1.0/tag2a6773ce and all of its asset IDs and
+digests remain unchanged. Private compiler ZIP/main/pin is88df2f483130877ca7efc0d8c5e2c5edee945aad.
+
+The actual bundled engine1.0.4 transaction installs259 exact files on Steam and
+its hosted API contract accepts both actual Steam and preserved Xbox references.
+Final cold Steam startup and scoped native men's-table regressions pass; fresh
+Xbox live qualification remains pending and is stated in the public notes. The
+installer embeds the exact complete959866-byte guide (SHA256599BE86F17B9C92CD32A5CFC26B1F4FE1BFE4BE2465FD7391CC6A8EE82BE83EF).
+Actual public1.0.3 Core discovers engine1.0.4/mod0.1.1 and requires engine update
+for the new manifest; current1.0.4 offers no engine update. Both fetch the same
+complete canonical guide. The new tag identifies built source, while subsequent
+evidence-only commits do not rebuild or replace the release.
+
+Post-publication recognized-output cleanup removed21 generated outputs/1.76GiB.
+The compact current-verification record and receipts remain. Two old private
+copies previously blocked from deletion remain266MiB; the new authorized private
+refresh work used artifacts and was removed normally. Installed game and saves
+were preserved.
+
 ## Authorized 0.1.1 / installer1.0.4 preparation
 
 The maintainer explicitly authorizes integrating the measured table improvements,

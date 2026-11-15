@@ -1,3 +1,25 @@
+## Published 0.1.1 / installer1.0.4 final verification
+
+Selected hosted43772243508/source22dfbddd6f1c54433c8e513a709fae2c33c8fbf1 passes
+1,649 C# cases,64 installer,89 JS,eight distribution/manual cases and all20 full
+guide browser editions. The added version test compares Host/health's generated
+constant with the compiled assembly's independent informational metadata.
+All eight public assets from approved publication43773043909 match the selected
+hosted files; v0.1.0 assets/tag remain unchanged. Exact engine1.0.4 embeds the
+canonical complete959866-byte manual and receipt-installs259 verified files.
+
+Final Steam cold startup/native MainMenu/What's New/Preferences/load-dialog
+cancellation and exact origin focus pass with four clean axe audits. Actual
+men's QA Squad rapid checkbox/body concurrency, database50-row page selection,
+page replacement, global10000/clear and Tactics pass; two more axe audits are
+clean and no client/transport failures occur. Version0.1.1/tools=false/
+Plugin5e0a19d8-380c-4e44-afdb-8424c1b4d3ea is retained at MainMenu with the normal
+sole Companion. The QA save remains byte-identical. The final hosted contract
+passes both real reference sets; final Xbox source compiles with the existing
+BallThird warning, but no fresh live Xbox launch is claimed. Actual public
+1.0.3 Core discovers1.0.4/mod0.1.1;1.0.4 finds no newer engine. Both retrieve the
+same full canonical manual. No new helper GUI-update or manual NVDA claim.
+
 ## 0.1.1 / installer1.0.4 cross-store release preparation
 
 The old installed contract reproduces the supplied Xbox0.9.2435.0 error exactly

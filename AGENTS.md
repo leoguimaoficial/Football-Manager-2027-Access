@@ -1,5 +1,37 @@
 # FM27 Access maintenance instructions
 
+## Published 0.1.1 / installer 1.0.4 — F208
+
+The maintainer explicitly authorized the release, superseding the preceding
+table-trial no-commit restriction. Public v0.1.1 is exact source22dfbddd6f1c54433c8e513a709fae2c33c8fbf1,
+hosted43772243508, publication43773043909. All eight public downloads equal the
+selected original assets; v0.1.0/tag2a6773ce and its eight assets remain unchanged.
+Private compiler ZIP/main/pin is88df2f483130877ca7efc0d8c5e2c5edee945aad.
+
+The Xbox0.9.2435.0 Application refusal is reproduced against actual preserved
+references and corrected without dropping required-signature/freshness guards.
+One canonical ZIP uses `by-store`: engine1.0.4 installs winhttp.dll for Xbox and
+version.dll otherwise, retaining exact ownership, safe migration and rollback.
+Both actual reference sets pass the final hosted458-type/24,535-member contract;
+production source compiles against both. A new live Xbox launch remains pending.
+
+Exact final Steam package is receipt-installed (259 exact files), version0.1.1,
+Plugin5e0a19d8-380c-4e44-afdb-8424c1b4d3ea. Cold native menu/preferences/load-dialog
+actions and four axe audits pass; men's QA Squad rapid selections, database page
+selection/global10000/clear and Tactics pass with two further axe audits. The
+6 July2026 09:00 save remains byte-identical. Final game30320/sole normal
+Companion16784 is at MainMenu. No manual NVDA or complete-career claim. Host's
+attribute and health version are now generated from the central mod Version.
+The initial automatic launch rejection was recorded; after the maintainer's
+explicit retry request, normal Steam launch succeeded. See current verification
+and session progress for cleanup and the two previously blocked private copies.
+
+Post-release cleanup removed21 recognized generated outputs/1,889,369,959 bytes
+(1.76GiB), retaining source, receipts, SDK10, Prism, baseline, installed0.1.1 and
+saves. Consolidated evidence is artifacts/current-verification.json (schema3).
+The two old .tools/reference-refresh copies (278,890,725 bytes/266MiB) remain
+under the preceding automatic-review deletion rejection; do not bypass it.
+
 ## Authorized 0.1.1 and installer 1.0.4 release
 
 The latest user request supersedes the earlier trial's no-commit/publication
