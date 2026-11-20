@@ -1,5 +1,15 @@
 # Native compatibility contract
 
+## 0.2.0 preparation — F214
+
+The authorized0.2.0 release incorporates the Steam27.1 correction documented
+below. The private compiler-input archive is now refreshed and pinned to
+03eba84ebe1db8fe2a1d2f7358ae77b6a3e479f6, identity
+A69907E2956FEB792E64D5C9940D1099B11AC350E5139E117DD5C106F6635FFC,
+for actual Steam26620374 inputs. Earlier0.1.1 assets/tag remain unchanged.
+The historical source-only statements below describe their own qualification;
+new hosted/native/public verification is recorded in the F214 release evidence.
+
 ## Steam 27.1 update: actual member dependencies — F209, 2026-11-19
 
 This is an unreleased source correction; public 0.1.1 assets and the private

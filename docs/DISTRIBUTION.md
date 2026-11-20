@@ -1,5 +1,18 @@
 # Distribution, selected builds and publication
 
+## Authorized 0.2.0 preparation — F214
+
+The maintainer authorizes0.2.0 with the six verified local source commits after
+55d6082, private compiler-input refresh and the existing trusted-main publication
+workflow. Private main/ZIP/pin is03eba84ebe1db8fe2a1d2f7358ae77b6a3e479f6,
+Steam26620374 reference identityA69907E2956FEB792E64D5C9940D1099B11AC350E5139E117DD5C106F6635FFC.
+The universal engine remains1.0.4; package-distribution reuses the exact existing
+official installer binary. Release notes/changelog describe player behavior,
+while hashes, compiler/native details and test counts remain in these records.
+Existing0.1.0/0.1.1 releases and tags remain unchanged. Successful hosted build,
+exact-asset native qualification, protected approval, publication and installer
+catalog discovery are recorded when complete; preparation is not publication proof.
+
 ## Published 0.1.1 / installer1.0.4
 
 [v0.1.1](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.1)
@@ -218,8 +231,8 @@ the cloud baseline. A change stops the build with this refresh command:
 ```
 
 The maintainer can enable this refresh automatically inside the normal build:
-`git config --local fm27.autoUpdateBuildReferences true`. It is enabled in the
-maintainer's current checkout. Other contributors keep the validation-only default
+`git config --local fm27.autoUpdateBuildReferences true`. The current maintainer
+checkout keeps it disabled and uses an explicitly authorized refresh. Other contributors keep the validation-only default
 and do not need private repository credentials for an unchanged baseline.
 
 After BepInEx has regenerated current interop, the command exports only managed

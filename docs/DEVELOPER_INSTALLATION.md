@@ -1,6 +1,6 @@
 # Developer deployment and removal
 
-The primary development profile is FM27 Steam build 26577676 with Unity
+The primary development profile is FM27 Steam build 26620374 (27.1.0.2505117) with Unity
 6000.3.18f1, metadata 39 and BepInEx 6.0.0-be.793. Compatible build/store variants are accepted by the
 required API contract, x64/Unity6000.3.x/metadata39 checks, exact loader hashes and
 fresh local interop. Reference game hashes record qualification rather than impose

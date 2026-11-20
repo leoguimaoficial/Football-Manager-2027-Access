@@ -1,5 +1,32 @@
 # FM27 Access session progress
 
+## Authorized 0.2.0 release preparation — F214 — 2026-11-20
+
+The maintainer explicitly authorizes0.2.0 with every verified pending source
+commit, the new private binary inputs and the existing automatic publication
+process. Six local main commits follow remote55d6082; all other local branch tips
+are already ancestors of remote main. No unverified experiment is merged.
+Private compiler ZIP/main/pin is refreshed to03eba84ebe1db8fe2a1d2f7358ae77b6a3e479f6,
+identityA69907E2956FEB792E64D5C9940D1099B11AC350E5139E117DD5C106F6635FFC,
+for installed Steam26620374/27.1.0.2505117. The script confirms the private
+repository and exports only allowed managed references; public source/player
+archives exclude proprietary inputs. Protected old cleanup copies remain intact.
+
+Central mod version becomes0.2.0; installer engine remains1.0.4 and the existing
+packaging workflow reuses its exact previously published executable. Rewrite
+the changelog and release notes for players, update current download links and
+preserve previous release/tag/assets. Complete manual content is unchanged.
+Local full1658C#/64installer/89JS/eight distribution checks, deployment/profile/
+package/cleanup fixtures, all20guide browser editions and Release build pass.
+The refreshed pin now passes the normal actual-game build wrapper. No game or
+Companion process is observed during preparation; no unsaved session is closed.
+
+Next: push the reviewed exact source, follow the trusted main build, download and
+verify its original eight assets, qualify the exact production package through
+owned receipts/native Steam actions, then promote that selected build through
+the existing protected publication job and verify public downloads/installer
+catalog discovery. Preparation and local checks are not publication evidence.
+
 ## Pre-career club profile structure — F213 — 2026-11-19
 
 The user requests organizing the current screen's run-on lists and committing

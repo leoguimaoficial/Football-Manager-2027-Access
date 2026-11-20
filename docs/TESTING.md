@@ -1,3 +1,15 @@
+## 0.2.0 local release preparation — F214, 2026-11-20
+
+Full1658C# cases,64installer cases,89Companion JS cases and eight distribution/
+documentation contracts pass. The existing loader/deployment/production/profile,
+player-package, retention and cleanup fixtures pass. All20manual browser editions
+pass keyboard/link/reflow/contrast/print/no-JS/axe checks. The normal Release build
+now accepts the actual Steam26620374 inputs against the refreshed private pin
+03eba84ebe1db8fe2a1d2f7358ae77b6a3e479f6. Central version is0.2.0, shipped tools
+remain disabled, and installer1.0.4 is unchanged. Exact hosted package, native
+production runtime and public installer discovery are qualified separately and
+recorded when completed; existing Xbox/Epic/manual-NVDA limits remain.
+
 ## Pre-career club profile structure — F213, 2026-11-19
 
 On the user's current Barcelona GameCreationLoadingScreen, the original-document

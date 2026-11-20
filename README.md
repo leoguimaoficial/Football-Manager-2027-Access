@@ -4,20 +4,17 @@ FM27 Access (Football Manager 2027 Access) is an unofficial accessibility mod
 that aims to help blind players manage their football clubs using a screen
 reader and keyboard navigation.
 
-**FM27 Access 0.1.1** improves large-screen loading, table selection and Xbox/Microsoft Store compatibility.
-
-The unreleased source also fixes startup on Steam FM27 **27.1.0.2505117**
-(build **26620374**) and reduces unnecessary rejections after game updates.
-It also restores native Quick Start choices and organizes the game-setup summary
-and editable league table. The published 0.1.1 downloads below predate these
-source-only corrections.
+**FM27 Access 0.2.0** restores compatibility with the current Steam update and
+makes creating a career easier to navigate, with clearer controls, headings and
+lists. Compatible future game updates are less likely to require a mod update;
+larger changes to the game can still require one.
 
 ## Download
 
 - [Download the universal Windows installer](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-Installer.exe) — recommended.
-- [Download the complete 0.1.1 ZIP](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/download/v0.1.1/FM27Access-v0.1.1.zip) — offline installation through **Install ZIP**.
+- [Download the complete 0.2.0 ZIP](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/download/v0.2.0/FM27Access-v0.2.0.zip) — offline installation through **Install ZIP**.
 - [Download the multilingual user guide](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-UserGuide.html).
-- [Release notes and all downloads](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.1).
+- [Release notes and all downloads](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.2.0).
 
 You need Windows 10 or 11 x64, Football Manager 2027, a screen reader such as
 NVDA, and Microsoft Edge WebView2, which normally comes with Microsoft Edge.
@@ -36,7 +33,7 @@ console stays closed.
 
 Steam is the primary development target. For Steam startup freezes or an Xbox/
 Microsoft Store compatibility error with 0.1.0, close the game and Companion,
-update the installer to **1.0.4** or newer, then update the mod to **0.1.1**.
+update the installer to **1.0.4** or newer, then update the mod to **0.2.0**.
 The same installer selects the appropriate files for each store; updating the
 installer alone does not update the installed mod. Saves and settings are kept.
 See the [compatibility record](docs/NATIVE_COMPATIBILITY.md) for actual evidence

@@ -1,6 +1,6 @@
 # Known issues and testing boundaries
 
-FM27 Access 0.1.1 follows the first public release0.1.0. This page records specific known
+FM27 Access 0.2.0 continues the project's public releases. This page records specific known
 issues and the limits of the existing checks. For installation and normal use,
 see the [player guide](user/FM27Access-UserGuide.html). Historical runtime and
 package references below describe their own test sessions, not separate downloads.

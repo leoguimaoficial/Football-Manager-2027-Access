@@ -1,5 +1,20 @@
 # FM27 Access maintenance instructions
 
+## Authorized 0.2.0 publication — F214
+
+The latest user request explicitly authorizes releasing0.2.0, synchronizing all
+six verified local commits to public main, refreshing the private compiler-input
+binary and running the existing automatic build/publication process. It supersedes
+the preceding source-only/no-push/no-release restriction for this release. Use
+player-facing English changelog/release notes. Keep installer engine1.0.4 and
+reuse its exact existing official binary; no installer source change is needed.
+Private references are refreshed to03eba84ebe1db8fe2a1d2f7358ae77b6a3e479f6,
+identityA69907E2956FEB792E64D5C9940D1099B11AC350E5139E117DD5C106F6635FFC.
+Publish only a selected successful trusted main artifact after exact verification
+and the configured normal release approval. Preserve existing releases/tags and
+the protected private cleanup copies. No proprietary binaries enter public Git.
+Record exact hosted, native runtime and installer-discovery evidence on completion.
+
 ## Live screen editing preference
 
 For UI refinements, inspect the actual current localhost document and preserve

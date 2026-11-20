@@ -5,11 +5,11 @@ need Windows 10 or 11 x64, Football Manager 2027, a screen reader and Microsoft
 Edge WebView2. The package includes .NET and BepInEx.
 
 [Download the universal installer](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-Installer.exe).
-The [release page](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.1)
+The [release page](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.2.0)
 also provides the complete ZIP, its manifest and the standalone HTML manual.
 
 For the Steam/Xbox compatibility correction, use installer engine **1.0.4** or
-newer and update the mod to **0.1.1**. Updating only the installer does not replace
+newer and update the mod to **0.2.0**. Updating only the installer does not replace
 0.1.0's compatibility contract. The installer selects `winhttp.dll` for Xbox/
 Microsoft Store and `version.dll` for other stores, using the same pinned bytes.
 It migrates only an unchanged receipt-owned alternative, preserves shared or

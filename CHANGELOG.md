@@ -8,29 +8,29 @@ Version 0.1.0 is the first public release.
 
 ## [Unreleased]
 
-### Fixed
+## [0.2.0] - 2026-11-20
 
-- The pre-career club profile separates board/supporter culture goals, kits,
-  club facts, cup competitions and rivals into readable groups. Native headings,
-  descriptions and available actions are preserved.
+### Game compatibility
 
-- Biography's additional favourite-club button uses its native localized caption
-  instead of the decorative "Plus icon" name, without repeating the caption below.
+- Restored startup after the latest Steam update to Football Manager 27.
+- Compatible game updates are less likely to require a new mod version. Larger
+  changes to the game can still require an update to FM27 Access.
 
-- Game setup groups the chosen club, starting date and database totals more
-  clearly. The summary and Add/Remove Leagues window use native table headings,
-  retain division counts and name selectors by nation and men's/women's leagues.
-  Playable/view-only labels come from the game's own legend.
+### Creating a career
 
-- Quick Start uses the game's localized unemployment caption and omits the
-  decorative `LeagueBackground` image. Club choices are actionable again through
-  their native grid selection, retaining names, predicted finishes and selection.
+- Club choices work again in Quick Start. The unemployment option uses the
+  game's language, and decorative background images no longer interrupt reading.
+- The setup summary makes the chosen club, starting date and player count easier
+  to read. League choices identify the nation and men's or women's competition,
+  while keeping the game's division counts and playable/view-only descriptions.
+- The biography button for adding another favourite club has a clear name in
+  the game's language, without a repeated label underneath.
+- Before starting the career, club information is organized into headings and
+  lists. Board and supporter expectations, kits, facilities, cup competitions
+  and rivals can be read item by item instead of as continuous text.
 
-- Restore startup on Steam FM27 27.1.0.2505117 (build 26620374). Compatibility
-  checks now require the native members actually used by the mod, including
-  reflected controls and patches, instead of unrelated generated game internals.
-  Compatible updates can load without a mod rebuild; genuine required API or
-  engine changes can still require an adaptation.
+Use **Check for updates** in the installer to select version 0.2.0. Close the
+game and Companion before updating. Your saves and settings are kept.
 
 ## [0.1.1] - 2026-11-15
 
