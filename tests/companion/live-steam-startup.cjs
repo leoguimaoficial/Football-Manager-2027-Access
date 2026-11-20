@@ -16,6 +16,13 @@ const {default:AxeBuilder}=require('@axe-core/playwright');
   const version=fs.readFileSync(path.resolve(__dirname,'../../Directory.Build.props'),'utf8').match(/<Version>([^<]+)<\/Version>/)?.[1];
   assert.ok(version,'Central mod version');
   report.health=JSON.parse(await c.fetchText('/health'));assert.equal(report.health.developerTools,false);assert.equal(report.health.version,version);
+  // The game's own update notice can be the first foreground after a patch.
+  // Observe and dismiss its actual native acknowledgement before testing MainMenu.
+  if(await page.title()!=='MainMenu'&&await page.getByRole('button',{name:'Entendi',exact:true}).count()===1){
+   report.startupNotice=await page.title();await audit('Native post-update notice');
+   await activate(page.getByRole('button',{name:'Entendi',exact:true}));
+   report.checks.push('Native post-update notice acknowledged through its own control');
+  }
   await menu();assert.equal(await page.locator('html').getAttribute('data-fm-development'),'false');
   report.menuButtons=await page.getByRole('button').allTextContents();
   assert.ok(report.menuButtons.includes('CRIAR NOVO JOGO, Alt I for more info'));

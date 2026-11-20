@@ -1,3 +1,38 @@
+## Unreleased Steam 27.1 compatibility — F209, 2026-11-19
+
+Actual Steam26620374/game27.1.0.2505117 uses179fresh local interop assemblies,
+Unity6000.3.18f1 and metadata39. Published0.1.1 reproduces36type rejections;
+unchanged production UI source compiles against the update. The revised required
+API capture retains458types/5179members.21managed-API cases cover unused member/
+overload removal, required signature refusal, generic member/field references,
+literal reflection, Harmony attribute-only targets, interfaces/enums and the
+existing malformed/layout/version cases.1658totalC#,64installer and89JS tests
+pass without skips; loader/deployment/player/production/retention/cleanup fixtures
+pass. The JSON contract and managed validation remain backward compatible.
+
+Final local Release is installed through the real receipt/transaction service:
+259exact files, preflight accepted, version0.1.1/tools=false. Cold game20904/
+Plugin95882f24-6c4e-44f5-af55-a09f43bb48ae passes native MainMenu, What's New,
+Preferences and load-dialog actions, exact focus and4clean axe audits. An earlier
+cold start also qualifies the native automatic update-notice acknowledgement;
+the startup driver now handles that first foreground explicitly.
+
+The dedicated FC Porto men's6July09:00 QA career loads normally.32Squad rows,
+three checkbox selections/native Actions readiness/inverse, database50-row page
+selection/replacement, all10000/clear, and Tactics33rows/four phase views pass
+through the production document and actual native commands, adding3clean audits.
+No client/transport failures occur. A capitalization assumption in the old driver
+and its expectation of a save prompt on a clean career are corrected against
+actual native behavior, with failed observations retained. Native return lands
+on MainMenu; the named QA save is byte-identical, with no simulation progression.
+Normal sole Companion4152/watch20904 is restored. See session progress for the
+automatic compound-command refusal and successful separate normal launch.
+
+This is source-only/local qualification. Public0.1.1 downloads and private compiler
+references are unchanged; Xbox/Epic, arbitrary future engine/API changes, a full
+career and manual NVDA are not newly qualified. Detailed evidence is retained in
+ignored artifacts/update-compatibility and consolidated current-verification.json.
+
 ## Published 0.1.1 / installer1.0.4 final verification
 
 Selected hosted43772243508/source22dfbddd6f1c54433c8e513a709fae2c33c8fbf1 passes

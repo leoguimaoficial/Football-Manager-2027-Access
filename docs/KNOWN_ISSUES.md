@@ -5,6 +5,17 @@ issues and the limits of the existing checks. For installation and normal use,
 see the [player guide](user/FM27Access-UserGuide.html). Historical runtime and
 package references below describe their own test sessions, not separate downloads.
 
+## Steam 27.1 source correction — F209
+
+Published0.1.1's overbroad native-member contract refuses Steam27.1.0.2505117
+(build26620374). Unreleased source captures actual binary dependencies and
+literal reflection/patch targets, restoring startup on the installed update.
+The downloaded0.1.1 assets have not been replaced. Compatible future updates do
+not require a mod rebuild merely because the version label or unused internal
+members change; genuine required API/Unity/metadata changes can still need work.
+See [native compatibility](NATIVE_COMPATIBILITY.md) and the current testing record
+for exact scope. This does not resolve the existing Xbox/Epic/full-career limits.
+
 ## Xbox 0.1.1 compatibility correction: fresh live check pending
 
 The reported0.9.2435.0 startup refusal is reproduced against preserved real Xbox

@@ -63,6 +63,174 @@ public sealed class ManagedApiCompatibilityTests : IDisposable
         Assert.Contains(ManagedApiContract.Validate(required, Path.GetDirectoryName(broken.Path)!), e => e.Contains("members changed/missing"));
     }
 
+    private (string Path, Type Type) WidgetFixture(string directory, bool unused = true,
+        bool required = true, bool broken = false, bool reflected = true, bool overload = true)
+    {
+        Directory.CreateDirectory(directory);
+        var assembly = new PersistedAssemblyBuilder(new AssemblyName("NativeWidgets"), typeof(object).Assembly);
+        var module = assembly.DefineDynamicModule("NativeWidgets");
+        var type = module.DefineType("Native.Widget", TypeAttributes.Public);
+        if (required)
+        {
+            var method = type.DefineMethod("Select", MethodAttributes.Public | MethodAttributes.Static,
+                broken ? typeof(long) : typeof(int), [typeof(int)]);
+            var il = method.GetILGenerator(); il.Emit(OpCodes.Ldarg_0);
+            if (broken) il.Emit(OpCodes.Conv_I8);
+            il.Emit(OpCodes.Ret);
+        }
+        if (overload) type.DefineMethod("Select", MethodAttributes.Public | MethodAttributes.Static,
+            typeof(void), [typeof(string)]).GetILGenerator().Emit(OpCodes.Ret);
+        if (unused) type.DefineMethod("_Rebuild_b__123_0", MethodAttributes.Public | MethodAttributes.Static,
+            typeof(void), Type.EmptyTypes).GetILGenerator().Emit(OpCodes.Ret);
+        if (reflected)
+        {
+            var getter = type.DefineMethod("get_Content", MethodAttributes.Public | MethodAttributes.Static | MethodAttributes.SpecialName,
+                typeof(string), Type.EmptyTypes);
+            var il = getter.GetILGenerator(); il.Emit(OpCodes.Ldstr, "native"); il.Emit(OpCodes.Ret);
+            type.DefineProperty("Content", PropertyAttributes.None, typeof(string), null).SetGetMethod(getter);
+        }
+        var created = type.CreateType()!;
+        string path = Path.Combine(directory, "NativeWidgets.dll"); assembly.Save(path);
+        return (path, created);
+    }
+
+    private string WidgetConsumer(Type widget, bool reflection = false, bool patch = false, bool direct = true)
+    {
+        var assembly = new PersistedAssemblyBuilder(new AssemblyName("WidgetConsumer"), typeof(object).Assembly);
+        var module = assembly.DefineDynamicModule("WidgetConsumer");
+        var type = module.DefineType("Consumer", TypeAttributes.Public);
+        var method = type.DefineMethod("Use", MethodAttributes.Public | MethodAttributes.Static, typeof(void), Type.EmptyTypes);
+        var il = method.GetILGenerator();
+        if (direct) { il.Emit(OpCodes.Ldc_I4_0); il.Emit(OpCodes.Call, widget.GetMethod("Select", [typeof(int)])!); il.Emit(OpCodes.Pop); }
+        // Include nontrivial operand widths so string scanning must follow IL boundaries.
+        il.Emit(OpCodes.Ldc_I8, 0x7200000072); il.Emit(OpCodes.Pop);
+        if (reflection) { il.Emit(OpCodes.Ldstr, "Content"); il.Emit(OpCodes.Pop); }
+        il.Emit(OpCodes.Ret);
+        if (patch)
+        {
+            var attribute = module.DefineType("HarmonyLib.HarmonyPatch", TypeAttributes.Public, typeof(Attribute));
+            var ctor = attribute.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, [typeof(Type), typeof(string)]);
+            var body = ctor.GetILGenerator(); body.Emit(OpCodes.Ldarg_0);
+            body.Emit(OpCodes.Call, typeof(Attribute).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, Type.EmptyTypes, null)!);
+            body.Emit(OpCodes.Ret);
+            var created = attribute.CreateType()!;
+            method.SetCustomAttribute(new CustomAttributeBuilder(created.GetConstructor([typeof(Type), typeof(string)])!, [widget, "get_Content"]));
+        }
+        type.CreateType();
+        string path = Path.Combine(root, "WidgetConsumer.dll"); assembly.Save(path); return path;
+    }
+
+    [Fact]
+    public void RemovedUnusedInternalsAndUnusedOverloadsDoNotBlockAnUpdatedGame()
+    {
+        var original = WidgetFixture(Path.Combine(root, "original"));
+        var updated = WidgetFixture(Path.Combine(root, "updated"), unused: false, reflected: false, overload: false);
+        var required = ManagedApiContract.Capture([WidgetConsumer(original.Type)], Path.GetDirectoryName(original.Path)!);
+        Assert.Single(Assert.Single(required).Members);
+        Assert.Empty(ManagedApiContract.Validate(required, Path.GetDirectoryName(updated.Path)!));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ActuallyCalledMembersCannotBeRemovedOrChangeSignature(bool broken)
+    {
+        var original = WidgetFixture(Path.Combine(root, "original"));
+        var updated = WidgetFixture(Path.Combine(root, "updated"), required: broken, broken: broken);
+        var required = ManagedApiContract.Capture([WidgetConsumer(original.Type)], Path.GetDirectoryName(original.Path)!);
+        Assert.Contains(ManagedApiContract.Validate(required, Path.GetDirectoryName(updated.Path)!), e => e.Contains("members changed/missing"));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void LiteralReflectionAndHarmonyAttributeTargetsRemainRequired(bool patch)
+    {
+        var original = WidgetFixture(Path.Combine(root, "original"));
+        var updated = WidgetFixture(Path.Combine(root, "updated"), reflected: false);
+        var required = ManagedApiContract.Capture([WidgetConsumer(original.Type, reflection: !patch, patch: patch)], Path.GetDirectoryName(original.Path)!);
+        Assert.Equal(2, Assert.Single(required).Members.Length);
+        Assert.Contains(ManagedApiContract.Validate(required, Path.GetDirectoryName(updated.Path)!), e => e.Contains("members changed/missing"));
+    }
+
+    [Fact]
+    public void HarmonyOnlyTargetTypesAreCapturedWithoutAConsumerTypeReference()
+    {
+        var original = WidgetFixture(Path.Combine(root, "original"));
+        var updated = WidgetFixture(Path.Combine(root, "updated"), reflected: false);
+        var required = ManagedApiContract.Capture([WidgetConsumer(original.Type, patch: true, direct: false)], Path.GetDirectoryName(original.Path)!);
+        Assert.Single(Assert.Single(required).Members);
+        Assert.Contains(ManagedApiContract.Validate(required, Path.GetDirectoryName(updated.Path)!), e => e.Contains("members changed/missing"));
+    }
+
+    [Fact]
+    public void GenericParentMemberReferencesAndFieldsAreCaptured()
+    {
+        string directory = Path.Combine(root, "generic"); Directory.CreateDirectory(directory);
+        var native = new PersistedAssemblyBuilder(new AssemblyName("NativeGeneric"), typeof(object).Assembly);
+        var module = native.DefineDynamicModule("NativeGeneric");
+        var generic = module.DefineType("Native.Box`1", TypeAttributes.Public);
+        var parameter = generic.DefineGenericParameters("T")[0];
+        var valueField = generic.DefineField("Value", parameter, FieldAttributes.Public | FieldAttributes.Static);
+        var identity = generic.DefineMethod("Read", MethodAttributes.Public | MethodAttributes.Static, parameter, [parameter]);
+        var body = identity.GetILGenerator(); body.Emit(OpCodes.Ldarg_0); body.Emit(OpCodes.Ret);
+        var closed = generic.CreateType()!.MakeGenericType(typeof(int));
+        native.Save(Path.Combine(directory, "NativeGeneric.dll"));
+        var consumer = new PersistedAssemblyBuilder(new AssemblyName("GenericConsumer"), typeof(object).Assembly);
+        var type = consumer.DefineDynamicModule("GenericConsumer").DefineType("Consumer", TypeAttributes.Public);
+        var il = type.DefineMethod("Use", MethodAttributes.Public | MethodAttributes.Static, typeof(void), Type.EmptyTypes).GetILGenerator();
+        il.Emit(OpCodes.Ldsfld, TypeBuilder.GetField(closed, valueField));
+        il.Emit(OpCodes.Call, TypeBuilder.GetMethod(closed, identity)); il.Emit(OpCodes.Pop); il.Emit(OpCodes.Ret);
+        type.CreateType(); string file = Path.Combine(root, "GenericConsumer.dll"); consumer.Save(file);
+        var required = ManagedApiContract.Capture([file], directory);
+        Assert.Equal(2, Assert.Single(required).Members.Length);
+        Assert.Empty(ManagedApiContract.Validate(required, directory));
+        var missing = ManagedApiContract.CaptureTypes(Path.Combine(directory, "NativeGeneric.dll"), ["Native.Box`1"])[0];
+        missing.Members = [];
+        Assert.Contains(ManagedApiContract.Compare(required[0], missing), e => e.Contains("members changed/missing"));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void TypeOnlyReferencesPreserveEnumConstantsAndInterfaceMethods(bool isEnum)
+    {
+        string Fixture(string directory, bool changed)
+        {
+            Directory.CreateDirectory(directory);
+            var assembly = new PersistedAssemblyBuilder(new AssemblyName("NativeTypes"), typeof(object).Assembly);
+            var module = assembly.DefineDynamicModule("NativeTypes");
+            if (isEnum)
+            {
+                var native = module.DefineEnum("Native.Mode", TypeAttributes.Public, typeof(int));
+                native.DefineLiteral("Required", changed ? 2 : 1); native.CreateType();
+            }
+            else
+            {
+                var native = module.DefineType("Native.Mode", TypeAttributes.Public | TypeAttributes.Interface | TypeAttributes.Abstract);
+                native.DefineMethod(changed ? "Removed" : "Select", MethodAttributes.Public | MethodAttributes.Abstract | MethodAttributes.Virtual,
+                    typeof(void), Type.EmptyTypes); native.CreateType();
+            }
+            string file = Path.Combine(directory, "NativeTypes.dll"); assembly.Save(file); return file;
+        }
+        string original = Fixture(Path.Combine(root, "original"), false), updated = Fixture(Path.Combine(root, "updated"), true);
+        // Construct the consumer against the actual emitted definition, without relying on
+        // a method call (enum constants are inlined, and interfaces can be type-only uses).
+        var context = new System.Runtime.Loader.AssemblyLoadContext("native-types-" + Guid.NewGuid(), isCollectible: true);
+        try
+        {
+            using var input = new MemoryStream(File.ReadAllBytes(original));
+            var target = context.LoadFromStream(input).GetType("Native.Mode")!;
+            var consumer = new PersistedAssemblyBuilder(new AssemblyName("TypeConsumer"), typeof(object).Assembly);
+            var type = consumer.DefineDynamicModule("TypeConsumer").DefineType("Consumer", TypeAttributes.Public);
+            type.DefineField("Mode", target, FieldAttributes.Public); type.CreateType();
+            string file = Path.Combine(root, "TypeConsumer.dll"); consumer.Save(file);
+            var required = ManagedApiContract.Capture([file], Path.GetDirectoryName(original)!);
+            Assert.Contains(ManagedApiContract.Validate(required, Path.GetDirectoryName(updated)!), e => e.Contains("members changed/missing"));
+        }
+        finally { context.Unload(); }
+    }
+
     private string Fixture(string directory, bool extra = false, bool rename = false, bool changeSignature = false, int enumValue = 1)
     {
         Directory.CreateDirectory(directory);

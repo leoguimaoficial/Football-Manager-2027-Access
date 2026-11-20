@@ -1,3 +1,15 @@
+## Compatible game updates use actual dependencies — F209
+
+Steam27.1.0.2505117/build26620374 compiles unchanged UI/adapters against its fresh
+local interop, but the previous full-public-member guard rejects36types. Replace
+that broad capture with actual method/field references and literal reflection/
+Harmony patch targets, preserving type/base/layout/interfaces/enums and exact
+required signatures. No FM26 renderer, command, focus or selection behavior is
+changed. The pristine FM26 baseline remains4d38a025. The source-only correction
+retains the existing loader/freshness/native-pair guards and package schema;
+published assets/private compiler references remain unchanged. See the native
+compatibility and testing records for scope and future-version limitations.
+
 ## FM26 0.2.17 Many-selection adaptation — local trial
 
 Upstream commits7775d90,90b1ec6 and5ff0048 add stale-checkbox-body protection,

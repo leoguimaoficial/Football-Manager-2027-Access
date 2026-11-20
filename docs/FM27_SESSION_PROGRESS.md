@@ -1,5 +1,60 @@
 # FM27 Access session progress
 
+## Steam 27.1 compatibility, source-only — F209 — 2026-11-19
+
+The maintainer requests restoring the updated game and reducing per-update mod
+maintenance, with commits only. No push, tag, release, public asset replacement
+or private compiler-reference update is performed. Installed Steam build26620374
+is FM27 27.1.0.2505117, x64/Unity6000.3.18f1/metadata39, with179fresh local interop
+assemblies. Published0.1.1 fails before initialization on36types, beginning with
+GameInputManager. The unchanged production source compiles against the actual
+new inputs. Metadata comparison exposes irrelevant generated callbacks and
+unused internal methods/properties in the previous full-public-member contract.
+
+ManagedApiContract now captures native binary MemberRef signatures, including
+generic method/field parents and base contracts. Instruction-decoded literal
+reflection names and HarmonyPatch attribute names/serialized types retain
+indirect targets, including attribute-only types. Identical uses elsewhere are
+conservative requirements. Type headers/base/layout/constraints/interfaces,
+complete interfaces/enums and used-member signatures/attributes/constants/offsets
+remain checked. Validate/Compare, package schema, loader/proxy/freshness and
+known mixed-native-pair protections remain unchanged. Current458types/5179members
+replace the previous24535members. Future matching required APIs can run after
+normal BepInEx regeneration; arbitrary native semantic/API/engine changes are
+not promised compatible. Literal reflection remains a conservative approximation.
+
+The existing installer transaction service repairs the actual managed installation
+from locally built Release files; all259receipt entries and final preflight pass.
+Final cold game20904 runs production Plugin95882f24-6c4e-44f5-af55-a09f43bb48ae,
+version0.1.1/tools=false. MainMenu, native What's New, Preferences and load-dialog
+open/cancel/origin-focus checks pass4clean WCAG-tagged axe audits. The first cold
+candidate also exposes the game's automatic post-update notice; its real Entendi
+control closes it, and the reusable startup test now covers that first foreground.
+
+Only `FM27Access QA Table Performance 20261115.fm` is loaded: FC Porto men,
+6July2026 at09:00. Squad retains32rows; three checkbox selections enable native
+Actions, and Clear restores0/disabled. Database50-row page selections replace
+the preceding page selection; native Select all reports10000 and Clear restores0.
+Tactics retains33rows and all four real phase views. These add3clean axe audits
+with no client/transport errors. Native Sair para o Ecrã Inicial returns directly
+from the clean career; no save confirmation is required or save written. Its
+SHA256 remains5FCDA08675E4336A91587192048A29975E49D311D0506A7CC2F72F1A4A927205.
+No day/match/business action advances. Two local driver assumptions initially
+fail: old title capitalization and requiring a dirty-save confirmation. Both
+observations are retained; the actual native captions/direct return are verified.
+
+Final1658C# tests (21managed-API cases),64installer and89Companion JS cases pass
+without skips. The full loader/deployment/player/production-profile/retention/
+cleanup fixture suite also passes. No manual NVDA or complete-career claim.
+The sole normal Companion4152/watch20904 is restored on MainMenu. Automatic review
+rejects one combined final-check/reopen shell command with `blocked by policy`
+and no detailed reason. Separate read-only final verification passes; a fixed-path
+normal Companion launch passes the same gate. This is a tool observation, not
+evidence of user input. Local evidence is consolidated under
+artifacts/current-verification.json.sourceCompatibilityUpdate, with detailed
+ignored logs/drivers in artifacts/update-compatibility. Older release evidence,
+the two protected reference-refresh copies and all other saves are retained.
+
 ## Published 0.1.1 / installer1.0.4 — F208 — 2026-11-15
 
 [v0.1.1](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.1.1)

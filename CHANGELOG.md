@@ -8,6 +8,14 @@ Version 0.1.0 is the first public release.
 
 ## [Unreleased]
 
+### Fixed
+
+- Restore startup on Steam FM27 27.1.0.2505117 (build 26620374). Compatibility
+  checks now require the native members actually used by the mod, including
+  reflected controls and patches, instead of unrelated generated game internals.
+  Compatible updates can load without a mod rebuild; genuine required API or
+  engine changes can still require an adaptation.
+
 ## [0.1.1] - 2026-11-15
 
 ### Faster screens and steadier table selection

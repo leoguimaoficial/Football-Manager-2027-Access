@@ -6,6 +6,10 @@ reader and keyboard navigation.
 
 **FM27 Access 0.1.1** improves large-screen loading, table selection and Xbox/Microsoft Store compatibility.
 
+The unreleased source also fixes startup on Steam FM27 **27.1.0.2505117**
+(build **26620374**) and reduces unnecessary rejections after game updates.
+The published 0.1.1 downloads below predate this source-only correction.
+
 ## Download
 
 - [Download the universal Windows installer](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/latest/download/FM27Access-Installer.exe) — recommended.

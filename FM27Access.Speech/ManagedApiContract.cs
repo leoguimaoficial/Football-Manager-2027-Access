@@ -1,7 +1,9 @@
 #nullable enable
 using System.Collections.Immutable;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Reflection.Metadata;
+using System.Reflection.Metadata.Ecma335;
 using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 using System.Text;
@@ -25,6 +27,7 @@ public static class ManagedApiContract
         private readonly PEReader pe;
         internal readonly MetadataReader Reader;
         internal readonly string Name;
+        internal byte[] Body(MethodDefinition method) => pe.GetMethodBody(method.RelativeVirtualAddress).GetILBytes()!;
         internal readonly Dictionary<string, TypeDefinitionHandle> Types = new(StringComparer.Ordinal);
         internal Image(string path)
         {
@@ -63,7 +66,7 @@ public static class ManagedApiContract
         return (assembly, Join(reader.GetString(type.Namespace), reader.GetString(type.Name)));
     }
 
-    private sealed class Signatures : ISignatureTypeProvider<string, object?>
+    private sealed class Signatures : ISignatureTypeProvider<string, object?>, ICustomAttributeTypeProvider<string>
     {
         private readonly string assembly;
         private readonly Action<(string assembly, string name)>? observed;
@@ -79,6 +82,11 @@ public static class ManagedApiContract
         public string GetPinnedType(string type) => "pinned:" + type;
         public string GetPointerType(string type) => type + "*";
         public string GetPrimitiveType(PrimitiveTypeCode code) => code.ToString();
+        public string GetSystemType() => "System.Type";
+        public bool IsSystemType(string type) => type == "System.Type" || type.EndsWith("::System.Type", StringComparison.Ordinal);
+        public string GetTypeFromSerializedName(string name) => name;
+        // HarmonyPatch's MethodType/ArgumentType enums both have Int32 storage.
+        public PrimitiveTypeCode GetUnderlyingEnumType(string type) => PrimitiveTypeCode.Int32;
         public string GetSZArrayType(string type) => type + "[]";
         public string GetTypeFromDefinition(MetadataReader reader, TypeDefinitionHandle handle, byte rawTypeKind)
         { string name = DefinitionName(reader, handle); observed?.Invoke((assembly, name)); return assembly + "::" + name; }
@@ -99,7 +107,15 @@ public static class ManagedApiContract
     private static string Generics(MetadataReader reader, Signatures signatures, GenericParameterHandleCollection handles) =>
         string.Join(";", handles.Select(h => { var p = reader.GetGenericParameter(h); return p.Index + ":" + (int)p.Attributes + ":" + string.Join(",", p.GetConstraints().Select(c => signatures.Entity(reader, reader.GetGenericParameterConstraint(c).Type)).OrderBy(s => s, StringComparer.Ordinal)); }));
 
-    private static TypeContract Describe(Image image, TypeDefinitionHandle handle, ISet<string>? referencedMembers = null)
+    private sealed class Usage
+    {
+        internal readonly HashSet<string> Direct = new(StringComparer.Ordinal);
+        internal readonly HashSet<string> Names = new(StringComparer.Ordinal);
+        internal bool Contains(string key, string name) => Direct.Contains(key) || Names.Contains(name)
+            || new[] { "get_", "set_", "add_", "remove_" }.Any(prefix => name.StartsWith(prefix, StringComparison.Ordinal) && Names.Contains(name.Substring(prefix.Length)));
+    }
+
+    private static TypeContract Describe(Image image, TypeDefinitionHandle handle, Usage? usage = null)
     {
         var reader = image.Reader;
         var type = reader.GetTypeDefinition(handle);
@@ -107,19 +123,24 @@ public static class ManagedApiContract
         var layout = type.GetLayout();
         string header = (int)type.Attributes + "|" + signatures.Entity(reader, type.BaseType) + "|" + layout.PackingSize + "|" + layout.Size + "|" + Generics(reader, signatures, type.GetGenericParameters());
         var members = new HashSet<string>(StringComparer.Ordinal);
+        // Enum values are inlined into consumers; interfaces define implementation contracts.
+        bool complete = usage == null || (type.Attributes & TypeAttributes.Interface) != 0
+            || signatures.Entity(reader, type.BaseType).EndsWith("::System.Enum", StringComparison.Ordinal);
         foreach (var h in type.GetInterfaceImplementations()) members.Add(Hash("I|" + signatures.Entity(reader, reader.GetInterfaceImplementation(h).Interface)));
         foreach (var h in type.GetMethods())
         {
             var method = reader.GetMethodDefinition(h);
             if ((method.Attributes & MethodAttributes.MemberAccessMask) == MethodAttributes.Private) continue;
-            if (referencedMembers != null && !referencedMembers.Contains(reader.GetString(method.Name))) continue;
+            string name = reader.GetString(method.Name);
+            if (!complete && !usage!.Contains("M|" + name + "|" + Method(method.DecodeSignature(signatures, null)), name)) continue;
             members.Add(Hash("M|" + reader.GetString(method.Name) + "|" + (int)method.Attributes + "|" + Method(method.DecodeSignature(signatures, null)) + "|" + Generics(reader, signatures, method.GetGenericParameters())));
         }
         foreach (var h in type.GetFields())
         {
             var field = reader.GetFieldDefinition(h);
             if ((field.Attributes & FieldAttributes.FieldAccessMask) == FieldAttributes.Private) continue;
-            if (referencedMembers != null && !referencedMembers.Contains(reader.GetString(field.Name))) continue;
+            string name = reader.GetString(field.Name);
+            if (!complete && !usage!.Contains("F|" + name + "|" + field.DecodeSignature(signatures, null), name)) continue;
             string value = "";
             if (!field.GetDefaultValue().IsNil) { var constant = reader.GetConstant(field.GetDefaultValue()); value = constant.TypeCode + ":" + Convert.ToBase64String(reader.GetBlobBytes(constant.Value)); }
             members.Add(Hash("F|" + reader.GetString(field.Name) + "|" + (int)field.Attributes + "|" + field.DecodeSignature(signatures, null) + "|" + field.GetOffset() + "|" + value));
@@ -127,15 +148,71 @@ public static class ManagedApiContract
         return new TypeContract { Assembly = image.Name, Name = DefinitionName(reader, handle), Header = Hash(header), Members = members.OrderBy(s => s, StringComparer.Ordinal).ToArray() };
     }
 
-    // Application is used only through direct static calls (runInBackground/isFocused),
-    // never as a reflection or patch target. Its unrelated advertising API differs by
-    // store. Capture its actual binary references instead of requiring unused APIs.
-    // All other types retain the conservative full public/reflection contract.
-    private static bool DirectMembersOnly(string assembly, string name) =>
-        assembly == "UnityEngine.CoreModule" && name == "UnityEngine.Application";
+    private static readonly Dictionary<ushort, OpCode> Opcodes = typeof(OpCodes).GetFields(BindingFlags.Public | BindingFlags.Static)
+        .Where(f => f.FieldType == typeof(OpCode)).Select(f => (OpCode)f.GetValue(null)!)
+        .ToDictionary(op => unchecked((ushort)op.Value));
 
-    /// <summary>Include public contracts of referenced interop types and their interop bases,
-    /// with actual member references for the explicitly audited direct-only Application API.</summary>
+    private static void ObserveNames(Image image, ISet<string> names, Action<(string assembly, string name)> observed)
+    {
+        foreach (var handle in image.Reader.MethodDefinitions)
+        {
+            var method = image.Reader.GetMethodDefinition(handle);
+            if (method.RelativeVirtualAddress == 0) continue;
+            byte[] bytes = image.Body(method);
+            for (int offset = 0; offset < bytes.Length;)
+            {
+                ushort value = bytes[offset++];
+                if (value == 0xfe) value = (ushort)(0xfe00 | bytes[offset++]);
+                if (!Opcodes.TryGetValue(value, out var op)) throw new BadImageFormatException("Unknown consumer IL opcode.");
+                if (op.OperandType == OperandType.InlineString)
+                    names.Add(image.Reader.GetUserString(MetadataTokens.UserStringHandle(BitConverter.ToInt32(bytes, offset) & 0xffffff)));
+                offset += op.OperandType switch
+                {
+                    OperandType.InlineNone => 0,
+                    OperandType.ShortInlineBrTarget or OperandType.ShortInlineI or OperandType.ShortInlineVar => 1,
+                    OperandType.InlineVar => 2,
+                    OperandType.InlineI8 or OperandType.InlineR => 8,
+                    OperandType.InlineSwitch => checked(4 + 4 * BitConverter.ToInt32(bytes, offset)),
+                    _ => 4
+                };
+                if (offset > bytes.Length) throw new BadImageFormatException("Truncated consumer IL.");
+            }
+        }
+        // Patch names live in custom-attribute blobs, not ldstr instructions.
+        foreach (var handle in image.Reader.CustomAttributes)
+        {
+            var attribute = image.Reader.GetCustomAttribute(handle);
+            string attributeType = "";
+            if (attribute.Constructor.Kind == HandleKind.MemberReference)
+            {
+                var constructor = image.Reader.GetMemberReference((MemberReferenceHandle)attribute.Constructor);
+                if (constructor.Parent.Kind == HandleKind.TypeReference)
+                    attributeType = Reference(image.Reader, (TypeReferenceHandle)constructor.Parent).name;
+            }
+            else if (attribute.Constructor.Kind == HandleKind.MethodDefinition)
+                attributeType = DefinitionName(image.Reader, image.Reader.GetMethodDefinition((MethodDefinitionHandle)attribute.Constructor).GetDeclaringType());
+            if (attributeType != "HarmonyLib.HarmonyPatch") continue;
+            var provider = new Signatures(image.Name);
+            var decoded = attribute.DecodeValue(provider);
+            void Observe(string type, object? value)
+            {
+                if (value is string name) names.Add(name);
+                if (provider.IsSystemType(type) && value is string qualified)
+                {
+                    int separator = qualified.IndexOf(',');
+                    if (separator > 0)
+                        observed((qualified.Substring(separator + 1).Split(',')[0].Trim(), qualified.Substring(0, separator).Trim()));
+                }
+                if (value is ImmutableArray<CustomAttributeTypedArgument<string>> array)
+                    foreach (var item in array) Observe(item.Type, item.Value);
+            }
+            foreach (var argument in decoded.FixedArguments) Observe(argument.Type, argument.Value);
+            foreach (var argument in decoded.NamedArguments) Observe(argument.Type, argument.Value);
+        }
+    }
+
+    /// <summary>Capture actual binary dependencies, literal reflection/patch targets and base
+    /// contracts. Unused generated game internals are not prerequisites for accessibility.</summary>
     public static TypeContract[] Capture(string[] modAssemblies, string interopDirectory)
     {
         var images = new Dictionary<string, Image>(StringComparer.OrdinalIgnoreCase);
@@ -144,21 +221,29 @@ public static class ManagedApiContract
             foreach (var path in Directory.EnumerateFiles(interopDirectory, "*.dll"))
             { var image = new Image(path); if (!images.TryAdd(image.Name, image)) { image.Dispose(); throw new InvalidDataException("Duplicate interop assembly identity."); } }
             var pending = new Queue<(string assembly, string name)>();
-            var directMembers = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+            var usage = new Usage();
             foreach (string path in modAssemblies)
             {
                 using var mod = new Image(path);
+                ObserveNames(mod, usage.Names, reference => { if (images.ContainsKey(reference.assembly)) pending.Enqueue(reference); });
                 foreach (var handle in mod.Reader.TypeReferences)
                 { var reference = Reference(mod.Reader, handle); if (images.ContainsKey(reference.assembly)) pending.Enqueue(reference); }
                 foreach (var handle in mod.Reader.MemberReferences)
                 {
                     var member = mod.Reader.GetMemberReference(handle);
-                    if (member.Parent.Kind != HandleKind.TypeReference) continue;
-                    var reference = Reference(mod.Reader, (TypeReferenceHandle)member.Parent);
-                    if (!DirectMembersOnly(reference.assembly, reference.name)) continue;
-                    string key = reference.assembly + "::" + reference.name;
-                    if (!directMembers.TryGetValue(key, out var names)) directMembers.Add(key, names = new(StringComparer.Ordinal));
-                    names.Add(mod.Reader.GetString(member.Name));
+                    // Include generic TypeSpec parents and inherited declarations. Keys are
+                    // deliberately shared across types: an identical use elsewhere can only
+                    // conservatively add a requirement, never remove a real dependency.
+                    var signatures = new Signatures(mod.Name);
+                    bool native = false;
+                    new Signatures(mod.Name, reference => native |= images.ContainsKey(reference.assembly))
+                        .Entity(mod.Reader, member.Parent.Kind is HandleKind.TypeReference or HandleKind.TypeSpecification
+                            ? member.Parent : default);
+                    if (!native) continue;
+                    string name = mod.Reader.GetString(member.Name);
+                    usage.Direct.Add(member.GetKind() == MemberReferenceKind.Method
+                        ? "M|" + name + "|" + Method(member.DecodeMethodSignature(signatures, null))
+                        : "F|" + name + "|" + member.DecodeFieldSignature(signatures, null));
                 }
             }
             var contracts = new Dictionary<string, TypeContract>(StringComparer.Ordinal);
@@ -169,8 +254,7 @@ public static class ManagedApiContract
                 if (contracts.ContainsKey(key)) continue;
                 var image = images[reference.assembly];
                 if (!image.Types.TryGetValue(reference.name, out var handle)) throw new InvalidDataException("Referenced native type missing: " + key);
-                contracts.Add(key, Describe(image, handle, DirectMembersOnly(reference.assembly, reference.name)
-                    ? directMembers.GetValueOrDefault(key) ?? new HashSet<string>(StringComparer.Ordinal) : null));
+                contracts.Add(key, Describe(image, handle, usage));
                 var parent = image.Reader.GetTypeDefinition(handle).BaseType;
                 var bases = new Signatures(image.Name, type => { if(images.ContainsKey(type.assembly))pending.Enqueue(type); });
                 bases.Entity(image.Reader, parent); // Includes generic base definitions/arguments.

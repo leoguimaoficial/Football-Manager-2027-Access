@@ -1,3 +1,18 @@
+## Updated Steam 27.1 startup and existing men's screens — F209
+
+Local source-only Release on Steam26620374/game27.1.0.2505117 cold-starts with
+fresh interop and the actual-dependency compatibility contract. MainMenu,
+What's New, Preferences, load-dialog cancellation and exact source focus pass
+4clean WCAG audits; the first post-update notice's native acknowledgement also
+passes in the preceding cold candidate. Dedicated FC Porto men's6July09:00 QA
+loads normally. Squad32rows/three selections/native Actions/inverse, database
+50-row page selection/replacement/all10000/clear and Tactics33rows/four phase
+views pass3further clean audits, with no client/transport errors. Native return
+lands directly on MainMenu; the checkpoint hash is unchanged. A driver's old
+caption case and assumed dirty-save prompt are corrected, not game behavior.
+No new screen-completion, simulation, full-career or manual NVDA claim. See the
+current session/testing/native-compatibility records; public assets are unchanged.
+
 ## Local upstream table trial — new Steam men's QA career
 
 Release9573a8ad on the new FC Porto men's6 July2026 checkpoint: Squad32 rows,

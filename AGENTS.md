@@ -1,5 +1,28 @@
 # FM27 Access maintenance instructions
 
+## Steam 27.1 source compatibility correction — F209
+
+The latest request authorizes fixing the current game update and committing only;
+do not infer push, release/tag or private-reference publication authorization.
+Steam26620374/game27.1.0.2505117 retains Unity6000.3.18f1/metadata39. Published
+0.1.1's full contract refuses36types although unchanged production UI source
+compiles. Capture actual method/field signatures plus literal reflection and
+Harmony attribute targets; preserve base/layout/interfaces/enums, exact required
+signatures and all loader/native-pair/fresh-interop guards. Current contract is
+458types/5,179members. Future matching API updates may load without rebuilding;
+do not promise arbitrary Unity/metadata/API versions or native semantics.
+
+Final local Release is receipt-installed with259verified files. Cold MainMenu,
+What's New/Preferences/load-dialog actions and exact focus pass4axe audits. Men's
+FC Porto6July2026 QA Squad32rows/selection, database50-row paging/page replacement/
+all10000/clear and Tactics33rows/four views pass3more audits. The save hash is
+unchanged; game20904/sole normal Companion4152 remains at MainMenu.1658C#/64installer/
+89JS checks pass. Two driver expectations were corrected (native caption case;
+clean career returns directly without a save prompt), with earlier failures kept.
+An automatic compound-command refusal was recorded; separate read-only checks
+and a fixed-path normal Companion launch passed. Public assets/private pin remain
+unchanged. See session/testing and artifacts/current-verification.json.
+
 ## Published 0.1.1 / installer 1.0.4 — F208
 
 The maintainer explicitly authorized the release, superseding the preceding

@@ -1,5 +1,49 @@
 # Native compatibility contract
 
+## Steam 27.1 update: actual member dependencies — F209, 2026-11-19
+
+This is an unreleased source correction; public 0.1.1 assets and the private
+compiler-reference pin remain unchanged. Actual Steam build26620374/game
+27.1.0.2505117 retains x64/Unity6000.3.18f1/metadata39. Its locally regenerated
+interop is fresh, but the installed published contract refuses36 types. Metadata
+inspection identifies removed/renumbered generated callbacks and unused game
+implementation members among the failures. The complete unchanged production
+source compiles against the new interop, so replacing a build-number allowlist
+would not address this failure: the old required-member set was too broad.
+
+Capture now reads exact method/field MemberRef signatures from all four compiled
+mod modules, including generic TypeSpec parents and inherited uses. Only native
+references participate. An identical signature used elsewhere conservatively
+retains that member; unused overloads and unrelated generated callbacks are
+omitted. Literal reflection names are collected by decoding IL instruction
+boundaries, including property/event accessor names. HarmonyPatch attribute
+blobs contribute their method names and serialized target types, including
+types used only in those attributes. No game assemblies are loaded to do this.
+
+Type identity, base/layout/generic constraints, implemented interfaces, full
+interface contracts and enum constants remain required. Used members retain
+their exact signature, attributes, constraints, field offset and constant value.
+The current payload has458types/5,179members instead of24,535members. Both the
+installer and Host retain the same existing JSON contract and managed validation;
+loader/proxy, known mixed-pair, metadata-only change and interop-freshness guards
+are unchanged. Older full contracts retain their original validation behavior.
+
+The tests prove that unused internals/overloads can disappear while used methods,
+generic methods/fields, reflection/patch targets, enum values and interface
+methods cannot silently disappear or change. Capture remains conservative about
+literal reflection names; arbitrary dynamically constructed reflection targets
+need review. A matching API does not prove native semantics or every screen.
+Future updates with the same required contracts can start after normal local
+BepInEx regeneration without a mod rebuild. Arbitrary Unity/metadata versions or
+genuine required API changes are not promised compatible. Current cold/live
+qualification is recorded in [testing](TESTING.md) and session progress.
+
+The native pair for this inspection is GameAssembly SHA256
+`3F4A26C4869D6429D2E73C276ADC64BDFAF6F3C86CE44FE0DE93D14683A5D7E9`, metadata
+`D6D7158370979A67DBC94DB87CCFD7D624BB6D9EA7FBA87B929EBD250AB02069`.
+
+## Historical published baseline
+
 Final published0.1.1 uses source22dfbddd6f1c54433c8e513a709fae2c33c8fbf1/hosted43772243508.
 Its exact required API contract validates against both preserved Xbox0.9.2435.0
 and actual Steam references. The final259-file receipt installation passes native
