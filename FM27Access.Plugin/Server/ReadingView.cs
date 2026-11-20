@@ -123,6 +123,11 @@ internal static class ReadingView
             {
                 case ScreenWalker.StopItem s: sb.Append(StopLine(s.Element)).Append('\n'); break;
                 case ScreenWalker.TextListItem list:
+                    if (list.Rows != null)
+                    {
+                        foreach (var row in list.Rows) { sb.Append("- "); RenderItems(sb, row); }
+                        break;
+                    }
                     for (int i = 0; i < list.Items.Count; i++)
                     {
                         sb.Append("- ").Append(DisplayText.Of(list.Items[i]));
@@ -131,6 +136,15 @@ internal static class ReadingView
                             foreach (var extra in trailing) sb.Append(' ').Append(DisplayText.Of(extra));
                         sb.Append('\n');
                     }
+                    break;
+                case ScreenWalker.JoinedTextItem joined:
+                    for (int i = 0; i < joined.Parts.Count; i++)
+                    {
+                        if (i > 0) sb.Append(' ');
+                        sb.Append(StopLine(joined.Parts[i]));
+                        if (joined.LeadingCaption && i == 0) sb.Append(':');
+                    }
+                    sb.Append('\n');
                     break;
                 case ScreenWalker.TableItem t: RenderTable(sb, t); break;
                 case ScreenWalker.FixtureScheduleItem fs: RenderFixtureSchedule(sb, fs); break;

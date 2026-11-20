@@ -10,6 +10,10 @@ Version 0.1.0 is the first public release.
 
 ### Fixed
 
+- The pre-career club profile separates board/supporter culture goals, kits,
+  club facts, cup competitions and rivals into readable groups. Native headings,
+  descriptions and available actions are preserved.
+
 - Biography's additional favourite-club button uses its native localized caption
   instead of the decorative "Plus icon" name, without repeating the caption below.
 

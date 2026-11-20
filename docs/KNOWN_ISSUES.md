@@ -5,6 +5,14 @@ issues and the limits of the existing checks. For installation and normal use,
 see the [player guide](user/FM27Access-UserGuide.html). Historical runtime and
 package references below describe their own test sessions, not separate downloads.
 
+## Pre-career club profile grouping — F213
+
+The current Barcelona club profile has structured native lists/headings and
+preserves all original text/actions. Qualification covers this full realised
+cohort, all three tabs and native tab focus; other clubs/national teams and large
+partial list variants are not newly qualified. Unexpected schemas retain the
+ordinary native walker/paging fallback. No career-start or manual NVDA claim.
+
 ## Setup summary refinement — F211
 
 The current four-nation men's setup has native summary/editor tables, readable

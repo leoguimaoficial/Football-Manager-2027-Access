@@ -1,3 +1,22 @@
+## Pre-career club profile lists — F213
+
+Actual GameCreationLoadingScreen/ClubProfileContent uses TeamInfoDetailsTemplate:
+BoardCulture and SuporterCulture each bind one SIText containing newline-delimited
+goals; generic rich-text reading flattened those lines. ClubProfileGroups maps
+only this native ownership to FM26 TextListItem/JoinedTextItem. SITextLink.ReadLines
+reuses its fragment reader, retaining full native source, original embedded-record
+indexes, identity/availability checks and stable per-fragment keys across lines.
+Ordinary ReadParts behavior and native disabled links remain unchanged. Changed
+sources use the existing stale-fragment recompose, not cached game text.
+
+Native facts pair their captions with values; kits, complete competition rows and
+rivals retain their own list items and native headings. Streamed lists require an
+exact realised/total count within the existing page size; unknown/partial shapes
+keep ordinary rendering/paging. Unexpected form controls are never flattened into
+readonly paragraphs. The development reading view now includes nested list rows
+and joined paragraphs instead of dropping them. Other tabs and reputation remain
+unchanged. See F213 testing/session evidence for exact scope and variant limits.
+
 ## Native setup summary and league editor — F211
 
 FM27 GameCreationGameSummaryScreen uses short-summary-table with anonymous

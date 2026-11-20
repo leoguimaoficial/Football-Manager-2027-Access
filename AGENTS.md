@@ -22,6 +22,20 @@ transient failures; respect policy denials rather than bypassing their controls.
 The user explicitly requested another Companion launch after F211's rejection;
 that retry succeeded as Companion24508/watch28440, with the game unchanged.
 
+## Pre-career club profile groups — F213
+
+Current GameCreationLoadingScreen/ClubProfileContent is the user's Barcelona
+pre-career profile. TeamInfoDetailsTemplate owns six genuine groups: kits3,
+board culture6, supporter culture6, facts6, cups3 and rivals2. ClubProfileGroups
+reuses live TextListItem/JoinedTextItem, native headings and exact source/row
+ownership. Split culture only on actual SIText newlines; preserve complete
+SITextLink source/record/availability guards, ordinary controls and partial-list
+fallback. Keep the real reputation indicator as explicitly requested. Scoped
+text/control comparison, all3tab roundtrips,3axe audits and78profile/spacing
+cases pass; full suites/manual NVDA not rerun. Never activate Iniciar Carreira
+for this refinement. Same game28440, local Debug/tools=true; final module and
+sole reopened Companion are recorded in session progress. Commit only.
+
 ## Biography add-club caption — F212
 
 ManagerPersonaDetailsScreenContainer/FavouriteClubStep's add-favourite-club

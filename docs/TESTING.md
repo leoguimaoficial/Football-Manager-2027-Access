@@ -1,3 +1,23 @@
+## Pre-career club profile structure — F213, 2026-11-19
+
+On the user's current Barcelona GameCreationLoadingScreen, the original-document
+driver live-career-start-structure.cjs compares every native text fragment/order
+(allowing label/value punctuation) and all control IDs/names/actions/availability
+to the pre-edit capture. All remain equal. Six semantic lists contain3kits,
+6board goals,6supporter goals,6facts,3cup entries and2rivals. Five native section
+headings contain no buttons; competition/rival descriptions stay with their own
+item, and the inline Spain culture reference remains natively readonly.
+
+Real keyboard tab roundtrips through Notícias de Última Hora and Melhor11 restore
+the complete profile and exact tab focus. Three WCAG-tagged axe audits pass with
+zero client/transport failures. The development /read endpoint retains native
+goals, facts and rival details.78profile/inline-spacing cases plus Debug/Release
+compilation pass; full suites and manual NVDA are not rerun. An initial driver
+incorrectly tried DOM focus on a static heading; the final check uses the actual
+native tab focus contract, without changing heading behavior. No Iniciar Carreira
+activation, game restart or player-setting change. Raw ignored evidence is in
+artifacts/career-start-structure; final runtime/handoff is in session progress.
+
 ## Biography additional-club button — F212, 2026-11-19
 
 The user requests only the Plus icon button correction and no complete test rerun.

@@ -1,3 +1,13 @@
+## Pre-career club profile groups — F213
+
+GameCreationLoadingScreen/ClubProfileContent: native headings, newline-delimited
+board/supporter goals, kits, label/value facts, cup/name-progress pairs and
+rival/name-type pairs are grouped without losing text or controls. Actual lists
+contain3/6/6/6/3/2items. Full native text/control comparison passes; reputation and
+disabled inline references stay unchanged. All3native tabs roundtrip with exact
+focus and3clean axe audits. No Iniciar Carreira command, other club/national-team
+variant, large partial list or manual NVDA qualification. See F213 session/testing.
+
 ## Native game summary and Add/Remove Leagues — F211
 
 GameCreationGameSummaryScreen: native five-column/four-row summary, exact

@@ -1,6 +1,12 @@
 {
   "panelName": "GameCreationLoadingScreen",
-  "headings": [],
+  "headings": [
+    { "match": { "typeName": "SIText", "parentName": "KitsText" }, "level": 2 },
+    { "match": { "typeName": "SIText", "parentName": "BoardCulture" }, "level": 2 },
+    { "match": { "typeName": "SIText", "parentName": "SuporterCulture" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "pathContains": "CupCompetitions" }, "level": 2 },
+    { "match": { "name": "text", "typeName": "SIText", "pathContains": "NotableRivals" }, "level": 2 }
+  ],
   "hides": [
     {
       "match": { "name": "ChangingRoom", "typeName": "SIImage" }

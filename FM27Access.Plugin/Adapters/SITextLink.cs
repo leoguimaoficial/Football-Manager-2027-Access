@@ -26,15 +26,20 @@ internal static class SITextLink
     // sentence activate its first record. Uses the existing joined-text/button
     // renderer; ordinary table-name links keep their original adapter.
     internal static System.Collections.Generic.List<FM27Access.Navigation.IAccessibleElement> ReadParts(VisualElement element)
+        => ReadParts(element, element.TryCast<SI.Bindable.SIText>()?.text, 0);
+
+    private static System.Collections.Generic.List<FM27Access.Navigation.IAccessibleElement> ReadParts(
+        VisualElement element, string fragment, int firstOrdinal)
     {
         var native = element.TryCast<SI.Bindable.SIText>();
         if (native == null) return null;
         string source = native.text;
         if (string.IsNullOrEmpty(source)) return null;
-        var matches = Links.Matches(source);
+        if (string.IsNullOrEmpty(fragment)) return null;
+        var matches = Links.Matches(fragment);
         if (matches.Count == 0) return null;
         var parts = new System.Collections.Generic.List<FM27Access.Navigation.IAccessibleElement>();
-        int end = 0, ordinal = 0;
+        int end = 0, ordinal = firstOrdinal;
         void Text(string raw)
         {
             var caption = Speech.TextFilters.CleanForDisplay(raw);
@@ -46,7 +51,7 @@ internal static class SITextLink
             if (!int.TryParse(match.Groups["id"].Value, out int index) || index < 0
                 || native.EmbeddedData == null || index >= native.EmbeddedData.Count || !native.IsValidLink(index))
                 return null; // still binding: retain the complete original text
-            Text(source.Substring(end, match.Index - end));
+            Text(fragment.Substring(end, match.Index - end));
             string caption = Speech.TextFilters.CleanForDisplay(match.Groups["text"].Value);
             if (string.IsNullOrWhiteSpace(caption)) return null;
             if (native.LinkHasActions(index))
@@ -63,16 +68,38 @@ internal static class SITextLink
             else Text(match.Groups["text"].Value);
             end = match.Index + match.Length;
         }
-        Text(source.Substring(end));
+        Text(fragment.Substring(end));
         var captions=new System.Collections.Generic.List<string>();
         foreach(var part in parts)captions.Add(part.GetLabel());
-        if(!Server.InlineTextSpacing.TryRead(Speech.TextFilters.CleanForDisplay(source),captions,out var separators))
+        if(!Server.InlineTextSpacing.TryRead(Speech.TextFilters.CleanForDisplay(fragment),captions,out var separators))
         {
             Speech.Log.Warn($"[SITextLink] Native inline text '{element.name}' no longer matches its fragments; keeping complete source.");
             return null;
         }
         for(int i=0;i<parts.Count;i++)((Part)parts[i]).SeparatorBefore=separators[i];
         return parts;
+    }
+
+    // Some native list components bind all rows to one SIText, separated by
+    // actual newlines. Preserve those rows and their original link records,
+    // retaining the full source guard even for a fragment on a later line.
+    internal static System.Collections.Generic.List<System.Collections.Generic.List<FM27Access.Navigation.IAccessibleElement>> ReadLines(VisualElement element)
+    {
+        string source = element.TryCast<SI.Bindable.SIText>()?.text;
+        if (string.IsNullOrWhiteSpace(source)) return null;
+        var result = new System.Collections.Generic.List<System.Collections.Generic.List<FM27Access.Navigation.IAccessibleElement>>();
+        int ordinal = 0;
+        foreach (string line in source.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.None))
+        {
+            string caption = Speech.TextFilters.CleanForDisplay(line);
+            if (string.IsNullOrWhiteSpace(caption)) continue;
+            var parts = HasLink(line) ? ReadParts(element, line, ordinal)
+                : new System.Collections.Generic.List<FM27Access.Navigation.IAccessibleElement> {
+                    new Part(element, source, caption, null, ordinal, System.IntPtr.Zero) { SeparatorBefore = "" } };
+            if (parts == null || parts.Count == 0) return null;
+            result.Add(parts); ordinal += parts.Count;
+        }
+        return result.Count > 0 ? result : null;
     }
 
     internal sealed class Part : PluginAdapterBase, Server.IStableKeyElement

@@ -1,5 +1,42 @@
 # FM27 Access session progress
 
+## Pre-career club profile structure — F213 — 2026-11-19
+
+The user requests organizing the current screen's run-on lists and committing
+for immediate testing with the game open. The actual screen has advanced to
+GameCreationLoadingScreen/Career Start, ClubProfileContent selected. Do not
+activate Iniciar Carreira. The TeamInfoDetailsTemplate native tree demonstrates
+BoardCulture/SuporterCulture newline-delimited SIText, kits, six label/value
+facts and separate complete streamed competition/rival rows. The old generic
+walk and rich-text cleanup flatten these native boundaries.
+
+ClubProfileGroups reuses TextListItem/JoinedTextItem and actual profile headings.
+Each native culture line is a separate item with its original embedded records;
+the SITextLink helper retains full source/identity/availability/stale guards.
+Complete streamed rows require exact native total/realisation/page-size checks;
+unknown shapes and unrelated form controls retain original rendering. The /read
+development view also retains nested list rows/joined text. No new caption map,
+translated string, game-state cache, forced command or per-name matching.
+The previously requested reputation indicator stays intact.
+
+The current profile contains lists of3kits,6board goals,6supporter goals,6facts,
+3cups and2rivals, with5native section headings. Before/after text/control/order/
+identity/action/availability comparison passes. Actual native keyboard tab
+roundtrips via News and Best11 restore the full profile and exact tab focus;
+all3tabs pass WCAG-tagged axe audits, with zero client/transport failures.78
+profile/inline-spacing cases and Debug/Release compilation pass. No full-suite
+rerun, manual NVDA, other-club/national-team/partial-window or career-start claim.
+An initial test's static-heading DOM-focus assertion is corrected to the existing
+tab focus contract; it is a driver observation, not a native/game input claim.
+
+All edits reload in the same game28440 with permanent hashes intact, using the
+recorded development revision/SourceLink inputs. Final module05fa352b-88a7-4179-97cc-cf968d7367e0
+remains local Debug/tools=true. The headless qualification client is closed after
+testing; sole normal Companion33204/watch28440 is restored and responding for the
+user. All35active source-receipt files remain exact. Raw evidence is
+ignored under artifacts/career-start-structure and consolidated verification.
+Source-only commit: no push, tag, release, private reference or save operation.
+
 ## Biography add-club caption only — F212 — 2026-11-19
 
 The user reports Plus icon on the current biography step and explicitly keeps

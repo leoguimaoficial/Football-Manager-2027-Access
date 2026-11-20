@@ -4534,6 +4534,10 @@ internal static class ScreenWalker
         // and the name checks below evaluate ~20 of them for a typical fall-through node — ~50k
         // marshals per /body on a large screen. Same precedent as the il2cppType hoist further down.
         var elName = el.name;
+        if (elName is "Founded" or "Nickname" or "Kits" or "BoardCulture" or "SuporterCulture"
+            or "GeneralData" or "CompetitionsList" or "NotableRivalsList"
+            && ClubProfileGroups.TryEmit(el, items, child =>
+            { var parts = new List<RenderItem>(); WalkRec(child, null, parts); return parts; })) return;
         if (elName == "short-summary-table" || el.hierarchy.childCount == 2
             && el.hierarchy[1].GetIl2CppType().Name == "StreamedObjectList")
         {
