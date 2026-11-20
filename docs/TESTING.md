@@ -1,3 +1,31 @@
+## Published 0.2.0 exact-package verification — F214, 2026-11-20
+
+Trusted main build44666154043 succeeds at596ee67006dbd95b966dd9085d76ae76a7a7963b
+with private pin03eba84. Download/verify its original eight assets, including
+source provenance, all package hashes, clean Release/tools=false policy and the
+byte-identical previously published installer1.0.4. Owned source Debug removal
+and the normal installer transaction install the exact hosted package; all259
+receipt files match. Cold Steam game15220 runs Plugin322d720f/version0.2.0/tools=false.
+
+The production-document startup driver passes native MainMenu, What's New,
+Preferences and load-dialog cancellation/exact focus with4clean WCAG audits.
+The Quick Start driver repeats20club choices, actual selection/inverse and a
+different-column choice, unemployment inverse, country popup/cancel/focus,
+all3tabs and unchanged Preferences with4more clean audits. Both have zero
+client/transport failures; developer routes return404. Native Back restores
+MainMenu and the sole visible Companion34728/watch15220 is reopened. No save is
+loaded or created; the existing Barcelona save remains byte-identical, with its
+hash retained in the ignored qualification evidence.
+
+Normal required-reviewer approval promotes the exact selection in44667582535.
+All eight unauthenticated public downloads equal the original selected bytes and
+pass verify-distribution. Prior0.1.0/0.1.1 IDs/digests remain unchanged. The actual
+installer's unchanged online service selects0.2.0, validates260manifest files,
+accepts minimum engine1.0.4, finds no newer engine and fetches the unchanged
+complete20-language canonical guide. No new clean-machine, Xbox/Epic, full-career
+or manual NVDA claim. Detailed ignored evidence is artifacts/release-0.2.0 and
+the consolidated current-verification record.
+
 ## 0.2.0 local release preparation — F214, 2026-11-20
 
 Full1658C# cases,64installer cases,89Companion JS cases and eight distribution/

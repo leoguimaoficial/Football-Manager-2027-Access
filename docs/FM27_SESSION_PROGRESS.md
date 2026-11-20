@@ -1,5 +1,50 @@
 # FM27 Access session progress
 
+## Published 0.2.0 — F214 — 2026-11-20
+
+All six previously local commits are synchronized to main, followed by version/
+private-pin/player-note preparation and the package compatibility clarification.
+The successful selected source is596ee67006dbd95b966dd9085d76ae76a7a7963b,
+trusted build44666154043, private input03eba84ebe1db8fe2a1d2f7358ae77b6a3e479f6.
+The superseded914c96f build is cancelled normally. Final CI, local full suites,
+guide checks and production artifact verification pass. Player-facing changelog
+and notes cover current Steam startup and the native creation-screen improvements.
+No private game/compiler binaries enter public Git or the source/player ZIPs.
+
+Download the successful original distribution and verify all eight assets/source
+provenance. Engine1.0.4 equals its previously published bytes. The game is already
+closed at preparation; receipt-aware removal of the old35-file source Debug
+payload preserves the loader, settings and save. InstallationService validates/
+extracts260manifest files and transaction-installs259exact receipt files. Normal
+Steam launch starts game15220/Plugin322d720f-13e8-4c26-870b-319a442f6dc0, production
+0.2.0/tools=false. No existing unsaved session is closed for these tests.
+
+Cold native MainMenu/What's New/Preferences/load-dialog cancellation and exact
+origin focus pass4axe audits. Quick Start20club choices/selection/inverse/cross-
+column case, native unemployment inverse, country popup/cancel/focus, all3tabs
+and unchanged Preferences pass4more. Zero client/transport errors; diagnostic
+endpoints return404. Normal native Back returns MainMenu without creating or
+loading a career. The existing Barcelona save is byte-identical. Headless client
+closes and sole visible Companion34728/watch15220 is restored and responding.
+
+Publish selected verified build44667582535 passes verification, waits for the
+existing required-reviewer gate, receives normal permitted reviewer approval
+under the maintainer's explicit release request, then publishes the original
+assets without rebuilding. No protection rule is removed or bypassed. Public
+release452230431/v0.2.0 is latest stable, with its tag at exact596ee670. All eight
+unauthenticated public downloads are byte-equal to the selected hosted artifacts
+and fully verified. Original0.1.0/0.1.1 release IDs/asset digests remain unchanged.
+
+The actual installer online catalog lists0.2.0/0.1.1/0.1.0, accepts the0.2.0
+manifest/minimum engine1.0.4, finds no same-version engine update and retrieves
+the complete canonical guide with unchanged599BE86F hash. No installer version
+bump/rebuild or manual GUI/NVDA/full-career/Xbox/Epic qualification is invented.
+Raw evidence is artifacts/release-0.2.0; compact state is current-verification.
+The active canonical receipt is .fm27access/installation.json, not the removed
+source receipt still referenced by historical source-maintenance files.
+Final game/Companion remain at MainMenu on exact public0.2.0. Evidence-only source
+documentation synchronization does not change the release tag or asset bytes.
+
 ## Authorized 0.2.0 release preparation — F214 — 2026-11-20
 
 The maintainer explicitly authorizes0.2.0 with every verified pending source

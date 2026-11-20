@@ -1,5 +1,28 @@
 # FM27 Access maintenance instructions
 
+## Published 0.2.0 — F214
+
+The explicitly authorized release is complete: publicv0.2.0 tags exact source
+596ee67006dbd95b966dd9085d76ae76a7a7963b, trusted build44666154043 and normal
+reviewer-approved publication44667582535. All eight unauthenticated downloads
+equal the selected original assets;0.1.0/0.1.1 asset IDs/digests and tags remain
+unchanged. All six previously local commits are synchronized to main. Private
+compiler ZIP/main/pin is03eba84ebe1db8fe2a1d2f7358ae77b6a3e479f6.
+Installer1.0.4 is the exact previously published binary, not rebuilt/reversioned;
+its online service discovers0.2.0, accepts the manifest and fetches the unchanged
+complete20-language guide. Player-facing changelog/release notes are published.
+
+Exact hosted production0.2.0 is receipt-installed:259exact files, Plugin
+322d720f-13e8-4c26-870b-319a442f6dc0, tools=false. Cold Steam menu/preferences/
+load-dialog and Quick Start choices/inverse/three tabs pass8axe audits. The
+existing Barcelona save is byte-identical; no career is loaded or started.
+Game15220/sole normal Companion34728/watch15220 remain at MainMenu. The canonical
+receipt is the game's .fm27access/installation.json; old source receipt is removed,
+not the active installation. Do not assume its former Debug reload is available.
+Full1658C#/64installer/89JS/eight distribution checks and all20guide editions pass.
+Xbox/Epic/new-career/full-career/manual-NVDA limits remain explicit. See current
+verification/session/distribution records. No further release/overwrite is implied.
+
 ## Authorized 0.2.0 publication — F214
 
 The latest user request explicitly authorizes releasing0.2.0, synchronizing all

@@ -1,5 +1,26 @@
 # Production release record
 
+## Published 0.2.0 — F214
+
+The maintainer explicitly authorizes0.2.0 with all six pending verified commits,
+private input refresh and the existing automatic publication workflow. Exact
+source596ee67006dbd95b966dd9085d76ae76a7a7963b/build44666154043 is promoted by
+reviewer-approved publication44667582535, without rebuilding. All eight public
+downloads equal the selected original artifacts; prior releases remain intact.
+Installer1.0.4 is reused byte-identically and its real online catalog/manifest
+service discovers0.2.0 with the complete unchanged guide. See distribution hashes.
+
+The actual hosted payload cold-starts on Steam27.1.0.2505117/build26620374 as
+production Plugin322d720f-13e8-4c26-870b-319a442f6dc0, version0.2.0/tools=false.
+All259receipt files are exact. Native main menu, What's New, Preferences and
+load-dialog cancellation/focus pass4axe audits; Quick Start20club choices,
+selection/inverse/cross-column, native unemployment toggle/inverse, country
+popup cancellation, all3tabs and Preferences pass4more. Client/transport errors
+are zero and developer routes return404. Current save is byte-identical; no
+career is loaded/started. Normal Companion34728/watch15220 is restored at MainMenu.
+This is scoped Steam evidence, not new Xbox/Epic, clean-machine/full-career or
+manual NVDA qualification. Earlier F211-F213 UI cohorts retain their own limits.
+
 ## Steam package correction — F206
 
 The maintainer authorized replacing the existing 0.1.0 assets without changing

@@ -1,5 +1,35 @@
 # Distribution, selected builds and publication
 
+## Published 0.2.0 — F214
+
+[v0.2.0](https://github.com/leoguimaoficial/Football-Manager-2027-Access/releases/tag/v0.2.0)
+is exact source596ee67006dbd95b966dd9085d76ae76a7a7963b from successful trusted
+[build44666154043](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/44666154043).
+[Publication44667582535](https://github.com/leoguimaoficial/Football-Manager-2027-Access/actions/runs/44667582535)
+passes the existing required-reviewer gate through normal allowed approval,
+then uploads the same original eight assets without rebuilding. All eight public
+downloads are fetched without authentication, fully verified and byte-equal to
+that selection. The public tag/latest release point to the selected source.
+Prior0.1.0/0.1.1 release IDs/assets/digests and tag targets remain unchanged.
+
+Private compiler ZIP/main/pin is03eba84ebe1db8fe2a1d2f7358ae77b6a3e479f6,
+identityA69907E2956FEB792E64D5C9940D1099B11AC350E5139E117DD5C106F6635FFC.
+The installer1.0.4 executable is the exact old official binary, SHA256
+5D877685A7A035E6FB3D578327201F76F0CC0C367C8E3C85C17628E8AC4FC5E1.
+Mod ZIP SHA256 is6769E8636D933D2B50080DD2A3D4BC3282380577850E5984A623AA953DC64866.
+The actual unchanged installer catalog/manifest services discover0.2.0 online,
+require engine1.0.4, request no same-version engine update and retrieve the exact
+complete canonical guide, SHA256599BE86F17B9C92CD32A5CFC26B1F4FE1BFE4BE2465FD7391CC6A8EE82BE83EF.
+
+The selected package is transaction-installed with259exact receipt files and
+cold-qualified on current Steam: production Plugin322d720f, tools=false, native
+main-menu/preferences/load-dialog plus Quick Start selection/inverse/tabs pass
+eight clean axe audits and no client/transport errors. No save is loaded or
+written; the existing Barcelona save hash remains exact. Game15220 and sole
+Companion34728 remain at MainMenu. Other game/store/full-career/manual-NVDA
+boundaries remain recorded. Subsequent evidence-only commits do not rebuild,
+retag or replace the published artifacts.
+
 ## Authorized 0.2.0 preparation — F214
 
 The maintainer authorizes0.2.0 with the six verified local source commits after

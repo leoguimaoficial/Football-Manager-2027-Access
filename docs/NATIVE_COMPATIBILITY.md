@@ -1,5 +1,15 @@
 # Native compatibility contract
 
+## Published 0.2.0 — F214
+
+Public0.2.0/source596ee67006dbd95b966dd9085d76ae76a7a7963b/build44666154043 uses
+the refreshed private03eba84 input and the458-type/5179-member production contract.
+Its exact downloaded package cold-starts on actual Steam26620374 with the fresh
+interop and retained loader/native-pair guards. Production native action and
+selection checks pass as recorded in testing. Old Steam26577676 has genuine
+required declaration differences and can require an earlier mod; no new Xbox
+API/live or Epic qualification is claimed. Public0.1.0/0.1.1 remain unchanged.
+
 ## 0.2.0 preparation — F214
 
 The authorized0.2.0 release incorporates the Steam27.1 correction documented

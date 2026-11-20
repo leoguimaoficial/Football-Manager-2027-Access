@@ -5,6 +5,15 @@ issues and the limits of the existing checks. For installation and normal use,
 see the [player guide](user/FM27Access-UserGuide.html). Historical runtime and
 package references below describe their own test sessions, not separate downloads.
 
+## Published 0.2.0 scope — F214
+
+The current release is available through the installer and has exact-package
+cold startup, menu/preferences/load-dialog and Quick Start checks on Steam27.1.
+It targets the current Steam update; older game builds may need a previous mod.
+Xbox/Microsoft Store needs a new release-specific API/live retest, and Epic,
+external clean-machine onboarding, full-career and manual NVDA qualification
+remain outstanding. The narrower UI and gameplay boundaries below still apply.
+
 ## Pre-career club profile grouping — F213
 
 The current Barcelona club profile has structured native lists/headings and
