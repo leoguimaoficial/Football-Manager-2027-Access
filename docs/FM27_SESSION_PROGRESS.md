@@ -27,6 +27,15 @@ owned receipts/native Steam actions, then promote that selected build through
 the existing protected publication job and verify public downloads/installer
 catalog discovery. Preparation and local checks are not publication evidence.
 
+An additional read-only comparison of the production458-type/5179-member
+contract against both preserved Steam26577676 copies refuses four required types
+with nine changed/missing declarations. Keep this genuine refusal; do not loosen
+enum/signature guards to promise every older game build. Update the package's
+compatibility description to distinguish current Steam qualification from the
+historical0.1.1 Xbox checks; new0.2.0 Xbox API/live coverage remains pending.
+The initial914c96f hosted preparation is superseded by this metadata clarification;
+only the successful exact final source/artifact is eligible for publication.
+
 ## Pre-career club profile structure — F213 — 2026-11-19
 
 The user requests organizing the current screen's run-on lists and committing

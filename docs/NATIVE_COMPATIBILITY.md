@@ -10,6 +10,15 @@ for actual Steam26620374 inputs. Earlier0.1.1 assets/tag remain unchanged.
 The historical source-only statements below describe their own qualification;
 new hosted/native/public verification is recorded in the F214 release evidence.
 
+The0.2.0 production contract remains458types/5179members. Read-only comparison
+against both preserved real Steam26577676 reference copies correctly refuses
+four changed required types (nine members total): InteropEventIDs,
+DatabaseRecordReference, StreamedListView and FloatingElement. These are actual
+required declaration differences, not version-label rejection. Current Steam
+27.1 inputs pass; older game builds can require the previous mod. No fresh0.2.0
+Xbox reference/live qualification is available, so the package description no
+longer presents0.1.1's historical Xbox API checks as evidence for this new contract.
+
 ## Steam 27.1 update: actual member dependencies — F209, 2026-11-19
 
 This is an unreleased source correction; public 0.1.1 assets and the private
