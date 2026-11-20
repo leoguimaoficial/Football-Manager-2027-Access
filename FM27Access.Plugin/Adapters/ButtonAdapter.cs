@@ -15,6 +15,7 @@ internal class ButtonAdapter : PluginAdapterBase
     private bool IsReadonlyNativeContent => GetType() == typeof(ButtonAdapter)
         && Element.TryCast<SI.Bindable.SIButton>() is { CanSubmit: false }
         && !NativeButtonCommand.HasBoundCommand(Element)
+        && !GridSelectorSelection.TryGridEntry(Element, out _, out _)
         // ButtonGroup owns its members' native selection command separately.
         // Specialized adapters likewise retain their intrinsic command paths.
         && FindAncestorButtonGroup() == null;

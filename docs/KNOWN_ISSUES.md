@@ -5,6 +5,16 @@ issues and the limits of the existing checks. For installation and normal use,
 see the [player guide](user/FM27Access-UserGuide.html). Historical runtime and
 package references below describe their own test sessions, not separate downloads.
 
+## Quick Start native refinement — F210
+
+Unreleased source removes the reported decorative background and the inherited
+English unemployment rename. The game's own Sem emprego text now names the
+checkbox. Native club-grid choices that were incorrectly readonly reuse their
+real list-selection action. Current checks cover the three Quick Start tabs,
+England's men's Premier League choices and Preferences cancellation; they do
+not qualify all countries, every setup variant or creating a complete career.
+See testing/session progress for the exact Debug/production cohorts.
+
 ## Steam 27.1 source correction — F209
 
 Published0.1.1's overbroad native-member contract refuses Steam27.1.0.2505117

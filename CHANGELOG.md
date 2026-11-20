@@ -10,6 +10,10 @@ Version 0.1.0 is the first public release.
 
 ### Fixed
 
+- Quick Start uses the game's localized unemployment caption and omits the
+  decorative `LeagueBackground` image. Club choices are actionable again through
+  their native grid selection, retaining names, predicted finishes and selection.
+
 - Restore startup on Steam FM27 27.1.0.2505117 (build 26620374). Compatibility
   checks now require the native members actually used by the mod, including
   reflected controls and patches, instead of unrelated generated game internals.

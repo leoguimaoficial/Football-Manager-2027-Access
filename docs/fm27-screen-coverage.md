@@ -1,3 +1,16 @@
+## Quick Start native choices and captions — F210
+
+GameCreationQuickStart: scoped decorative SIImage omission, official Sem emprego
+caption and actual GridSelector club selection replace the internal image label,
+English rename and readonly club cards. The targeted driver covers20native club
+choices, selection/inverse, unemployment toggle/inverse, country dropdown cancel/
+origin focus, all3tabs and unchanged Preferences checkboxes. Debug's native grid
+index0→1→0 and4clean axe audits are independent evidence. Existing headings,
+reputations, country/league/club content and footer actions remain native.
+Cold production8e7941fe/game34572 repeats the cohort, adds a different-column
+selection/inverse and passes4more audits, with the original setup restored.
+No Next, career creation, full-screen completion or manual NVDA claim.
+
 ## Updated Steam 27.1 startup and existing men's screens — F209
 
 Local source-only Release on Steam26620374/game27.1.0.2505117 cold-starts with

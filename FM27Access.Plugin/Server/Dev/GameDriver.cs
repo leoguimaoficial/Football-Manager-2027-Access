@@ -70,10 +70,32 @@ internal static class GameDriver
         }
 
         var vector=dir switch{MoveDirection.Up=>Vector2.up,MoveDirection.Down=>Vector2.down,MoveDirection.Left=>Vector2.left,_=>Vector2.right};
-        focus.ResolveDirection(vector,cur.worldBound.center,true,cur,out var next);
+        var next = ResolveNext(focus, vector, cur);
         if (next == null) return $"{name}: no element in that direction (focus: {NameOf(cur)})\n";
         if(!focus.TryFocusElement(next))return $"{name}: native focus rejected {NameOf(next)}\n";
         return $"{name} -> {NameOf(next)}\n";
+    }
+
+    // Diagnostic navigation only. FM27 27.1 supplies the current focus and its
+    // bounds instead of the earlier point origin; keep both generated APIs usable.
+    private static VisualElement ResolveNext(SI.UI.FocusSubsystem focus, Vector2 direction, VisualElement current)
+    {
+        var type = typeof(SI.UI.FocusSubsystem);
+        var leaf = typeof(VisualElement).MakeByRefType();
+        var method = type.GetMethod("ResolveDirection", new[]
+            { typeof(Vector2), typeof(VisualElement), typeof(Rect), typeof(bool), typeof(VisualElement), leaf });
+        object[] args;
+        if (method != null)
+            args = new object[] { direction, current, current.worldBound, true, current, null };
+        else
+        {
+            method = type.GetMethod("ResolveDirection", new[]
+                { typeof(Vector2), typeof(Vector2), typeof(bool), typeof(VisualElement), leaf })
+                ?? throw new MissingMethodException(type.FullName, "ResolveDirection");
+            args = new object[] { direction, current.worldBound.center, true, current, null };
+        }
+        method.Invoke(focus, args);
+        return args[args.Length - 1] as VisualElement;
     }
 
     private static string Submit()

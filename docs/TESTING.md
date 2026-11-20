@@ -1,3 +1,28 @@
+## Quick Start native refinement — F210, 2026-11-19
+
+Actual Steam27.1 GameCreationQuickStart: the scoped image hide removes
+LeagueBackground. Removing the old English checkbox rename first exposed an
+incorrect enclosing-title fallback. Debug native hierarchy and a read-only
+constant-binding check confirm the own SIText Sem emprego while Toggle.label
+is empty. The corrected caption appears once. Native grid inspection also
+identifies club cards as list selections rather than ordinary SIButton commands.
+Debug191e047c independently confirms canonical grid index0→1→0 when choosing
+Arsenal/Aston Villa/Arsenal. No native value is written by the probes.
+
+The production-document driver live-quick-start-native.cjs covers20club choices,
+native selection/inverse, Sem emprego toggle/inverse, country dropdown open/
+cancel/exact focus, all3tabs and Preferences cancellation. The4Preferences
+checkbox labels/values/availability remain equal to their pre-fix capture.
+Four WCAG-tagged axe audits pass in that Debug cohort. Release build and
+1658C# cases (including69profile cases) plus89JS cases pass. Final cold production
+8e7941fe/game34572 repeats the same driver, including a different-column Man City
+selection/inverse, with4more clean audits and no client/transport errors. Debug
+routes return404; the259-file receipt passes and no developer compiler remains.
+Before/after comparison preserves all17original controls/values/headings/content,
+with the intended caption/image changes and20restored club buttons. Normal visible
+Companion21560/watch34572 is restored on Quick Start with the original selection.
+No Next, career creation, save write or manual NVDA claim.
+
 ## Unreleased Steam 27.1 compatibility — F209, 2026-11-19
 
 Actual Steam26620374/game27.1.0.2505117 uses179fresh local interop assemblies,

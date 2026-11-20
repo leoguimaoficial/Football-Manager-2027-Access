@@ -65,6 +65,12 @@ internal class CheckBoxAdapter : PluginAdapterBase
                     break;
                 }
         }
+        // A plain native checkbox can own a localized SIText while Toggle.label
+        // is empty. That caption names the choice before an enclosing group title
+        // (Quick Start's unemployment choice is inside the team-selection group).
+        var ownCaption = OwnLocalizedCaption();
+        if (ownCaption != null) return ownCaption;
+
         // A text sharing the checkbox's own container is its row label — the game writes these
         // option rows as "[box] Use current match tactics", with the label AFTER the box. It has to
         // beat FindFieldLabel, which only ever accepts PRECEDING siblings and so climbs out of the
@@ -105,6 +111,23 @@ internal class CheckBoxAdapter : PluginAdapterBase
             return Element.name;
 
         return null;
+    }
+
+    private string OwnLocalizedCaption()
+    {
+        // Switch captions can be On/Off values; cards retain their complete title
+        // and explanation above. Only one direct, visible, constant caption qualifies.
+        if (IsStateSwitch()) return null;
+        string caption = null;
+        for (int i = 0; i < Element.hierarchy.childCount; i++)
+        {
+            var child = Element.hierarchy[i];
+            if (!ElementBridge.IsVisible(child) || child.GetIl2CppType().Name != "SIText") continue;
+            if (caption != null) return null;
+            caption = StaticButtonCaption.ReadText(child);
+            if (string.IsNullOrWhiteSpace(caption)) return null;
+        }
+        return caption;
     }
 
     // An on/off switch (the game names them "inputs-switch-toggle-…": Preferences' "Match Sounds",

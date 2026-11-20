@@ -1,5 +1,22 @@
 # FM27 Access maintenance instructions
 
+## Quick Start native refinement — F210
+
+GameCreationQuickStart now omits only its decorative LeagueBackground SIImage,
+uses its own constant localized SIText Sem emprego instead of the English rename
+or enclosing group heading, and retains20native club-selection buttons. Discover
+the actual GridSelector/list/realized item before exposing that existing native
+selection action; do not force CanSubmit or ordinary SIButton callbacks. Keep
+switch/card captions, other readonly buttons and native disabled state intact.
+Debug191e047c confirms actual grid index0→1→0. Final Release8e7941fe/game34572
+passes the20choices/inverse/cross-column case, checkbox inverse, country popup/
+focus,3tabs and Preferences with4clean axe audits; all original17controls/values/
+readable content remain, with20restored club buttons.1658C#/89JS pass. Canonical
+receipt has259exact files; temporary source Debug is removed and tools=false.
+Sole normal visible Companion21560/watch34572 is on Quick Start, Clube/England/
+Premier League/Arsenal, Sem emprego unchecked. Do not activate Next/create a
+career without a new request. Source-only commits; no push/release/private update.
+
 ## Steam 27.1 source compatibility correction — F209
 
 The latest request authorizes fixing the current game update and committing only;

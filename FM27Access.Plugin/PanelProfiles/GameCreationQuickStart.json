@@ -20,16 +20,14 @@
   ],
   "hides": [
     {
+      "match": { "name": "LeagueBackground", "typeName": "SIImage" }
+    },
+    {
       "match": { "name": "ContinentImage", "typeName": "SIImage" }
     },
     {
       "match": { "pathContains": "LeagueKey", "typeName": "SIText" }
     }
   ],
-  "renames": [
-    {
-      "match": { "name": "Checkbox", "pathContains": "UnemployedCheckbox" },
-      "label": "Unemployed"
-    }
-  ]
+  "renames": []
 }

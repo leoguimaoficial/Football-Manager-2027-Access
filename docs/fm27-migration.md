@@ -1,3 +1,21 @@
+## Quick Start native choices and captions — F210
+
+Actual GameCreationQuickStart exposes a decorative SIImage named LeagueBackground.
+Omit only that element through its panel profile. Remove the inherited English
+Unemployed rename. The actual SICheckBox has empty Toggle.label and owns a direct
+SIText with the constant localized caption Sem emprego; prefer one such caption
+through StaticButtonCaption before borrowing an enclosing field/group heading.
+Keep switch values and complete card descriptions on their existing paths.
+
+Its20club cards have active-toggle indicators inside native GridSelector columns.
+Their SIButtons have no own submit command: the owning VirtualisedList selects
+the card. The readonly-button guard had hidden that existing FM26 selection path.
+Discover the exact owning grid/list/realized item read-only, require native One
+or ExactlyOne selection mode, and reuse that same validated list/index on explicit
+activation. Preserve native disabled/selected state, names and predicted finishes;
+never force CanSubmit or invent a click callback. Caption and button changes are
+shared by HTML and speech. See testing/session records for live scope.
+
 ## Compatible game updates use actual dependencies — F209
 
 Steam27.1.0.2505117/build26620374 compiles unchanged UI/adapters against its fresh

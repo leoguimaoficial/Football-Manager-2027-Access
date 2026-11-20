@@ -1,5 +1,70 @@
 # FM27 Access session progress
 
+## Quick Start native refinement — F210 — 2026-11-19
+
+The user reports LeagueBackground, image on the already-open quick-game creation
+screen and requests native game content. The FM26 profile is still identical to
+4d38a025: its English Unemployed rename masks the checkbox's real caption, and it
+does not omit this background. Add the scoped GameCreationQuickStart/SIImage/
+LeagueBackground hide and remove that rename. The first candidate correctly
+removes the image but reveals a second defect: checkbox naming borrows the group
+heading Escolher equipa instead of its own text.
+
+Supported receipt-aware removal/source Debug installation enables native inspection.
+Actual hierarchy is UnemployedCheckbox > BindingVariables > SICheckBox(Checkbox)
+with a direct visible SIText(text), Sem emprego. Toggle.label and tooltip are empty.
+StaticButtonCaption's existing constant-localization reader independently returns
+Sem emprego. Prefer exactly one such direct caption before the enclosing field
+fallback; switches and complete cards keep their existing paths. No translated
+caption, native binding value or per-locale map is invented.
+
+The complete review finds20club cards rendered readonly although their native
+GridSelector owns real selection. Each SIButton has active-toggle under its actual
+VirtualisedList column (One selection mode), not an ordinary own submit event.
+The readonly guard now recognizes that bounded selection capability. Classification
+and activation discover the same checked native list/realized item; activation
+reuses FM26 SetSelection, with actual Pointer ancestry. Ordinary no-command buttons
+stay readonly. No CanSubmit, callback or availability is forced; the native
+selection runs only on an explicit activation.
+Debug191e047c/game31972 independently reads canonical grid index0→1→0 for
+Arsenal/Aston Villa/Arsenal, with4clean WCAG-tagged axe audits. A first readonly
+probe attempted a nonexistent managed Count property and stopped in the evaluator;
+its corrected metadata read and native hierarchy are retained separately.
+
+Local Debug compilation also exposes the update's changed diagnostic-only
+FocusSubsystem.ResolveDirection signature. Adapt GameDriver to inspect either the
+new focus/Rect form or the previous Vector2-origin form, retaining peek-only native
+navigation. This helper is compiled only with developer tools. Its compilation is
+checked; no new live directional-navigation qualification is claimed.
+
+Temporary Debug is removed through its source receipt. The normal transaction
+service reinstalls final Release with259exact receipt files, pinned loader bytes,
+458types/5179members, version0.1.1/tools=false and no mcs.dll. Cold game34572/
+Plugin8e7941fe-16a7-47cd-8084-ca70fa020ca8 reopens the original Quick Start cohort.
+The new reusable live-quick-start-native driver repeats the20club commands,
+selection/inverse plus a different-column Man City choice, Sem emprego inverse,
+country dropdown open/cancel/exact focus, all3tabs and Preferences close. Its4
+checkbox labels/values/availability match the earlier capture. Four further clean
+axe audits and zero client/transport errors pass; diagnostic endpoints return404.
+
+The retained before/after comparison confirms all original17controls, values,
+headings and readable content, apart from the intended image omission/native
+checkbox caption and newly exposed selection state. The20club commands bring the
+control count to37.1658C# cases (including69profiles) and89JS cases pass; Debug and
+Release builds pass. No Next, manager appearance, career creation, save loading/
+write or manual NVDA is performed. Final native state remains Clube, England,
+Premier League, the tested cohort's initial Arsenal selection and Sem emprego unchecked.
+
+Normal visible Companion21560/watch34572 is restored on that same screen for the
+user. Computer Use's attempted native screenshots contain unrelated/overlapping
+Chrome pixels and are excluded from native-layout evidence; no physical user
+action is inferred. The initial Back driver also expected Atrás on the preceding
+chooser; its actual native caption Anterior is used afterward. Source-only work
+does not push, publish, update private references or touch the protected private
+copies. Detailed ignored evidence is in artifacts/quick-start-refinement and
+artifacts/current-verification.json.quickStartNativeRefinement. All receipts are
+retained; the active production receipt is the game's .fm27access/installation.json.
+
 ## Steam 27.1 compatibility, source-only — F209 — 2026-11-19
 
 The maintainer requests restoring the updated game and reducing per-update mod

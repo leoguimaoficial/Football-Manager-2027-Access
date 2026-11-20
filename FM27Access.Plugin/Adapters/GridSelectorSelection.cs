@@ -44,48 +44,44 @@ internal static class GridSelectorSelection
             return true;
         }
 
-        if (element.GetIl2CppType().Name != "SIButton")
-            return false;
+        if (!TryGridEntry(element, out var list, out int index)) return false;
+        wasSelected = ReadSelected(element) == true;
+        list.SetSelection(index);
+        return true;
+    }
 
-        var activeToggle = FindChildByName(element, "active-toggle");
-        if (activeToggle == null)
-            return false;
-
-        wasSelected = ElementBridge.IsVisible(activeToggle);
-
-        VisualElement? virtListElement = null;
-        var walk = element.hierarchy.parent;
-        while (walk != null)
+    // These SIButtons are visuals for a real GridSelector selection, so their
+    // own Events/CanSubmit can be empty. Discover the same native list/item used
+    // by activation without selecting it or borrowing a neighbouring grid column.
+    internal static bool TryGridEntry(VisualElement element, out SI.UI.VirtualisedList list, out int index)
+    {
+        list = null;
+        index = -1;
+        if (element.GetIl2CppType().Name != "SIButton" || FindChildByName(element, "active-toggle") == null) return false;
+        SI.UI.VirtualisedList? candidate = null;
+        bool grid = false;
+        for (var parent = element.hierarchy.parent; parent != null; parent = parent.hierarchy.parent)
         {
-            if (walk.GetIl2CppType().Name == "VirtualisedList")
-            {
-                virtListElement = walk;
-                break;
-            }
-            walk = walk.hierarchy.parent;
+            string type = parent.GetIl2CppType().Name;
+            if (type is "SIButton" or "Panel") break;
+            if (candidate == null && type == "VirtualisedList") candidate = parent.TryCast<SI.UI.VirtualisedList>();
+            if (type == "GridSelector") { grid = true; break; }
         }
-
-        if (virtListElement == null)
-        {
-            Speech.Log.Warn("[GridSelectorSelection] active-toggle present but no VirtualisedList ancestor");
-            return false;
-        }
-
-        var list = new SI.UI.VirtualisedList(virtListElement.Pointer);
-        int activeCount = list.GetActiveCount();
+        if (!grid || candidate == null || candidate.SelectionMode is not
+            (SI.UI.VirtualisedList.SelectionModes.One or SI.UI.VirtualisedList.SelectionModes.ExactlyOne)) return false;
+        int activeCount = candidate.GetActiveCount();
         for (int i = 0; i < activeCount; i++)
         {
-            var item = list.GetActiveItem(i);
+            var item = candidate.GetActiveItem(i);
             if (item == null || item.Content == null) continue;
             if (IsAncestorOf(item.Content, element))
             {
-                Speech.Log.Info($"[GridSelectorSelection] SetSelection({item.Index})");
-                list.SetSelection(item.Index);
+                list = candidate;
+                index = item.Index;
                 return true;
             }
         }
 
-        Speech.Log.Warn("[GridSelectorSelection] button not found in VirtualisedList active items");
         return false;
     }
 
