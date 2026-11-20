@@ -5,6 +5,17 @@ issues and the limits of the existing checks. For installation and normal use,
 see the [player guide](user/FM27Access-UserGuide.html). Historical runtime and
 package references below describe their own test sessions, not separate downloads.
 
+## Setup summary refinement — F211
+
+The current four-nation men's setup has native summary/editor tables, readable
+playable/view-only modes, preserved division counts and clearer club/date
+sections. Live checks cover all fourteen editor selections, cancellation/focus,
+an actual France mode change/inverse and the existing transfer/progression cards.
+They do not qualify every nation, mixed playable/view-below variants, partial
+virtualised windows or completing career creation. Unsupported table shapes
+keep the ordinary native walker/paging fallback. The explicitly local runtime
+remains Debug/tools=true for in-game editing; public defaults remain Release.
+
 ## Quick Start native refinement — F210
 
 Unreleased source removes the reported decorative background and the inherited

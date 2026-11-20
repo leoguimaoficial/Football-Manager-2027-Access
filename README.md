@@ -8,7 +8,9 @@ reader and keyboard navigation.
 
 The unreleased source also fixes startup on Steam FM27 **27.1.0.2505117**
 (build **26620374**) and reduces unnecessary rejections after game updates.
-The published 0.1.1 downloads below predate this source-only correction.
+It also restores native Quick Start choices and organizes the game-setup summary
+and editable league table. The published 0.1.1 downloads below predate these
+source-only corrections.
 
 ## Download
 

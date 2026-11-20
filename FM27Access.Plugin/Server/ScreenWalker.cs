@@ -186,6 +186,7 @@ internal static class ScreenWalker
         FoldBudgetTilePairs(items);
         FoldCoachWorkloadCounts(items);
         JoinCaptionedTotals(items);
+        GameCreationSummary.Restructure(items, panelObj);
         RestructureAdvancedSetup(items, panelObj);
         RestructureContractNegotiation(items, panelObj);
         RestructureTransferOffer(items, panelObj);
@@ -4533,6 +4534,13 @@ internal static class ScreenWalker
         // and the name checks below evaluate ~20 of them for a typical fall-through node — ~50k
         // marshals per /body on a large screen. Same precedent as the il2cppType hoist further down.
         var elName = el.name;
+        if (elName == "short-summary-table" || el.hierarchy.childCount == 2
+            && el.hierarchy[1].GetIl2CppType().Name == "StreamedObjectList")
+        {
+            var setupTable = GameCreationSummary.TryTable(el, child =>
+            { var parts = new List<RenderItem>(); WalkRec(child, null, parts); return parts; });
+            if (setupTable != null) { items.Add(setupTable); return; }
+        }
         if (elName is "purpose_block" or "topic_block" or "squad_header" or "squad_block"
             && MessageContentGroups.TryEmit(el, items, child =>
             { var parts = new List<RenderItem>(); WalkRec(child, null, parts); return parts; })) return;

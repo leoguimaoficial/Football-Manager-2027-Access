@@ -1,5 +1,62 @@
 # FM27 Access session progress
 
+## Native setup summary, continued live editing — F211 — 2026-11-19
+
+The user's current screen is GameCreationGameSummaryScreen, not the preceding
+Quick Start selector. Its one main heading is already correct; inspecting the
+whole HTML had also included the document title. The actual defects are flat
+league columns, missing textual mode icons, backwards joined club/prediction,
+and ungrouped metrics/date. The AddRemoveLeaguesCard editor similarly no longer
+matches FM26's named grid and borrows division counts as selector labels.
+
+GameCreationSummary reuses NativeFormTableItem and original native cell actions,
+requiring complete realised rows/count/order. Read actual applied icon classes
+against this card's localized native legend, without an enum/caption map. Keep
+every native division count, row explanation and remove control/availability.
+Dropdown labels use actual nation and column captions. Summary metrics retain
+live value adapters; native ClubName/StartDateLabel become informative headings,
+with gender/prediction and the ordinary edit command below. No button is nested
+in a heading. See migration notes for schema/fallback limits.
+
+Record the user's preference in AGENTS and developer deployment: preserve the
+running game and unsaved setup, reload UI changes and leave the owned Companion
+for immediate testing. The old Release/tools=false module has no reload route,
+so a single necessary receipt-aware closed-game switch enables local Debug.
+Capture all14editor selections and the transfer/progression cards before that
+switch. Native Back's intermediate Quick Start showed a different club from the
+authoritative summary; do not infer its cause or silently retain that mismatch.
+Re-enter the actual Spain/Barcelona setup via the native continent/country menu;
+the complete restored summary equals its original captured text and values.
+No career is created or save loaded/written. Subsequent edits reload game28440
+without closing it. Final local module5896f5ae-c1a0-4e50-8010-f6715ce12464 remains
+Debug/tools=true for further UI testing; public/default Release is unchanged.
+
+The live summary driver retains all four nations and13league selectors plus
+database, exact selected options and division counts. Actual France mode change
+and inverse update both native editor and summary; complete original state and
+date restore. Date/editor cancellation has exact origin focus. All transfer and
+progression text/controls/choices are compared to the pre-edit captures, with
+native cancellation. Evidence, axe audits and runtime/receipt checks are kept
+under artifacts/current-screen-refinement and current-verification.json.
+1658C# cases/69profiles,89JS cases and actual-reference Release compilation pass.
+The private pinned-reference packaging wrapper refuses the newer local inputs;
+no pin/private archive/public assets are changed in this source-only task.
+
+Driver/evaluator observations remain distinct from physical input: early country
+drivers assumed a flat menu, then waited for selection rather than native submenu
+expansion; a shell quoting failure made no call. Later checks miscounted table
+selectors and compared undefined against serialized JSON, then were corrected.
+No manual NVDA, all-country/mixed-mode/large-window or full-career claim.
+Only verified source is committed; no push, tag or publication.
+
+Final6axe audits pass with zero client/transport errors. A read-only follow-up
+confirms all35active source-receipt files are exact, game28440 and the same module
+remain live. The combined receipt-validation/Companion-reopening command is
+rejected by automatic review with `blocked by policy`, without a detailed reason;
+it does not run. Do not bypass that rejection. The independent read-only check
+finds no normal Companion process, so the final handoff explicitly reports that
+reopening remains blocked. The game stays open on the restored summary.
+
 ## Quick Start native refinement — F210 — 2026-11-19
 
 The user reports LeagueBackground, image on the already-open quick-game creation

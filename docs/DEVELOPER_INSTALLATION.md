@@ -65,6 +65,17 @@ dispatcher. Host, Navigation and Speech changes require a cold install.
 Use -GameClosed to stage a core update for the next game start.
 Live reload requires a Debug installation. Release does not expose /reload.
 
+For ongoing local screen refinements, preserve the current game and unsaved
+setup. Inspect its actual localhost document and use this reload for embedded
+profiles, adapters, walker/renderer and client assets. Keep the explicitly enabled
+development runtime during that UI session instead of alternating Debug/Release
+installations after each edit. If Release is already running, enabling reload
+requires one receipt-aware closed-game installation first; restore the original
+setup before continuing. Restart again only when permanent dependencies change
+or another technical necessity is demonstrated. Keep one owned Companion/client,
+restore it for the user's in-game test, and record the exact runtime/profile.
+Shipped builds retain the normal Release/no-diagnostics defaults.
+
 ## Removal
 
     ./scripts/uninstall-loader.ps1 -ReceiptPath '<mod receipt>'

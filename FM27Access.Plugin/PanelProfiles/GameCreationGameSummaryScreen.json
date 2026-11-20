@@ -1,6 +1,9 @@
 {
   "panelName": "GameCreationGameSummaryScreen",
-  "headings": [],
+  "headings": [
+    { "match": { "name": "ClubName", "typeName": "SIText" }, "level": 2 },
+    { "match": { "name": "StartDateLabel", "typeName": "SIText" }, "level": 2 }
+  ],
   "hides": [
     {
       "match": { "parentName": "Header", "typeName": "SIText" }

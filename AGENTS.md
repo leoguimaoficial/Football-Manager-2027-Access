@@ -1,5 +1,35 @@
 # FM27 Access maintenance instructions
 
+## Live screen editing preference
+
+For UI refinements, inspect the actual current localhost document and preserve
+the running game and its unsaved state. Apply/reload screen-only changes in the
+same session and leave the owned Companion available for the user to test.
+Restart only for a demonstrated technical necessity, such as changing permanent
+Host/Navigation/Speech/native dependencies or enabling an unavailable reload
+facility. Do not switch between Debug and Release after every UI iteration.
+During an explicitly local UI-maintenance session, retain the opt-in reloadable
+development runtime when needed for continued testing; shipped builds still
+default to Release with developer tools disabled. Record runtime/profile and
+any unavoidable restart, preserve current choices, and do not substitute a
+cached or fabricated game screen. Commit verified updates without pushing or
+publishing unless separately requested.
+
+## Native setup summary and editor — F211
+
+Current unsaved setup remains Configuração do Jogo: Barcelona men, Medium40190,
+13July2026 and ESP/FRA/ENG/ITA. GameCreationSummary reuses native form tables,
+live values and original dropdown commands; legend text requires actual icon
+identity. Keep exact row/list completeness, division counts, native availability
+and fallback/paging guards. Club/date headings are informational, with the edit
+button outside headings. Fourteen original selections and the complete transfer/
+progression cards remain equal to their captures; actual France view-only/inverse,
+exact cancel focus and6axe audits pass.1658C#/89JS cases and Release compilation
+pass; no career creation/manual NVDA. One initial restart enables reload; final
+game28440/module5896f5ae-c1a0-4e50-8010-f6715ce12464 stays local Debug/tools=true
+for continued live UI editing. Do not reinstall Release merely to end an iteration.
+See session/testing records for receipts, handoff and conditional limits.
+
 ## Quick Start native refinement — F210
 
 GameCreationQuickStart now omits only its decorative LeagueBackground SIImage,

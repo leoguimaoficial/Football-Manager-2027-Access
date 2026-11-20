@@ -1,3 +1,15 @@
+## Native game summary and Add/Remove Leagues — F211
+
+GameCreationGameSummaryScreen: native five-column/four-row summary, exact
+playable/view-only legend labels, database totals, chosen-club and start-date
+headings. AddRemoveLeaguesCard: five native columns, thirteen league selectors,
+all division counts and four remove controls with native availability. Fourteen
+selected options including the database match the pre-change native capture.
+Actual France Jogável → Apenas Ver → Jogável updates both editor and summary;
+date/editor cancellation returns exact source focus. Transfer/progression cards
+retain the original text, settings and controls. No Next, career creation or
+manual NVDA qualification. See F211 testing/session evidence and variant limits.
+
 ## Quick Start native choices and captions — F210
 
 GameCreationQuickStart: scoped decorative SIImage omission, official Sem emprego

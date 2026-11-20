@@ -1,3 +1,32 @@
+## Native setup summary and league editor — F211, 2026-11-19
+
+The current Steam27.1 Configuração do Jogo capture has Barcelona men,13July2026,
+40190players, Medium database and ESP/FRA/ENG/ITA league rows. Preserve this
+unsaved configuration. One required restart replaces the nonreloadable Release
+runtime with explicit Debug/tools=true through owned receipt removal/install;
+the restored summary equals the complete original native text before UI edits.
+Subsequent Plugin/profile edits reload on the same game28440, final module
+5896f5ae-c1a0-4e50-8010-f6715ce12464. No repeated game restart or Release install.
+
+live-game-summary-native.cjs verifies native five-column tables/four full rows,
+all13league selectors plus database, all4remove buttons/native disabled state,
+and division counts. Every one of14selected options equals the pre-edit native
+capture, with exact cancellation focus. France men's Jogável → Apenas Ver
+updates the editor and actual summary; the inverse restores the entire summary.
+Date cancellation preserves its value/focus. Transfer/progression cards are
+compared against the complete captured text/controls/settings and cancelled.
+Six WCAG-tagged axe audits pass with zero client/transport errors, recorded in
+artifacts/current-screen-refinement/live-summary.json. No Next/career creation,
+save write or manual NVDA qualification; untested variants remain documented.
+
+1658C# cases (including69profile cases),89JS cases and direct Release solution
+compilation against actual local game references pass. The packaging build
+wrapper still refuses the historical private reference pin, as in the preceding
+source-only adaptation; no private reference refresh/publication is authorized
+or attempted. Initial driver failures counted13table selectors as12 and compared
+an unserialized undefined property to JSON; corrected tests retain those failed
+observations and do not attribute them to physical user input.
+
 ## Quick Start native refinement — F210, 2026-11-19
 
 Actual Steam27.1 GameCreationQuickStart: the scoped image hide removes

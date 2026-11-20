@@ -1,3 +1,29 @@
+## Native setup summary and league editor — F211
+
+FM27 GameCreationGameSummaryScreen uses short-summary-table with anonymous
+headers and league-row/BindingVariables cells; AddRemoveLeaguesCard has an
+anonymous header/list container and ComponentElement rows. Neither matches
+FM26's frame header-row/frame league-row recognizer. GameCreationSummary reuses
+NativeFormTableItem, walking original cell controls and checking exact native
+column order, row ownership and VirtualisedList item count. Partial windows,
+unknown schemas and lists exceeding the existing page size keep the ordinary
+walker/paging path. No ordinal list item is treated as a record identity.
+
+Summary mode icons match their actual applied SIStyleSetter classes to the
+same card's playable/view-only legend, reading its localized StringValue on
+every read. Editor selectors retain original native dropdown activation and
+availability; names use their own nation and column captions, and icon values
+use the native legend/row-template caption reader. Split walking keeps division
+counts from being consumed as an incorrectly borrowed selector label. Remove
+buttons and each nation's native explanation remain in the row header.
+
+Panel-scoped ClubName/StartDateLabel headings retain live native text. The
+summary postpass reuses LabelValueItem/JoinedTextItem for metric and club details,
+with the ordinary edit button after the information. The main title remains
+unique. No caption map, gameplay value, command or action readiness is invented.
+The local reloadable runtime supports further edits without closing the game;
+Release remains the default for shipped builds. See F211 testing/session limits.
+
 ## Quick Start native choices and captions — F210
 
 Actual GameCreationQuickStart exposes a decorative SIImage named LeagueBackground.

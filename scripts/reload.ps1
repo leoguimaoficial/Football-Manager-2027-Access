@@ -54,7 +54,7 @@ try {
             $after=Invoke-RestMethod 'http://127.0.0.1:8787/health' -TimeoutSec 2
             if($after.instance -ne $before.instance -and $after.coreMvid -eq $mvid -and $after.screen -eq 'Live'){
                 & "$PSScriptRoot/clean-local-artifacts.ps1"
-                Write-Output "Production Plugin reloaded; module $mvid."
+                Write-Output "$Configuration Plugin reloaded; module $mvid."
                 return
             }
         }catch{Write-Verbose $_.Exception.Message}

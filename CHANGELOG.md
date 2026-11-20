@@ -10,6 +10,11 @@ Version 0.1.0 is the first public release.
 
 ### Fixed
 
+- Game setup groups the chosen club, starting date and database totals more
+  clearly. The summary and Add/Remove Leagues window use native table headings,
+  retain division counts and name selectors by nation and men's/women's leagues.
+  Playable/view-only labels come from the game's own legend.
+
 - Quick Start uses the game's localized unemployment caption and omits the
   decorative `LeagueBackground` image. Club choices are actionable again through
   their native grid selection, retaining names, predicted finishes and selection.
