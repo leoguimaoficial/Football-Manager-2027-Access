@@ -15,6 +15,13 @@ any unavoidable restart, preserve current choices, and do not substitute a
 cached or fabricated game screen. Commit verified updates without pushing or
 publishing unless separately requested.
 
+On tool/function errors, retry a safe authorized operation before giving up.
+Check whether the first attempt already succeeded before repeating a mutation,
+so commands, selections or messages are not duplicated. Use bounded retries for
+transient failures; respect policy denials rather than bypassing their controls.
+The user explicitly requested another Companion launch after F211's rejection;
+that retry succeeded as Companion24508/watch28440, with the game unchanged.
+
 ## Native setup summary and editor — F211
 
 Current unsaved setup remains Configuração do Jogo: Barcelona men, Medium40190,

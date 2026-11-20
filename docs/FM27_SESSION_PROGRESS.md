@@ -57,6 +57,14 @@ it does not run. Do not bypass that rejection. The independent read-only check
 finds no normal Companion process, so the final handoff explicitly reports that
 reopening remains blocked. The game stays open on the restored summary.
 
+The user then explicitly requests another launch and asks for safe retries on
+future function errors. Read-only health/process inspection confirms the same
+game/module and no Companion. A direct normal launch now succeeds: sole visible
+Companion24508/watch28440, responding with FM27 Access Companion window title.
+The game is not closed or restarted. Record bounded retries in AGENTS, checking
+the prior outcome before repeating mutations and retaining policy boundaries.
+This successful user-requested retry supersedes the blocked handoff above.
+
 ## Quick Start native refinement — F210 — 2026-11-19
 
 The user reports LeagueBackground, image on the already-open quick-game creation
