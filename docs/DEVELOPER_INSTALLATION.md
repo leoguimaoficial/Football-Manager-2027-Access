@@ -76,6 +76,12 @@ or another technical necessity is demonstrated. Keep one owned Companion/client,
 restore it for the user's in-game test, and record the exact runtime/profile.
 Shipped builds retain the normal Release/no-diagnostics defaults.
 
+A Git commit can change AssemblyInformationalVersion and SourceLink/PDB metadata
+even when permanent source is unchanged. Reproducing an existing development
+runtime can require its recorded SourceRevisionId and SourceLink compiler inputs;
+record the actual edited source separately. Keep the full permanent-file hash
+comparison: metadata reproduction must not mask a real permanent code change.
+
 ## Removal
 
     ./scripts/uninstall-loader.ps1 -ReceiptPath '<mod receipt>'

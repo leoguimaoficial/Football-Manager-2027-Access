@@ -10,6 +10,9 @@ Version 0.1.0 is the first public release.
 
 ### Fixed
 
+- Biography's additional favourite-club button uses its native localized caption
+  instead of the decorative "Plus icon" name, without repeating the caption below.
+
 - Game setup groups the chosen club, starting date and database totals more
   clearly. The summary and Add/Remove Leagues window use native table headings,
   retain division counts and name selectors by nation and men's/women's leagues.

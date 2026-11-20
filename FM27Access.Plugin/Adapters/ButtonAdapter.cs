@@ -88,6 +88,9 @@ internal class ButtonAdapter : PluginAdapterBase
         var findingCaption = KeyFindingCaption();
         if (findingCaption != null) return findingCaption;
 
+        var favouriteClubCaption = FavouriteClubAddCaption();
+        if (favouriteClubCaption != null) return favouriteClubCaption;
+
         var iconLabel = TryGetIconLabel();
         if (iconLabel != null) return iconLabel;
 
@@ -123,6 +126,28 @@ internal class ButtonAdapter : PluginAdapterBase
         if(destination!=null)return "Open external link: "+destination;
 
         return UnlabeledIconButton;
+    }
+
+    private string FavouriteClubAddCaption()
+    {
+        // The biography's add-row command puts its localized caption beside
+        // the icon button. Keep this exact component's text ahead of icon names.
+        var template = Element.parent;
+        var row = template?.parent;
+        if (Element.name != "buttons-controls-pc-default" || row?.name != "add-favourite-club"
+            || !ElementBridge.IsInPanel(Element, "ManagerPersonaDetailsScreenContainer")) return null;
+        TextElement caption = null;
+        int visible = 0;
+        for (int i = 0; i < row.hierarchy.childCount; i++)
+        {
+            var child = row.hierarchy[i];
+            if (!ElementBridge.IsVisible(child)) continue;
+            visible++;
+            if (child.Pointer == template.Pointer) continue;
+            if (caption != null || child.TryCast<SI.Bindable.SIText>() == null) return null;
+            caption = child.TryCast<TextElement>();
+        }
+        return visible == 2 && !string.IsNullOrWhiteSpace(caption?.text) ? caption.text : null;
     }
 
     private string GenericActionCaption()

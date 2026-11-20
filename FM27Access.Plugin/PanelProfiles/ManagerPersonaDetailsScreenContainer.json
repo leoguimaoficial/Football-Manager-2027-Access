@@ -9,7 +9,8 @@
     { "match": { "name": "Text", "typeName": "SIText", "pathStartsWith": "TemplateContainer > VisualElement(\"Header\") > VisualElement(\"LHS\")" } },
     { "match": { "name": "text", "typeName": "SIText", "pathContains": "step1-frame" } },
     { "match": { "typeName": "SIText", "pathContains": "add-nationality" } },
-    { "match": { "typeName": "SIText", "pathContains": "add-language" } }
+    { "match": { "typeName": "SIText", "pathContains": "add-language" } },
+    { "match": { "typeName": "SIText", "parentName": "add-favourite-club" } }
   ],
   "renames": [
     {

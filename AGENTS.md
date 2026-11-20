@@ -22,6 +22,20 @@ transient failures; respect policy denials rather than bypassing their controls.
 The user explicitly requested another Companion launch after F211's rejection;
 that retry succeeded as Companion24508/watch28440, with the game unchanged.
 
+## Biography add-club caption — F212
+
+ManagerPersonaDetailsScreenContainer/FavouriteClubStep's add-favourite-club
+component owns an icon button beside a localized SIText. ButtonAdapter reads
+that exact native caption before its icon fallback; retain the existing page
+and command. The user's follow-up omits only its duplicated sibling caption
+through the panel profile. Scoped DOM comparison changes only this button name;
+keyboard add/remove of the new empty row preserves the original club. No full
+suites rerun by explicit user request. Same game28440, local Debug/tools=true;
+the latest module is recorded in session progress. Companion8172/watch28440 reopened.
+Permanent hashes remain exact. Preserve the recorded build-revision/SourceLink
+metadata when reproducing these unchanged permanent development assemblies;
+do not weaken reload guards or restart merely because Git metadata changed.
+
 ## Native setup summary and editor — F211
 
 Current unsaved setup remains Configuração do Jogo: Barcelona men, Medium40190,

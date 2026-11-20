@@ -1,3 +1,20 @@
+## Biography additional-club button — F212, 2026-11-19
+
+The user requests only the Plus icon button correction and no complete test rerun.
+Actual ManagerPersonaDetailsScreenContainer/FavouriteClubStep has the button in
+add-favourite-club beside SIText "Seleccionar clube adicional". The scoped adapter
+uses that live caption ahead of the generic icon fallback, retaining the native
+command and all other page content. Initial DOM element/text/control comparison
+proves only the button label changes. The user's follow-up omits the repeated
+sibling caption through a scoped profile rule, retaining its text in the button.
+Real keyboard activation adds the second empty
+favourite-club row; its native Delete removes it and preserves the original club.
+No Next or other profile setting is activated. Debug compilation and this focused
+live check pass with zero client/request failures; full suites/axe/NVDA are not
+rerun. Ignored evidence: artifacts/biography-plus/verified.json and before/after
+documents. Same game28440, visible Companion8172/watch28440; the final profile
+reload and exact module are recorded in session progress.
+
 ## Native setup summary and league editor — F211, 2026-11-19
 
 The current Steam27.1 Configuração do Jogo capture has Barcelona men,13July2026,

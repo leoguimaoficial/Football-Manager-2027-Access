@@ -1,5 +1,44 @@
 # FM27 Access session progress
 
+## Biography add-club caption only — F212 — 2026-11-19
+
+The user reports Plus icon on the current biography step and explicitly keeps
+the rest of the page unchanged, without rerunning complete tests. Native tree:
+ManagerPersonaDetailsScreenContainer > FavouriteClubStep > favourite-club-1 >
+RowVisible > BindableSwitchElement > add-favourite-club, containing the ordinary
+button template and sibling SIText "Seleccionar clube adicional". The inherited
+FM26 icon mapping wins before the wrapped-row fallback. ButtonAdapter now prefers
+the caption only in this exact two-child native component/panel; it rereads native
+text for the current game language and retains all command/availability behavior.
+The user then requests removing the duplicated text. Omit only the direct SIText
+child of add-favourite-club through this panel's profile, retaining that native
+caption in the button and all other page content.
+
+Initial reload correctly refuses a different permanent hash after the prior Git
+commit. Investigation finds AssemblyInformationalVersion and SourceLink/PDB
+revision differences, with no permanent code change. Reproduce the installed
+9ab38b24d4ca176ceeb2aa5e1e8551cc83b38e95 development build's revision and SourceLink
+metadata; the original full permanent hash guards then pass. No installed Host,
+Navigation or Speech is replaced, and no game restart occurs. Temporary reload
+parameter experiments are removed; the final script remains unchanged. Actual
+code provenance is this source commit plus the scoped runtime evidence, rather
+than the retained development base's informational metadata.
+
+Final Debug modulef077f478-2329-43ae-9626-330007689608 remains on game28440. A focused
+original-document comparison changes only the reported button label; actual
+keyboard activation adds a second empty row, whose sole native Delete restores
+the original favourite club. No Next, profile advancement or club choice change.
+Zero client/request errors; Debug build and this check only, without full suites,
+new axe or manual NVDA claims. Original Companion24508 is briefly stopped for the
+sole headless test client, then visible Companion8172/watch28440 is reopened.
+Evidence is ignored under artifacts/biography-plus; commit only, no publication.
+
+The final duplicate-caption follow-up reloads module994317d9-9da1-4e49-8124-9089ac0caa5f
+on the same game28440. Read-only localhost verification confirms the localized
+caption occurs exactly once, inside the original native button, with no loose
+copy. Companion8172 remains responding. No additional action/full test suite or
+game restart is needed for this scoped presentation-only omission.
+
 ## Native setup summary, continued live editing — F211 — 2026-11-19
 
 The user's current screen is GameCreationGameSummaryScreen, not the preceding
